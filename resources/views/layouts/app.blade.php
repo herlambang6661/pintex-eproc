@@ -15,22 +15,18 @@
 * Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
 -->
 <html lang="en">
-    <div class="main-wrapper">
         @include('shared.header')
 
-        <script src="{{ asset('assets/dist/js/demo-theme.min.js?1684106062') }}"></script>
         <div class="main-content">
             
-            <div class="container">
                 <body>
+                    <script src="{{ asset('assets/dist/js/demo-theme.min.js?1684106062') }}"></script>
                     @yield('content')
                 </body>
-            </div>
         </div>
 
         @include('shared.footer')
         @include('shared.script')
         @include('components.alert')
         </div>
-    </div>
 </html>

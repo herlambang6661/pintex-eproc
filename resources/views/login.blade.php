@@ -53,29 +53,23 @@
                             <div class="card card-md">
                                 <div class="card-body">
                                     <h3 class="h3 text-center mb-4">Selamat Datang, Silahkan Login untuk menggunakan aplikasi</h3>
-                                    <form action="javascript:void(0)" method="post" name="formLogin" id="formLogin">
-                                        {{ csrf_field() }}
+                                    <form action="{{ route('login.post') }}" method="post" name="handleAjax" id="handleAjax">
+                                        @csrf
                                         {{-- Error Alert --}}
-                                        @if(session('error'))
-                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                {{session('error')}}
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                        @endif
+                                        <div id="errors-list"></div>
+
                                         <div class="mb-3">
                                             <label class="form-label">Username</label>
                                             <input type="text" name="username" id="username" class="form-control" placeholder="Masukkan Username" autofocus="true">
-                                            @if($errors->has('username'))
-                                                <span class="error">{{ $errors->first('username') }}</span>
+                                            @if ($errors->has('username'))
+                                                <span class="text-danger">{{ $errors->first('username') }}</span>
                                             @endif
                                         </div>
                                         <div class="mb-2">
                                             <label class="form-label">Password</label>
                                             <input type="password" name="password" id="password" class="form-control" placeholder="Masukkan password">
-                                            @if($errors->has('password'))
-                                                <span class="error">{{ $errors->first('password') }}</span>
+                                            @if ($errors->has('password'))
+                                                <span class="text-danger">{{ $errors->first('password') }}</span>
                                             @endif
                                         </div>
                                         <div class="form-footer">
@@ -88,7 +82,6 @@
                     </div>
                     <div class="col-lg d-none d-lg-block text-center">
                         <iframe src="https://lottie.host/embed/1523dad4-cfef-40cf-8540-e7f823aa09b8/6BPh2N8U6X.lottie" width="600px" height="600px"></iframe>
-
                     </div>
                 </div>
             </div>
@@ -104,98 +97,66 @@
             $(function () {
                 /*------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================
-                Create Data
+                Ajax Login
                 --------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================*/
-                    if ($("#formLogin").length > 0) {
-                        $("#formLogin").validate({
-                            rules: {
-                                username: {
-                                    required: true,
-                                },
-                                password: {
-                                    required: true,
-                                },
+ 
+                if ($("#handleAjax").length > 0) {
+                    $("#handleAjax").validate({
+                        rules: {
+                            username: {
+                                required: true,
                             },
-                            messages: {
-                                username: {
-                                    required: "Username tidak boleh kosong",
-                                },
-                                password: {
-                                    required: "Password tidak boleh kosong",
-                                },
+                            password: {
+                                required: true,
                             },
+                        },
+                        messages: {
+                            username: {
+                                required: "Username tidak boleh kosong",
+                            },
+                            password: {
+                                required: "Password tidak boleh kosong",
+                            },
+                        },
 
-                            submitHandler: function(form) {
-                                $.ajaxSetup({
-                                    headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    }
-                                });
+                        submitHandler: function(form) {
 
-                                $('#submitLogin').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                                $("#submitLogin"). attr("disabled", true);
+                            $('#submitLogin').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            $("#submitLogin"). attr("disabled", true);
 
-                                $.ajax({
-                                    url: "{{url('proses_login')}}",
-                                    type: "POST",
-                                    data: $('#formLogin').serialize(),
+                            
+                        $.ajax({
+                            url: $(form).attr('action'),
+                            data: $(form).serialize(),
+                            type: "POST",
+                            dataType: 'json',
+                            
+                            success: function (data) {
+                
+                                if (data.status) {
+                                    $('#submitLogin').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Redirect to Dashboard');
+                                    window.location = data.redirect;
+                                }else{
                                     
-                                    beforeSend: function() {
-                                        Swal.fire({
-                                            title: 'Mohon Menunggu',
-                                            html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang mencari username / password</h1>',
-                                            showConfirmButton: false,
-                                            timerProgressBar: true,
-                                            allowOutsideClick: false,
-                                            allowEscapeKey: false,
-                                        })
-                                    },
+                                    $('#submitLogin').html('Login');
+                                    $("#submitLogin"). attr("disabled", false);
                                     
-                                    success: function( response ) {
-                                        console.log( 'Completed.' );
-                                        $('#submitLogin').html('Login');
-                                        $("#submitLogin"). attr("disabled", false);
-                                        
-                                        // console.log('Result:', response);
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: "top-end",
-                                            showConfirmButton: false,
-                                            timer: 7000,
-                                            timerProgressBar: true,
-                                            didOpen: (toast) => {
-                                                toast.onmouseenter = Swal.stopTimer;
-                                                toast.onmouseleave = Swal.resumeTimer;
-                                            }
-                                        });
-                                            Toast.fire({
-                                            icon: response.type,
-                                            title: response.msg,
-                                        });
-                                    },
-                                    error: function (data) {
-                                        console.log('Error:', data);
-                                        // const obj = JSON.parse(data.responseJSON);
-
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Gagal Login. Status: '+data.status,
-                                            html: data.responseJSON.message,
-                                            showConfirmButton: true
-                                        });
-
-                                        $('#submitLogin').html('Login');
-                                        $("#submitLogin"). attr("disabled", false);
-                                    }
-                                });
-                            }
-                        })
-                    }
+                                    $(".alert").remove();
+                                    $.each(data.errors, function (key, val) {
+                                        $("#errors-list").append("<div class='alert  alert-danger alert-dismissible' role='alert'><div class='d-flex'><div><svg xmlns='http://www.w3.org/2000/svg' class='icon alert-icon' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'><path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0'></path><path d='M12 8v4'></path><path d='M12 16h.01'></path></svg></div><div><h4 class='alert-title'>"+data.header+"</h4><div class='text-secondary'>" + val + "</div></div></div><a class='btn-close' data-bs-dismiss='alert' aria-label='close'></a></div>");
+                                    });
+                                }
+                            
+                            },
+                        });
+                        }
+                    })
+                }
                     
                 /*------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================
-                End Cotton Zone
+                End Ajax
                 --------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================*/
             });

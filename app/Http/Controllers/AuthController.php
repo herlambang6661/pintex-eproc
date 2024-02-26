@@ -2,88 +2,141 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
     public function index()
     {
-        // kita ambil data user lalu simpan pada variable $user
-        $user = Auth::user();
-        // kondisi jika user nya ada 
-        if ($user) {
-            // jika user nya memiliki level admin
-            if ($user->role == 'admin') {
-                // arahkan ke halaman admin ya :P
-                return redirect()->intended('dashboard');
-            }
-            // jika user nya memiliki level user
-            else if ($user->role == 'balestore') {
-                // arahkan ke halaman user
-                return redirect()->intended('dashboard');
-            }
-        }
         return view('login');
     }
-    //
-    public function proses_login(Request $request)
+
+    /**  
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function registration()
     {
-        // kita buat validasi pada saat tombol login di klik
-        // validas nya username & password wajib di isi 
-        $request->validate(
-            [
-                'username' => 'required',
-                'password' => 'required'
-            ],
-            [
-                'username.required' => 'Field Username diperlukan, tidak boleh kosong',
-                'password.required' => 'Field Password diperlukan, tidak boleh kosong',
-            ]
-        );
-
-
-        // ambil data request username & password saja 
-        $credential = $request->only('username', 'password');
-
-        // cek jika data username dan password valid (sesuai) dengan data
-        if (Auth::attempt($credential)) {
-            // kalau berhasil simpan data user ya di variabel $user
-            $user =  Auth::user();
-            // cek lagi jika level user admin maka arahkan ke halaman admin
-            if ($user->role == 'admin') {
-                // return redirect()->intended('admin');
-                $arr = array('msg' => 'Username dan Password Valid, anda akan segera diarahkan ke halaman Dashboard', 'type' => 'success', 'status' => true);
-                return Response()->json($arr);
-            }
-            // tapi jika level user nya user biasa maka arahkan ke halaman user
-            else if ($user->role == 'user') {
-                return redirect()->intended('user');
-            }
-            // jika belum ada role maka ke halaman /
-            return redirect()->intended('/');
-        }
-
-        // jika ga ada data user yang valid maka kembalikan lagi ke halaman login
-        // pastikan kirim pesan error juga kalau login gagal ya
-        $arr = array('msg' => 'Username atau Password Salah!', 'type' => 'error', 'status' => false);
-        return Response()->json($arr);
-        // return redirect('login')
-        //     ->withInput()
-        //     ->withErrors(['login_gagal' => 'These credentials does not match our records']);
+        return view('auth.register');
     }
 
-    public function logout(Request $request)
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function postLogin(Request $request)
     {
-        // logout itu harus menghapus session nya 
 
-        $request->session()->flush();
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
 
-        // jalan kan juga fungsi logout pada auth 
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "errors" => $validator->errors()
+            ]);
+        } else {
+            if (Auth::attempt($request->only(["username", "password"]))) {
+                return response()->json([
+                    "status" => true,
+                    "redirect" => url("dashboard")
+                ]);
+            } else {
+                return response()->json([
+                    "status" => false,
+                    "header" => "Invalid credentials",
+                    "errors" => ["Cek Username & Password Anda"],
+                ]);
+            }
+        }
+    }
 
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function postRegistration(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|min:6|same:password',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $data = $request->all();
+        $user = $this->create($data);
+
+        Auth::login($user);
+
+        return response()->json([
+            "status" => true,
+            "redirect" => url("dashboard")
+        ]);
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function dashboard()
+    {
+        if (Auth::check()) {
+            return view('products.dashboard');
+        }
+
+        return redirect("login")->withSuccess('Opps! You do not have access');
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function create(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password'])
+        ]);
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function logout()
+    {
+        Session::flush();
         Auth::logout();
-        // kembali kan ke halaman login
+
         return Redirect('login');
     }
 }
