@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Pengadaan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -25,3 +26,7 @@ Route::get('registration', [AuthController::class, 'registration'])->name('regis
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
 Route::get('dashboard', [AuthController::class, 'dashboard']);
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::controller(Pengadaan::class)->group(function () {
+    Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
+});

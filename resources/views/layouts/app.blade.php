@@ -16,17 +16,14 @@
 -->
 <html lang="en">
         @include('shared.header')
-
         <div class="main-content">
-            
+                @include('shared.script')
                 <body>
-                    <script src="{{ asset('assets/dist/js/demo-theme.min.js?1684106062') }}"></script>
-                    @yield('content')
+                        <script src="{{ asset('assets/dist/js/demo-theme.min.js?1684106062') }}"></script>
+                        @yield('content')
                 </body>
         </div>
 
-        @include('shared.footer')
-        @include('shared.script')
         @include('components.alert')
         </div>
 </html>
