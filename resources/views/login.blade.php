@@ -141,6 +141,7 @@
                                     
                                     $('#submitLogin').html('Login');
                                     $("#submitLogin"). attr("disabled", false);
+                                    $('#username').focus();
                                     
                                     $(".alert").remove();
                                     $.each(data.errors, function (key, val) {

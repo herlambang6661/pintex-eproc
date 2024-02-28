@@ -169,7 +169,7 @@
                             </a>
                             <a class="dropdown-item" href="./badges.html">
                                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" class="icon icon-tabler icon-tabler-users-group" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /><path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M17 10h2a2 2 0 0 1 2 2v1" /><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></svg>
-                                Supplier
+                                Supplier & User
                             </a>
                             <a class="dropdown-item" href="./buttons.html">
                                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" class="icon icon-tabler icon-tabler-rollercoaster" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21a5.55 5.55 0 0 0 5.265 -3.795l.735 -2.205a8.775 8.775 0 0 1 8.325 -6h3.675" /><path d="M20 9v12" /><path d="M8 21v-3" /><path d="M12 21v-10" /><path d="M16 9.5v11.5" /><path d="M15 3h5v3h-5z" /><path d="M6 8l4 -3l2 2.5l-4 3l-1.8 -.5z" /></svg>

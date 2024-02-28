@@ -3,6 +3,7 @@
 use App\Http\Controllers\Pengadaan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -20,6 +21,9 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::resource('getPermintaan', PermintaanList::class);
+
+
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -29,4 +33,6 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::controller(Pengadaan::class)->group(function () {
     Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
+    Route::post('storedataPermintaan', 'storePermintaan');
+    Route::get('getKabag', 'getKabag')->name('getKabag');
 });

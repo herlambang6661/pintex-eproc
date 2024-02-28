@@ -18,6 +18,12 @@
         @include('shared.header')
         <div class="main-content">
                 @include('shared.script')
+                
+                <style>
+                        .error{
+                        color: #FF0000; 
+                        }
+                </style>
                 <body>
                         <script src="{{ asset('assets/dist/js/demo-theme.min.js?1684106062') }}"></script>
                         @yield('content')

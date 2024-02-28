@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->string('noform');
             $table->string('kabag');
-            $table->string('keteranganform')->nullable();
+            $table->longText('keteranganform')->nullable();
             $table->string('foto')->nullable();
             $table->string('dibuat')->nullable();
             $table->rememberToken();

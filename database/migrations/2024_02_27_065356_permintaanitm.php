@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('katalog')->nullable();
             $table->string('part')->nullable();
             $table->string('mesin');
-            $table->float('qty', 8, 2);
+            $table->float('qty', 10, 2);
             $table->string('satuan');
             $table->string('pemesan');
             $table->string('unit');
@@ -37,9 +37,9 @@ return new class extends Migration
             $table->boolean('urgent');
             $table->string('nsupp')->nullable();
             $table->boolean('partial');
-            $table->float('qtypenerimaan_partial', 8, 2);
+            $table->float('qtypenerimaan_partial', 10, 2)->nullable();
             $table->string('kodeseri_partial')->nullable();
-            $table->float('estimasiharga', 8, 2)->nullable();
+            $table->float('estimasiharga', 10, 2)->nullable();
             $table->string('statusACC')->nullable();
             $table->string('keteranganACC')->nullable();
             $table->integer('qty_sample')->nullable();

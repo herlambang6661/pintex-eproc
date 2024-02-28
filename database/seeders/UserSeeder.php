@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'email' => 'IT@pintex.co.id',
             ],
             [
-                'name' => 'Puji Nurenti',
+                'name' => 'Puji Nurrenti',
                 'username' => 'puji',
                 'password' => Hash::make('260897'),
                 'role' => 'purchasing',
