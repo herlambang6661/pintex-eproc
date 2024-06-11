@@ -35,4 +35,6 @@ Route::controller(Pengadaan::class)->group(function () {
     Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
     Route::post('storedataPermintaan', 'storePermintaan');
     Route::get('getKabag', 'getKabag')->name('getKabag');
+    Route::get('getMesin', 'getMesin')->name('getMesin');
+    Route::get('getPemesan', 'getPemesan')->name('getPemesan');
 });

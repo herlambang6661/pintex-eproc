@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Daftar\Mastermesin;
 
 class Pengadaan extends Controller
 {
@@ -147,5 +148,28 @@ class Pengadaan extends Controller
                 ->get();
         }
         return Response()->json($kabag);
+    }
+
+    function getMesin(Request $request)
+    {
+
+        // $mesin = [];
+        if ($request->has('q')) {
+            $search = $request->q;
+            $mesin = DB::table('mastermesin AS me')
+                ->select(DB::raw('DISTINCT(merk), mesin, id_mesinitm, unit'))
+                ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
+                ->where('me.mesin', 'LIKE', "%$search%")
+                ->orWhere('mi.merk', 'LIKE', "%$search%")
+                ->orderBy('me.mesin', 'ASC')
+                ->get();
+        } else {
+            $mesin = DB::table('mastermesin AS me')
+                ->select(DB::raw('DISTINCT(merk), mesin, id_mesinitm, unit'))
+                ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
+                ->orderBy('me.mesin', 'ASC')
+                ->get();
+        }
+        return Response()->json($mesin);
     }
 }
