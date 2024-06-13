@@ -354,7 +354,8 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li
+                    class="nav-item dropdown {{ $active == 'Permintaan' || $active == 'Persetujuan' || $active == 'ProsesEmail' || $active == 'Pembelian' || $active == 'StatusBarang' ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -374,10 +375,12 @@
                             Pengadaan
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div
+                        class="dropdown-menu {{ $active == 'Permintaan' || $active == 'Persetujuan' || $active == 'ProsesEmail' || $active == 'Pembelian' || $active == 'StatusBarang' ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ url('pengadaan/permintaan') }}">
+                                <a class="dropdown-item {{ $active == 'Permintaan' ? 'active' : '' }}"
+                                    href="{{ url('pengadaan/permintaan') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-clipboard-text" width="24"
                                         height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

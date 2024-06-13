@@ -17,7 +17,9 @@ class Pengadaan extends Controller
 
     function permintaan()
     {
-        return view('products/02_pengadaan.permintaan');
+        return view('products/02_pengadaan.permintaan', [
+            'active' => 'Permintaan'
+        ]);
     }
 
     function storePermintaan(Request $request)
