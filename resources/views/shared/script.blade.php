@@ -12,7 +12,8 @@
 <script src="{{ asset('assets/extentions/jquery.validate.min.js') }}"></script>
 <!-- Datatables -->
 <script src="{{ asset('assets/extentions/datatables/datatables.min.js') }}"></script>
-<link href="{{ asset('assets/extentions/datatables/DataTables-1.13.4/css/dataTables.bootstrap5.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/extentions/datatables/DataTables-1.13.4/css/dataTables.bootstrap5.css') }}"
+    rel="stylesheet">
 <link href="{{ asset('assets/extentions/datatables/Buttons-2.3.4/css/buttons.bootstrap5.min.css') }}" rel="stylesheet">
 <script src="{{ asset('assets/extentions/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/extentions/datatables/DataTables-1.13.4/js/dataTables.bootstrap5.js') }}"></script>
@@ -24,3 +25,50 @@
 
 <script src="{{ asset('assets/extentions/select2/js/select2.full.min.js') }}" defer></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            "scrollX": false,
+            "responsive": false,
+            "pageLength": 10,
+            "lengthMenu": [10, 25, 50, "All"],
+            "language": {
+                "lengthMenu": "Tampilkan _MENU_ data per halaman",
+                "zeroRecords": "Data tidak ditemukan",
+                "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+                "infoEmpty": "Tidak ada data yang tersedia",
+                "infoFiltered": "(difilter dari total _MAX_ data)",
+                "search": "Cari:",
+                "paginate": {
+                    "first": "Pertama",
+                    "last": "Terakhir",
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                }
+            }
+        });
+        $(document).ready(function() {
+            $('#example1').DataTable({
+                "scrollX": false,
+                "responsive": false,
+                "pageLength": 10,
+                "lengthMenu": [10, 25, 50, "All"],
+                "language": {
+                    "lengthMenu": "Tampilkan _MENU_ data per halaman",
+                    "zeroRecords": "Data tidak ditemukan",
+                    "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+                    "infoEmpty": "Tidak ada data yang tersedia",
+                    "infoFiltered": "(difilter dari total _MAX_ data)",
+                    "search": "Cari:",
+                    "paginate": {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "Selanjutnya",
+                        "previous": "Sebelumnya"
+                    }
+                }
+            });
+        });
+    });
+</script>
