@@ -61,8 +61,8 @@
 <script>
     function confirmDelete(type, item, id) {
         Swal.fire({
-            title: 'Hapus Data '+type,
-            text: 'Apakah anda yakin ingin menghapus '+item+'?',
+            title: 'Hapus Data ' + type,
+            text: 'Apakah anda yakin ingin menghapus ' + item + '?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -73,7 +73,7 @@
             // if (result.isConfirmed) {
             //     // Submit the corresponding form
             //     document.getElementById(id).click();
-                
+
             // }
 
             $.ajax({
@@ -146,3 +146,30 @@
     }
 </script>
 
+<script>
+    function confirmDelete(event, id) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Hapus Data',
+            html: `
+                <center>
+                    <lottie-player src="https://lottie.host/54b33864-47d1-4f30-b38c-bc2b9bdc3892/1xkjwmUkku.json"  
+                        background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop autoplay>
+                    </lottie-player>
+                </center>
+                <br>
+                <h1 class="h4">Sedang menghapus data. Proses mungkin membutuhkan beberapa menit.</h1>
+                <h1 class="h4">
+                    <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                </h1>
+            `,
+            showConfirmButton: false,
+            showCancelButton: false,
+            allowOutsideClick: false
+        });
+
+        setTimeout(function() {
+            document.getElementById('deleteForm' + id).submit();
+        }, 3000);
+    }
+</script>

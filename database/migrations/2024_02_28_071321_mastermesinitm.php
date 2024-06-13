@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('mastermesinitm', function (Blueprint $table) {
             $table->id('id_itm');
-            $table->string('id_mesin');
-            $table->string('id_mesinitm');
+            $table->unsignedBigInteger('id_mesin');
+            $table->string('id_mesinitm')->nullable();
             $table->string('merk');
             $table->string('kode_nomor');
             $table->string('foto')->nullable();
             $table->string('dibuat');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_mesin')->references('id')->on('mastermesin');
         });
     }
 
