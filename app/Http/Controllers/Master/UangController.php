@@ -13,7 +13,7 @@ class UangController extends Controller
     {
         $uang = MasterUangModel::all();
         return view('products.01_master.uang.index', [
-            'judul' => 'Halaman uang',
+            'judul' => 'Halaman Kelola Mata Uang',
             'uang' => $uang,
             'active' => 'Uang'
         ]);

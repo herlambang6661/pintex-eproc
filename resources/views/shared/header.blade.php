@@ -2,6 +2,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" href="{{ asset('assets/static/assets.png') }}">
     <title>EPROC - PT PINTEX (Stand Alone).</title>
     <!-- CSS files -->
     <link href="{{ url('assets/dist/css/tabler.min.css?1684106062') }}" rel="stylesheet" />

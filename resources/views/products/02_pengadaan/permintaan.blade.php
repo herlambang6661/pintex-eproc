@@ -79,7 +79,7 @@
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
-                    <div class="row row-deck row-cards">
+                    <div class="row row-deck">
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="tabs-profile-8" role="tabpanel">
                                 <div class="card card-xl shadow rounded">
@@ -334,15 +334,16 @@
             var td = document.createElement("td");
             td.setAttribute("align", "center");
             td.setAttribute("style", "border-left-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;");
-            td.innerHTML += '<button class="btn btn-danger btn-icon remove" type="button" onclick="hapusElemen(' + idf +
+            td.innerHTML += '<button class="btn btn-sm btn-danger btn-icon remove" type="button" onclick="hapusElemen(' +
+                idf +
                 ');"><i class="fa-regular fa-trash-can"></i> </button>';
             tr.appendChild(td);
 
             // Kolom 2 Jenis
             var td = document.createElement("td");
             td.innerHTML += "<select name='jenis[]' id='jenis_" + idf +
-                "' class='form-select inputNone blinking' onchange='tampilkan(" + idf +
-                ")' style='width:100%;' style='text-transform: uppercase;'><option hidden></option><option value='Standar'>STANDAR</option><option value='Lain'>LAIN-LAIN</option></select>";
+                "' class='form-select inputNone' onchange='tampilkan(" + idf +
+                ")' style='width:100%;text-transform: uppercase;'><option hidden></option><option value='Standar'>STANDAR</option><option value='Lain'>LAIN-LAIN</option></select>";
             tr.appendChild(td);
 
             // Kolom 3 Kodeproduk                            
@@ -353,7 +354,7 @@
 
             // Kolom 4 Nama Barang / Jasa
             var td = document.createElement("td");
-            td.innerHTML += "<div name='tampil_" + idf + "' id='tampil_" + idf + "'></div>";
+            td.innerHTML += "<div name='menampilkan_barang_" + idf + "' id='menampilkan_barang_" + idf + "'></div>";
             tr.appendChild(td);
 
             // Kolom 5 Deskripsi
@@ -441,54 +442,36 @@
         }
 
         function tampilkan(idf) {
-            var nama_kota = document.getElementById("jenis_" + idf).value;
-            if (nama_kota == "Standar") {
-                document.getElementById("tampil_" + idf).innerHTML =
-                    '<select name="namaBarang[]" class="form-select  elementbrg inputNone" style="text-transform: uppercase;width:100%"><option></option></select>';
+            var var_select = document.getElementById("jenis_" + idf).value;
+            if (var_select == "Standar") {
+                document.getElementById("menampilkan_barang_" + idf).innerHTML =
+                    '<select name="namaBarang[]" class="form-select  elementbrg inputNone" style="text-transform: uppercase;"><option></option></select>';
                 $('#deskripsi_' + idf).prop('readonly', false);
                 $('#katalog' + idf).prop('readonly', false);
                 $('#part_' + idf).prop('readonly', false);
 
-                // $('#mesin_'+idf).prop('readonly', false);
                 document.getElementById("tampil_mesin_" + idf).innerHTML =
-                    '<select name="mesin[]" class="form-select  elementmsn inputNone" style="text-transform: uppercase;width:100%"><option></option></select>';
+                    '<select name="mesin[]" class="form-select elementmsn" style="text-transform: uppercase;"><option></option></select>';
                 $('#qty_' + idf).prop('readonly', false);
                 $('#satuan_' + idf).prop('readonly', false);
-                // $('#pemesan_'+idf).prop('readonly', false);
                 document.getElementById("tampil_pemesan_" + idf).innerHTML =
-                    '<select required name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;width:100%"><option></option></select>';
+                    '<select required name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;"><option></option></select>';
                 $('#peruntukan_' + idf).prop('readonly', false);
                 $('#sample_' + idf).prop('readonly', false);
-            } else if (nama_kota == "Lain") {
-                document.getElementById("tampil_" + idf).innerHTML =
-                    '<input type="text" list="barangList" name="namaBarang[]" class="form-control  inputNone" style="width:100%;text-transform: uppercase;width:100%" >';
+            } else if (var_select == "Lain") {
+                document.getElementById("menampilkan_barang_" + idf).innerHTML =
+                    '<input type="text" list="barangList" name="namaBarang[]" class="form-control  inputNone" style=";text-transform: uppercase;" >';
                 $('#deskripsi_' + idf).prop('readonly', false);
                 $('#katalog' + idf).prop('readonly', false);
                 $('#part_' + idf).prop('readonly', false);
 
-                // $('#mesin_'+idf).prop('readonly', false);
                 document.getElementById("tampil_mesin_" + idf).innerHTML =
-                    '<select name="mesin[]" class="form-select  elementmsn inputNone" style="text-transform: uppercase;width:100%"><option></option></select>';
+                    '<select name="mesin[]" class="form-select  elementmsn" style="text-transform: uppercase;"><option></option></select>';
                 $('#qty_' + idf).prop('readonly', false);
                 $('#satuan_' + idf).prop('readonly', false);
-                document.getElementById("tampil_pemesan_" + idf).innerHTML =
-                    '<select name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;width:100%"><option></option></select>';
-                // $('#pemesan_'+idf).prop('readonly', false);
-                $('#peruntukan_' + idf).prop('readonly', false);
-                $('#sample_' + idf).prop('readonly', false);
-            } else {
-                document.getElementById("tampil_" + idf).innerHTML =
-                    '<input type="text" list="barangList" name="namaBarang[]" class="form-control  inputNone" style="width:100%;text-transform: uppercase;width:100%" readonly>';
-                $('#deskripsi_' + idf).prop('readonly', true);
-                $('#katalog' + idf).prop('readonly', true);
-                $('#part_' + idf).prop('readonly', true);
 
-                $('#mesin_' + idf).prop('readonly', false);
-                $('#qty_' + idf).prop('readonly', false);
-                $('#satuan_' + idf).prop('readonly', false);
                 document.getElementById("tampil_pemesan_" + idf).innerHTML =
-                    '<select name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;width:100%"><option></option></select>';
-                // $('#pemesan_'+idf).prop('readonly', false);
+                    '<select name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;"><option></option></select>';
                 $('#peruntukan_' + idf).prop('readonly', false);
                 $('#sample_' + idf).prop('readonly', false);
             }
@@ -546,7 +529,7 @@
                         url: "/getMesin",
                         // type: "post",
                         dataType: 'json',
-                        delay: 250,
+                        delay: 200,
                         // data: function(params) {
                         //     return {
                         //         searchTerm: params.term // search term
@@ -636,7 +619,7 @@
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
                     [10, 25, 50, -1],
-                    ['10', '25', '50', 'Tampilkan Semua']
+                    ['10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
                         extend: 'copyHtml5',
