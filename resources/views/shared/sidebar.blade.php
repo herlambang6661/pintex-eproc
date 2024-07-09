@@ -5,8 +5,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark" style="margin-top: 5px">
+            <a href="{{ url('dashboard') }}" style="margin-right: 5px">
+                <img src="{{ asset('assets/static/assets.png') }}" width="25px" alt="" srcset="">
+            </a>
             <a href="{{ url('dashboard') }}">
-                E-PROCUREMENT
+                E-PROC
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">

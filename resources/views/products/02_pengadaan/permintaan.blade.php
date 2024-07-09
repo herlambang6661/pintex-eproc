@@ -44,14 +44,14 @@
                             <div class="btn-list">
                                 <ul class="nav">
                                     <a href="#tabs-profile-8"
-                                        class="active nav-link btn btn-warning d-none d-sm-inline-block border border-warning"
+                                        class="active btn btn-warning d-none d-sm-inline-block border border-warning"
                                         data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
                                         style="margin-right: 10px">
                                         <i class="fa-solid fa-list-ul"></i>
                                         List Item Permintaan
                                     </a>
                                     <a href="#tabs-home-8"
-                                        class="nav-link btn btn-primary d-none d-sm-inline-block border border-primary"
+                                        class="btn btn-primary d-none d-sm-inline-block border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab">
                                         <i class="fa-solid fa-hand-holding-medical"></i>
                                         Tambah Permintaan
@@ -82,7 +82,7 @@
                     <div class="row row-deck">
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="tabs-profile-8" role="tabpanel">
-                                <div class="card card-xl shadow rounded">
+                                <div class="card card-xl shadow rounded border border-blue">
                                     <div class="card-stamp card-stamp-lg">
                                         <div class="card-stamp-icon bg-primary">
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -135,11 +135,11 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tabs-home-8" role="tabpanel">
-                                <div class="card shadow">
+                                <div class="card shadow card-active">
                                     <div class="card-body">
-                                        <form method="POST" class="form" id="add-form" enctype="multipart/form-data"
-                                            accept-charset="utf-8" onkeydown="return event.key != 'Enter';"
-                                            data-select2-id="add-form">
+                                        <form method="POST" name="formPermintaan" id="formPermintaan" class="form"
+                                            enctype="multipart/form-data" accept-charset="utf-8"
+                                            onkeydown="return event.key != 'Enter';" data-select2-id="add-form">
                                             @csrf
                                             <div class="row">
                                                 <div class="control-group col-lg-3">
@@ -167,7 +167,7 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    <div class="mb-3">
+                                                    <div class="mb-1">
                                                         <label class="form-label">Kepala Bagian</label>
                                                         <select name="kabag" id="kabag"
                                                             class="form-select elementkabag" data-select2-id="kabag"
@@ -176,7 +176,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="control-group col-lg-9">
-                                                    <div class="card card-active">
+                                                    <div class="card">
                                                         <div class="card-stamp card-stamp-lg">
                                                             <div class="card-stamp-icon bg-primary text-white">
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -227,7 +227,7 @@
                                             <hr>
                                             <input id="idf" value="1" type="hidden">
                                             <div style="overflow-x:auto;overflow-x: scroll;">
-                                                <div style="width: 2000px">
+                                                <div style="width: 2800px">
                                                     <table id="detail_transaksi" class="control-group text-nowrap"
                                                         border="0"
                                                         style="width: 100%;text-align:center;font-weight: bold;">
@@ -270,17 +270,18 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <br>
+                                            <hr>
                                             <div class="row">
-                                                <div class="control-group col-lg-8">
+                                                <div class="control-group col-lg-12">
                                                     <div id="ketTamb">
                                                         <div class="mb-3">
                                                             <label class="form-label">Keterangan Tambahan</label>
-                                                            <textarea name="keteranganform" class="form-control" id="keteranganform"></textarea>
+                                                            {{-- <textarea name="keteranganform" class="form-control" id="keteranganform"></textarea> --}}
+                                                            <textarea id="tinymce-default"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="control-group col-lg-4">
+                                                {{-- <div class="control-group col-lg-4">
                                                     <script>
                                                         var loadFile = function(event) {
                                                             var output = document.getElementById('blah');
@@ -300,11 +301,11 @@
                                                             accept=".jpg, .jpeg, .png, .gif" onchange="loadFile(event)">
                                                     </div>
                                                     <img id="blah" src="#" alt="Preview" width="300px">
-                                                </div>
+                                                </div> --}}
                                             </div>
                                             <br>
                                             <div class="float-xl-right">
-                                                <button type="submit" class="btn btn-primary" id="submitPermintaan"><i
+                                                <button type="submit" id="submitPermintaan" class="btn btn-primary"><i
                                                         class="fa-regular fa-floppy-disk" style="margin-right: 5px"></i>
                                                     Simpan Permintaan</button>
                                             </div>
@@ -319,6 +320,7 @@
             @include('shared.footer')
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
     <script type="text/javascript">
         var unit = 'Unit 1';
 
@@ -451,7 +453,7 @@
                 $('#part_' + idf).prop('readonly', false);
 
                 document.getElementById("tampil_mesin_" + idf).innerHTML =
-                    '<select name="mesin[]" class="form-select elementmsn" style="text-transform: uppercase;"><option></option></select>';
+                    '<select name="mesin[]" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;"><option></option></select>';
                 $('#qty_' + idf).prop('readonly', false);
                 $('#satuan_' + idf).prop('readonly', false);
                 document.getElementById("tampil_pemesan_" + idf).innerHTML =
@@ -481,52 +483,7 @@
                     language: "id",
                     placeholder: "Pilih Barang",
                     ajax: {
-                        url: "https://pintex.co.id/apps//GD/Pengadaan/getMasterBarang",
-                        type: "post",
-                        dataType: 'json',
-                        delay: 250,
-                        data: function(params) {
-                            return {
-                                searchTerm: params.term // search term
-                            };
-                        },
-                        processResults: function(response) {
-                            return {
-                                results: response
-                            };
-                        },
-                        cache: true
-                    },
-                });
-
-                $(".elementprm").select2({
-                    language: "id",
-                    placeholder: "Pilih Pemesan",
-                    ajax: {
-                        url: "https://pintex.co.id/apps//GD/Pengadaan/getMasterPemesan",
-                        type: "post",
-                        dataType: 'json',
-                        delay: 250,
-                        data: function(params) {
-                            return {
-                                searchTerm: params.term // search term
-                            };
-                        },
-                        processResults: function(response) {
-                            return {
-                                results: response
-                            };
-                        },
-                        cache: true
-                    },
-                });
-
-                $(".elementmsn").select2({
-                    language: "id",
-                    width: '100%',
-                    placeholder: "Pilih Mesin",
-                    ajax: {
-                        url: "/getMesin",
+                        url: "/getMasterBarang",
                         // type: "post",
                         dataType: 'json',
                         delay: 200,
@@ -539,17 +496,70 @@
                             return {
                                 results: $.map(response, function(item) {
                                     return {
-                                        text: item.mesin.toUpperCase() + " " + item.merk
-                                            .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
-                                                " (UNIT " + item.unit + ")"),
                                         id: item.id,
+                                        text: item.nama.toUpperCase(),
                                     }
                                 })
                             };
                         },
                         cache: true
                     },
-
+                });
+                $(".elementprm").select2({
+                    language: "id",
+                    placeholder: "Pilih Pemesan",
+                    ajax: {
+                        url: "/getMasterPemesan",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementmsn").select2({
+                    language: "id",
+                    width: '250px',
+                    placeholder: "Pilih Mesin",
+                    ajax: {
+                        url: "/getMesin",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            console.log(response);
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.mesin.toUpperCase() + " " + item.merk
+                                            .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
+                                                " (UNIT " + item.unit + ")"),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
                 });
             });
         }
@@ -571,6 +581,7 @@
                     //     };
                     // },
                     processResults: function(response) {
+                        console.log(response);
                         return {
                             results: $.map(response, function(item) {
                                 return {
@@ -600,14 +611,14 @@
         });
         // @formatter:on
 
-
+        var tablePermintaan;
         $(function() {
             /*------------------------------------------
             --------------------------------------------
             Render DataTable
             --------------------------------------------
             --------------------------------------------*/
-            var table = $('.datatable-permintaan').DataTable({
+            tablePermintaan = $('.datatable-permintaan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "scrollX": true,
@@ -736,37 +747,13 @@
             Start Create Data
             --------------------------------------------==============================================================================================================================================================
             --------------------------------------------==============================================================================================================================================================*/
-            if ($("#add-form").length > 0) {
-                $("#add-form").validate({
+            if ($("#formPermintaan").length > 0) {
+                $("#formPermintaan").validate({
                     rules: {
                         tanggal: {
                             required: true,
                         },
                         kabag: {
-                            required: true,
-                        },
-                        jenis: {
-                            required: true,
-                        },
-                        kodeproduk: {
-                            required: true,
-                        },
-                        qty: {
-                            required: true,
-                        },
-                        satuan: {
-                            required: true,
-                        },
-                        unit: {
-                            required: true,
-                        },
-                        namaBarang: {
-                            required: true,
-                        },
-                        mesin: {
-                            required: true,
-                        },
-                        pemesan: {
                             required: true,
                         },
                     },
@@ -776,30 +763,6 @@
                         },
                         kabag: {
                             required: "Masukkan Kabag",
-                        },
-                        jenis: {
-                            required: "Masukkan Jenis",
-                        },
-                        kodeproduk: {
-                            required: "Masukkan Kode Produk",
-                        },
-                        qty: {
-                            required: "Masukkan Qty",
-                        },
-                        satuan: {
-                            required: "Masukkan Satuan",
-                        },
-                        unit: {
-                            required: "Masukkan Unit",
-                        },
-                        namaBarang: {
-                            required: "Masukkan Nama Barang",
-                        },
-                        mesin: {
-                            required: "Masukkan Mesin",
-                        },
-                        pemesan: {
-                            required: "Masukkan Pemesan",
                         },
                     },
 
@@ -817,7 +780,7 @@
                         $.ajax({
                             url: "{{ url('storedataPermintaan') }}",
                             type: "POST",
-                            data: $('#add-form').serialize(),
+                            data: $('#formPermintaan').serialize(),
                             beforeSend: function() {
                                 Swal.fire({
                                     title: 'Menyimpan Data',
@@ -834,8 +797,7 @@
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
                                 );
                                 $("#submitPermintaan").attr("disabled", false);
-                                table.draw();
-
+                                tablePermintaan.ajax.reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",
@@ -851,22 +813,20 @@
                                     icon: "success",
                                     title: response.msg,
                                 });
-                                document.getElementById("add-form").reset();
+                                document.getElementById("formPermintaan").reset();
                                 $('#tabs-profile-8').addClass('active show');
                                 $('#tabs-home-8').removeClass('active show');
                             },
                             error: function(data) {
                                 console.log('Error:', data);
                                 // const obj = JSON.parse(data.responseJSON);
-                                table.draw();
-
+                                tablePermintaan.ajax.reload();
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal Input',
                                     html: data.responseJSON.message,
                                     showConfirmButton: true
                                 });
-
                                 $('#submitPermintaan').html(
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
                                 );
@@ -924,5 +884,31 @@
             // Requery the server with the new one-time export settings
             dt.ajax.reload();
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let options = {
+                selector: '#tinymce-default',
+                height: 300,
+                menubar: false,
+                statusbar: false,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                ],
+                // toolbar: 'undo redo | formatselect | ' +
+                //     'bold italic backcolor | alignleft aligncenter ' +
+                //     'alignright alignjustify | bullist numlist outdent indent | ' +
+                //     'removeformat',
+
+                toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }'
+            }
+            if (localStorage.getItem("tablerTheme") === 'dark') {
+                options.skin = 'oxide-dark';
+                options.content_css = 'dark';
+            }
+            tinyMCE.init(options);
+        })
     </script>
 @endsection

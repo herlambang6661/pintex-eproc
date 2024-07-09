@@ -102,6 +102,8 @@ Route::controller(Pengadaan::class)->group(function () {
     Route::get('getKabag', 'getKabag')->name('getKabag');
     Route::get('getMesin', 'getMesin')->name('getMesin');
     Route::get('getPemesan', 'getPemesan')->name('getPemesan');
+    Route::get('getMasterBarang', 'getMasterBarang')->name('getMasterBarang');
+    Route::get('getMasterPemesan', 'getMasterPemesan')->name('getMasterPemesan');
 });
 
 //Rute Pengaturan

@@ -159,7 +159,7 @@ class Pengadaan extends Controller
         if ($request->has('q')) {
             $search = $request->q;
             $mesin = DB::table('mastermesin AS me')
-                ->select(DB::raw('DISTINCT(merk), mesin, id_mesinitm, unit'))
+                ->select(DB::raw('DISTINCT(merk),me.id, mesin, id_mesinitm, unit'))
                 ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
                 ->where('me.mesin', 'LIKE', "%$search%")
                 ->orWhere('mi.merk', 'LIKE', "%$search%")
@@ -167,11 +167,53 @@ class Pengadaan extends Controller
                 ->get();
         } else {
             $mesin = DB::table('mastermesin AS me')
-                ->select(DB::raw('DISTINCT(merk), mesin, id_mesinitm, unit'))
+                ->select(DB::raw('DISTINCT(merk),me.id, mesin, id_mesinitm, unit'))
                 ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
                 ->orderBy('me.mesin', 'ASC')
                 ->get();
         }
         return Response()->json($mesin);
+    }
+
+    function getMasterBarang(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $barang = DB::table('masterbarang')
+                ->select(DB::raw('id_masterbarang as id, kodebarang, nama'))
+                ->where('tipe', '=', "Standard")
+                ->where('nama', 'LIKE', "%$search%")
+                ->orWhere('kodebarang', 'LIKE', "%$search%")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        } else {
+            $barang = DB::table('masterbarang')
+                ->select(DB::raw('id_masterbarang as id, kodebarang, nama'))
+                ->where('tipe', '=', "Standard")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        }
+        return Response()->json($barang);
+    }
+
+    public function getMasterPemesan(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $pemesan = DB::table('person')
+                ->select(DB::raw('id, nama, jabatan'))
+                ->where('tipe', '=', "INDIVIDU")
+                ->where('nama', 'LIKE', "%$search%")
+                ->orWhere('jabatan', 'LIKE', "%$search%")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        } else {
+            $pemesan = DB::table('person')
+                ->select(DB::raw('id, nama, jabatan'))
+                ->where('tipe', '=', "INDIVIDU")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        }
+        return Response()->json($pemesan);
     }
 }
