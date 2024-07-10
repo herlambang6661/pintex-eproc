@@ -142,11 +142,13 @@ class Pengadaan extends Controller
                 ->where('tipe', "INDIVIDU")
                 ->where('kabag', "1")
                 ->where('nama', 'LIKE', "%$search%")
+                ->orderBy('nama')
                 ->get();
         } else {
             $kabag = DB::table('person')
                 ->where('tipe', "INDIVIDU")
                 ->where('kabag', "1")
+                ->orderBy('nama')
                 ->get();
         }
         return Response()->json($kabag);

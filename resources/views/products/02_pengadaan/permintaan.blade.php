@@ -224,7 +224,7 @@
                                                     Tambah Item
                                                 </button>
                                             </div>
-                                            <hr>
+                                            <div class="hr-text text-blue">Item Permintaan</div>
                                             <input id="idf" value="1" type="hidden">
                                             <div style="overflow-x:auto;overflow-x: scroll;">
                                                 <div style="width: 2800px">
@@ -270,7 +270,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <hr>
+                                            <div class="hr-text text-blue">Keterangan Tambahan</div>
                                             <div class="row">
                                                 <div class="control-group col-lg-12">
                                                     <div id="ketTamb">
