@@ -131,7 +131,7 @@
                                                     </td>
                                                     <td>
                                                         <input type="date" id="idfilter_sampai" class="form-control "
-                                                            value="{{ date('Y-m-28') }}">
+                                                            value="{{ date('Y-m-d') }}">
                                                     </td>
                                                     <td>
                                                         <select id="idfilter_mesin"
@@ -687,7 +687,7 @@
             --------------------------------------------*/
             tablePermintaan = $('.datatable-permintaan').DataTable({
                 "processing": true, //Feature control the processing indicator.
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
+                "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
