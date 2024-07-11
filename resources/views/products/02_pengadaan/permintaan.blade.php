@@ -112,57 +112,46 @@
                                         </div>
                                     </div> --}}
                                     <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Tgl Awal</th>
-                                                    <th class="text-center">Tgl Akhir</th>
-                                                    <th class="text-center">Mesin</th>
-                                                    <th class="text-center">Unit</th>
-                                                    <th class="text-center">Status</th>
-                                                    <th class="text-center"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <input type="date" id="idfilter_dari" class="form-control "
-                                                            value="{{ date('Y-m-01') }}">
-                                                    </td>
-                                                    <td>
-                                                        <input type="date" id="idfilter_sampai" class="form-control "
-                                                            value="{{ date('Y-m-d') }}">
-                                                    </td>
-                                                    <td>
-                                                        <select id="idfilter_mesin"
-                                                            class="form-select elementmsn text-nowrap"
-                                                            style="text-transform: uppercase;">
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="idfilter_unit" class="form-control">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="idfilter_status" class="form-control ">
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="btn btn-primary btn-icon"
-                                                            aria-label="Button">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                <path d="M21 21l-6 -6" />
-                                                            </svg>
-                                                        </a>
-                                                        <input class="btn btn-primary" type="reset" value="Reset">
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <form action="#" id="form-filter-items" method="get" autocomplete="off"
+                                            novalidate="" class="sticky-top">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">Tgl Awal</th>
+                                                        <th class="text-center">Tgl Akhir</th>
+                                                        <th class="text-center">Mesin</th>
+                                                        <th class="text-center">Unit</th>
+                                                        <th class="text-center">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="date" id="idfilter_dari" class="form-control"
+                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" id="idfilter_sampai" class="form-control "
+                                                                onchange="syn()" value="{{ date('Y-m-d') }}">
+                                                        </td>
+                                                        <td>
+                                                            <select id="idfilter_mesin" onchange="syn()"
+                                                                class="form-select elementmsn text-nowrap"
+                                                                style="text-transform: uppercase;">
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="idfilter_unit" onchange="syn()"
+                                                                class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="idfilter_status" onchange="syn()"
+                                                                class="form-control">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
                                     <div class="table-responsive">
                                         <table style="width:100%; height: 100%;font-size:13px;"
@@ -679,6 +668,10 @@
         // @formatter:on
 
         var tablePermintaan;
+
+        function syn() {
+            tablePermintaan.ajax.reload();
+        }
         $(function() {
             /*------------------------------------------
             --------------------------------------------
@@ -748,7 +741,9 @@
                         title: '',
                         data: 'action',
                         name: 'action',
-                        className: "cuspad0 cuspad1"
+                        className: "cuspad0 cuspad1",
+                        orderable: false,
+                        searchable: false,
                     },
                     {
                         title: 'Kodeseri',
@@ -763,16 +758,16 @@
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'Barang',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 cuspad1"
-                    },
-                    {
                         title: 'Tanggal',
                         data: 'tgl',
                         name: 'tgl',
                         className: "cuspad0 text-center"
+                    },
+                    {
+                        title: 'Barang',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
+                        className: "cuspad0 cuspad1"
                     },
                     {
                         title: 'Deskripsi',
@@ -808,6 +803,12 @@
                         title: 'Qty Acc',
                         data: 'qtyacc',
                         name: 'qtyacc',
+                        className: "cuspad0 text-center"
+                    },
+                    {
+                        title: 'Satuan',
+                        data: 'satuan',
+                        name: 'satuan',
                         className: "cuspad0 text-center"
                     },
                     {
