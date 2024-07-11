@@ -14,7 +14,9 @@ use App\Http\Controllers\_01Master\TarifPajakController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\_01Master\MasterBarangController;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
+use App\Http\Controllers\_02Pengadaan\PersetujuanController;
 use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
+use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +34,7 @@ Route::get('/', function () {
 });
 
 Route::resource('getPermintaan', PermintaanList::class);
-
+Route::resource('getPersetujuan', PersetujuanList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
@@ -108,6 +110,10 @@ Route::controller(PermintaanController::class)->group(function () {
     // Permintaan
     Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
     Route::post('storedataPermintaan', 'storePermintaan');
+});
+
+Route::controller(PersetujuanController::class)->group(function () {
+    Route::get('pengadaan/persetujuan', 'persetujuan')->name('pengadaan/persetujuan');
 });
 
 //Rute Pengaturan

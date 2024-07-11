@@ -21,13 +21,17 @@ class MasterBarangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'kodebarang' => 'required',
             'nama' => 'required',
             'inisial' => 'required',
+            'tipe' => 'required',
         ]);
 
         $barang = new MasterBarangModel();
-        $barang->nama = $request->input('nama');
-        $barang->inisial = $request->input('inisial');
+        $barang->kodebarang = strtoupper($request->input('kodebarang'));
+        $barang->nama = strtoupper($request->input('nama'));
+        $barang->inisial = strtoupper($request->input('inisial'));
+        $barang->tipe = $request->input('tipe');
         $barang->dibuat = auth()->user()->name;
 
         $barang->save();

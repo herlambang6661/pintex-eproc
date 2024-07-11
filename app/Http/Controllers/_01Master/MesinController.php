@@ -81,17 +81,25 @@ class MesinController extends Controller
             'kode_nomor' => 'required',
         ]);
 
+        $id_mesin = $request->input('id_mesin');
+        $merk = strtoupper($request->input('merk'));
+        $kode_nomor = strtoupper($request->input('kode_nomor'));
+
+        // Menggabungkan id_mesin dan merk untuk id_mesinitm
+        $id_mesinitm = strtoupper($id_mesin . $merk);
+
         $mesinitm = new MesinItmModel();
-        $mesinitm->id_mesin = $request->input('id_mesin');
-        $mesinitm->merk = $request->input('merk');
-        $mesinitm->kode_nomor = $request->input('kode_nomor');
+        $mesinitm->id_mesin = $id_mesin;
+        $mesinitm->merk = $merk;
+        $mesinitm->kode_nomor = $kode_nomor;
+        $mesinitm->id_mesinitm = $id_mesinitm; // Assign id_mesinitm
         $mesinitm->dibuat = auth()->user()->name;
         $mesinitm->save();
 
         if ($mesinitm->save()) {
-            return redirect('/mesin')->with('success', 'Data mesinItm berhasil di tambahkan');
+            return redirect('/mesin')->with('success', 'Data mesinItm berhasil ditambahkan');
         } else {
-            return redirect()->back()->with('error', 'Data mesinItm gagal di tambahkan, silahkan coba kembali');
+            return redirect()->back()->with('error', 'Data mesinItm gagal ditambahkan, silakan coba kembali');
         }
     }
 
