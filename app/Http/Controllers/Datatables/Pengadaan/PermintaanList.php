@@ -26,7 +26,20 @@ class PermintaanList extends Controller
     {
 
         if ($request->ajax()) {
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-01');
+            }
+
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-28');
+            }
+
             $data = DB::table('permintaanitm')
+                ->whereBetween('tgl', [$dari, $sampai])
                 ->orderBy('kodeseri', 'desc')
                 ->get();
             return DataTables::of($data)

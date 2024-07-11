@@ -126,12 +126,12 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <input type="date" class="form-control "
-                                                            value="{{ date('Y-01-01') }}">
+                                                        <input type="date" id="idfilter_dari" class="form-control "
+                                                            value="{{ date('Y-m-01') }}">
                                                     </td>
                                                     <td>
-                                                        <input type="date" class="form-control "
-                                                            value="{{ date('Y-01-01') }}">
+                                                        <input type="date" id="idfilter_sampai" class="form-control "
+                                                            value="{{ date('Y-m-28') }}">
                                                     </td>
                                                     <td>
                                                         <select id="idfilter_mesin"
@@ -140,10 +140,10 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control ">
+                                                        <input type="text" id="idfilter_unit" class="form-control">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control ">
+                                                        <input type="text" id="idfilter_status" class="form-control ">
                                                     </td>
                                                     <td>
                                                         <a href="#" class="btn btn-primary btn-icon"
@@ -733,7 +733,17 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                ajax: "{{ route('getPermintaan.index') }}",
+                "ajax": {
+                    "url": "{{ route('getPermintaan.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#idfilter_dari').val();
+                        data.sampai = $('#idfilter_sampai').val();
+                        data.mesin = $('#idfilter_mesin').val();
+                        data.unit = $('#unit').val();
+                        data.status = $('#status').val();
+                    }
+                },
                 columns: [{
                         title: '',
                         data: 'action',
