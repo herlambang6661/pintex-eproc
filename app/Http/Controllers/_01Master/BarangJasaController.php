@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Master;
+namespace App\Http\Controllers\_01Master;
 
 use App\Models\Master\BarangJasaModel;
 use App\Models\Master\UangModel;

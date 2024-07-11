@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Datatables\Pengadaan;
 
-use App\Models\Pengadaan\PermintaanItm;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Pengadaan\PermintaanItm;
 
 class PermintaanList extends Controller
 {
@@ -27,20 +28,19 @@ class PermintaanList extends Controller
         if ($request->ajax()) {
             $data = DB::table('permintaanitm')
                 ->orderBy('kodeseri', 'desc')
-                ->where('tgl', '2024-02-28')
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('mesinV', function ($row) {
-                    $getmesin = DB::table('mastermesin')
-                        ->join('mastermesinitm', 'mastermesin.id', '=', 'mastermesinitm.id_mesin')
-                        ->where('id_mesinitm', $row->mesin)
-                        ->get();
-                    foreach ($getmesin as $key) {
-                        $m = $key->mesin . " - " . $key->merk;
-                    }
-                    return $m;
-                })
+                // ->addColumn('mesinV', function ($row) {
+                //     $getmesin = DB::table('mastermesin')
+                //         ->join('mastermesinitm', 'mastermesin.id', '=', 'mastermesinitm.id_mesin')
+                //         ->where('id_mesinitm', $row->mesin)
+                //         ->get();
+                //     foreach ($getmesin as $key) {
+                //         $m = $key->mesin . " - " . $key->merk;
+                //     }
+                //     return $m;
+                // })
                 ->addColumn('stt', function ($row) {
 
                     $getstatus = DB::table('permintaanitm')->get();
@@ -48,46 +48,71 @@ class PermintaanList extends Controller
                         $ss = $key->status;
                     }
                     if ($ss == 'PROSES PERSETUJUAN') {
-                        $c = '<span class="status status-blue" style="font-size:11px">' . $ss . '</span>';
+                        $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $ss . '</b>';
                     } elseif ($ss == 'ACC') {
-                        $c = '<span class="status status-purple" style="font-size:11px">' . $ss . '</span>';
+                        $c = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span> <b class="text-purple">' . $ss . '</b>';
                     } elseif ($ss == 'HOLD') {
-                        $c = '<span class="status status-orange" style="font-size:11px">' . $ss . '</span>';
+                        $c = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span> <b class="text-orange">' . $ss . '</b>';
                     } elseif ($ss == 'REJECT') {
-                        $c = '<span class="status status-red" style="font-size:11px">' . $ss . '</span>';
+                        $c = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span> <b class="text-red">' . $ss . '</b>';
                     } elseif ($ss == 'PROSES PEMBELIAN') {
-                        $c = '<span class="status status-lime" style="font-size:11px">' . $ss . '</span>';
+                        $c = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span> <b class="text-lime">' . $ss . '</b>';
                     } elseif ($ss == 'DIBELI') {
-                        $c = '<span class="status status-green" style="font-size:11px">' . $ss . '</span>';
+                        $c = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span> <b class="text-green">' . $ss . '</b>';
                     } elseif ($ss == 'DITERIMA') {
-                        $c = '<span class="status status-teal" style="font-size:11px">' . $ss . '</span>';
+                        $c = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span> <b class="text-teal">' . $ss . '</b>';
                     } else {
-                        $c = '<span class="status status-dark">' . $ss . '</span>';
+                        $c = '<span class="status-dot status-dot-animated status-dark"></span> <b class="text-dark">' . $ss . '</b>';
                     }
                     return $c;
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = '<div class="btn-list flex-nowrap">
-                                <a href="#" class="btn btn-indigo w-100">
-                                    <i class="fa-solid fa-print" style="margin-right:5px;"></i>Print
-                                </a>
-                                <div class="dropdown">
-                                    <button class="btn btn-dark w-100 dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-bars" style="margin-right:5px"></i> Opsi
+
+                    if ($row->status == "PROSES PERSETUJUAN" && (Auth::user()->alias == 'pur' || Auth::user()->alias == 'kng' || Auth::user()->alias == 'own')) {
+                        $btn = '<div class="btn-list flex-nowrap">
+                                    <a href="#" class="btn btn-sm btn-link">
+                                        <i class="fa-solid fa-print" style="margin-right:5px;"></i>
+                                    </a>
+                                        <button class="btn btn-sm btn-link align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end" style="">
+                                            <a class="dropdown-item" href="" target="_blank" data-id="' . $row->id . '"><i class="icon-copy dw dw-print"></i> Print</a> 
+                                            <a class="dropdown-item" href="#myModal" id="custId" data-toggle="modal" data-id="' . $row->id . '" data-noform="' . $row->noform . '"><i class="dw dw-eye"></i> Lihat</a> 
+                                            <a class="remove dropdown-item" href="javascript:void(0);" data-iditm="' . substr($row->kodeseri, 0, 3) . "-" . substr($row->kodeseri, 3, 3) . '" data-ket="' . $row->namaBarang . '" data-desc="' . $row->keterangan . '"><i class="icon-copy dw dw-delete-3"></i> Hapus</a>
+                                            <a class="dropdown-item" style="margin: 4px 4px 4px 4px" href="#myModaleditPem" id="custId" data-toggle="modal" data-id="' . $row->id . '"><i class="icon-copy dw dw-pencil"></i> Edit</a>
+                                        </div>
+                                </div>';
+                    }
+                    if (($row->status == "PROSES PERSETUJUAN" || $row->status == "ACC" || $row->status == "MENUNGGU ACC" || $row->status == "PROSES PEMBELIAN" || $row->status == "HOLD" || $row->status == "REJECT") && (Auth::user()->alias == 'pur' || Auth::user()->alias == 'kng' || Auth::user()->alias == 'own')) {
+                        $btn = '<div class="btn-list flex-nowrap">
+                                    <a href="#" class="btn btn-sm btn-link">
+                                        <i class="fa-solid fa-print" style="margin-right:5px;"></i>
+                                    </a>
+                                        <button class="btn btn-sm btn-link align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end" style="">
+                                            <a class="dropdown-item" href="" target="_blank" data-id="' . $row->id . '"><i class="icon-copy dw dw-print"></i> Print</a> 
+                                            <a class="dropdown-item" href="#myModal" id="custId" data-toggle="modal" data-id="' . $row->id . '" data-noform="' . $row->noform . '"><i class="dw dw-eye"></i> Lihat</a> 
+                                            <a class="dropdown-item" style="margin: 4px 4px 4px 4px" href="#myModaleditPem" id="custId" data-toggle="modal" data-id="' . $row->id . '"><i class="icon-copy dw dw-pencil"></i> Edit</a>
+                                        </div>
+                                </div>';
+                    }
+                    if (($row->status == "PROSES PERSETUJUAN" || $row->status == "ACC" || $row->status == "MENUNGGU ACC" || $row->status == "PROSES PEMBELIAN" || $row->status == "HOLD" || $row->status == "REJECT" || $row->status == "DITERIMA" || $row->status == "DIBELI")) {
+                        $btn = '<div class="btn-list flex-nowrap">
+                                    <a href="#" class="btn btn-sm btn-link">
+                                        <i class="fa-solid fa-print" style="margin-right:5px;"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-link align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa-solid fa-pen-to-square" style="margin-right:5px;"></i> Edit Permintaan
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa-solid fa-eye" style="margin-right:5px;"></i> Lihat Detail
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa-solid fa-trash-can" style="margin-right:5px"></i> Hapus Permintaan
-                                        </a>
+                                    <div class="dropdown-menu dropdown-menu-end" style="">
+                                        <a class="dropdown-item" href="" target="_blank" data-id="' . $row->id . '"><i class="icon-copy dw dw-print"></i> Print</a> 
+                                        <a class="dropdown-item" href="#myModal" id="custId" data-toggle="modal" data-id="' . $row->id . '" data-noform="' . $row->noform . '"><i class="dw dw-eye"></i> Lihat</a>
                                     </div>
-                                </div>
-                            </div>';
+                                </div>';
+                    }
                     // $btn = '
                     // <a style="margin: 4px 4px 4px 4px" class="btn btn-outline-primary btn-icon" href="https://pintex.co.id/apps/index.php/GD/Pengadaan/print/1716/24-00350" target="_blank" data-id="6674"><i class="fas fa-print fa-fw"></i></a> 
                     // <a href="#myModal" class="btn btn-outline-info btn-icon" id="custId" data-toggle="modal" data-id="6674" data-noform="24-00350"><i class="fas fa-eye fa-fw"></i></a> 

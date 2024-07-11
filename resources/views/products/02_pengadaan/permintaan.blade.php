@@ -1,5 +1,17 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        td.cuspad0 {
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-right: 13px;
+            padding-left: 13px;
+        }
+
+        td.cuspad1 {
+            text-transform: uppercase;
+        }
+    </style>
     <div class="page">
         <!-- Sidebar -->
         @include('shared.sidebar')
@@ -83,7 +95,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="tabs-profile-8" role="tabpanel">
                                 <div class="card card-xl shadow rounded border border-blue">
-                                    <div class="card-stamp card-stamp-lg">
+                                    {{-- <div class="card-stamp card-stamp-lg">
                                         <div class="card-stamp-icon bg-primary">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 class="icon icon-tabler icon-tabler-clipboard-text" width="24"
@@ -98,40 +110,65 @@
                                                 <path d="M9 16h6" />
                                             </svg>
                                         </div>
+                                    </div> --}}
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Tgl Awal</th>
+                                                    <th class="text-center">Tgl Akhir</th>
+                                                    <th class="text-center">Mesin</th>
+                                                    <th class="text-center">Unit</th>
+                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="date" class="form-control "
+                                                            value="{{ date('Y-01-01') }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control "
+                                                            value="{{ date('Y-01-01') }}">
+                                                    </td>
+                                                    <td>
+                                                        <select id="idfilter_mesin"
+                                                            class="form-select elementmsn text-nowrap"
+                                                            style="text-transform: uppercase;">
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control ">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control ">
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-primary btn-icon"
+                                                            aria-label="Button">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                <path d="M21 21l-6 -6" />
+                                                            </svg>
+                                                        </a>
+                                                        <input class="btn btn-primary" type="reset" value="Reset">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <style>
-                                        td.cuspad0 {
-                                            padding-top: 1px;
-                                            padding-bottom: 1px;
-                                            padding-right: 13px;
-                                            padding-left: 13px;
-                                        }
-
-                                        td.cuspad1 {
-                                            text-transform: uppercase;
-                                        }
-                                    </style>
-                                    <table style="width:100%;font-size:13px;"
-                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable-permintaan">
-                                        <thead>
-                                            <tr>
-                                                <th class="cuspad0">No</th>
-                                                <th class="cuspad0">Kodeseri</th>
-                                                <th class="cuspad0">Barang</th>
-                                                <th class="cuspad0">Tanggal</th>
-                                                <th class="cuspad0">Noform</th>
-                                                <th class="cuspad0">Deskripsi</th>
-                                                <th class="cuspad0">Katalog</th>
-                                                <th class="cuspad0">Part</th>
-                                                <th class="cuspad0">Mesin</th>
-                                                <th class="cuspad0">Qty Pesan</th>
-                                                <th class="cuspad0">Qty Acc</th>
-                                                <th class="cuspad0">Dibeli</th>
-                                                <th class="cuspad0">Status</th>
-                                                <th class="cuspad0"></th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table style="width:100%; height: 100%;font-size:13px;"
+                                            class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-permintaan">
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tabs-home-8" role="tabpanel">
@@ -277,7 +314,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Keterangan Tambahan</label>
                                                             {{-- <textarea name="keteranganform" class="form-control" id="keteranganform"></textarea> --}}
-                                                            <textarea id="tinymce-default"></textarea>
+                                                            <textarea id="tinymce-default" name="keteranganform"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -597,6 +634,36 @@
                     cache: true
                 },
             });
+            $(".elementmsn").select2({
+                language: "id",
+                width: '250px',
+                placeholder: "Pilih Mesin",
+                ajax: {
+                    url: "/getMesin",
+                    // type: "post",
+                    dataType: 'json',
+                    delay: 200,
+                    // data: function(params) {
+                    //     return {
+                    //         searchTerm: params.term // search term
+                    //     };
+                    // },
+                    processResults: function(response) {
+                        console.log(response);
+                        return {
+                            results: $.map(response, function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.mesin.toUpperCase() + " " + item.merk
+                                        .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
+                                            " (UNIT " + item.unit + ")"),
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+            });
         });
 
         // @formatter:off
@@ -621,16 +688,16 @@
             tablePermintaan = $('.datatable-permintaan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
-                "scrollCollapse": true,
+                "scrollX": false,
+                "scrollCollapse": false,
                 "pagingType": 'full_numbers',
                 "dom": "<'card-header h3' B>" +
                     "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
-                    [10, 25, 50, -1],
-                    ['10', '25', '50', 'Semua']
+                    [10, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
                         extend: 'copyHtml5',
@@ -668,76 +735,82 @@
                 },
                 ajax: "{{ route('getPermintaan.index') }}",
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
+                        title: '',
+                        data: 'action',
+                        name: 'action',
                         className: "cuspad0 cuspad1"
                     },
                     {
+                        title: 'Kodeseri',
                         data: 'kodeseri',
                         name: 'kodeseri',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 cuspad1"
-                    },
-                    {
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 text-center"
-                    },
-                    {
+                        title: 'Noform',
                         data: 'noform',
                         name: 'noform',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
+                        title: 'Barang',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
+                        className: "cuspad0 cuspad1"
+                    },
+                    {
+                        title: 'Tanggal',
+                        data: 'tgl',
+                        name: 'tgl',
+                        className: "cuspad0 text-center"
+                    },
+                    {
+                        title: 'Deskripsi',
                         data: 'keterangan',
                         name: 'keterangan',
                         className: "cuspad0 cuspad1"
                     },
                     {
+                        title: 'Katalog',
                         data: 'katalog',
                         name: 'katalog',
                         className: "cuspad0 cuspad1"
                     },
                     {
+                        title: 'Part',
                         data: 'part',
                         name: 'part',
                         className: "cuspad0 cuspad1"
                     },
                     {
-                        data: 'mesinV',
-                        name: 'mesinV',
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
+                        title: 'Qty PO',
                         data: 'qty',
                         name: 'qty',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
+                        title: 'Qty Acc',
                         data: 'qtyacc',
                         name: 'qtyacc',
                         className: "cuspad0 text-center"
                     },
                     {
+                        title: 'Dibeli',
                         data: 'dibeli',
                         name: 'dibeli',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
+                        title: 'Status',
                         data: 'stt',
                         name: 'stt',
                         className: 'text-center cuspad0 text-center'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center'
                     },
                 ],
 

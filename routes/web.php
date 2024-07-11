@@ -1,18 +1,20 @@
 <?php
 
 use App\Http\Controllers\Pengadaan;
+use App\Models\Pengadaan\Permintaan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
-use App\Http\Controllers\Master\BarangJasaController;
-use App\Http\Controllers\Master\LockerController;
-use App\Http\Controllers\Master\MasterBarangController;
-use App\Http\Controllers\Master\MesinController;
-use App\Http\Controllers\Master\SuplierController;
-use App\Http\Controllers\Master\TarifPajakController;
-use App\Http\Controllers\Master\UangController;
+use App\Http\Controllers\_01Master\UangController;
+use App\Http\Controllers\_01Master\MesinController;
+use App\Http\Controllers\_01Master\LockerController;
+use App\Http\Controllers\_01Master\SuplierController;
 use App\Http\Controllers\Pengaturan\PenggunaController;
+use App\Http\Controllers\_01Master\BarangJasaController;
+use App\Http\Controllers\_01Master\TarifPajakController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\_01Master\MasterBarangController;
+use App\Http\Controllers\_02Pengadaan\PermintaanController;
+use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,14 +98,16 @@ Route::controller(LockerController::class)->group(function () {
 });
 
 //Rute Pengadaaan
-Route::controller(Pengadaan::class)->group(function () {
-    Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
-    Route::post('storedataPermintaan', 'storePermintaan');
+Route::controller(PermintaanController::class)->group(function () {
+    // Ambil Data
     Route::get('getKabag', 'getKabag')->name('getKabag');
     Route::get('getMesin', 'getMesin')->name('getMesin');
     Route::get('getPemesan', 'getPemesan')->name('getPemesan');
     Route::get('getMasterBarang', 'getMasterBarang')->name('getMasterBarang');
     Route::get('getMasterPemesan', 'getMasterPemesan')->name('getMasterPemesan');
+    // Permintaan
+    Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
+    Route::post('storedataPermintaan', 'storePermintaan');
 });
 
 //Rute Pengaturan
