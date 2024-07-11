@@ -110,6 +110,7 @@ Route::controller(PermintaanController::class)->group(function () {
     // Permintaan
     Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
     Route::post('storedataPermintaan', 'storePermintaan');
+    Route::post('pengadaan/printPermintaan', 'printPermintaan')->name('pengadaan/printPermintaan');
 });
 
 Route::controller(PersetujuanController::class)->group(function () {

@@ -210,4 +210,11 @@ class PermintaanController extends Controller
         }
         return Response()->json($arr);
     }
+
+    public function printPermintaan(Request $request)
+    {
+        $permintaan = DB::table('permintaan')->where('noform', $request->noform)->get();
+        $permintaanItem = DB::table('permintaanitm')->where('noform', $request->noform)->get();
+        return view('products/00_print.printPermintaan', ['permintaan' => $permintaan, 'permintaanItem' => $permintaanItem]);
+    }
 }
