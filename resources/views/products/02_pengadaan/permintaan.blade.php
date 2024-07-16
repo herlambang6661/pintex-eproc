@@ -18,6 +18,37 @@
         <!-- Navbar -->
         @include('shared.navbar')
 
+        <datalist id="datalistNamaBarang">
+            @foreach ($namaBarang as $item)
+                <option value="{{ strtoupper($item->namaBarang) }}">{{ strtoupper($item->namaBarang) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistDeskripsi">
+            @foreach ($deskripsi as $a)
+                <option value="{{ strtoupper($a->keterangan) }}">{{ strtoupper($a->keterangan) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistKatalog">
+            @foreach ($katalog as $b)
+                <option value="{{ strtoupper($b->katalog) }}">{{ strtoupper($b->katalog) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistPart">
+            @foreach ($part as $c)
+                <option value="{{ strtoupper($c->part) }}">{{ strtoupper($c->part) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistSatuan">
+            @foreach ($satuan as $d)
+                <option value="{{ strtoupper($d->satuan) }}">{{ strtoupper($d->satuan) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistPeruntukan">
+            @foreach ($peruntukan as $e)
+                <option value="{{ strtoupper($e->peruntukan) }}">{{ strtoupper($e->peruntukan) }}</option>
+            @endforeach
+        </datalist>
+
         <div class="page-wrapper">
             <!-- Page header -->
             <div class="page-header d-print-none">
@@ -95,25 +126,9 @@
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="tabs-profile-8" role="tabpanel">
                                 <div class="card card-xl shadow rounded border border-blue">
-                                    {{-- <div class="card-stamp card-stamp-lg">
-                                        <div class="card-stamp-icon bg-primary">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="icon icon-tabler icon-tabler-clipboard-text" width="24"
-                                                height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path
-                                                    d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
-                                                <path
-                                                    d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                                <path d="M9 12h6" />
-                                                <path d="M9 16h6" />
-                                            </svg>
-                                        </div>
-                                    </div> --}}
                                     <div class="table-responsive">
                                         <form action="#" id="form-filter-items" method="get" autocomplete="off"
-                                            novalidate="" class="sticky-top">
+                                            novalidate="" class="">
                                             <table class="table mb-0">
                                                 <thead>
                                                     <tr>
@@ -128,11 +143,12 @@
                                                     <tr>
                                                         <td>
                                                             <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
+                                                                onchange="syn()" value="{{ date('Y-01-01') }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" id="idfilter_sampai" class="form-control "
-                                                                onchange="syn()" value="{{ date('Y-m-d') }}">
+                                                            <input type="date" id="idfilter_sampai"
+                                                                class="form-control " onchange="syn()"
+                                                                value="{{ date('Y-m-d') }}">
                                                         </td>
                                                         <td>
                                                             <select id="idfilter_mesin" onchange="syn()"
@@ -155,7 +171,7 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table style="width:100%; height: 100%;font-size:13px;"
-                                            class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-permintaan">
+                                            class="table table-bordered table-striped table-vcenter card-table table-hover text-nowrap datatable datatable-permintaan">
                                         </table>
                                     </div>
                                 </div>
@@ -346,6 +362,129 @@
             @include('shared.footer')
         </div>
     </div>
+    {{-- Start Modals --}}
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            /* display: none; */
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Loader style */
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            display: block;
+            margin: 15px auto;
+            position: relative;
+            color: #ff0000c3;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        .loader::after,
+        .loader::before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 50%;
+            left: 50%;
+            transform: scale(0.5) translate(0, 0);
+            background-color: #ff0000c3;
+            border-radius: 50%;
+            animation: animloader 1s infinite ease-in-out;
+        }
+
+        .loader::before {
+            background-color: #ffffffba;
+            transform: scale(0.5) translate(-48px, -48px);
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes animloader {
+            50% {
+                transform: scale(1) translate(-50%, -50%);
+            }
+        }
+
+        /* END Loader style */
+    </style>
+    <div class="modal modal-blur fade" id="modalDetailPermintaan" tabindex="-1" style="display: none;"
+        aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="loader"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Detail Permintaan
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="fetched-data-permintaan"></div>
+                </div>
+                <div class="modal-footer">
+                    {{-- <button type="button" class="btn me-auto" data-bs-dismiss="modal">Keluar</button> --}}
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-blur fade" id="modalEditPermintaan" tabindex="-1" style="display: none;"
+        aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="loader"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                        Edit Permintaan
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="fetched-data-edit-permintaan"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary me-auto" data-bs-dismiss="modal">Simpan</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- End Modals --}}
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
     <script type="text/javascript">
         var unit = 'Unit 1';
@@ -387,25 +526,24 @@
 
             // Kolom 5 Deskripsi
             var td = document.createElement("td");
-            td.innerHTML += "<input readonly type='text' list='deskripsiList' name='deskripsi[]' id='deskripsi_" + idf +
+            td.innerHTML += "<input readonly type='text' list='datalistDeskripsi' name='deskripsi[]' id='deskripsi_" + idf +
                 "' class='form-control  inputNone' style='text-transform: uppercase;'>";
             tr.appendChild(td);
 
             // Kolom 6 Katalog
             var td = document.createElement("td");
-            td.innerHTML += "<input readonly type='text' list='katalogList' name='katalog[]' id='katalog" + idf +
+            td.innerHTML += "<input readonly type='text' list='datalistKatalog' name='katalog[]' id='katalog" + idf +
                 "' value='' class='form-control  inputNone' style='text-transform: uppercase;'>";
             tr.appendChild(td);
 
             // Kolom 7 Part
             var td = document.createElement("td");
-            td.innerHTML += "<input readonly type='text' list='partList' name='part[]' id='part_" + idf +
+            td.innerHTML += "<input readonly type='text' list='datalistPart' name='part[]' id='part_" + idf +
                 "' class='form-control  inputNone' style='text-transform: uppercase;'>";
             tr.appendChild(td);
 
             // Kolom 8 Mesin
             var td = document.createElement("td");
-            // td.innerHTML += '<input readonly list="mesinversi2" name="mesin[]" id="mesin_'+idf+'" class="form-control  inputNone" style="text-transform: uppercase;">';
             td.innerHTML += "<div name='tampil_mesin_" + idf + "' id='tampil_mesin_" + idf + "'></div>";
             tr.appendChild(td);
 
@@ -417,13 +555,12 @@
 
             // Kolom 10 Satuan
             var td = document.createElement("td");
-            td.innerHTML += "<input readonly list='satuanList' type='text' name='satuan[]' id='satuan_" + idf +
+            td.innerHTML += "<input readonly list='datalistSatuan' type='text' name='satuan[]' id='satuan_" + idf +
                 "' class='form-control  inputNone' style='text-transform: uppercase;'>";
             tr.appendChild(td);
 
             // Kolom 11 Pemesan
             var td = document.createElement("td");
-            // td.innerHTML += '<input readonly list="kabaglist" name="pemesan[]" id="pemesan_'+idf+'" class="form-control  inputNone" style="text-transform: uppercase;">';
             td.innerHTML += "<div name='tampil_pemesan_" + idf + "' id='tampil_pemesan_" + idf + "'></div>";
             tr.appendChild(td);
 
@@ -437,16 +574,13 @@
             // Kolom 13 Peruntukan
             var td = document.createElement("td");
             td.innerHTML += '<input readonly name="peruntukan[]" id="peruntukan_' + idf +
-                '" class="form-control  inputNone" style="text-transform: uppercase;">';
+                '" class="form-control  inputNone" list"datalistPeruntukan" style="text-transform: uppercase;">';
             tr.appendChild(td);
 
             // Kolom 14 Sample
             var td = document.createElement("td");
-            // td.setAttribute("align","center");
-            // td.setAttribute("style", "border-right-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;");
             td.innerHTML += '<input readonly type="number" value="0" name="sample[]" id="sample_' + idf +
                 '" class="form-control " style="">';
-            // td.innerHTML += '<input type="file" name="files[]" class="form-control-file imgInp" accept="image/*">';
             tr.appendChild(td);
 
             // Kolom 14 Urgent
@@ -488,7 +622,7 @@
                 $('#sample_' + idf).prop('readonly', false);
             } else if (var_select == "Lain") {
                 document.getElementById("menampilkan_barang_" + idf).innerHTML =
-                    '<input type="text" list="barangList" name="namaBarang[]" class="form-control  inputNone" style=";text-transform: uppercase;" >';
+                    '<input type="text" list="datalistNamaBarang" name="namaBarang[]" class="form-control  inputNone" style=";text-transform: uppercase;" >';
                 $('#deskripsi_' + idf).prop('readonly', false);
                 $('#katalog' + idf).prop('readonly', false);
                 $('#part_' + idf).prop('readonly', false);
@@ -590,71 +724,6 @@
             });
         }
 
-        $(document).ready(function() {
-            $(".elementkabag").select2({
-                language: "id",
-                width: '100%',
-                placeholder: "Pilih Kabag",
-                ajax: {
-                    url: "/getKabag",
-                    // type: "post",
-                    dataType: 'json',
-                    delay: 250,
-                    // data: function(params) {
-                    //     return {
-                    //         // "_token": "{{ csrf_token() }}",
-                    //         searchTerm: params.term // search term
-                    //     };
-                    // },
-                    processResults: function(response) {
-                        console.log(response);
-                        return {
-                            results: $.map(response, function(item) {
-                                return {
-                                    text: item.nama,
-                                    id: item.id,
-                                }
-                            })
-                        };
-                        // return {
-                        //     results: response
-                        // };
-                    },
-                    cache: true
-                },
-            });
-            $(".elementmsn").select2({
-                language: "id",
-                width: '250px',
-                placeholder: "Pilih Mesin",
-                ajax: {
-                    url: "/getMesin",
-                    // type: "post",
-                    dataType: 'json',
-                    delay: 200,
-                    // data: function(params) {
-                    //     return {
-                    //         searchTerm: params.term // search term
-                    //     };
-                    // },
-                    processResults: function(response) {
-                        console.log(response);
-                        return {
-                            results: $.map(response, function(item) {
-                                return {
-                                    id: item.id,
-                                    text: item.mesin.toUpperCase() + " " + item.merk
-                                        .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
-                                            " (UNIT " + item.unit + ")"),
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                },
-            });
-        });
-
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function() {
             window.Litepicker && (new Litepicker({
@@ -673,6 +742,62 @@
             tablePermintaan.ajax.reload();
         }
         $(function() {
+            /*------------------------------------------
+            --------------------------------------------
+            Start Render Select2
+            --------------------------------------------
+            --------------------------------------------*/
+            $(".elementkabag").select2({
+                language: "id",
+                width: '100%',
+                placeholder: "Pilih Kabag",
+                ajax: {
+                    url: "/getKabag",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(response) {
+                        console.log(response);
+                        return {
+                            results: $.map(response, function(item) {
+                                return {
+                                    text: item.nama,
+                                    id: item.id,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+            });
+            $(".elementmsn").select2({
+                language: "id",
+                width: '250px',
+                placeholder: "Pilih Mesin",
+                ajax: {
+                    url: "/getMesin",
+                    dataType: 'json',
+                    delay: 200,
+                    processResults: function(response) {
+                        console.log(response);
+                        return {
+                            results: $.map(response, function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.mesin.toUpperCase() + " " + item.merk
+                                        .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
+                                            " (UNIT " + item.unit + ")"),
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+            });
+            /*------------------------------------------
+            --------------------------------------------
+            End Render Select2
+            --------------------------------------------
+            --------------------------------------------*/
             /*------------------------------------------
             --------------------------------------------
             Render DataTable
@@ -925,6 +1050,142 @@
             End Create Data
             --------------------------------------------==============================================================================================================================================================
             --------------------------------------------==============================================================================================================================================================*/
+            /*------------------------------------------
+            --------------------------------------------
+            Start Render Ajax Modal
+            --------------------------------------------
+            --------------------------------------------*/
+            $('#modalDetailPermintaan').on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget)
+                var noform = button.data('noform');
+                console.log("Fetch Noform: " + noform + "...");
+                $("#overlay").fadeIn(300);
+                $.ajax({
+                    type: 'POST',
+                    url: 'viewPermintaan',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        noform: noform,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-permintaan').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $("#overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('.datatable-permintaan').on('click', '.remove', function() {
+                var kodeseri = $(this).data('id');
+                var nama = $(this).data('nama');
+                var desc = $(this).data('desc');
+                var token = $("meta[name='csrf-token']").attr("content");
+                let r = (Math.random() + 1).toString(36).substring(2);
+
+                swal.fire({
+                    title: 'Hapus Data Permintaan',
+                    text: 'Apakah anda yakin ingin menghapus ' + kodeseri + ', Ket : ' + nama +
+                        " " + desc,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '<i class="fa-regular fa-trash-can"></i> Hapus',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        (async () => {
+                            const {
+                                value: password
+                            } = await Swal.fire({
+                                title: "Ketik tulisan dibawah untuk menghapus " +
+                                    kodeseri,
+                                html: '<div class="unselectable">' + r +
+                                    '</div>',
+                                input: "text",
+                                inputPlaceholder: "Enter your password to Delete " +
+                                    nama,
+                                showCancelButton: true,
+                                cancelButtonColor: '#3085d6',
+                                cancelButtonText: 'Batal',
+                                confirmButtonText: 'Ok',
+                                inputAttributes: {
+                                    autocapitalize: "off",
+                                    autocorrect: "off"
+                                },
+                            });
+                            if (password == r) {
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: "{{ route('getPermintaan.store') }}" +
+                                        '/' + kodeseri,
+                                    data: {
+                                        "_token": "{{ csrf_token() }}",
+                                    },
+                                    beforeSend: function() {
+                                        Swal.fire({
+                                            title: 'Mohon Menunggu',
+                                            html: '<center><lottie-player src="https://lottie.host/54b33864-47d1-4f30-b38c-bc2b9bdc3892/1xkjwmUkku.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menghapus data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                            timerProgressBar: true,
+                                            showConfirmButton: false,
+                                            allowOutsideClick: false,
+                                            allowEscapeKey: false,
+                                        })
+                                    },
+                                    success: function(data) {
+                                        tablePermintaan.ajax.reload();
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: "top-end",
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                            timerProgressBar: true,
+                                            didOpen: (toast) => {
+                                                toast.onmouseenter =
+                                                    Swal.stopTimer;
+                                                toast.onmouseleave =
+                                                    Swal
+                                                    .resumeTimer;
+                                            }
+                                        });
+                                        Toast.fire({
+                                            icon: "success",
+                                            title: "Data Lamaran : " +
+                                                nama + " Terhapus"
+                                        });
+                                    },
+                                    error: function(data) {
+                                        tablePermintaan.ajax.reload();
+                                        console.log('Error:', data
+                                            .responseText);
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal!',
+                                            text: 'Error: ' + data
+                                                .responseText,
+                                            showConfirmButton: true,
+                                        });
+                                    }
+                                });
+                            } else {
+                                tablePermintaan.ajax.reload();
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Gagal",
+                                    text: "Teks yang diketik tidak sama",
+                                });
+                            }
+                        })()
+                    }
+                })
+            });
+            /*------------------------------------------
+            --------------------------------------------
+            End Render Ajax Modal
+            --------------------------------------------
+            --------------------------------------------*/
         });
 
         function newexportaction(e, dt, button, config) {

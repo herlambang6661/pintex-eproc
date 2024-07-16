@@ -58,6 +58,10 @@ class PermintaanList extends Controller
                     $m = Carbon::parse($row->tgl)->format('d/m/Y');
                     return $m;
                 })
+                // ->addColumn('mesin', function ($row) {
+                //     $m = DB::table('')->first();
+                //     return $m;
+                // })
                 ->addColumn('stt', function ($row) {
                     if ($row->status == 'PROSES PERSETUJUAN') {
                         $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
@@ -81,7 +85,7 @@ class PermintaanList extends Controller
                 ->addColumn('action', function ($row) {
                     // Menampilkan button edit jika kondisi edited di dalam db = 0
                     if (($row->edited == 0 || $row->edited == null) && $row->status == 'PROSES PERSETUJUAN') {
-                        $btnEdit = '<a class="dropdown-item" href="#myModaleditPem" id="custId" data-toggle="modal" data-id="' . $row->id . '">
+                        $btnEdit = '<a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEditPermintaan" data-id="' . $row->id . '">
                                         <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                         Edit
                                     </a>';
@@ -91,8 +95,8 @@ class PermintaanList extends Controller
 
                     if ($row->status == "PROSES PERSETUJUAN" && (Auth::user()->alias == 'pur' || Auth::user()->alias == 'kng' || Auth::user()->alias == 'own')) {
                         $btnCondition = '
-                                    <a class="remove dropdown-item" href="javascript:void(0);" data-iditm="' . substr($row->kodeseri, 0, 3) . "-" . substr($row->kodeseri, 3, 3) . '" data-ket="' . $row->namaBarang . '" data-desc="' . $row->keterangan . '">
-                                        <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                    <a class="remove dropdown-item" href="javascript:void(0);" data-id="' . $row->kodeseri . '" data-nama="' . $row->namaBarang . '" data-desc="' . $row->keterangan . '">
+                                        <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon text-red icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                         Hapus
                                     </a>' . $btnEdit;
                     } else {
@@ -114,32 +118,29 @@ class PermintaanList extends Controller
                                             <input type="hidden" name="_token" value="' . csrf_token() . '">
                                             <input type="hidden" name="noform" value="' . $row->noform . '">
                                             <button type="submit" class="dropdown-item">
-                                                <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-printer"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></svg>
+                                                <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon text-blue icon-tabler icons-tabler-outline icon-tabler-printer"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></svg>
                                                 PRINT
                                             </button>
                                         </form>
-                                        <a class="dropdown-item" href="#myModal" id="custId" data-toggle="modal" data-id="' . $row->id . '" data-noform="' . $row->noform . '">
-                                            <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M12 21h-5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v4.5" /><path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" /><path d="M18.5 19.5l2.5 2.5" /></svg>
+                                        <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDetailPermintaan" data-id="' . $row->id . '" data-noform="' . $row->noform . '">
+                                            <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon text-green icon-tabler icons-tabler-outline icon-tabler-file-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M12 21h-5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v4.5" /><path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" /><path d="M18.5 19.5l2.5 2.5" /></svg>
                                             Lihat
                                         </a>' .
                         $btnCondition
                         . '</div>
                         </div>';
                     return $btn;
-
-                    // $btn = '
-                    // <a style="margin: 4px 4px 4px 4px" class="btn btn-outline-primary btn-icon" href="https://pintex.co.id/apps/index.php/GD/Pengadaan/print/1716/24-00350" target="_blank" data-id="6674"><i class="fas fa-print fa-fw"></i></a> 
-                    // <a href="#myModal" class="btn btn-outline-info btn-icon" id="custId" data-toggle="modal" data-id="6674" data-noform="24-00350"><i class="fas fa-eye fa-fw"></i></a> 
-                    // <a href="javascript:void(0);" class="remove btn btn-outline-danger btn-icon" data-iditm="120-101" data-ket="BEARING" data-desc="6309 2RS C3"><i class="fas fa-trash fa-fw"></i></a>
-                    // <a style="margin: 4px 4px 4px 4px" href="#myModaleditPem" class="btn btn-outline-success btn-icon" id="custId" data-toggle="modal" data-id="6674"><i class="fas fa-pencil fa-fw"></i></a>';
-
-                    // $btn = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="View" class="view btn btn-info btn-sm viewProduct"><i class="fa-solid fa-fw fa-eye"></i> Lihat</a>  <a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct"><i class="fa-solid fa-fw fa-pen-to-square"></i> Edit</a>';
-                    // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-item="' . $row->kodeseri . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct"><i class="fa-solid fa-fw fa-trash-can"></i> Hapus</a>';
                 })
                 ->rawColumns(['action', 'stt', 'tgl'])
                 ->make(true);
         }
 
         return view('products.02_administrasi.suratkontrak');
+    }
+
+    public function destroy($id)
+    {
+        DB::table('permintaanitm')->where('kodeseri', '=', $id)->delete();
+        return response()->json(['success' => 'Record deleted successfully.']);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_02Pengadaan;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +19,24 @@ class PermintaanController extends Controller
     function permintaan()
     {
         return view('products/02_pengadaan.permintaan', [
-            'active' => 'Permintaan'
+            'active' => 'Permintaan',
+            'namaBarang' => $this->getDatalist('permintaanitm', 'jenis', 'Lain', null),
+            'deskripsi' => $this->getDatalist('permintaanitm', null, null, 'keterangan'),
+            'katalog' => $this->getDatalist('permintaanitm', null, null, 'katalog'),
+            'part' => $this->getDatalist('permintaanitm', null, null, 'part'),
+            'satuan' => $this->getDatalist('permintaanitm', null, null, 'satuan'),
+            'peruntukan' => $this->getDatalist('permintaanitm', null, null, 'peruntukan'),
         ]);
+    }
+
+    private function getDatalist($table, $var = null, $value = null, $select = null)
+    {
+        if ($var) {
+            $get = DB::table($table)->distinct()->where($var, '=', $value)->get('namaBarang');
+        } else {
+            $get = DB::table($table)->distinct()->get($select);
+        }
+        return $get;
     }
 
     function getKabag(Request $request)
@@ -209,6 +226,112 @@ class PermintaanController extends Controller
             $arr = array('msg' => 'Data: ' . $kodeSurat . ' telah berhasil disimpan', 'status' => true);
         }
         return Response()->json($arr);
+    }
+
+    public function viewPermintaan(Request $request)
+    {
+        $no = 1;
+        $getpermintaan = DB::table('permintaan')->where('noform', '=', $request->noform)->first();
+        $getpermintaanitem = DB::table('permintaanitm')->where('noform', '=', $request->noform)->get();
+        echo '
+            <div class="row mb-4">
+                <div class="col-lg-4">
+                    <div class="card bg-info-lt mb-3" style="box-shadow: 10px 10px 5px lightblue;">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-vcenter card-table">
+                                <tbody><tr>
+                                    <td>Tanggal</td>
+                                    <td>:</td>
+                                    <td>' . Carbon::parse($getpermintaan->tanggal)->format('d/m/Y') . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Nomor Form</td>
+                                    <td>:</td>
+                                    <td>' . $getpermintaan->noform . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Kepala Bagian</td>
+                                    <td>:</td>
+                                    <td>' . $getpermintaan->kabag . '</td>
+                                </tr>
+                            </tbody></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card bg-orange-lt" style="box-shadow: 10px 10px 5px lightblue;">
+                        <div class="card-body" style="overflow-y: scroll; height: 200px">
+                            <i>*Note :</i><br>
+                            ' . $getpermintaan->keteranganform . '
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" style="box-shadow: 10px 10px 5px lightblue;">
+                <table class="table table-sm table-bordered table-vcenter table-hover text-nowrap" style="width:100%;">
+                    <thead>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Kodeseri</th>
+                        <th class="text-center">Barang</th>
+                        <th class="text-center">Katalog</th>
+                        <th class="text-center">Mesin</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">Satuan</th>
+                        <th class="text-center">Pemesan</th>
+                        <th class="text-center">Dibeli</th>
+                        <th class="text-center">Ket. Status</th>
+                        <th class="text-center">Sample</th>
+                        <th class="text-center">Status</th>
+                    </thead>
+                    <tbody>
+                        ';
+        foreach ($getpermintaanitem as $key) {
+            if ($key->status == 'PROSES PERSETUJUAN') {
+                $sst = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span>';
+                $txt = '<span class="badge bg-blue"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'ACC') {
+                $sst = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-purple"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'HOLD') {
+                $sst = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-orange"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'REJECT') {
+                $sst = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-red"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'PROSES PEMBELIAN') {
+                $sst = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-lime"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'DIBELI') {
+                $sst = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-green"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'DITERIMA') {
+                $sst = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-teal"><b>' . $key->status . '</b></span>';
+            } else {
+                $sst = '<span class="status-dot status-dot-animated status-dark"></span>';
+                $txt = ' <span class="badge bg-dark"><b>' . $key->status . '</b></span>';
+            }
+            echo '          <tr>';
+            echo '              <td class="text-center">' . $no . '</td>';
+            echo '              <td class="text-center">' . $sst . ' ' . $key->kodeseri . '</td>';
+            echo '              <td class="">' . $key->namaBarang . '</td>';
+            echo '              <td class="text-center">' . $key->katalog . '</td>';
+            echo '              <td class="text-center">' . $key->mesin . '</td>';
+            echo '              <td class="text-center">' . $key->qty . '</td>';
+            echo '              <td class="text-center">' . $key->satuan . '</td>';
+            echo '              <td class="text-center">' . $key->pemesan . '</td>';
+            echo '              <td class="text-center">' . $key->dibeli . '</td>';
+            echo '              <td class="text-center">' . $key->keteranganACC . '</td>';
+            echo '              <td class="text-center">' . $key->qty_sample . '</td>';
+            echo '              <td class="text-center">' . $txt . '</td>';
+            echo '          </tr>';
+            $no++;
+        }
+        echo '
+                    </tbody>
+                </table>
+            </div>
+        ';
     }
 
     public function printPermintaan(Request $request)
