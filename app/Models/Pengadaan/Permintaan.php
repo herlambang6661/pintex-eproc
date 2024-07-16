@@ -18,4 +18,30 @@ class Permintaan extends Model
         'foto',
         'dibuat',
     ];
+
+    public function getMesinBaru($id)
+    {
+        $this->db->select('mesin');
+        $this->db->from("gd_mastermesin me");
+        $this->db->join('gd_mastermesinitm mi', 'me.id=mi.id_mesin', 'left');
+        $this->db->where('id_mesitm', $id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row()->mesin;
+        }
+        return $query;
+    }
+
+    public function getMerkBaru($id)
+    {
+        $this->db->select('merk');
+        $this->db->from("gd_mastermesin me");
+        $this->db->join('gd_mastermesinitm mi', 'me.id=mi.id_mesin', 'left');
+        $this->db->where('id_mesitm', $id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row()->merk;
+        }
+        return $query;
+    }
 }
