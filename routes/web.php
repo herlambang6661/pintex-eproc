@@ -13,6 +13,7 @@ use App\Http\Controllers\_01Master\BarangJasaController;
 use App\Http\Controllers\_01Master\TarifPajakController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\_01Master\MasterBarangController;
+use App\Http\Controllers\_02Pengadaan\EmailController;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
 use App\Http\Controllers\_02Pengadaan\PersetujuanController;
 use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
@@ -34,7 +35,6 @@ Route::get('/', function () {
 });
 
 Route::resource('getPermintaan', PermintaanList::class);
-Route::resource('getPersetujuan', PersetujuanList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
@@ -116,6 +116,11 @@ Route::controller(PermintaanController::class)->group(function () {
 
 Route::controller(PersetujuanController::class)->group(function () {
     Route::get('pengadaan/persetujuan', 'persetujuan')->name('pengadaan/persetujuan');
+    Route::post('/persetujuan/ajax_list_prosesQTY', 'ajax_list_prosesQTY')->name('proses.qty');
+});
+
+Route::controller(EmailController::class)->group(function () {
+    Route::get('pengadaan/email', 'email')->name('pengadaan/email');
 });
 
 //Rute Pengaturan
