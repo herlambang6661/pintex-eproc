@@ -427,7 +427,8 @@
                                     </svg>
                                     Proses Email
                                 </a>
-                                <a class="dropdown-item" href="./buttons.html">
+                                <a class="dropdown-item" href="{{ url('pengadaan/pembelian') }}"
+                                    {{ $active == 'Pembelian' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-shopping-cart-dollar" width="24"
                                         height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -441,7 +442,8 @@
                                     </svg>
                                     Pembelian
                                 </a>
-                                <a class="dropdown-item" href="./colors.html">
+                                <a class="dropdown-item" href="{{ url('pengadaan/status_barang') }}"
+                                    {{ $active == 'StatusBarang' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-git-pull-request-draft" width="24"
                                         height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -478,7 +480,8 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li
+                    class="nav-item dropdown {{ $active == 'Penerimaan' || $active == 'Pengiriman' || $active == 'Sample' || $active == 'BarangTransit' || $active == 'Mutasi' ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -496,10 +499,12 @@
                             Gudang
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div
+                        class="dropdown-menu {{ $active == 'Penerimaan' || $active == 'Pengiriman' || $active == 'Sample' || $active == 'BarangTransit' || $active == 'Mutasi' ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="./empty.html">
+                                <a class="dropdown-item" href="{{ url('gudang/penerimaan') }} "
+                                    {{ $active == 'Penerimaan' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="icon icon-tabler icon-tabler-truck-return" width="24"
                                         height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -513,7 +518,8 @@
                                     </svg>
                                     Penerimaan
                                 </a>
-                                <a class="dropdown-item" href="./cookie-banner.html">
+                                <a class="dropdown-item" href="{{ url('gudang/pengiriman') }}"
+                                    {{ $active == 'Pengiriman' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="icon icon-tabler icon-tabler-mail-fast" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -527,7 +533,8 @@
                                     </svg>
                                     Pengiriman
                                 </a>
-                                <a class="dropdown-item" href="./activity.html">
+                                <a class="dropdown-item" href="{{ url('gudang/sample') }}"
+                                    {{ $active == 'Sample' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="icon icon-tabler icon-tabler-test-pipe" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -541,7 +548,8 @@
                                     </svg>
                                     Sample
                                 </a>
-                                <a class="dropdown-item" href="./gallery.html">
+                                <a class="dropdown-item" href="{{ url('gudang/barangtransit') }}"
+                                    {{ $active == 'BarangTransit' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="icon icon-tabler icon-tabler-transform" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -554,7 +562,8 @@
                                     </svg>
                                     Barang Transit
                                 </a>
-                                <a class="dropdown-item" href="./invoice.html">
+                                <a class="dropdown-item" href="{{ url('gudang/mutasi') }}"
+                                    {{ $active == 'Mutasi' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="icon icon-tabler icon-tabler-arrows-random" width="24"
                                         height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -575,7 +584,8 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li
+                    class="nav-item dropdown {{ $active == 'Servis' || $active == 'Retur' || $active == 'Barcode' || $active == 'Pengambilan' ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="true">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -592,10 +602,12 @@
                             Teknik
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div
+                        class="dropdown-menu {{ $active == 'Servis' || $active == 'Retur' || $active == 'Barcode' || $active == 'Pengambilan' ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="./layout-horizontal.html">
+                                <a class="dropdown-item" href="{{ url('teknik/servis') }}"
+                                    {{ $active == 'Servis' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-home-cog" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -613,7 +625,8 @@
                                     </svg>
                                     Servis
                                 </a>
-                                <a class="dropdown-item" href="./layout-boxed.html">
+                                <a class="dropdown-item" href="{{ url('teknik/retur') }}"
+                                    {{ $active == 'Retur' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-receipt-refund" width="24"
                                         height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -625,7 +638,8 @@
                                     </svg>
                                     Retur
                                 </a>
-                                <a class="dropdown-item" href="./layout-vertical.html">
+                                <a class="dropdown-item" href="{{ url('teknik/barcode') }}"
+                                    {{ $active == 'Barcode' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-qrcode" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -649,7 +663,8 @@
                                     </svg>
                                     Barcode Barang
                                 </a>
-                                <a class="dropdown-item" href="./layout-vertical-transparent.html">
+                                <a class="dropdown-item" href="{{ url('teknik/pengambilan') }}"
+                                    {{ $active == 'Pengambilan' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-book-upload" width="24"
                                         height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -666,7 +681,8 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li
+                    class="nav-item dropdown {{ $active == 'Pemakaian' || $active == 'Pembelian' || $active == 'Stok' ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -689,8 +705,10 @@
                             Laporan
                         </span>
                     </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
+                    <div
+                        class="dropdown-menu {{ $active == 'Pemakaian' || $active == 'Pembelian' || $active == 'Stok' ? 'show' : '' }}">
+                        <a class="dropdown-item" href="{{ url('laporan/pemakaian') }}"
+                            {{ $active == 'Pemakaian' ? 'active' : '' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                 class="icon icon-tabler icon-tabler-report" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -707,7 +725,8 @@
                             </svg>
                             Laporan Pemakaian
                         </a>
-                        <a class="dropdown-item" href="./changelog.html">
+                        <a class="dropdown-item" href="{{ url('laporan/pembelian') }}"
+                            {{ $active == 'Pembelian' ? 'active' : '' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                 class="icon icon-tabler icon-tabler-clipboard-data" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -724,8 +743,8 @@
                             </svg>
                             Laporan Pembelian
                         </a>
-                        <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank"
-                            rel="noopener">
+                        <a class="dropdown-item" href="{{ url('laporan/stok') }}"
+                            {{ $active == 'Stok' ? 'active' : '' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                 class="icon icon-tabler icon-tabler-checkup-list" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"

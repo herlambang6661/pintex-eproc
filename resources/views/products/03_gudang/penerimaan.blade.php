@@ -44,29 +44,44 @@
                         <div class="col">
                             <!-- Page pre-title -->
                             <h2 class="page-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                    class="icon icon-tabler icon-tabler-mail" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-truck-return"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
-                                    <path d="M3 7l9 6l9 -6" />
+                                    <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v6h-5l2 2m0 -4l-2 2" />
+                                    <path d="M9 17l6 0" />
+                                    <path d="M13 6h5l3 5v6h-2" />
                                 </svg>
-                                Proses Email
+                                Penerimaan
                             </h2>
                             <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="https://pintex.co.id/apps/HR/Recruitment"><i
-                                                class="fa-solid fa-basket-shopping"></i> Pengadaan</a></li>
+                                                class="fa-solid fa-basket-shopping"></i> Gudang</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-paste"></i> Proses Email</a></li>
+                                                class="fa-regular fa-paste"></i> Penerimaan</a></li>
                                 </ol>
                             </div>
                         </div>
-
+                        {{-- <div class="col-auto ms-auto d-print-none">
+                            <div class="btn-list">
+                                <div class="mb-3">
+                                    <div class="row g-2">
+                                        <div class="col-auto">
+                                            <select class="form-select" id="filterDropdown" name="tipe">
+                                                <option value="Permintaan">Permintaan</option>
+                                                <option value="Servis">Servis</option>
+                                                <option value="Retur">Retur</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -83,15 +98,16 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-mail-forward">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-list-check">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 18h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" />
-                                                    <path d="M3 6l9 6l9 -6" />
-                                                    <path d="M15 18h6" />
-                                                    <path d="M18 15l3 3l-3 3" />
+                                                    <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M11 6l9 0" />
+                                                    <path d="M11 12l9 0" />
+                                                    <path d="M11 18l9 0" />
                                                 </svg>
-                                                Proses Email
+                                                List Penerimaan
                                             </a>
                                         </li>
                                         <li class="nav-item">
@@ -99,46 +115,23 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-mail-fast">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-activity">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M3 7h3" />
-                                                    <path d="M3 11h2" />
-                                                    <path
-                                                        d="M9.02 8.801l-.6 6a2 2 0 0 0 1.99 2.199h7.98a2 2 0 0 0 1.99 -1.801l.6 -6a2 2 0 0 0 -1.99 -2.199h-7.98a2 2 0 0 0 -1.99 1.801z" />
-                                                    <path d="M9.8 7.5l2.982 3.28a3 3 0 0 0 4.238 .202l3.28 -2.982" />
+                                                    <path d="M3 12h4l3 8l4 -16l3 8h4" />
                                                 </svg>
-                                                List Email
+                                                Checklist Penerimaan
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#tabs-list-reject" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-mail-check">
+                                                    viewBox="0 0 24 24" fill="currentColor"
+                                                    class="icon icon-tabler icons-tabler-filled icon-tabler-parking-circle">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
-                                                        d="M11 19h-6a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v6" />
-                                                    <path d="M3 7l9 6l9 -6" />
-                                                    <path d="M15 19l2 2l4 -4" />
+                                                        d="M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -20 0l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72m1.334 5h-3.334a1 1 0 0 0 -1 1v8a1 1 0 0 0 1 1l.117 -.007a1 1 0 0 0 .883 -.993v-3h2.334c1.516 0 2.666 -1.38 2.666 -3s-1.15 -3 -2.666 -3m0 2c.323 0 .666 .411 .666 1s-.343 1 -.666 1h-2.334v-2z" />
                                                 </svg>
-                                                Follup Email
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#tabs-list-hold" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-basket">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M10 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                                    <path
-                                                        d="M5.001 8h13.999a2 2 0 0 1 1.977 2.304l-1.255 7.152a3 3 0 0 1 -2.966 2.544h-9.512a3 3 0 0 1 -2.965 -2.544l-1.255 -7.152a2 2 0 0 1 1.977 -2.304z" />
-                                                    <path d="M17 10l-2 -6" />
-                                                    <path d="M7 10l2 -6" />
-                                                </svg>
-                                                Follup Pembelian / PO
+                                                Partial Penerimaan
                                             </a>
                                         </li>
                                     </ul>
@@ -160,22 +153,11 @@
                                                             <tr>
                                                                 <td>
                                                                     <input type="date" id="idfilter_dari"
-                                                                        class="form-control "
-                                                                        value="{{ date('Y-m-01') }}">
+                                                                        class="form-control " value="{{ date('Y-m-01') }}">
                                                                 </td>
                                                                 <td>
                                                                     <input type="date" id="idfilter_sampai"
                                                                         class="form-control " value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
                                                                 </td>
                                                                 <td>
                                                                     <a href="#" class="btn btn-primary btn-icon"
@@ -202,7 +184,7 @@
                                                 </div>
                                                 <div class="table-responsive">
                                                     <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-proses-email">
+                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-list-penerimaan">
                                                     </table>
                                                 </div>
                                             </div>
@@ -215,6 +197,7 @@
                                                             <tr>
                                                                 <th class="text-center">Tgl Awal</th>
                                                                 <th class="text-center">Tgl Akhir</th>
+                                                                <th class="text-center"></th>
                                                                 <th class="text-center"></th>
                                                                 <th class="text-center"></th>
                                                             </tr>
@@ -231,16 +214,6 @@
                                                                         class="form-control " value="{{ date('Y-m-d') }}">
                                                                 </td>
                                                                 <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
                                                                     <a href="#" class="btn btn-primary btn-icon"
                                                                         aria-label="Button">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -265,7 +238,7 @@
                                                 </div>
                                                 <div class="table-responsive">
                                                     <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-list-email">
+                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-checklist-penerimaan">
                                                     </table>
                                                 </div>
                                             </div>
@@ -294,16 +267,6 @@
                                                                         class="form-control " value="{{ date('Y-m-d') }}">
                                                                 </td>
                                                                 <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
                                                                     <a href="#" class="btn btn-primary btn-icon"
                                                                         aria-label="Button">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -322,76 +285,14 @@
                                                                     <input class="btn btn-primary" type="reset"
                                                                         value="Reset">
                                                                 </td>
+                                                                <td></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                                 <div class="table-responsive">
                                                     <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-follup-email">
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="tabs-list-hold">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center">Tgl Awal</th>
-                                                                <th class="text-center">Tgl Akhir</th>
-                                                                <th class="text-center"></th>
-                                                                <th class="text-center"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="date" id="idfilter_dari"
-                                                                        class="form-control "
-                                                                        value="{{ date('Y-m-01') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="date" id="idfilter_sampai"
-                                                                        class="form-control " value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#" class="btn btn-primary btn-icon"
-                                                                        aria-label="Button">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="1.5"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                            <path stroke="none" d="M0 0h24v24H0z"
-                                                                                fill="none" />
-                                                                            <path
-                                                                                d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                            <path d="M21 21l-6 -6" />
-                                                                        </svg>
-                                                                    </a>
-                                                                    <input class="btn btn-primary" type="reset"
-                                                                        value="Reset">
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="table-responsive">
-                                                    <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-pembelian-po">
+                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-partial-penerimaan">
                                                     </table>
                                                 </div>
                                             </div>
@@ -437,7 +338,136 @@
         }
 
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-proses-email').DataTable({
+            var tableListPenerimaan = $('.datatable-list-penerimaan').DataTable({
+                "processing": true,
+                "serverSide": false,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                "lengthMenu": [
+                    [10, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                // "ajax": {
+                //     "url": "#",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.dari = $('#idfilter_dari').val();
+                //         data.sampai = $('#idfilter_sampai').val();
+                //     }
+                // },
+                "columns": [{
+                        title: '',
+                        data: 'action',
+                        name: 'action',
+                        className: "cuspad0 cuspad1",
+                    },
+                    {
+                        title: 'NPB',
+                        data: 'tgl',
+                        name: 'tgl',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'TANGGAL',
+                        data: 'kodeseri',
+                        name: 'kodeseri',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'KODESERI',
+                        data: 'noform',
+                        name: 'noform',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'NAMA',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
+                        className: "cuspad0 text-center clickable"
+                    },
+                    {
+                        title: 'KETERANGAN',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'QTY',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'SATUAN',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'PEMESAN',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'DIBELI',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'LOCKER',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                ],
+
+            });
+        });
+
+        //----------------------------------------------CHECKLLIS PENERIMAAN-----------------------------------------//
+        $(document).ready(function() {
+            var tableChecklistPenerimaan = $('.datatable-checklist-penerimaan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -453,7 +483,7 @@
                 ],
                 "buttons": [{
                     "className": 'btn btn-success',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Email',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Penerimaan',
                     "action": function(e, node, config) {
                         $('#myModalAccQty').modal('show')
                     }
@@ -473,14 +503,14 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
+                // "ajax": {
+                //     "url": "#",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.dari = $('#idfilter_dari').val();
+                //         data.sampai = $('#idfilter_sampai').val();
+                //     }
+                // },
                 "columns": [{
                         title: '',
                         data: 'action',
@@ -491,67 +521,61 @@
                         }
                     },
                     {
-                        title: 'TANGGAL',
+                        title: 'TGL',
                         data: 'tgl',
                         name: 'tgl',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'Kodeseri',
+                        title: 'KODESERI',
                         data: 'kodeseri',
                         name: 'kodeseri',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'NOFORM',
+                        title: 'BARANG',
                         data: 'noform',
                         name: 'noform',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'BARANG',
+                        title: 'PEMESAN',
                         data: 'namaBarang',
                         name: 'namaBarang',
                         className: "cuspad0 text-center clickable"
                     },
                     {
-                        title: 'DESKRIPSI',
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'QTY ACC',
+                        title: 'QTY',
                         data: 'qty',
                         name: 'qty',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
                         title: 'SATUAN',
-                        data: 'satuan',
-                        name: 'satuan',
+                        data: 'qty',
+                        name: 'qty',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'PEMESAN',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        title: 'SUPPLIER',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'UNIT/MESIN',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        title: 'JENIS',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
                     },
                 ],
 
             });
         });
 
-        //---------------PERSETUJUAN----------------------------------//
+        //---------------------------------------------PARSIAL PENERIMAAN-----------------------------------//
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-list-email').DataTable({
+            var tablePermintaan = $('.datatable-partial-penerimaan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -566,8 +590,8 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                    "className": 'btn btn-info',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
+                    "className": 'btn btn-success',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Penerimaan',
                     "action": function(e, node, config) {
                         $('#myModalAccQty').modal('show')
                     }
@@ -600,53 +624,68 @@
                         data: 'action',
                         name: 'action',
                         className: "cuspad0 cuspad1",
+                        render: function(data, type, row) {
+                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
+                        }
                     },
                     {
-                        title: 'TANGGAL',
+                        title: 'TGL',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center"
+                        className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
                         className: "cuspad0 text-center clickable"
                     },
                     {
                         title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'DESKRIPSI',
                         data: 'keterangan',
                         name: 'keterangan',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'MESIN',
-                        data: 'mesin',
-                        name: 'mesin',
+                        title: 'PEMESAN',
+                        data: 'qty',
+                        name: 'qty',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'QTY',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'SATUAN',
+                        title: 'DIBELI',
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'PEMESAN',
+                        title: 'TERIMA',
                         data: 'pemesan',
                         name: 'pemesan',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'SISA',
+                        data: 'unit',
+                        name: 'unit',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'SATUAN',
+                        data: 'unit',
+                        name: 'unit',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'SUPPLIER',
+                        data: 'unit',
+                        name: 'unit',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'JENIS',
+                        data: 'unit',
+                        name: 'unit',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                 ],
@@ -658,254 +697,6 @@
 
             $('#filter_id').on('click change', function() {
                 tablePermintaan.ajax.reload(null, false);
-            });
-        });
-
-        //---------------REJECT----------------------------------------//
-        $(document).ready(function() {
-            var tablePermintaan = $('.datatable-follup-email').DataTable({
-                "processing": true,
-                "serverSide": false,
-                "scrollX": false,
-                "scrollCollapse": false,
-                "pagingType": 'full_numbers',
-                "dom": "<'card-header h3' B>" +
-                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
-                    "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
-                "lengthMenu": [
-                    [10, 10, 25, 50, -1],
-                    ['Default', '10', '25', '50', 'Semua']
-                ],
-                "buttons": [{
-                        extend: 'copyHtml5',
-                        className: 'btn btn-teal',
-                        text: '<i class="fa fa-copy text-white"></i> Copy',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        autoFilter: true,
-                        className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        className: 'btn btn-danger',
-                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
-                    },
-                ],
-                "language": {
-                    "lengthMenu": "Menampilkan _MENU_",
-                    "zeroRecords": "Data Tidak Ditemukan",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
-                    "infoEmpty": "Data Tidak Ditemukan",
-                    "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
-                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
-                    "paginate": {
-                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
-                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
-                    },
-                },
-                "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
-                "columns": [{
-                        title: 'TGL PERMINTAAN',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'KODESERI',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
-                        className: "cuspad0 text-center clickable"
-                    },
-                    {
-                        title: 'NO.EMAIL',
-                        data: 'proses_email',
-                        name: 'proses_email',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'DESKRIPSI',
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'MESIN',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'QTY',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'SATUAN',
-                        data: 'satuan',
-                        name: 'satuan',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'PEMESAN',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                ],
-            });
-
-            $('#filter_id').on('click change', function() {
-                tablePermintaan.ajax.reload(null, false);
-            });
-        });
-
-
-        //---------------HOLD-----------------------------------------//
-        $(document).ready(function() {
-            var tablePermintaan = $('.datatable-pembelian-po').DataTable({
-                "processing": true,
-                "serverSide": false,
-                "scrollX": false,
-                "scrollCollapse": false,
-                "pagingType": 'full_numbers',
-                "dom": "<'card-header h3' B>" +
-                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
-                    "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
-                "lengthMenu": [
-                    [10, 10, 25, 50, -1],
-                    ['Default', '10', '25', '50', 'Semua']
-                ],
-                "buttons": [{
-                        extend: 'copyHtml5',
-                        className: 'btn btn-teal',
-                        text: '<i class="fa fa-copy text-white"></i> Copy',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        autoFilter: true,
-                        className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        className: 'btn btn-danger',
-                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
-                    },
-                ],
-                "language": {
-                    "lengthMenu": "Menampilkan _MENU_",
-                    "zeroRecords": "Data Tidak Ditemukan",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
-                    "infoEmpty": "Data Tidak Ditemukan",
-                    "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
-                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
-                    "paginate": {
-                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
-                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
-                    },
-                },
-                "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
-                "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
-
-                    },
-                    {
-                        title: 'TGL PERMINTAAN',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'KODESERI',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
-                        className: "cuspad0 text-center clickable"
-                    },
-                    {
-                        title: 'NOFORM',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'QTY MINTA',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'SATUAN',
-                        data: 'satuan',
-                        name: 'satuan',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'PEMESAN',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'UNIT/MESIN',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'KETERANGAN REJECT',
-                        data: 'keteranganACC',
-                        name: 'keteranganACC',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                ],
-
             });
         });
     </script>

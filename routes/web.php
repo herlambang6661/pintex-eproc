@@ -14,8 +14,21 @@ use App\Http\Controllers\_01Master\TarifPajakController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\_01Master\MasterBarangController;
 use App\Http\Controllers\_02Pengadaan\EmailController;
+use App\Http\Controllers\_02Pengadaan\PembelianController;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
 use App\Http\Controllers\_02Pengadaan\PersetujuanController;
+use App\Http\Controllers\_02Pengadaan\StatusBarangController;
+use App\Http\Controllers\_03Gudang\BarangTransitController;
+use App\Http\Controllers\_03Gudang\MutasiController;
+use App\Http\Controllers\_03Gudang\PenerimaanController;
+use App\Http\Controllers\_03Gudang\PengirimanController;
+use App\Http\Controllers\_03Gudang\SampleController;
+use App\Http\Controllers\_04Teknik\BarcodeController;
+use App\Http\Controllers\_04Teknik\ReturController;
+use App\Http\Controllers\_04Teknik\ServisController;
+use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
+use App\Http\Controllers\_05Laporan\LaporanPembelianController;
+use App\Http\Controllers\_05Laporan\LaporanStokController;
 use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
 
@@ -121,6 +134,64 @@ Route::controller(PersetujuanController::class)->group(function () {
 
 Route::controller(EmailController::class)->group(function () {
     Route::get('pengadaan/email', 'email')->name('pengadaan/email');
+});
+
+Route::controller(PembelianController::class)->group(function () {
+    Route::get('pengadaan/pembelian', 'pembelian');
+});
+
+Route::controller(StatusBarangController::class)->group(function () {
+    Route::get('pengadaan/status_barang', 'statusBarang');
+});
+
+
+//ROUTE GUDANG
+Route::controller(PenerimaanController::class)->group(function () {
+    Route::get('gudang/penerimaan', 'penerimaan');
+});
+
+Route::controller(PengirimanController::class)->group(function () {
+    Route::get('gudang/pengiriman', 'pengiriman');
+});
+
+Route::controller(SampleController::class)->group(function () {
+    Route::get('gudang/sample', 'sample');
+});
+
+Route::controller(BarangTransitController::class)->group(function () {
+    Route::get('gudang/barangtransit', 'barangTransit');
+});
+
+Route::controller(MutasiController::class)->group(function () {
+    Route::get('gudang/mutasi', 'mutasi');
+});
+
+//ROUTE TEKNIK
+
+Route::controller(ServisController::class)->group(function () {
+    Route::get('teknik/servis', 'servis');
+});
+
+Route::controller(ReturController::class)->group(function () {
+    Route::get('teknik/retur', 'retur');
+});
+
+Route::controller(BarcodeController::class)->group(function () {
+    Route::get('teknik/barcode', 'barcode');
+});
+
+//ROUTE LAPORAN
+
+Route::controller(LaporanPemakaianController::class)->group(function () {
+    Route::get('laporan/pemakaian', 'pemakaian');
+});
+
+Route::controller(LaporanPembelianController::class)->group(function () {
+    Route::get('laporan/pembelian', 'pembelian');
+});
+
+Route::controller(LaporanStokController::class)->group(function () {
+    Route::get('laporan/stok', 'stok');
 });
 
 //Rute Pengaturan
