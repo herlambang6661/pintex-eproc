@@ -334,6 +334,148 @@ class PermintaanController extends Controller
         ';
     }
 
+    public function viewEditPermintaan(Request $request)
+    {
+        $getItem = DB::table('permintaanitm')->where('id', '=', $request->id)->first();
+        $getForm = DB::table('permintaan')->where('noform', '=', $getItem->noform)->first();
+        if ($getItem->jenis == "Lain") {
+            echo '
+                    <div class="row">
+                        <div class="col-lg-12 mb-3">
+                            <div class="card bg-pink-lt">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Jenis</label>
+                                                <input type="text" class="form-control disabled" disabled value="' . $getItem->jenis . '">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Tanggal</label>
+                                                <input type="date" class="form-control" value="' . $getItem->tgl . '">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card bg-azure-lt">
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <label class="form-label">Nama Barang</label>
+                                        <input type="text" class="form-control" value="' . $getItem->namaBarang . '">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Deskripsi</label>
+                                        <input type="text" class="form-control" value="' . $getItem->keterangan . '">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Katalog</label>
+                                        <input type="text" class="form-control" value="' . $getItem->katalog . '">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Part</label>
+                                        <input type="text" class="form-control" value="' . $getItem->part . '">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card bg-orange-lt">
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <label class="form-label">Mesin</label>
+                                        <input type="text" class="form-control" value="' . $getItem->mesin . '">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Qty</label>
+                                                <input type="number" class="form-control" value="' . $getItem->qty . '">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Satuan</label>
+                                                <input type="text" class="form-control" value="' . $getItem->satuan . '">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Pemesan</label>
+                                                <input type="text" class="form-control" value="' . $getItem->pemesan . '">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Unit</label>
+                                                <input type="text" class="form-control" value="' . $getItem->unit . '">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Peruntukan</label>
+                                                <input type="text" class="form-control" value="' . $getItem->peruntukan . '">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Sample</label>
+                                                <input type="number" class="form-control" value="' . $getItem->qty_sample . '">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hr-text text-blue">Keterangan Tambahan</div>
+                        <div class="control-group col-lg-12">
+                            <div id="ketTamb">
+                                <div class="mb-3">
+                                    <textarea id="tinymce-edit" name="keteranganform" value="' . $getForm->keteranganform . '"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            ';
+        } else {
+            # code...
+        };
+        echo '
+                    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
+                    <script type="text/javascript">
+                        $(function() {
+                            let options = {
+                                selector: "#tinymce-edit",
+                                height: 300,
+                                menubar: false,
+                                statusbar: false,
+                                plugins: [
+                                    "advlist autolink lists link image charmap print preview anchor",
+                                    "searchreplace visualblocks code fullscreen",
+                                    "insertdatetime media table paste code help wordcount"
+                                ],
+                                toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+                                content_style: "body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }"
+                            }
+                            if (localStorage.getItem("tablerTheme") === "dark") {
+                                options.skin = "oxide-dark";
+                                options.content_css = "dark";
+                            }
+                            tinyMCE.init(options);
+                        })
+                    </script>
+        ';
+    }
+
     public function printPermintaan(Request $request)
     {
         $permintaan = DB::table('permintaan')->where('noform', $request->noform)->get();
