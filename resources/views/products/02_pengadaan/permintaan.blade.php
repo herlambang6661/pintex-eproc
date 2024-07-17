@@ -292,7 +292,8 @@
                                                                     Part</td>
                                                                 <td class="bg-primary text-white" style="width: 200px">
                                                                     Mesin</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">Qty
+                                                                <td class="bg-primary text-white" style="width: 200px">
+                                                                    Qty
                                                                 </td>
                                                                 <td class="bg-primary text-white" style="width: 200px">
                                                                     Satuan</td>
@@ -1059,7 +1060,7 @@
                 var button = $(e.relatedTarget)
                 var noform = button.data('noform');
                 console.log("Fetch Noform: " + noform + "...");
-                $("#overlay").fadeIn(300);
+                $(".overlay").fadeIn(300);
                 $.ajax({
                     type: 'POST',
                     url: 'viewPermintaan',
@@ -1072,7 +1073,29 @@
                     }
                 }).done(function() {
                     setTimeout(function() {
-                        $("#overlay").fadeOut(300);
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('#modalEditPermintaan').on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget)
+                var id = button.data('id');
+                console.log("Fetch Id Item: " + id + "...");
+                $(".overlay").fadeIn(300);
+                $.ajax({
+                    type: 'POST',
+                    url: 'viewEditPermintaan',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: id,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-edit-permintaan').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
                     }, 500);
                 });
             });
@@ -1152,8 +1175,9 @@
                                         });
                                         Toast.fire({
                                             icon: "success",
-                                            title: "Data Lamaran : " +
-                                                nama + " Terhapus"
+                                            title: "Data Permintaan : " +
+                                                nama + " (" + kodeseri +
+                                                ") Terhapus"
                                         });
                                     },
                                     error: function(data) {
