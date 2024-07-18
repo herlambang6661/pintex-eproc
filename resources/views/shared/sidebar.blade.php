@@ -682,7 +682,7 @@
                     </div>
                 </li>
                 <li
-                    class="nav-item dropdown {{ $active == 'Pemakaian' || $active == 'Pembelian' || $active == 'Stok' ? 'active' : '' }}">
+                    class="nav-item dropdown {{ $active == 'Pemakaian' || $active == 'LaporanPembelian' || $active == 'Stok' ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -706,7 +706,7 @@
                         </span>
                     </a>
                     <div
-                        class="dropdown-menu {{ $active == 'Pemakaian' || $active == 'Pembelian' || $active == 'Stok' ? 'show' : '' }}">
+                        class="dropdown-menu {{ $active == 'Pemakaian' || $active == 'LaporanPembelian' || $active == 'Stok' ? 'show' : '' }}">
                         <a class="dropdown-item" href="{{ url('laporan/pemakaian') }}"
                             {{ $active == 'Pemakaian' ? 'active' : '' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
@@ -726,7 +726,7 @@
                             Laporan Pemakaian
                         </a>
                         <a class="dropdown-item" href="{{ url('laporan/pembelian') }}"
-                            {{ $active == 'Pembelian' ? 'active' : '' }}>
+                            {{ $active == 'LaporanPembelian' ? 'active' : '' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                 class="icon icon-tabler icon-tabler-clipboard-data" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"

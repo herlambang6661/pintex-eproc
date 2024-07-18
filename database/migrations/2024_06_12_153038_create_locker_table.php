@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gd_locker', function (Blueprint $table) {
+        Schema::create('locker', function (Blueprint $table) {
             $table->id();
             $table->string('qr');
             $table->string('inisial');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gd_locker');
+        Schema::dropIfExists('locker');
     }
 };

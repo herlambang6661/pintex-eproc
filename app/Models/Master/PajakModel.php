@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PajakModel extends Model
 {
     use HasFactory;
-    protected $table = 'gd_pajak';
+    protected $table = 'pajak';
     protected $fillable = [
         'tax_code',
         'jenis_pajak',

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UangModel extends Model
 {
     use HasFactory;
-    protected $table = 'gd_uang';
+    protected $table = 'uang';
     protected $fillable = [
         'inisial',
         'kurs',

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SuplierModel extends Model
 {
     use HasFactory;
-    protected $table = 'gd_suplier';
+    protected $table = 'suplier';
     protected $fillable = [
         'uang_id',
         'nama',
