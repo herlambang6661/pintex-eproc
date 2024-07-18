@@ -44,25 +44,29 @@
                         <div class="col">
                             <!-- Page pre-title -->
                             <h2 class="page-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                    class="icon icon-tabler icon-tabler-mail" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-random"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
-                                    <path d="M3 7l9 6l9 -6" />
+                                    <path d="M20 21h-4v-4" />
+                                    <path d="M16 21l5 -5" />
+                                    <path d="M6.5 9.504l-3.5 -2l2 -3.504" />
+                                    <path d="M3 7.504l6.83 -1.87" />
+                                    <path d="M4 16l4 -1l1 4" />
+                                    <path d="M8 15l-3.5 6" />
+                                    <path d="M21 5l-.5 4l-4 -.5" />
+                                    <path d="M20.5 9l-4.5 -5.5" />
                                 </svg>
-                                Proses Email
+                                Mutasi
                             </h2>
                             <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="https://pintex.co.id/apps/HR/Recruitment"><i
-                                                class="fa-solid fa-basket-shopping"></i> Pengadaan</a></li>
+                                                class="fa-solid fa-basket-shopping"></i> Gudang</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-paste"></i> Proses Email</a></li>
+                                                class="fa-regular fa-paste"></i> Mutasi</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -79,73 +83,82 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#tabs-qty-persetujuan" class="nav-link" data-bs-toggle="tab">
+                                            <a href="#tabs-data-mutasi" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-mail-forward">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-switch-2">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 18h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" />
-                                                    <path d="M3 6l9 6l9 -6" />
-                                                    <path d="M15 18h6" />
-                                                    <path d="M18 15l3 3l-3 3" />
+                                                    <path d="M3 17h5l1.67 -2.386m3.66 -5.227l1.67 -2.387h6" />
+                                                    <path d="M18 4l3 3l-3 3" />
+                                                    <path d="M3 7h5l7 10h6" />
+                                                    <path d="M18 20l3 -3l-3 -3" />
                                                 </svg>
-                                                Proses Email
+                                                Data Mutasi
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#tabs-persetujuan" class="nav-link active" data-bs-toggle="tab">
+                                            <a href="#tabs-gudang-induk" class="nav-link active" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-mail-fast">
+                                                    viewBox="0 0 24 24" fill="currentColor"
+                                                    class="icon icon-tabler icons-tabler-filled icon-tabler-home">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M3 7h3" />
-                                                    <path d="M3 11h2" />
                                                     <path
-                                                        d="M9.02 8.801l-.6 6a2 2 0 0 0 1.99 2.199h7.98a2 2 0 0 0 1.99 -1.801l.6 -6a2 2 0 0 0 -1.99 -2.199h-7.98a2 2 0 0 0 -1.99 1.801z" />
-                                                    <path d="M9.8 7.5l2.982 3.28a3 3 0 0 0 4.238 .202l3.28 -2.982" />
+                                                        d="M12.707 2.293l9 9c.63 .63 .184 1.707 -.707 1.707h-1v6a3 3 0 0 1 -3 3h-1v-7a3 3 0 0 0 -2.824 -2.995l-.176 -.005h-2a3 3 0 0 0 -3 3v7h-1a3 3 0 0 1 -3 -3v-6h-1c-.89 0 -1.337 -1.077 -.707 -1.707l9 -9a1 1 0 0 1 1.414 0m.293 11.707a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883 -.993l.117 -.007z" />
                                                 </svg>
-                                                List Email
+                                                Gudang Induk
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#tabs-list-reject" class="nav-link" data-bs-toggle="tab">
+                                            <a href="#tabs-gudang-2-1" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-mail-check">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-home-hand">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M18 9l-6 -6l-9 9h2v7a2 2 0 0 0 2 2h3.5" />
+                                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2" />
                                                     <path
-                                                        d="M11 19h-6a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v6" />
-                                                    <path d="M3 7l9 6l9 -6" />
-                                                    <path d="M15 19l2 2l4 -4" />
+                                                        d="M16 17.5l-.585 -.578a1.516 1.516 0 0 0 -2 0c-.477 .433 -.551 1.112 -.177 1.622l1.762 2.456c.37 .506 1.331 1 2 1h3c1.009 0 1.497 -.683 1.622 -1.593c.252 -.938 .378 -1.74 .378 -2.407c0 -1 -.939 -1.843 -2 -2h-1v-2.636c0 -.754 -.672 -1.364 -1.5 -1.364s-1.5 .61 -1.5 1.364v4.136z" />
                                                 </svg>
-                                                Follup Email
+                                                Gudang 2-1
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#tabs-list-hold" class="nav-link" data-bs-toggle="tab">
+                                            <a href="#tabs-gudang-2-2" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-basket">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-home-hand">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M10 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                    <path d="M18 9l-6 -6l-9 9h2v7a2 2 0 0 0 2 2h3.5" />
+                                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2" />
                                                     <path
-                                                        d="M5.001 8h13.999a2 2 0 0 1 1.977 2.304l-1.255 7.152a3 3 0 0 1 -2.966 2.544h-9.512a3 3 0 0 1 -2.965 -2.544l-1.255 -7.152a2 2 0 0 1 1.977 -2.304z" />
-                                                    <path d="M17 10l-2 -6" />
-                                                    <path d="M7 10l2 -6" />
+                                                        d="M16 17.5l-.585 -.578a1.516 1.516 0 0 0 -2 0c-.477 .433 -.551 1.112 -.177 1.622l1.762 2.456c.37 .506 1.331 1 2 1h3c1.009 0 1.497 -.683 1.622 -1.593c.252 -.938 .378 -1.74 .378 -2.407c0 -1 -.939 -1.843 -2 -2h-1v-2.636c0 -.754 -.672 -1.364 -1.5 -1.364s-1.5 .61 -1.5 1.364v4.136z" />
                                                 </svg>
-                                                Follup Pembelian / PO
+                                                Gudang 2-2
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-gudang-2-3" class="nav-link" data-bs-toggle="tab">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-home-hand">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M18 9l-6 -6l-9 9h2v7a2 2 0 0 0 2 2h3.5" />
+                                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2" />
+                                                    <path
+                                                        d="M16 17.5l-.585 -.578a1.516 1.516 0 0 0 -2 0c-.477 .433 -.551 1.112 -.177 1.622l1.762 2.456c.37 .506 1.331 1 2 1h3c1.009 0 1.497 -.683 1.622 -1.593c.252 -.938 .378 -1.74 .378 -2.407c0 -1 -.939 -1.843 -2 -2h-1v-2.636c0 -.754 -.672 -1.364 -1.5 -1.364s-1.5 .61 -1.5 1.364v4.136z" />
+                                                </svg>
+                                                Gudang 2-3
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="card-body">
                                     <div class="tab-content">
-                                        <div class="tab-pane" id="tabs-qty-persetujuan">
+                                        <div class="tab-pane" id="tabs-data-mutasi">
                                             <div class="card card-xl shadow rounded border border-blue">
                                                 <div class="table-responsive">
                                                     <table class="table mb-0">
@@ -166,16 +179,6 @@
                                                                 <td>
                                                                     <input type="date" id="idfilter_sampai"
                                                                         class="form-control " value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
                                                                 </td>
                                                                 <td>
                                                                     <a href="#" class="btn btn-primary btn-icon"
@@ -202,12 +205,12 @@
                                                 </div>
                                                 <div class="table-responsive">
                                                     <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-proses-email">
+                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-mutasi">
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane active show" id="tabs-persetujuan">
+                                        <div class="tab-pane active show" id="tabs-gudang-induk">
                                             <div class="card card-xl shadow rounded border border-blue">
                                                 <div class="table-responsive">
                                                     <table class="table mb-0">
@@ -217,28 +220,20 @@
                                                                 <th class="text-center">Tgl Akhir</th>
                                                                 <th class="text-center"></th>
                                                                 <th class="text-center"></th>
+                                                                <th class="text-center"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td>
                                                                     <input type="date" id="idfilter_dari"
-                                                                        class="form-control "
-                                                                        value="{{ date('Y-m-01') }}">
+                                                                        class="form-control" onchange="syn()"
+                                                                        value="{{ date('Y-01-01') }}">
                                                                 </td>
                                                                 <td>
                                                                     <input type="date" id="idfilter_sampai"
-                                                                        class="form-control " value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
+                                                                        class="form-control " onchange="syn()"
+                                                                        value="{{ date('Y-m-d') }}">
                                                                 </td>
                                                                 <td>
                                                                     <a href="#" class="btn btn-primary btn-icon"
@@ -265,12 +260,12 @@
                                                 </div>
                                                 <div class="table-responsive">
                                                     <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-list-email">
+                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-gudang-induk">
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="tabs-list-reject">
+                                        <div class="tab-pane" id="tabs-gudang-2-1">
                                             <div class="card card-xl shadow rounded border border-blue">
                                                 <div class="table-responsive">
                                                     <table class="table mb-0">
@@ -280,28 +275,20 @@
                                                                 <th class="text-center">Tgl Akhir</th>
                                                                 <th class="text-center"></th>
                                                                 <th class="text-center"></th>
+                                                                <th class="text-center"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td>
                                                                     <input type="date" id="idfilter_dari"
-                                                                        class="form-control "
-                                                                        value="{{ date('Y-m-01') }}">
+                                                                        class="form-control" onchange="syn()"
+                                                                        value="{{ date('Y-01-01') }}">
                                                                 </td>
                                                                 <td>
                                                                     <input type="date" id="idfilter_sampai"
-                                                                        class="form-control " value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
+                                                                        class="form-control " onchange="syn()"
+                                                                        value="{{ date('Y-m-d') }}">
                                                                 </td>
                                                                 <td>
                                                                     <a href="#" class="btn btn-primary btn-icon"
@@ -328,12 +315,12 @@
                                                 </div>
                                                 <div class="table-responsive">
                                                     <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-follup-email">
+                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-gudang-21">
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="tabs-list-hold">
+                                        <div class="tab-pane" id="tabs-gudang-2-2">
                                             <div class="card card-xl shadow rounded border border-blue">
                                                 <div class="table-responsive">
                                                     <table class="table mb-0">
@@ -343,28 +330,20 @@
                                                                 <th class="text-center">Tgl Akhir</th>
                                                                 <th class="text-center"></th>
                                                                 <th class="text-center"></th>
+                                                                <th class="text-center"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td>
                                                                     <input type="date" id="idfilter_dari"
-                                                                        class="form-control "
-                                                                        value="{{ date('Y-m-01') }}">
+                                                                        class="form-control" onchange="syn()"
+                                                                        value="{{ date('Y-01-01') }}">
                                                                 </td>
                                                                 <td>
                                                                     <input type="date" id="idfilter_sampai"
-                                                                        class="form-control " value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
+                                                                        class="form-control " onchange="syn()"
+                                                                        value="{{ date('Y-m-d') }}">
                                                                 </td>
                                                                 <td>
                                                                     <a href="#" class="btn btn-primary btn-icon"
@@ -391,7 +370,62 @@
                                                 </div>
                                                 <div class="table-responsive">
                                                     <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-pembelian-po">
+                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-gudang-22">
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tabs-gudang-2-3">
+                                            <div class="card card-xl shadow rounded border border-blue">
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Tgl Awal</th>
+                                                                <th class="text-center">Tgl Akhir</th>
+                                                                <th class="text-center"></th>
+                                                                <th class="text-center"></th>
+                                                                <th class="text-center"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="date" id="idfilter_dari"
+                                                                        class="form-control" onchange="syn()"
+                                                                        value="{{ date('Y-01-01') }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="date" id="idfilter_sampai"
+                                                                        class="form-control " onchange="syn()"
+                                                                        value="{{ date('Y-m-d') }}">
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" class="btn btn-primary btn-icon"
+                                                                        aria-label="Button">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="24" height="24"
+                                                                            viewBox="0 0 24 24" fill="none"
+                                                                            stroke="currentColor" stroke-width="1.5"
+                                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                            <path stroke="none" d="M0 0h24v24H0z"
+                                                                                fill="none" />
+                                                                            <path
+                                                                                d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                            <path d="M21 21l-6 -6" />
+                                                                        </svg>
+                                                                    </a>
+                                                                    <input class="btn btn-primary" type="reset"
+                                                                        value="Reset">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table style="width:100%; height: 100%;font-size:13px;"
+                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-gudang-23">
                                                     </table>
                                                 </div>
                                             </div>
@@ -437,7 +471,7 @@
         }
 
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-proses-email').DataTable({
+            var tableMutasi = $('.datatable-mutasi').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -452,12 +486,24 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                    "className": 'btn btn-success',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Email',
-                    "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
-                    }
-                }, ],
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -473,73 +519,82 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
+                // "ajax": {
+                //     "url": "{{ route('getPermintaan.index') }}",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.dari = $('#idfilter_dari').val();
+                //         data.sampai = $('#idfilter_sampai').val();
+                //     }
+                // },
                 "columns": [{
                         title: '',
                         data: 'action',
                         name: 'action',
                         className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
                     },
                     {
-                        title: 'TANGGAL',
+                        title: 'TANGGAL MUTASI',
                         data: 'tgl',
                         name: 'tgl',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'Kodeseri',
+                        title: 'NOFORM',
                         data: 'kodeseri',
                         name: 'kodeseri',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'NOFORM',
+                        title: 'NPB',
                         data: 'noform',
                         name: 'noform',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'BARANG',
+                        title: 'KODESERI',
                         data: 'namaBarang',
                         name: 'namaBarang',
                         className: "cuspad0 text-center clickable"
                     },
                     {
-                        title: 'DESKRIPSI',
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'QTY ACC',
+                        title: 'BARANG',
                         data: 'qty',
                         name: 'qty',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'SATUAN',
+                        title: 'MESIN',
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'PEMESAN',
+                        title: 'LOKER',
                         data: 'pemesan',
                         name: 'pemesan',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'DARI',
+                        data: 'mesin',
+                        name: 'mesin',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'UNIT/MESIN',
+                        title: 'KE',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'OLEH',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'DITERIMA',
                         data: 'mesin',
                         name: 'mesin',
                         className: "cuspad0 cuspad1 text-center clickable"
@@ -549,9 +604,9 @@
             });
         });
 
-        //---------------PERSETUJUAN----------------------------------//
+        //---------------GUDANG INDUK----------------------------------//
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-list-email').DataTable({
+            var tableGudangInduk = $('.datatable-gudang-induk').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -567,7 +622,7 @@
                 ],
                 "buttons": [{
                     "className": 'btn btn-info',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Mutasi Dari Gudang Induk',
                     "action": function(e, node, config) {
                         $('#myModalAccQty').modal('show')
                     }
@@ -587,36 +642,39 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
+                // "ajax": {
+                //     "url": "{{ route('getPermintaan.index') }}",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.dari = $('#idfilter_dari').val();
+                //         data.sampai = $('#idfilter_sampai').val();
+                //     }
+                // },
                 "columns": [{
                         title: '',
                         data: 'action',
                         name: 'action',
                         className: "cuspad0 cuspad1",
+                        render: function(data, type, row) {
+                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
+                        }
                     },
                     {
-                        title: 'TANGGAL',
+                        title: 'TGL PEMBELIAN',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center"
+                        className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
                         className: "cuspad0 text-center clickable"
                     },
                     {
                         title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
+                        data: 'mesin',
+                        name: 'mesin',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
@@ -626,27 +684,27 @@
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'MESIN',
-                        data: 'mesin',
-                        name: 'mesin',
+                        title: 'PEMESAN',
+                        data: 'qty',
+                        name: 'qty',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'QTY',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'SATUAN',
+                        title: 'QTY BELI',
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'PEMESAN',
+                        title: 'SATUAN',
                         data: 'pemesan',
                         name: 'pemesan',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'SUPPLIER',
+                        data: 'unit',
+                        name: 'unit',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                 ],
@@ -661,9 +719,9 @@
             });
         });
 
-        //---------------REJECT----------------------------------------//
+        //---------------GUDANG 2-1----------------------------------------//
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-follup-email').DataTable({
+            var tableGudang21 = $('.datatable-gudang-21').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -678,24 +736,12 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                        extend: 'copyHtml5',
-                        className: 'btn btn-teal',
-                        text: '<i class="fa fa-copy text-white"></i> Copy',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        autoFilter: true,
-                        className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        className: 'btn btn-danger',
-                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
-                    },
-                ],
+                    "className": 'btn btn-info',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Mutasi Dari Gudang 2-1',
+                    "action": function(e, node, config) {
+                        $('#myModalAccQty').modal('show')
+                    }
+                }],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -711,36 +757,39 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
+                // "ajax": {
+                //     "url": "{{ route('getPermintaan.index') }}",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.dari = $('#idfilter_dari').val();
+                //         data.sampai = $('#idfilter_sampai').val();
+                //     }
+                // },
                 "columns": [{
-                        title: 'TGL PERMINTAAN',
+                        title: '',
+                        data: 'action',
+                        name: 'action',
+                        className: "cuspad0 cuspad1",
+                        render: function(data, type, row) {
+                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
+                        }
+                    },
+                    {
+                        title: 'TGL PEMBELIAN',
                         data: 'tgl',
                         name: 'tgl',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
                         className: "cuspad0 text-center clickable"
                     },
                     {
-                        title: 'NO.EMAIL',
-                        data: 'proses_email',
-                        name: 'proses_email',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
                         title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
+                        data: 'mesin',
+                        name: 'mesin',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
@@ -750,27 +799,27 @@
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'MESIN',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'QTY',
+                        title: 'PEMESAN',
                         data: 'qty',
                         name: 'qty',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'SATUAN',
+                        title: 'QTY BELI',
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'PEMESAN',
+                        title: 'SATUAN',
                         data: 'pemesan',
                         name: 'pemesan',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'SUPPLIER',
+                        data: 'unit',
+                        name: 'unit',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                 ],
@@ -782,9 +831,9 @@
         });
 
 
-        //---------------HOLD-----------------------------------------//
+        //---------------GUDANG 2-2-----------------------------------------//
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-pembelian-po').DataTable({
+            var tableGudang22 = $('.datatable-gudang-22').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -799,24 +848,12 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                        extend: 'copyHtml5',
-                        className: 'btn btn-teal',
-                        text: '<i class="fa fa-copy text-white"></i> Copy',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        autoFilter: true,
-                        className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        className: 'btn btn-danger',
-                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
-                    },
-                ],
+                    "className": 'btn btn-info',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Mutasi Dari Gudang 2-2',
+                    "action": function(e, node, config) {
+                        $('#myModalAccQty').modal('show')
+                    }
+                }],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -832,14 +869,14 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
+                // "ajax": {
+                //     "url": "{{ route('getPermintaan.index') }}",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.dari = $('#idfilter_dari').val();
+                //         data.sampai = $('#idfilter_sampai').val();
+                //     }
+                // },
                 "columns": [{
                         title: '',
                         data: 'action',
@@ -848,64 +885,171 @@
                         render: function(data, type, row) {
                             return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
                         }
-
                     },
                     {
-                        title: 'TGL PERMINTAAN',
+                        title: 'TGL PEMBELIAN',
                         data: 'tgl',
                         name: 'tgl',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
                         className: "cuspad0 text-center clickable"
                     },
                     {
-                        title: 'NOFORM',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
                         title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
+                        data: 'mesin',
+                        name: 'mesin',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'QTY MINTA',
+                        title: 'DESKRIPSI',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'PEMESAN',
                         data: 'qty',
                         name: 'qty',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'SATUAN',
+                        title: 'QTY BELI',
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'PEMESAN',
+                        title: 'SATUAN',
                         data: 'pemesan',
                         name: 'pemesan',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'UNIT/MESIN',
+                        title: 'SUPPLIER',
                         data: 'unit',
                         name: 'unit',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
+                ],
+            });
+
+            $('#filter_id').on('click change', function() {
+                tablePermintaan.ajax.reload(null, false);
+            });
+        });
+
+        //-------------------------GUDANG 2-3 ------------------------------------------------------//
+        $(document).ready(function() {
+            var tableGudang23 = $('.datatable-gudang-23').DataTable({
+                "processing": true,
+                "serverSide": false,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                "lengthMenu": [
+                    [10, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                    "className": 'btn btn-info',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Mutasi Dari Gudang 2-3',
+                    "action": function(e, node, config) {
+                        $('#myModalAccQty').modal('show')
+                    }
+                }],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                // "ajax": {
+                //     "url": "{{ route('getPermintaan.index') }}",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.dari = $('#idfilter_dari').val();
+                //         data.sampai = $('#idfilter_sampai').val();
+                //     }
+                // },
+                "columns": [{
+                        title: '',
+                        data: 'action',
+                        name: 'action',
+                        className: "cuspad0 cuspad1",
+                        render: function(data, type, row) {
+                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
+                        }
+                    },
                     {
-                        title: 'KETERANGAN REJECT',
-                        data: 'keteranganACC',
-                        name: 'keteranganACC',
+                        title: 'TGL PEMBELIAN',
+                        data: 'tgl',
+                        name: 'tgl',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'KODESERI',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
+                        className: "cuspad0 text-center clickable"
+                    },
+                    {
+                        title: 'BARANG',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'DESKRIPSI',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'PEMESAN',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'QTY BELI',
+                        data: 'satuan',
+                        name: 'satuan',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'SATUAN',
+                        data: 'pemesan',
+                        name: 'pemesan',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'SUPPLIER',
+                        data: 'unit',
+                        name: 'unit',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                 ],
+            });
 
+            $('#filter_id').on('click change', function() {
+                tablePermintaan.ajax.reload(null, false);
             });
         });
     </script>
