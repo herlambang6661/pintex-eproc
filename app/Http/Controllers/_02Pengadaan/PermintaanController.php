@@ -333,6 +333,49 @@ class PermintaanController extends Controller
         //     </div>
         // ';
         echo '
+                <style>
+                    .stamp {
+                            transform: rotate(12deg);
+                            color: #555;
+                            font-size: 2rem;
+                            font-weight: 600;
+                            border: 0.25rem solid #555;
+                            display: inline-block;
+                            padding: 0.25rem 1rem;
+                            text-transform: uppercase;
+                            border-radius: 1rem;
+                            font-family: "Courier";
+                            -webkit-mask-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png");
+                            -webkit-mask-size: 944px 604px;
+                            mix-blend-mode: multiply;
+                        }
+
+                        .is-nope {
+                            color: #D23;
+                            border: 0.5rem double #D23;
+                            transform: rotate(3deg);
+                            -webkit-mask-position: 2rem 3rem;
+                            font-size: 2rem;  
+                        }
+
+                        .is-approved {
+                            color: #0A9928;
+                            border: 0.5rem solid #0A9928;
+                            -webkit-mask-position: 13rem 6rem;
+                            transform: rotate(-14deg);
+                            border-radius: 0;
+                        } 
+
+                        .is-draft {
+                            color: #C4C4C4;
+                            border: 1rem double #C4C4C4;
+                            transform: rotate(-5deg);
+                            font-size: 6rem;
+                            font-family: "Open sans", Helvetica, Arial, sans-serif;
+                            border-radius: 0;
+                            padding: 0.5rem;
+                        } 
+                </style>
                 <div class="modal-body" style="color: black;">
                     <div class="row">
                         <div class="col-md-4 text-center">
@@ -370,29 +413,59 @@ class PermintaanController extends Controller
                                 <th style="border-color: black;" class="text-center">Part</th>
                                 <th style="border-color: black;" class="text-center">Mesin</th>
                                 <th style="border-color: black;" class="text-center">Quantity</th>
-                                <th style="border-color: black;" class="text-center">Satuan</th>
                                 <th style="border-color: black;" class="text-center">Pemesan</th>
+                                <th style="border-color: black;" class="text-center">Status</th>
                             </thead>
                             <tbody class="text-black" style="border-color: black;">
                             ';
         $i = 1;
         foreach ($getpermintaanitem as $key) {
             $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $key->mesin)->first();
+            if ($key->status == 'PROSES PERSETUJUAN') {
+                $sst = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span>';
+                $txt = '<span class="badge bg-blue"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'ACC') {
+                $sst = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-purple"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'HOLD') {
+                $sst = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-orange"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'REJECT') {
+                $sst = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-red"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'PROSES PEMBELIAN') {
+                $sst = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-lime"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'DIBELI') {
+                $sst = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-green"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'DITERIMA') {
+                $sst = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-teal"><b>' . $key->status . '</b></span>';
+            } else {
+                $sst = '<span class="status-dot status-dot-animated status-dark"></span>';
+                $txt = ' <span class="badge bg-dark"><b>' . $key->status . '</b></span>';
+            }
             echo '
                                     <tr>
                                         <td class="text-center">' . $i . '</td>
-                                        <td class="text-center">' . $key->kodeseri . '</td>
-                                        <td class="text-center">' . $key->namaBarang . '</td>
+                                        <td class="text-center">' . $sst . " " . $key->kodeseri . '</td>
+                                        <td class="">' . $key->namaBarang . '</td>
                                         <td class="text-center">' . $key->keterangan . '</td>
                                         <td class="text-center">' . $key->katalog . '</td>
                                         <td class="text-center">' . $key->part . '</td>
                                         <td class="text-center">' . $getMesin->mesin . " " . $getMesin->merk . '</td>
-                                        <td class="text-center">' . $key->qty . '</td>
-                                        <td class="text-center">' . $key->satuan . '</td>
+                                        <td class="text-center">' . $key->qty . ' ' . $key->satuan . '</td>
                                         <td class="text-center">' . $key->pemesan . '</td>
+                                        <td class="text-center">' . $txt . '</td>
                                     </tr>
                                     ';
             $i++;
+            if ($key->statusACC == 'ACC') {
+                $status = 'approve';
+            } else {
+                $status = 'proposal';
+            }
         }
 
         echo '
@@ -420,11 +493,18 @@ class PermintaanController extends Controller
                                 ( ' . $getpermintaan->kabag . ' )
                             </div>
                             <div class="col">
-                                ( ' . $getpermintaan->dibuat . ' )
+                                ( ' . $getpermintaan->dibuat .
+            ' )
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>';
+        if ($status == 'approve') {
+            echo '          <span class="stamp is-approved">Approved</span>';
+        } elseif ($status == 'proposal') {
+            echo '          <span class="stamp">proposal</span>';
+        }
+        echo '
         ';
     }
 
