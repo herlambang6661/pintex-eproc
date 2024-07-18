@@ -915,8 +915,8 @@
                     },
                     {
                         title: 'Mesin',
-                        data: 'mesin',
-                        name: 'mesin',
+                        data: 'merk',
+                        name: 'merk',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {

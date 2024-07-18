@@ -342,19 +342,19 @@ class PermintaanController extends Controller
             echo '
                     <div class="row">
                         <div class="col-lg-12 mb-3">
-                            <div class="card bg-pink-lt">
+                            <div class="card bg-pink-lt shadow rounded border border-blue">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Jenis</label>
-                                                <input type="text" class="form-control disabled" disabled value="' . $getItem->jenis . '">
+                                                <input type="text" class="form-control border border-blue disabled" disabled value="' . $getItem->jenis . '">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Tanggal</label>
-                                                <input type="date" class="form-control" value="' . $getItem->tgl . '">
+                                                <input type="date" class="form-control border border-blue" value="' . $getItem->tgl . '">
                                             </div>
                                         </div>
                                     </div>
@@ -362,33 +362,37 @@ class PermintaanController extends Controller
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="card bg-azure-lt">
+                            <div class="card bg-azure-lt shadow rounded border border-blue">
                                 <div class="card-body">
                                     <div class="mb-2">
                                         <label class="form-label">Nama Barang</label>
-                                        <input type="text" class="form-control" value="' . $getItem->namaBarang . '">
+                                        <select name="namaBarang[]" class="form-select  elementbrg inputNone" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->namaBarang . '" selected="selected">' . $getItem->namaBarang . '</option> 
+                                        </select>
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Deskripsi</label>
-                                        <input type="text" class="form-control" value="' . $getItem->keterangan . '">
+                                        <input type="text" list="datalistDeskripsi" class="form-control" value="' . $getItem->keterangan . '">
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Katalog</label>
-                                        <input type="text" class="form-control" value="' . $getItem->katalog . '">
+                                        <input type="text" list="datalistKatalog" class="form-control" value="' . $getItem->katalog . '">
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Part</label>
-                                        <input type="text" class="form-control" value="' . $getItem->part . '">
+                                        <input type="text" list="datalistPart" class="form-control" value="' . $getItem->part . '">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="card bg-orange-lt">
+                            <div class="card bg-orange-lt shadow rounded border border-blue">
                                 <div class="card-body">
                                     <div class="mb-2">
                                         <label class="form-label">Mesin</label>
-                                        <input type="text" class="form-control" value="' . $getItem->mesin . '">
+                                        <select name="mesin[]" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->mesin . '" selected="selected">' . $getItem->mesin . '</option> 
+                                        </select>
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -400,7 +404,7 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Satuan</label>
-                                                <input type="text" class="form-control" value="' . $getItem->satuan . '">
+                                                <input type="text" list="datalistSatuan" class="form-control" value="' . $getItem->satuan . '">
                                             </div>
                                         </div>
                                     </div>
@@ -408,7 +412,9 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Pemesan</label>
-                                                <input type="text" class="form-control" value="' . $getItem->pemesan . '">
+                                                <select required name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;">
+                                                    <option value="' . $getItem->pemesan . '" selected="selected">' . $getItem->pemesan . '</option> 
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -438,7 +444,7 @@ class PermintaanController extends Controller
 
                         <div class="hr-text text-blue">Keterangan Tambahan</div>
                         <div class="control-group col-lg-12">
-                            <div id="ketTamb">
+                            <div id="ketTamb" class="shadow rounded border border-blue">
                                 <div class="mb-3">
                                     <textarea id="tinymce-edit" name="keteranganform" value="' . $getForm->keteranganform . '"></textarea>
                                 </div>
@@ -453,16 +459,82 @@ class PermintaanController extends Controller
                     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
                     <script type="text/javascript">
                         $(function() {
+                            $(".elementbrg").select2({
+                                dropdownParent: $("#modalEditPermintaan"),
+                                language: "id",
+                                placeholder: "Pilih Barang",
+                                ajax: {
+                                    url: "/getMasterBarang",
+                                    dataType: "json",
+                                    delay: 200,
+                                    processResults: function(response) {
+                                        return {
+                                            results: $.map(response, function(item) {
+                                                return {
+                                                    id: item.id,
+                                                    text: item.nama.toUpperCase(),
+                                                }
+                                            })
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                            $(".elementprm").select2({
+                                dropdownParent: $("#modalEditPermintaan"),
+                                language: "id",
+                                placeholder: "Pilih Pemesan",
+                                ajax: {
+                                    url: "/getMasterPemesan",
+                                    dataType: "json",
+                                    delay: 200,
+                                    processResults: function(response) {
+                                        return {
+                                            results: $.map(response, function(item) {
+                                                return {
+                                                    id: item.id,
+                                                    text: item.nama.toUpperCase(),
+                                                }
+                                            })
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                            $(".elementmsn").select2({
+                                dropdownParent: $("#modalEditPermintaan"),
+                                language: "id",
+                                width: "100%",
+                                placeholder: "Pilih Mesin",
+                                ajax: {
+                                    url: "/getMesin",
+                                    dataType: "json",
+                                    delay: 200,
+                                    processResults: function(response) {
+                                        console.log(response);
+                                        return {
+                                            results: $.map(response, function(item) {
+                                                return {
+                                                    id: item.id,
+                                                    text: item.mesin.toUpperCase() + " " + item.merk
+                                                        .toUpperCase() + (item.unit == "88" ? " (UMUM)" :
+                                                            " (UNIT " + item.unit + ")"),
+                                                }
+                                            })
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                        })
+                    </script>
+                    <script type="text/javascript">
+                        $(function() {
                             let options = {
                                 selector: "#tinymce-edit",
                                 height: 300,
                                 menubar: false,
                                 statusbar: false,
-                                plugins: [
-                                    "advlist autolink lists link image charmap print preview anchor",
-                                    "searchreplace visualblocks code fullscreen",
-                                    "insertdatetime media table paste code help wordcount"
-                                ],
                                 toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
                                 content_style: "body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }"
                             }
