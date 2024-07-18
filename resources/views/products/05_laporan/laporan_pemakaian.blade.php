@@ -44,29 +44,30 @@
                         <div class="col">
                             <!-- Page pre-title -->
                             <h2 class="page-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-random"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                    class="icon icon-tabler icon-tabler-report" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M20 21h-4v-4" />
-                                    <path d="M16 21l5 -5" />
-                                    <path d="M6.5 9.504l-3.5 -2l2 -3.504" />
-                                    <path d="M3 7.504l6.83 -1.87" />
-                                    <path d="M4 16l4 -1l1 4" />
-                                    <path d="M8 15l-3.5 6" />
-                                    <path d="M21 5l-.5 4l-4 -.5" />
-                                    <path d="M20.5 9l-4.5 -5.5" />
+                                    <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
+                                    <path d="M18 14v4h4" />
+                                    <path d="M18 11v-4a2 2 0 0 0 -2 -2h-2" />
+                                    <path
+                                        d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                    <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                    <path d="M8 11h4" />
+                                    <path d="M8 15h3" />
                                 </svg>
-                                Mutasi
+                                Laporan Pemakaian
                             </h2>
                             <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="https://pintex.co.id/apps/HR/Recruitment"><i
-                                                class="fa-solid fa-basket-shopping"></i> Gudang</a></li>
+                                                class="fa-solid fa-basket-shopping"></i> Laporan</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-paste"></i> Mutasi</a></li>
+                                                class="fa-regular fa-paste"></i> Laporan Pemakaian</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -85,14 +86,11 @@
                                         <li class="nav-item">
                                             <a href="#tabs-supplier" class="nav-link active" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-switch-2">
+                                                    viewBox="0 0 24 24" fill="currentColor"
+                                                    class="icon icon-tabler icons-tabler-filled icon-tabler-shopping-cart">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M3 17h5l1.67 -2.386m3.66 -5.227l1.67 -2.387h6" />
-                                                    <path d="M18 4l3 3l-3 3" />
-                                                    <path d="M3 7h5l7 10h6" />
-                                                    <path d="M18 20l3 -3l-3 -3" />
+                                                    <path
+                                                        d="M6 2a1 1 0 0 1 .993 .883l.007 .117v1.068l13.071 .935a1 1 0 0 1 .929 1.024l-.01 .114l-1 7a1 1 0 0 1 -.877 .853l-.113 .006h-12v2h10a3 3 0 1 1 -2.995 3.176l-.005 -.176l.005 -.176c.017 -.288 .074 -.564 .166 -.824h-5.342a3 3 0 1 1 -5.824 1.176l-.005 -.176l.005 -.176a3.002 3.002 0 0 1 1.995 -2.654v-12.17h-1a1 1 0 0 1 -.993 -.883l-.007 -.117a1 1 0 0 1 .883 -.993l.117 -.007h2zm0 16a1 1 0 1 0 0 2a1 1 0 0 0 0 -2zm11 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2z" />
                                                 </svg>
                                                 Supplier
                                             </a>
@@ -100,11 +98,18 @@
                                         <li class="nav-item">
                                             <a href="#tabs-item" class="nav-link " data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="currentColor"
-                                                    class="icon icon-tabler icons-tabler-filled icon-tabler-home">
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-sitemap">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
-                                                        d="M12.707 2.293l9 9c.63 .63 .184 1.707 -.707 1.707h-1v6a3 3 0 0 1 -3 3h-1v-7a3 3 0 0 0 -2.824 -2.995l-.176 -.005h-2a3 3 0 0 0 -3 3v7h-1a3 3 0 0 1 -3 -3v-6h-1c-.89 0 -1.337 -1.077 -.707 -1.707l9 -9a1 1 0 0 1 1.414 0m.293 11.707a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883 -.993l.117 -.007z" />
+                                                        d="M3 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                                    <path
+                                                        d="M15 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                                    <path
+                                                        d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                                    <path d="M6 15v-1a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v1" />
+                                                    <path d="M12 9l0 3" />
                                                 </svg>
                                                 Item
                                             </a>
@@ -114,12 +119,18 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-home-hand">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-robot">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M18 9l-6 -6l-9 9h2v7a2 2 0 0 0 2 2h3.5" />
-                                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2" />
                                                     <path
-                                                        d="M16 17.5l-.585 -.578a1.516 1.516 0 0 0 -2 0c-.477 .433 -.551 1.112 -.177 1.622l1.762 2.456c.37 .506 1.331 1 2 1h3c1.009 0 1.497 -.683 1.622 -1.593c.252 -.938 .378 -1.74 .378 -2.407c0 -1 -.939 -1.843 -2 -2h-1v-2.636c0 -.754 -.672 -1.364 -1.5 -1.364s-1.5 .61 -1.5 1.364v4.136z" />
+                                                        d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                                                    <path d="M12 2v2" />
+                                                    <path d="M9 12v9" />
+                                                    <path d="M15 12v9" />
+                                                    <path d="M5 16l4 -2" />
+                                                    <path d="M15 14l4 2" />
+                                                    <path d="M9 18h6" />
+                                                    <path d="M10 8v.01" />
+                                                    <path d="M14 8v.01" />
                                                 </svg>
                                                 Mesin
                                             </a>
@@ -129,12 +140,11 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-home-hand">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M18 9l-6 -6l-9 9h2v7a2 2 0 0 0 2 2h3.5" />
-                                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2" />
                                                     <path
-                                                        d="M16 17.5l-.585 -.578a1.516 1.516 0 0 0 -2 0c-.477 .433 -.551 1.112 -.177 1.622l1.762 2.456c.37 .506 1.331 1 2 1h3c1.009 0 1.497 -.683 1.622 -1.593c.252 -.938 .378 -1.74 .378 -2.407c0 -1 -.939 -1.843 -2 -2h-1v-2.636c0 -.754 -.672 -1.364 -1.5 -1.364s-1.5 .61 -1.5 1.364v4.136z" />
+                                                        d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                                                    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                                 </svg>
                                                 Servis
                                             </a>
@@ -144,12 +154,14 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-home-hand">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-codepen">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M18 9l-6 -6l-9 9h2v7a2 2 0 0 0 2 2h3.5" />
-                                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2" />
-                                                    <path
-                                                        d="M16 17.5l-.585 -.578a1.516 1.516 0 0 0 -2 0c-.477 .433 -.551 1.112 -.177 1.622l1.762 2.456c.37 .506 1.331 1 2 1h3c1.009 0 1.497 -.683 1.622 -1.593c.252 -.938 .378 -1.74 .378 -2.407c0 -1 -.939 -1.843 -2 -2h-1v-2.636c0 -.754 -.672 -1.364 -1.5 -1.364s-1.5 .61 -1.5 1.364v4.136z" />
+                                                    <path d="M3 15l9 6l9 -6l-9 -6l-9 6" />
+                                                    <path d="M3 9l9 6l9 -6l-9 -6l-9 6" />
+                                                    <path d="M3 9l0 6" />
+                                                    <path d="M21 9l0 6" />
+                                                    <path d="M12 3l0 6" />
+                                                    <path d="M12 15l0 6" />
                                                 </svg>
                                                 Grafik
                                             </a>
@@ -325,7 +337,7 @@
                                         </div>
                                         <div class="tab-pane" id="tabs-grafik">
                                             <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="col-md-8">
+                                                <div class="col-md-12">
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <h3 class="card-title">Grafik Laporan Pemakaian</h3>
@@ -514,12 +526,24 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                    "className": 'btn btn-info',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Mutasi Dari Gudang Induk',
-                    "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
-                    }
-                }],
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",

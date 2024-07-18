@@ -24,6 +24,7 @@ use App\Http\Controllers\_03Gudang\PenerimaanController;
 use App\Http\Controllers\_03Gudang\PengirimanController;
 use App\Http\Controllers\_03Gudang\SampleController;
 use App\Http\Controllers\_04Teknik\BarcodeController;
+use App\Http\Controllers\_04Teknik\PengambilanController;
 use App\Http\Controllers\_04Teknik\ReturController;
 use App\Http\Controllers\_04Teknik\ServisController;
 use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
@@ -179,6 +180,10 @@ Route::controller(ReturController::class)->group(function () {
 
 Route::controller(BarcodeController::class)->group(function () {
     Route::get('teknik/barcode', 'barcode');
+});
+
+Route::controller(PengambilanController::class)->group(function () {
+    Route::get('teknik/pengambilan', 'pengambilan');
 });
 
 //ROUTE LAPORAN

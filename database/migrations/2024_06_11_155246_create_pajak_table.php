@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gd_pajak', function (Blueprint $table) {
+        Schema::create('pajak', function (Blueprint $table) {
             $table->id();
             $table->string('tax_code');
             $table->string('jenis_pajak');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gd_pajak');
+        Schema::dropIfExists('pajak');
     }
 };

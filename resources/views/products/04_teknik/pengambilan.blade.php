@@ -26,15 +26,16 @@
                             <!-- Page pre-title -->
                             <h2 class="page-title">
                                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                    class="icon icon-tabler icon-tabler-receipt-refund" width="24" height="24"
+                                    class="icon icon-tabler icon-tabler-book-upload" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" />
-                                    <path d="M15 14v-2a2 2 0 0 0 -2 -2h-4l2 -2m0 4l-2 -2" />
+                                    <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5" />
+                                    <path d="M11 16h-5a2 2 0 0 0 -2 2" />
+                                    <path d="M15 16l3 -3l3 3" />
+                                    <path d="M18 13v9" />
                                 </svg>
-                                Retur
+                                Pengambilan
                             </h2>
                             <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
@@ -43,7 +44,7 @@
                                     <li class="breadcrumb-item"><a href="https://pintex.co.id/apps/HR/Recruitment"><i
                                                 class="fa-solid fa-basket-shopping"></i> Teknik</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-paste"></i> Retur</a></li>
+                                                class="fa-regular fa-paste"></i> Pengambilan</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -56,14 +57,14 @@
                                         class="active btn btn-warning d-none d-sm-inline-block border border-warning"
                                         data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
                                         style="margin-right: 10px">
-                                        <i class="fa-solid fa-list-ul"></i>
-                                        List retur
+                                        <i class="fa-solid fa-truck"></i>
+                                        Pengambilan Barang
                                     </a>
                                     <a href="#tabs-home-8"
                                         class="btn btn-primary d-none d-sm-inline-block border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab">
-                                        <i class="fa-solid fa-hand-holding-medical"></i>
-                                        Tambah Data Retur
+                                        <i class="fa-solid fa-list"></i>
+                                        List Item Pengambilan
                                     </a>
                                 </ul>
                                 <ul class="nav">
@@ -71,13 +72,13 @@
                                         class="nav-link btn btn-primary d-sm-none btn-icon border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab"
                                         aria-label="List Item Permintaan" style="margin-right: 10px">
-                                        <i class="fa-solid fa-list-ul"></i>
+                                        <i class="fa-solid fa-truck"></i>
                                     </a>
                                     <a href="#tabs-home-8"
                                         class="nav-link btn btn-warning d-sm-none btn-icon border border-warning"
                                         data-bs-toggle="tab" aria-selected="true" role="tab"
                                         aria-label="Tambah Permintaan">
-                                        <i class="fa-solid fa-hand-holding-medical"></i>
+                                        <i class="fa-solid fa-list"></i>
                                     </a>
                                 </ul>
                             </div>
@@ -91,96 +92,20 @@
                     <div class="row row-deck">
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="tabs-profile-8" role="tabpanel">
-                                <div class="card card-xl shadow rounded border border-blue">
-                                    <div class="table-responsive">
-                                        <form action="#" id="form-filter-items" method="get" autocomplete="off"
-                                            novalidate="" class="">
-                                            <table class="table mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center">Tgl Awal</th>
-                                                        <th class="text-center">Tgl Akhir</th>
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()" value="{{ date('Y-01-01') }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" id="idfilter_sampai" class="form-control "
-                                                                onchange="syn()" value="{{ date('Y-m-d') }}">
-                                                        </td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-primary btn-icon"
-                                                                aria-label="Button">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="1.5"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                    <path d="M21 21l-6 -6" />
-                                                                </svg>
-                                                            </a>
-                                                            <input class="btn btn-primary" type="reset" value="Reset">
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </form>
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table style="width:100%; height: 100%;font-size:13px;"
-                                            class="table table-bordered table-striped table-vcenter card-table table-hover text-nowrap datatable datatable-retur">
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="tabs-home-8" role="tabpanel">
                                 <div class="card shadow card-active">
                                     <div class="card-body">
-                                        <form method="POST" name="formPermintaan" id="formPermintaan" class="form"
+                                        <form method="POST" name="" id="" class="form"
                                             enctype="multipart/form-data" accept-charset="utf-8"
                                             onkeydown="return event.key != 'Enter';" data-select2-id="add-form">
                                             @csrf
                                             <div class="row">
                                                 <div class="control-group col-lg-3">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Tanggal Permintaan</label>
-                                                        <div class="input-icon mb-2">
-                                                            <input name="tanggal" class="form-control "
-                                                                placeholder="Select a date" id="datepicker-icon"
-                                                                value="<?= date('Y-m-d') ?>" />
-                                                            <span class="input-icon-addon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon"
-                                                                    width="24" height="24" viewBox="0 0 24 24"
-                                                                    stroke-width="2" stroke="currentColor" fill="none"
-                                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path
-                                                                        d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                                                    <path d="M16 3v4" />
-                                                                    <path d="M8 3v4" />
-                                                                    <path d="M4 11h16" />
-                                                                    <path d="M11 15h1" />
-                                                                    <path d="M12 15v3" />
-                                                                </svg>
-                                                            </span>
-                                                        </div>
-                                                    </div>
                                                     <div class="mb-1">
-                                                        <label class="form-label">Noform</label>
+                                                        <label class="form-label">Kodeseri</label>
                                                         <input name="text" class="form-control "
-                                                            placeholder="Select a noform" id="datepicker-icon"
+                                                            placeholder="Scan QR atau Kodeseri " id="datepicker-icon"
                                                             value="" />
+                                                        <small class="text-danger">Scan QR / Kodeseri</small>
                                                     </div>
                                                 </div>
                                                 <div class="control-group col-lg-9">
@@ -206,15 +131,6 @@
                                                             </div>
                                                         </div>
                                                         <div class="card-body shadow">
-                                                            <h3 class="card-title">Repeat Order</h3>
-                                                            <div class="control-group col-lg-3">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control"
-                                                                        id="repeatOr" onblur="carikodeseri();"
-                                                                        onkeyup="" style="border-color: black;"
-                                                                        placeholder="Masukkan Kodeseri/Barang">
-                                                                </div>
-                                                            </div>
                                                             <hr>
                                                             <div class="col">
                                                                 <div id="hasil_cari"></div>
@@ -225,82 +141,146 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="control-group after-add-more">
-                                                <button class="btn btn-success" type="button"
-                                                    onclick="tambahItem(); return false;">
-                                                    <i class="fa-solid fa-cart-plus" style="margin-right: 5px"></i>
-                                                    Tambah Item
-                                                </button>
-                                            </div>
-                                            <div class="hr-text text-blue">Item Permintaan</div>
-                                            <input id="idf" value="1" type="hidden">
-                                            <div style="overflow-x:auto;overflow-x: scroll;">
-                                                <div style="width: 2800px">
-                                                    <table id="detail_transaksi" class="control-group text-nowrap"
-                                                        border="0"
-                                                        style="width: 100%;text-align:center;font-weight: bold;">
-                                                        <thead>
-                                                            <tr>
-                                                                <td
-                                                                    style="border-left-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;width: 50px">
-                                                                </td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    Kodeseri</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    Barang</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    Qty</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    Keterangan</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    Supplier</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    Expedisi</td>
-                                                            </tr>
-                                                        </thead>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="hr-text text-blue">Keterangan Tambahan</div>
+                                            <div class="hr-text text-blue">Pengambilan Barang</div>
                                             <div class="row">
-                                                <div class="control-group col-lg-12">
-                                                    <div id="ketTamb">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Keterangan Tambahan</label>
-                                                            {{-- <textarea name="keteranganform" class="form-control" id="keteranganform"></textarea> --}}
-                                                            <textarea id="tinymce-default" name="keteranganform"></textarea>
+                                                <div class="card">
+                                                    <div class="card-stamp card-stamp-lg">
+                                                        <div class="card-stamp-icon bg-warning text-white">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                class="icon icon-tabler icon-tabler-zoom-replace"
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M21 21l-6 -6" />
+                                                                <path
+                                                                    d="M3.291 8a7 7 0 0 1 5.077 -4.806a7.021 7.021 0 0 1 8.242 4.403" />
+                                                                <path d="M17 4v4h-4" />
+                                                                <path
+                                                                    d="M16.705 12a7 7 0 0 1 -5.074 4.798a7.021 7.021 0 0 1 -8.241 -4.403" />
+                                                                <path d="M3 16v-4h4" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body shadow">
+                                                        <div class="row" style="max-width: 900px;">
+                                                            <div class="col-lg-4">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Kodeseri</label>
+                                                                    <input name="text" class="form-control"
+                                                                        placeholder="Scan QR atau Kodeseri" id="kodeseri"
+                                                                        value="" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Tanggal</label>
+                                                                    <input name="date" type="date"
+                                                                        class="form-control" placeholder="Pilih Tanggal"
+                                                                        id="tanggal" value="" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Diambil Oleh</label>
+                                                                    <input name="text" class="form-control"
+                                                                        placeholder="Diambil Oleh" id="diambil_oleh"
+                                                                        value="" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr class="text-center">
+                                                                        <th>Kodeseri</th>
+                                                                        <th>Barang</th>
+                                                                        <th>Stok</th>
+                                                                        <th>QTY</th>
+                                                                        <th>Mesin</th>
+                                                                        <th>Unit</th>
+                                                                        <th>Keterangan</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <br>
+                                                        <div class="float-xl-right">
+                                                            <button type="submit" id="submitPermintaan"
+                                                                class="btn btn-primary"><i
+                                                                    class="fa-regular fa-floppy-disk"
+                                                                    style="margin-right: 5px"></i>
+                                                                Input</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="control-group col-lg-4">
-                                                    <script>
-                                                        var loadFile = function(event) {
-                                                            var output = document.getElementById('blah');
-                                                            output.src = URL.createObjectURL(event.target
-                                                                .files[0]);
-                                                            output.onload = function() {
-                                                                URL.revokeObjectURL(output
-                                                                    .src) // free memory
-                                                            }
-                                                        };
-                                                    </script>
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Unggah Gambar</label>
-                                                        <input type="file" name="gambarKeterangan"
-                                                            id="gambarKeterangan" class="form-control-file"
-                                                            accept=".jpg, .jpeg, .png, .gif" onchange="loadFile(event)">
-                                                    </div>
-                                                    <img id="blah" src="#" alt="Preview" width="300px">
-                                                </div> --}}
-                                            </div>
-                                            <br>
-                                            <div class="float-xl-right">
-                                                <button type="submit" id="submitPermintaan" class="btn btn-primary"><i
-                                                        class="fa-regular fa-floppy-disk" style="margin-right: 5px"></i>
-                                                    Proses</button>
                                             </div>
                                         </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-home-8" role="tabpanel">
+                                <div class="card card-xl shadow rounded border border-blue">
+                                    <div class="table-responsive">
+                                        <form action="#" id="form-filter-items" method="get" autocomplete="off"
+                                            novalidate="" class="">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">Tgl Awal</th>
+                                                        <th class="text-center">Tgl Akhir</th>
+                                                        <th class="text-center"></th>
+                                                        <th class="text-center"></th>
+                                                        <th class="text-center"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="date" id="idfilter_dari" class="form-control"
+                                                                onchange="syn()" value="{{ date('Y-01-01') }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" id="idfilter_sampai"
+                                                                class="form-control " onchange="syn()"
+                                                                value="{{ date('Y-m-d') }}">
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-primary btn-icon"
+                                                                aria-label="Button">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="1.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </a>
+                                                            <input class="btn btn-primary" type="reset" value="Reset">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table style="width:100%; height: 100%;font-size:13px;"
+                                            class="table table-bordered table-striped table-vcenter card-table table-hover text-nowrap datatable datatable-pengambilan">
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -343,7 +323,7 @@
         }
 
         $(document).ready(function() {
-            var tableRetur = $('.datatable-retur').DataTable({
+            var tablePengambilan = $('.datatable-pengambilan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -391,14 +371,14 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "#",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('getPermintaan.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#idfilter_dari').val();
+                        data.sampai = $('#idfilter_sampai').val();
+                    }
+                },
                 "columns": [{
                         title: '',
                         data: 'action',
@@ -413,20 +393,14 @@
                     },
                     {
                         title: 'NOFORM',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
+                        data: 'noform',
+                        name: 'noform',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'KODERETUR',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
                         title: 'KODESERI',
-                        data: 'noform',
-                        name: 'noform',
+                        data: 'kodeseri',
+                        name: 'kodeseri',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
@@ -436,21 +410,27 @@
                         className: "cuspad0 text-center clickable"
                     },
                     {
+                        title: 'QTY',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'MESIN',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'DIAMBIL',
+                        data: 'pemesan',
+                        name: 'pemesan',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
                         title: 'KETERANGAN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'SUPPLIER',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'EXPEDISI',
-                        data: 'qty',
-                        name: 'qty',
+                        data: 'keterangan',
+                        name: 'keterangan',
                         className: "cuspad0 cuspad1 clickable"
                     },
                 ],

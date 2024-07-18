@@ -25,14 +25,26 @@
                         <div class="col">
                             <!-- Page pre-title -->
                             <h2 class="page-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-test-pipe"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                    class="icon icon-tabler icon-tabler-qrcode" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M20 8.04l-12.122 12.124a2.857 2.857 0 1 1 -4.041 -4.04l12.122 -12.124" />
-                                    <path d="M7 13h8" />
-                                    <path d="M19 15l1.5 1.6a2 2 0 1 1 -3 0l1.5 -1.6z" />
-                                    <path d="M15 3l6 6" />
+                                    <path
+                                        d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                    <path d="M7 17l0 .01" />
+                                    <path
+                                        d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                    <path d="M7 7l0 .01" />
+                                    <path
+                                        d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                    <path d="M17 7l0 .01" />
+                                    <path d="M14 14l3 0" />
+                                    <path d="M20 14l0 .01" />
+                                    <path d="M14 14l0 3" />
+                                    <path d="M14 20l3 0" />
+                                    <path d="M17 17l3 0" />
+                                    <path d="M20 17l0 3" />
                                 </svg>
                                 Barcode
                             </h2>

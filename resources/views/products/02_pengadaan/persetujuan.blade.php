@@ -219,7 +219,7 @@
                                                     <table class="table mb-0">
                                                         <thead>
                                                             <tr>
-                                                                <th class="text-center">Form Persetujuan Pak Alvin / Pak
+                                                                <th class="text-black">Form Persetujuan Pak Alvin / Pak
                                                                     Brian</th>
                                                                 <th class="text-center"></th>
                                                                 <th class="text-center"></th>
@@ -273,7 +273,7 @@
                                                     <table class="table mb-0">
                                                         <thead>
                                                             <tr>
-                                                                <th class="text-center">Data Barang Yang Tidak Di ACC
+                                                                <th class="text-black">Data Barang Yang Tidak Di ACC
                                                                     (Reject)</th>
                                                                 <th class="text-center"></th>
                                                                 <th class="text-center"></th>
@@ -281,31 +281,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>
-                                                                    <a href="#" class="btn btn-danger"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-full-width">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="2"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-credit-card-refund">
-                                                                            <path stroke="none" d="M0 0h24v24H0z"
-                                                                                fill="none" />
-                                                                            <path
-                                                                                d="M12 19h-6a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5" />
-                                                                            <path d="M3 10h18" />
-                                                                            <path d="M7 15h.01" />
-                                                                            <path d="M11 15h2" />
-                                                                            <path d="M16 19h6" />
-                                                                            <path d="M19 16l-3 3l3 3" />
-                                                                        </svg>
-                                                                        Ubah Data
-                                                                    </a>
-                                                                </td>
-                                                                <td></td>
-                                                                <td></td>
+
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -323,41 +299,12 @@
                                                     <table class="table mb-0">
                                                         <thead>
                                                             <tr>
-                                                                <th class="text-center">Data Barang Yang Di Hold</th>
+                                                                <th class="text-black">Data Barang Yang Di Hold</th>
                                                                 <th class="text-center"></th>
                                                                 <th class="text-center"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="#" class="btn btn-info"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-full-width">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="2"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-credit-card-refund">
-                                                                            <path stroke="none" d="M0 0h24v24H0z"
-                                                                                fill="none" />
-                                                                            <path
-                                                                                d="M12 19h-6a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5" />
-                                                                            <path d="M3 10h18" />
-                                                                            <path d="M7 15h.01" />
-                                                                            <path d="M11 15h2" />
-                                                                            <path d="M16 19h6" />
-                                                                            <path d="M19 16l-3 3l3 3" />
-                                                                        </svg>
-                                                                        Ubah Data
-                                                                    </a>
-                                                                </td>
-                                                                <td>
-                                                                </td>
-                                                                <td>
-                                                                </td>
-                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -647,24 +594,12 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                        extend: 'copyHtml5',
-                        className: 'btn btn-teal',
-                        text: '<i class="fa fa-copy text-white"></i> Copy',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        autoFilter: true,
-                        className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        className: 'btn btn-danger',
-                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
-                    },
-                ],
+                    "className": 'btn btn-danger',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Ubah Data',
+                    "action": function(e, node, config) {
+                        $('#myModalAccQty').modal('show')
+                    }
+                }, ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -777,24 +712,12 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                        extend: 'copyHtml5',
-                        className: 'btn btn-teal',
-                        text: '<i class="fa fa-copy text-white"></i> Copy',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        autoFilter: true,
-                        className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
-                        action: newexportaction,
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        className: 'btn btn-danger',
-                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
-                    },
-                ],
+                    "className": 'btn btn-info',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Ubah Data',
+                    "action": function(e, node, config) {
+                        $('#myModalAccQty').modal('show')
+                    }
+                }, ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",

@@ -10,7 +10,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class LockerModel extends Model
 {
     use HasFactory;
-    protected $table = 'gd_locker';
+    protected $table = 'locker';
     protected $fillable = [
         'qr',
         'inisial',
