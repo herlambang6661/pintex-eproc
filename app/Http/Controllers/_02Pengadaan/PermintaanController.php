@@ -349,7 +349,7 @@ class PermintaanController extends Controller
                             </u>
                         </div>
                     </div>
-                    <hr style="margin-top: 5px;">
+                    <div class="hr-text"></div>
                     <div class="container">
                         <i>
                             <p>
@@ -399,9 +399,7 @@ class PermintaanController extends Controller
                             </tbody>
                         </table>
                         <i>*Note : ' . $getpermintaan->keteranganform . '</i>
-                        <br>
-                        <br>
-                        <br>
+                        <br><br><br>
                         <div class="row text-center">
                             <div class="col">
                                 Menyetujui,
@@ -426,7 +424,6 @@ class PermintaanController extends Controller
                             </div>
                         </div>
                     </div>
-                    <?php } ?>
                 </div>
         ';
     }
