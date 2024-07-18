@@ -38,30 +38,23 @@ class PermintaanList extends Controller
                 $sampai = date('Y-m-28');
             }
 
-            $data = DB::table('permintaanitm')
-                ->whereBetween('tgl', [$dari, $sampai])
-                ->orderBy('kodeseri', 'desc')
+            $data = DB::table('permintaanitm AS pe')
+                // ->select('pe.id', 'pe.namaBarang', 'pe.tgl', 'pe.status', 'pe.edited', 'pe.noform', 'pe.kodeseri', 'pe.keterangan', 'pe.katalog', 'pe.part', 'mi.merk as mesin', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli')
+                // ->select(DB::raw('pe.id, pe.namaBarang, pe.tgl, pe.status, pe.edited, pe.noform, pe.kodeseri, pe.keterangan, pe.katalog, pe.part, pe.qty, pe.qtyacc, pe.satuan, pe.dibeli, 
+                //     (SELECT mi.merk FROM mastermesinitm mi WHERE mi.id_mesinitm = pe.mesin) AS merk'))
+                ->whereBetween('pe.tgl', [$dari, $sampai])
+                ->orderBy('pe.kodeseri', 'desc')
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                // ->addColumn('mesinV', function ($row) {
-                //     $getmesin = DB::table('mastermesin')
-                //         ->join('mastermesinitm', 'mastermesin.id', '=', 'mastermesinitm.id_mesin')
-                //         ->where('id_mesinitm', $row->mesin)
-                //         ->get();
-                //     foreach ($getmesin as $key) {
-                //         $m = $key->mesin . " - " . $key->merk;
-                //     }
-                //     return $m;
-                // })
                 ->addColumn('tgl', function ($row) {
                     $m = Carbon::parse($row->tgl)->format('d/m/Y');
                     return $m;
                 })
-                // ->addColumn('mesin', function ($row) {
-                //     $m = DB::table('')->first();
-                //     return $m;
-                // })
+                ->addColumn('merk', function ($row) {
+                    $m = DB::table('mastermesinitm')->select('merk')->where('id_mesinitm', '=', $row->mesin)->first();
+                    return $m;
+                })
                 ->addColumn('stt', function ($row) {
                     if ($row->status == 'PROSES PERSETUJUAN') {
                         $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
