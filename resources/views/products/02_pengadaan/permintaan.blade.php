@@ -449,9 +449,9 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="fetched-data-permintaan"></div>
-                </div>
+                {{-- <div class="modal-body"> --}}
+                <div class="fetched-data-permintaan"></div>
+                {{-- </div> --}}
                 <div class="modal-footer">
                     {{-- <button type="button" class="btn me-auto" data-bs-dismiss="modal">Keluar</button> --}}
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
