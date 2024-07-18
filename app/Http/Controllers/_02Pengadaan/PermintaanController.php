@@ -349,7 +349,7 @@ class PermintaanController extends Controller
                             </u>
                         </div>
                     </div>
-                    <div class="hr-text"></div>
+                    <hr style="margin-top: 5px;">
                     <div class="container">
                         <i>
                             <p>
