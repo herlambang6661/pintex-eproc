@@ -53,7 +53,7 @@ class PermintaanList extends Controller
                 })
                 ->addColumn('merk', function ($row) {
                     $m = DB::table('mastermesinitm')->select('merk')->where('id_mesinitm', '=', $row->mesin)->first();
-                    return $m;
+                    return $m->merk;
                 })
                 ->addColumn('stt', function ($row) {
                     if ($row->status == 'PROSES PERSETUJUAN') {
