@@ -81,7 +81,7 @@
             <div class="container">
                 <i>
                     <p>
-                        Tanggal : {{ $tanggal }}
+                        Tanggal : {{ Carbon::parse($tanggal)->format('d/m/Y') }}
                     </p>
                     <p>
                         No. Form : {{ $noform }}

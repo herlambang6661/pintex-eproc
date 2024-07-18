@@ -402,7 +402,7 @@ class PermintaanController extends Controller
                                 No. Form : ' . $getpermintaan->noform . '
                             </p>
                         </i>
-                        <table class="table table-sm table-bordered"
+                        <table class="table table-sm table-bordered table-hover"
                             style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
                             <thead class="text-black" style="border-color: black;">
                                 <th style="border-color: black;" class="text-center">#</th>
