@@ -53,9 +53,9 @@ class PermintaanList extends Controller
                     return $m;
                 })
                 ->addColumn('merk', function ($row) {
-                    // $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $row->mesin)->first();
-                    // return $m->mesin . " " . $m->merk;
-                    return $row->mesin;
+                    $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $row->mesin)->first();
+                    return $m->mesin . " " . $m->merk;
+                    // return $row->mesin;
                 })
                 ->addColumn('stt', function ($row) {
                     if ($row->status == 'PROSES PERSETUJUAN') {
