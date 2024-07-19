@@ -683,7 +683,7 @@
                             return {
                                 results: $.map(response, function(item) {
                                     return {
-                                        id: item.id,
+                                        id: item.nama.toUpperCase(),
                                         text: item.nama.toUpperCase(),
                                     }
                                 })
@@ -762,7 +762,7 @@
                             results: $.map(response, function(item) {
                                 return {
                                     text: item.nama,
-                                    id: item.id,
+                                    id: item.nama,
                                 }
                             })
                         };

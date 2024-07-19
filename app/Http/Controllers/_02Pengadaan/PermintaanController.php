@@ -20,6 +20,7 @@ class PermintaanController extends Controller
     {
         return view('products/02_pengadaan.permintaan', [
             'active' => 'Permintaan',
+            'judul' => 'Permintaan',
             'namaBarang' => $this->getDatalist('permintaanitm', 'jenis', 'Lain', null),
             'deskripsi' => $this->getDatalist('permintaanitm', null, null, 'keterangan'),
             'katalog' => $this->getDatalist('permintaanitm', null, null, 'katalog'),
@@ -136,22 +137,19 @@ class PermintaanController extends Controller
             ],
         );
 
-        // // GET NOFORM
-        $noform = date('y') . "00000";
-        $checknoform = DB::table('permintaan')->orderBy('noform', 'desc')->limit('1')->get();
-        foreach ($checknoform as $key) {
-            $noform = $key->noform;
-        }
-        $y = substr($noform, 0, 2);
+        // Initiate Noform
+        $checknoform = DB::table('permintaan')->orderBy('noform', 'desc')->first();
+        $y = substr($checknoform->noform, 0, 2);
         if (date('y') == $y) {
-            $noUrut = substr($noform, 2, 5);
-            $na = $noUrut + 1;
-            $char = date('y');
-            $kodeSurat = $char . sprintf("%05s", $na);
+            $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
+            $noUrut = (int) substr($query->noform, -5);
+            $noUrut++;
+            $char = date('y-');
+            $kodeSurat = $char . sprintf("%05s", $noUrut);
         } else {
-            $kodeSurat = date('y') . "00001";
+            $kodeSurat = date('y-') . "00001";
         }
-        // GET NOFORM
+
 
         $jml_mbl = count($request->jenis);
         for ($i = 0; $i < $jml_mbl; $i++) {
@@ -502,7 +500,7 @@ class PermintaanController extends Controller
         if ($status == 'approve') {
             echo '          <span class="stamp is-approved">Approved</span>';
         } elseif ($status == 'proposal') {
-            echo '          <span class="stamp">proposal</span>';
+            echo '          <span class="stamp">requested</span>';
         }
         echo '
         ';

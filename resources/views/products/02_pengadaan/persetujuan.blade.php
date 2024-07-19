@@ -44,10 +44,9 @@
                         <div class="col">
                             <!-- Page pre-title -->
                             <h2 class="page-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                    class="icon icon-tabler icon-tabler-heart-handshake" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-handshake"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path
                                         d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
@@ -71,17 +70,40 @@
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
-                                <div class="mb-3">
-                                    <div class="row g-2">
-                                        <div class="col-auto">
-                                            <select class="form-select" id="filterDropdown" name="tipe">
-                                                <option value="Permintaan">Permintaan</option>
-                                                <option value="Servis">Servis</option>
-                                                <option value="Retur">Retur</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                <ul class="nav">
+                                    <a href="#tabs-profile-8" class="active btn btn-outline-danger d-none d-sm-inline-block"
+                                        data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
+                                        style="margin-right: 10px">
+                                        <i class="fa-solid fa-list-ul"></i>
+                                        Permintaan
+                                    </a>
+                                    <a href="#tabs-home-8" class="btn btn-outline-danger d-none d-sm-inline-block"
+                                        data-bs-toggle="tab" aria-selected="true" role="tab">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+                                        </svg>
+                                        Servis
+                                    </a>
+                                </ul>
+                                <ul class="nav">
+                                    <a href="#tabs-profile-8"
+                                        class="nav-link btn btn-primary d-sm-none btn-icon border border-primary"
+                                        data-bs-toggle="tab" aria-selected="true" role="tab"
+                                        aria-label="List Item Permintaan" style="margin-right: 10px">
+                                        <i class="fa-solid fa-list-ul"></i>
+                                    </a>
+                                    <a href="#tabs-home-8"
+                                        class="nav-link btn btn-warning d-sm-none btn-icon border border-warning"
+                                        data-bs-toggle="tab" aria-selected="true" role="tab"
+                                        aria-label="Tambah Permintaan">
+                                        <i class="fa-solid fa-hand-holding-medical"></i>
+                                    </a>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -92,26 +114,27 @@
                 <div class="container-xl">
                     <div class="row row-deck">
                         <div class="col-md-12">
-                            <div class="card transparent-card">
+                            <div class="card transparent-card card-xl shadow rounded border border-blue">
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#tabs-qty-persetujuan" class="nav-link" data-bs-toggle="tab">
+                                            <a href="#tabs-qty-persetujuan" class="nav-link active" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-symlink">
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-checklist">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M4 21v-4a3 3 0 0 1 3 -3h5" />
-                                                    <path d="M9 17l3 -3l-3 -3" />
-                                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                                    <path d="M5 11v-6a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-9.5" />
+                                                    <path
+                                                        d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" />
+                                                    <path d="M14 19l2 2l4 -4" />
+                                                    <path d="M9 8h4" />
+                                                    <path d="M9 12h2" />
                                                 </svg>
                                                 Proses QTY Persetujuan
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#tabs-persetujuan" class="nav-link active" data-bs-toggle="tab">
+                                            <a href="#tabs-persetujuan" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -159,160 +182,167 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="card-body">
-                                    <div class="tab-content">
-                                        <div class="tab-pane" id="tabs-qty-persetujuan">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center">Tgl Awal</th>
-                                                                <th class="text-center">Tgl Akhir</th>
-                                                                <th class="text-center"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="date" id="idfilter_dari"
-                                                                        class="form-control "
-                                                                        value="{{ date('Y-m-01') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="date" id="idfilter_sampai"
-                                                                        class="form-control " value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#" class="btn btn-primary btn-icon"
-                                                                        aria-label="Button">
+                                <div class="tab-content">
+                                    <div class="tab-pane active show" id="tabs-qty-persetujuan">
+                                        <div class="card">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-dark">Penentuan Qty Acc Permintaan Item</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            <div class="table-responsive">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="row g-2">
+                                                                <div class="col">
+                                                                    <input type="date" id="fqtydari"
+                                                                        class="form-control border-primary"
+                                                                        value="{{ date('Y-m-d', strtotime(date('Y-m-01') . '-1 month')) }}">
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="date" id="fqtysampai"
+                                                                        class="form-control border-primary"
+                                                                        value="{{ date('Y-m-d') }}">
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <a class="btn btn-primary" data-bs-toggle="offcanvas"
+                                                                        href="#filterTableQtyPermintaan" role="button"
+                                                                        aria-controls="filterTableQtyPermintaan">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                                             width="24" height="24"
                                                                             viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="1.5"
+                                                                            stroke="currentColor" stroke-width="2"
                                                                             stroke-linecap="round" stroke-linejoin="round"
-                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-alt">
                                                                             <path stroke="none" d="M0 0h24v24H0z"
                                                                                 fill="none" />
-                                                                            <path
-                                                                                d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                            <path d="M21 21l-6 -6" />
+                                                                            <path d="M4 8h4v4h-4z" />
+                                                                            <path d="M6 4l0 4" />
+                                                                            <path d="M6 12l0 8" />
+                                                                            <path d="M10 14h4v4h-4z" />
+                                                                            <path d="M12 4l0 10" />
+                                                                            <path d="M12 18l0 2" />
+                                                                            <path d="M16 5h4v4h-4z" />
+                                                                            <path d="M18 4l0 1" />
+                                                                            <path d="M18 9l0 11" />
                                                                         </svg>
+                                                                        Saring Lanjutan
                                                                     </a>
-                                                                    <input class="btn btn-primary" type="reset"
-                                                                        value="Reset">
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="table-responsive">
-                                                    <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-qty-persetujuan">
-                                                    </table>
-                                                </div>
+                                                <table style="width:100%; height: 100%;font-size:13px;"
+                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-qty-persetujuan">
+                                                </table>
                                             </div>
                                         </div>
-                                        <div class="tab-pane active show" id="tabs-persetujuan">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-black">Form Persetujuan Pak Alvin / Pak
-                                                                    Brian</th>
-                                                                <th class="text-center"></th>
-                                                                <th class="text-center"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <select class="form-select">
-                                                                        <option value="all">Semua Unit</option>
-                                                                        <option value="Unit1">Unit 1</option>
-                                                                        <option value="Unit2">Unit 2</option>
-                                                                        <option value="TFO">TFO</option>
-                                                                        <option value="TFI">TFI</option>
-                                                                        <option value="UMUM">UMUM</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#" class="btn btn-primary btn-icon"
-                                                                        aria-label="Button">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="1.5"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                            <path stroke="none" d="M0 0h24v24H0z"
-                                                                                fill="none" />
-                                                                            <path
-                                                                                d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                            <path d="M21 21l-6 -6" />
-                                                                        </svg>
-                                                                    </a>
-                                                                    <input class="btn btn-primary" type="reset"
-                                                                        value="Reset">
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="table-responsive">
-                                                    <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
-                                                    </table>
-                                                </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabs-persetujuan">
+                                        <div class="card">
+                                            {{-- <div class="card card-xl shadow rounded border border-blue"> --}}
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-black">Formulir Persetujuan Pak Alvin / Pak
+                                                                Brian / Pak Jesse</th>
+                                                            <th class="text-center"></th>
+                                                            <th class="text-center"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <select class="form-select">
+                                                                    <option value="all">Semua Unit</option>
+                                                                    <option value="Unit1">Unit 1</option>
+                                                                    <option value="Unit2">Unit 2</option>
+                                                                    <option value="TFO">TFO</option>
+                                                                    <option value="TFI">TFI</option>
+                                                                    <option value="UMUM">UMUM</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="btn btn-primary btn-icon"
+                                                                    aria-label="Button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                        <path d="M21 21l-6 -6" />
+                                                                    </svg>
+                                                                </a>
+                                                                <input class="btn btn-primary" type="reset"
+                                                                    value="Reset">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
+                                            {{-- <div class="table-responsive"> --}}
+                                            <table style="width:100%; height: 100%;font-size:13px;"
+                                                class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
+                                                </thead>
+                                            </table>
+                                            {{-- </div> --}}
+                                            {{-- </div> --}}
                                         </div>
-                                        <div class="tab-pane" id="tabs-list-reject">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-black">Data Barang Yang Tidak Di ACC
-                                                                    (Reject)</th>
-                                                                <th class="text-center"></th>
-                                                                <th class="text-center"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
+                                    </div>
+                                    <div class="tab-pane" id="tabs-list-reject">
+                                        <div class="card">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-black">Data Barang Yang Tidak Di ACC
+                                                                (Reject)</th>
+                                                            <th class="text-center"></th>
+                                                            <th class="text-center"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
 
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="table-responsive">
-                                                    <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-reject">
-                                                    </table>
-                                                </div>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table style="width:100%; height: 100%;font-size:13px;"
+                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-reject">
+                                                </table>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="tabs-list-hold">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-black">Data Barang Yang Di Hold</th>
-                                                                <th class="text-center"></th>
-                                                                <th class="text-center"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="table-responsive">
-                                                    <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-hold">
-                                                    </table>
-                                                </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabs-list-hold">
+                                        <div class="card">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-black">Data Barang Yang Di Hold</th>
+                                                            <th class="text-center"></th>
+                                                            <th class="text-center"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table style="width:100%; height: 100%;font-size:13px;"
+                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-hold">
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -325,7 +355,95 @@
             @include('shared.footer')
         </div>
     </div>
-
+    {{-- Modal Start --}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterTableQtyPermintaan"
+        aria-labelledby="filterTableQtyPermintaan">
+        <div class="offcanvas-header">
+            <h2 class="offcanvas-title" id="filterTableQtyPermintaan">Saring Qty Acc</h2>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                <div class="card-stamp card-stamp-lg">
+                    <div class="card-stamp-icon bg-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-alt">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 8h4v4h-4z" />
+                            <path d="M6 4l0 4" />
+                            <path d="M6 12l0 8" />
+                            <path d="M10 14h4v4h-4z" />
+                            <path d="M12 4l0 10" />
+                            <path d="M12 18l0 2" />
+                            <path d="M16 5h4v4h-4z" />
+                            <path d="M18 4l0 1" />
+                            <path d="M18 9l0 11" />
+                        </svg>
+                    </div>
+                </div>
+                <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
+                    class="sticky-top">
+                    <div class="form-label">Noform</div>
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control border-primary"
+                                    placeholder="Masukkan Nomor Formulir Permintaan">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-label">Pemesan</div>
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="fbagian" id="fbagian" class="form-select border-primary">
+                                    <option value="*">Semua</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-label">Unit</div>
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="fshift" id="fshift" class="form-select border-primary">
+                                    <option value="*">Semua</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-label">Dibeli</div>
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="fgrup" id="fgrup" class="form-select border-primary">
+                                    <option value="*">Semua</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-label">Status</div>
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="fgrup" id="fgrup" class="form-select border-primary">
+                                    <option value="*">Semua</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <button type="button" class="btn btn-primary w-100" onclick="syn();" id="btn-filter">Filter
+                            Data</button> <br>
+                        <input type="reset" class="btn btn-link w-100" value="Reset">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Modal End --}}
     <script type="text/javascript">
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -367,16 +485,32 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
-                    [10, 10, 25, 50, -1],
+                    [25, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                    "className": 'btn btn-success',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Penentuan Qty',
-                    "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
-                    }
-                }, ],
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                    {
+                        className: 'btn btn-blue',
+                        text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg> Proses Acc Qty Permintaan',
+                    },
+                ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -396,8 +530,9 @@
                     "url": "{{ route('getPermintaan.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
+                        data.tipe = $('#qtyacc').val();
+                        data.dari = $('#fqtydari').val();
+                        data.sampai = $('#fqtysampai').val();
                     }
                 },
                 "columns": [{

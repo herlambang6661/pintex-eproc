@@ -38,10 +38,11 @@ class PermintaanList extends Controller
                 $sampai = date('Y-m-28');
             }
 
+            if ($request->tipe == 'qtyacc') {
+                $status = $request->dari;
+            }
+
             $data = DB::table('permintaanitm AS pe')
-                // ->select('pe.id', 'pe.namaBarang', 'pe.tgl', 'pe.status', 'pe.edited', 'pe.noform', 'pe.kodeseri', 'pe.keterangan', 'pe.katalog', 'pe.part', 'mi.merk as mesin', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli')
-                // ->select(DB::raw('pe.id, pe.namaBarang, pe.tgl, pe.status, pe.edited, pe.noform, pe.kodeseri, pe.keterangan, pe.katalog, pe.part, pe.qty, pe.qtyacc, pe.satuan, pe.dibeli, 
-                //     (SELECT mi.merk FROM mastermesinitm mi WHERE mi.id_mesinitm = pe.mesin) AS merk'))
                 ->whereBetween('pe.tgl', [$dari, $sampai])
                 ->orderBy('pe.kodeseri', 'desc')
                 ->get();
@@ -52,9 +53,9 @@ class PermintaanList extends Controller
                     return $m;
                 })
                 ->addColumn('merk', function ($row) {
-                    $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $row->mesin)->first();
-                    return $m->mesin . " " . $m->merk;
-                    // return $row->mesin;
+                    // $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $row->mesin)->first();
+                    // return $m->mesin . " " . $m->merk;
+                    return $row->mesin;
                 })
                 ->addColumn('stt', function ($row) {
                     if ($row->status == 'PROSES PERSETUJUAN') {

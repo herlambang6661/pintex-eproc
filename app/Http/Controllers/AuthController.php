@@ -109,6 +109,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return view('products.dashboard', [
                 'active' => 'Dashboard',
+                'judul' => 'Dashboard',
             ]);
         }
 

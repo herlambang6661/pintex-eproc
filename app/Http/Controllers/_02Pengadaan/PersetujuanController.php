@@ -19,6 +19,7 @@ class PersetujuanController extends Controller
     {
         return view('products.02_pengadaan.persetujuan', [
             'active' => 'Persetujuan',
+            'judul' => 'Persetujuan',
         ]);
     }
 
