@@ -11,6 +11,7 @@ class PengirimanController extends Controller
     {
         return view('products.03_gudang.pengiriman', [
             'active' => 'Pengiriman',
+            'judul' => 'Pengiriman'
         ]);
     }
 }

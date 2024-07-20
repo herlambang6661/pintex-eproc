@@ -11,6 +11,7 @@ class BarcodeController extends Controller
     {
         return view('products.04_teknik.barcode', [
             'active' => 'Barcode',
+            'judul' => 'Barcode'
         ]);
     }
 }

@@ -80,7 +80,7 @@
                 <div class="container-xl">
                     <div class="row row-deck">
                         <div class="col-md-12">
-                            <div class="card transparent-card">
+                            <div class="card transparent-card card-xl shadow rounded border border-blue">
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
@@ -154,152 +154,147 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="card-body">
-                                    <div class="tab-content">
-                                        <div class="tab-pane active show" id="tabs-supplier">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center">Tgl Awal</th>
-                                                                <th class="text-center">Tgl Akhir</th>
-                                                                <th class="text-center"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="date" id="idfilter_dari"
-                                                                        class="form-control "
-                                                                        value="{{ date('Y-m-01') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="date" id="idfilter_sampai"
-                                                                        class="form-control " value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#" class="btn btn-primary btn-icon"
-                                                                        aria-label="Button">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="1.5"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                            <path stroke="none" d="M0 0h24v24H0z"
-                                                                                fill="none" />
-                                                                            <path
-                                                                                d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                            <path d="M21 21l-6 -6" />
-                                                                        </svg>
-                                                                    </a>
-                                                                    <input class="btn btn-primary" type="reset"
-                                                                        value="Reset">
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="table-responsive">
-                                                    <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-supplier">
-                                                    </table>
-                                                </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane active show" id="tabs-supplier">
+                                        <div class="card card-xl shadow rounded border border-blue">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">Tgl Awal</th>
+                                                            <th class="text-center">Tgl Akhir</th>
+                                                            <th class="text-center"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="date" id="idfilter_dari"
+                                                                    class="form-control " value="{{ date('Y-m-01') }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="date" id="idfilter_sampai"
+                                                                    class="form-control " value="{{ date('Y-m-d') }}">
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="btn btn-primary btn-icon"
+                                                                    aria-label="Button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                        <path d="M21 21l-6 -6" />
+                                                                    </svg>
+                                                                </a>
+                                                                <input class="btn btn-primary" type="reset"
+                                                                    value="Reset">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table style="width:100%; height: 100%;font-size:13px;"
+                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-supplier">
+                                                </table>
                                             </div>
                                         </div>
-                                        <div class="tab-pane " id="tabs-item">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center">Tgl Awal</th>
-                                                                <th class="text-center">Tgl Akhir</th>
-                                                                <th class="text-center"></th>
-                                                                <th class="text-center"></th>
-                                                                <th class="text-center"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="date" id="idfilter_dari"
-                                                                        class="form-control" onchange="syn()"
-                                                                        value="{{ date('Y-01-01') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="date" id="idfilter_sampai"
-                                                                        class="form-control " onchange="syn()"
-                                                                        value="{{ date('Y-m-d') }}">
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#" class="btn btn-primary btn-icon"
-                                                                        aria-label="Button">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="1.5"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                            <path stroke="none" d="M0 0h24v24H0z"
-                                                                                fill="none" />
-                                                                            <path
-                                                                                d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                            <path d="M21 21l-6 -6" />
-                                                                        </svg>
-                                                                    </a>
-                                                                    <input class="btn btn-primary" type="reset"
-                                                                        value="Reset">
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="table-responsive">
-                                                    <table style="width:100%; height: 100%;font-size:13px;"
-                                                        class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-item">
-                                                    </table>
-                                                </div>
+                                    </div>
+                                    <div class="tab-pane " id="tabs-item">
+                                        <div class="card card-xl shadow rounded border border-blue">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">Tgl Awal</th>
+                                                            <th class="text-center">Tgl Akhir</th>
+                                                            <th class="text-center"></th>
+                                                            <th class="text-center"></th>
+                                                            <th class="text-center"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="date" id="idfilter_dari"
+                                                                    class="form-control" onchange="syn()"
+                                                                    value="{{ date('Y-01-01') }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="date" id="idfilter_sampai"
+                                                                    class="form-control " onchange="syn()"
+                                                                    value="{{ date('Y-m-d') }}">
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="btn btn-primary btn-icon"
+                                                                    aria-label="Button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                        <path d="M21 21l-6 -6" />
+                                                                    </svg>
+                                                                </a>
+                                                                <input class="btn btn-primary" type="reset"
+                                                                    value="Reset">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table style="width:100%; height: 100%;font-size:13px;"
+                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-item">
+                                                </table>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="tabs-mesin">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="card-header">
-                                                    <h5>Laporan Pemakaian By Mesin</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <div class="form-group">
-                                                                <label for="start_date">Start Date</label>
-                                                                <input type="date" class="form-control"
-                                                                    id="start_date" name="start_date" required>
-                                                            </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabs-mesin">
+                                        <div class="card card-xl shadow rounded border border-blue">
+                                            <div class="card-header">
+                                                <h5>Laporan Pemakaian By Mesin</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <div class="form-group">
+                                                            <label for="start_date">Start Date</label>
+                                                            <input type="date" class="form-control" id="start_date"
+                                                                name="start_date" required>
                                                         </div>
-                                                        <div class="col-md-5">
-                                                            <div class="form-group">
-                                                                <label for="end_date">End Date</label>
-                                                                <input type="date" class="form-control" id="end_date"
-                                                                    name="end_date" required>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="form-group">
+                                                            <label for="end_date">End Date</label>
+                                                            <input type="date" class="form-control" id="end_date"
+                                                                name="end_date" required>
                                                         </div>
-                                                        <div class="col-md-2 d-flex align-items-end">
-                                                            <button type="submit"
-                                                                class="btn btn-primary btn-block">Search</button>
-                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 d-flex align-items-end">
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-block">Search</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="tabs-grafik">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="col-md-12">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <h3 class="card-title">Grafik Laporan Pemakaian</h3>
-                                                            <div id="chart-uptime"></div>
-                                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabs-grafik">
+                                        <div class="card card-xl shadow rounded border border-blue">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Grafik Laporan Pemakaian</h3>
+                                                        <div id="chart-uptime"></div>
                                                     </div>
                                                 </div>
                                             </div>

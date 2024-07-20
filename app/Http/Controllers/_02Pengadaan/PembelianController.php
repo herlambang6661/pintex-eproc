@@ -11,6 +11,7 @@ class PembelianController extends Controller
     {
         return view('products.02_pengadaan.pembelian', [
             'active' => 'Pembelian',
+            'judul' => 'Pembelian'
         ]);
     }
 }

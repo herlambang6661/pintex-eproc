@@ -11,6 +11,7 @@ class PengambilanController extends Controller
     {
         return view('products.04_teknik.pengambilan', [
             'active' => 'Pengambilan',
+            'judul' => 'Pengambilan'
         ]);
     }
 }

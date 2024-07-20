@@ -11,6 +11,7 @@ class PenerimaanController extends Controller
     {
         return view('products.03_gudang.penerimaan', [
             'active' => 'Penerimaan',
+            'judul' => 'Penerimaan'
         ]);
     }
 }

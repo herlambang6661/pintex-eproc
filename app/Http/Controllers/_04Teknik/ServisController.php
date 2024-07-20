@@ -11,6 +11,7 @@ class ServisController extends Controller
     {
         return view('products.04_teknik.servis', [
             'active' => 'Servis',
+            'judul' => 'Servis'
         ]);
     }
 }

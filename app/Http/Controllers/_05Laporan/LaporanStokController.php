@@ -11,6 +11,7 @@ class LaporanStokController extends Controller
     {
         return view('products.05_laporan.laporan_stok', [
             'active' => 'Stok',
+            'judul' => 'Laporan Stok',
         ]);
     }
 }

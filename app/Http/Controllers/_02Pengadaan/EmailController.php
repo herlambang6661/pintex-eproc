@@ -10,7 +10,8 @@ class EmailController extends Controller
     public function email()
     {
         return view('products.02_pengadaan.email', [
-            'active' => 'ProsesEmail'
+            'active' => 'ProsesEmail',
+            'judul' => 'Email'
         ]);
     }
 }

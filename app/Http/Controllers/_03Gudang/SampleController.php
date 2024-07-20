@@ -11,6 +11,7 @@ class SampleController extends Controller
     {
         return view('products.03_gudang.sample', [
             'active' => 'Sample',
+            'judul' => 'Sample'
         ]);
     }
 }
