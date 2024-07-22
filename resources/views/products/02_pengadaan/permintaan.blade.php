@@ -945,8 +945,8 @@
                     },
                     {
                         title: 'Status',
-                        data: 'stt',
-                        name: 'stt',
+                        data: 'status',
+                        name: 'status',
                         className: 'text-center cuspad0 text-center'
                     },
                 ],
