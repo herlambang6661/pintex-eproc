@@ -853,7 +853,7 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "url": "{{ route('getPermintaanItem.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
@@ -915,8 +915,8 @@
                     },
                     {
                         title: 'Mesin',
-                        data: 'merk',
-                        name: 'merk',
+                        data: 'mesin',
+                        name: 'mesin',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
