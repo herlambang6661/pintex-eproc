@@ -10,7 +10,8 @@ class BarangTransitController extends Controller
     public function barangTransit()
     {
         return view('products.03_gudang.barang_transit', [
-            'active' => 'BarangTransit'
+            'active' => 'BarangTransit',
+            'judul' => 'Barang Transit',
         ]);
     }
 }

@@ -11,6 +11,7 @@ class StatusBarangController extends Controller
     {
         return view('products.02_pengadaan.status_barang', [
             'active' => 'StatusBarang',
+            'judul' => 'Status Barang',
         ]);
     }
 }

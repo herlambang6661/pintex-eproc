@@ -11,6 +11,7 @@ class ReturController extends Controller
     {
         return view('products.04_teknik.retur', [
             'active' => 'Retur',
+            'judul' => 'Retur'
         ]);
     }
 }

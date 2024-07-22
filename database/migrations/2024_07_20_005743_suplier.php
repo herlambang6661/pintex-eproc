@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->timestamps();
 
-            $table->foreign('uang_id')->references('id')->on('gd_uang');
+            $table->foreign('uang_id')->references('id')->on('uang');
         });
     }
 
@@ -42,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suplier');
+        Schema::dropIfExists('pajak');
     }
 };

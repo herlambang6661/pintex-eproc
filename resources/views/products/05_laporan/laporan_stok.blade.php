@@ -79,7 +79,7 @@
                 <div class="container-xl">
                     <div class="row row-deck">
                         <div class="col-md-12">
-                            <div class="card transparent-card">
+                            <div class="card transparent-card card-xl shadow rounded border border-blue">
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
@@ -111,85 +111,81 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="card-body">
-                                    <div class="tab-content">
-                                        <div class="tab-pane" id="tabs-supplier">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <h5>Laporan Stok Barang</h5>
-                                                            <small class="text-danger"><b>Silahkan pilih item penarikan
-                                                                    laporan</b></small>
-                                                            <select name="barang" id="barang"
-                                                                class="form-select elementbarang" data-select2-id="barang"
-                                                                tabindex="-1" aria-placeholder="Cari Barang">
-                                                            </select>
-                                                        </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane" id="tabs-supplier">
+                                        <div class="card card-xl shadow rounded border border-blue">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <h5>Laporan Stok Barang</h5>
+                                                        <small class="text-danger"><b>Silahkan pilih item penarikan
+                                                                laporan</b></small>
+                                                        <select name="barang" id="barang"
+                                                            class="form-select elementbarang" data-select2-id="barang"
+                                                            tabindex="-1" aria-placeholder="Cari Barang">
+                                                        </select>
+                                                    </div>
 
-                                                        <div class="col-md-2 d-flex align-items-end">
-                                                            <button type="submit" class="btn btn-primary btn-block">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="2"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                    <path d="M21 21l-6 -6" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
+                                                    <div class="col-md-2 d-flex align-items-end">
+                                                        <button type="submit" class="btn btn-primary btn-block">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                <path d="M21 21l-6 -6" />
+                                                            </svg>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane active show" id="tabs-item">
-                                            <div class="card card-xl shadow rounded border border-blue">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <h5>Laporan Detail Stok</h5>
-                                                            <small class="text-danger"><b>Silahkan pilih item</b></small>
-                                                            <select name="kabag" id="kabag"
-                                                                class="form-select elementkabag" data-select2-id="kabag"
-                                                                tabindex="-1" aria-hidden="true">
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2 d-flex align-items-end">
-                                                            <button type="submit" class="btn btn-primary btn-block"
-                                                                style="margin-right: 10px">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="2"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                    <path d="M21 21l-6 -6" />
-                                                                </svg>
-                                                                Search
-                                                            </button>
-                                                            <button type="submit" class="btn btn-info btn-block">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="2"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path
-                                                                        d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
-                                                                    <path
-                                                                        d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
-                                                                    <path
-                                                                        d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
-                                                                    <path
-                                                                        d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
-                                                                </svg>
-                                                                Tampilkan semua</button>
-                                                        </div>
+                                    </div>
+                                    <div class="tab-pane active show" id="tabs-item">
+                                        <div class="card card-xl shadow rounded border border-blue">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <h5>Laporan Detail Stok</h5>
+                                                        <small class="text-danger"><b>Silahkan pilih item</b></small>
+                                                        <select name="kabag" id="kabag"
+                                                            class="form-select elementkabag" data-select2-id="kabag"
+                                                            tabindex="-1" aria-hidden="true">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2 d-flex align-items-end">
+                                                        <button type="submit" class="btn btn-primary btn-block"
+                                                            style="margin-right: 10px">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                <path d="M21 21l-6 -6" />
+                                                            </svg>
+                                                            Search
+                                                        </button>
+                                                        <button type="submit" class="btn btn-info btn-block">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path
+                                                                    d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
+                                                                <path
+                                                                    d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
+                                                                <path
+                                                                    d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
+                                                                <path
+                                                                    d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
+                                                            </svg>
+                                                            Tampilkan semua</button>
                                                     </div>
                                                 </div>
                                             </div>

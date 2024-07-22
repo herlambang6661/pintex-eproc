@@ -79,7 +79,7 @@
                                 <div class="card h-100">
                                     <div class="card-body d-flex flex-column align-items-center">
                                         <span class="avatar avatar-xl mb-3 rounded"
-                                            style="background-image: url(assets/static/avatars/000m.jpg)"></span>
+                                            style="background-image: url(assets/static/avatar.png)"></span>
                                         <h3 class="m-0 mb-1"><a href="#">{{ $item->name }}</a></h3>
                                         <div class="text-secondary">{{ $item->username }}</div>
                                         <div class="mt-3">

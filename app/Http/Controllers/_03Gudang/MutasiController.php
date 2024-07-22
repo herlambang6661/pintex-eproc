@@ -11,6 +11,7 @@ class MutasiController extends Controller
     {
         return view('products.03_gudang.mutasi', [
             'active' => 'Mutasi',
+            'judul' => 'Mutasi'
         ]);
     }
 }

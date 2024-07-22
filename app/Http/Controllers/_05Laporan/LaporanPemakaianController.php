@@ -11,6 +11,7 @@ class LaporanPemakaianController extends Controller
     {
         return view('products.05_laporan.laporan_pemakaian', [
             'active' => 'Pemakaian',
+            'judul' => 'Laporan Pemakaian',
         ]);
     }
 }
