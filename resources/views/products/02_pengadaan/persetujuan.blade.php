@@ -117,6 +117,7 @@
                             <div class="card transparent-card card-xl shadow rounded border border-blue">
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                                        {{-- TAB HEADER PROSES QTY PERSETUJUAN --}}
                                         <li class="nav-item">
                                             <a href="#tabs-qty-persetujuan" class="nav-link active" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -133,6 +134,7 @@
                                                 Proses QTY Persetujuan
                                             </a>
                                         </li>
+                                        {{-- TAB HEADER PROSES PERSETUJUAN --}}
                                         <li class="nav-item">
                                             <a href="#tabs-persetujuan" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -153,6 +155,7 @@
                                                 Proses Persetujuan
                                             </a>
                                         </li>
+                                        {{-- TAB HEADER REJECT --}}
                                         <li class="nav-item">
                                             <a href="#tabs-list-reject" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -166,6 +169,7 @@
                                                 Item List Reject
                                             </a>
                                         </li>
+                                        {{-- TAB HEADER HOLD --}}
                                         <li class="nav-item">
                                             <a href="#tabs-list-hold" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -237,7 +241,7 @@
                                                     </div>
                                                 </div>
                                                 <table style="width:100%; height: 100%;font-size:13px;"
-                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-qty-persetujuan">
+                                                    class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-qty-persetujuan">
                                                 </table>
                                             </div>
                                         </div>
@@ -483,7 +487,7 @@
                 "dom": "<'card-header h3' B>" +
                     "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 "lengthMenu": [
                     [25, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
@@ -509,6 +513,9 @@
                     {
                         className: 'btn btn-blue',
                         text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg> Proses Acc Qty Permintaan',
+                        action: function(e, node, config) {
+                            $('#myModalCheck').modal('show')
+                        }
                     },
                 ],
                 "language": {
@@ -525,6 +532,12 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses Qty Acc ",
+                        }
+                    },
                 },
                 "ajax": {
                     "url": "{{ route('getPermintaan.index') }}",
@@ -533,16 +546,33 @@
                         data.tipe = $('#qtyacc').val();
                         data.dari = $('#fqtydari').val();
                         data.sampai = $('#fqtysampai').val();
+
+
+                        // data.dari = $('#idfilter_dari').val();
+                        // data.sampai = $('#idfilter_sampai').val();
+                        // data.mesin = $('#idfilter_mesin').val();
+                        // data.unit = $('#unit').val();
+                        // data.status = $('#status').val();
                     }
                 },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": false,
+                    'className': 'select-checkbox',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                select: {
+                    'style': 'multi',
+                    "selector": 'td:not(:nth-child(2))',
+                },
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         title: 'Tgl Permintaan',
@@ -566,7 +596,7 @@
                         title: 'Barang',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        className: "cuspad0 clickable"
                     },
                     {
                         title: 'QTY Minta',
@@ -590,7 +620,7 @@
                         title: 'Unit/Mesin',
                         data: 'mesin',
                         name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 clickable"
                     },
                 ],
 

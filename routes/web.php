@@ -123,7 +123,6 @@ Route::controller(PermintaanController::class)->group(function () {
     Route::get('getMasterPemesan', 'getMasterPemesan')->name('getMasterPemesan');
     // Permintaan
     Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
-    Route::get('getPermintaanItem', 'getPermintaanItem')->name('getPermintaanItem.index');
     Route::post('storedataPermintaan', 'storePermintaan');
     Route::post('pengadaan/printPermintaan', 'printPermintaan')->name('pengadaan/printPermintaan');
     Route::post('pengadaan/viewPermintaan', 'viewPermintaan')->name('pengadaan/viewPermintaan');

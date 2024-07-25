@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pengadaan\PermintaanItm;
+use App\Http\Controllers\_02Pengadaan\PermintaanController;
+
 
 class PermintaanList extends Controller
 {
@@ -38,9 +40,11 @@ class PermintaanList extends Controller
                 $sampai = date('Y-m-28');
             }
 
-            // if ($request->tipe == 'qtyacc') {
-            //     $status = $request->dari;
-            // }
+            if ($request->tipe == 'qtyacc') {
+                $status = "PROSES PERSETUJUAN";
+            } else {
+                $status = '%%';
+            }
 
             // $data = DB::table('permintaanitm AS pe')
             //     ->whereBetween('pe.tgl', [$dari, $sampai])
@@ -52,7 +56,7 @@ class PermintaanList extends Controller
                 // ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_mesinitm')
                 ->whereBetween('pe.tgl', [$dari, $sampai])
                 // ->where('pe.unit', 'like', $unit)
-                // ->where('pe.status', 'like', $status)
+                ->where('pe.status', 'like', $status)
                 ->orderBy('pe.kodeseri', 'desc')
                 ->get();
 
@@ -66,31 +70,31 @@ class PermintaanList extends Controller
                     $m = Carbon::parse($row->tgl)->format('d/m/Y');
                     return $m;
                 })
-                // ->addColumn('merk', function ($row) {
-                //     $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $row->mesin)->first();
-                //     return $m->mesin . " " . $m->merk;
-                //     // return $row->mesin;
-                // })
-                // ->addColumn('stt', function ($row) {
-                //     if ($row->status == 'PROSES PERSETUJUAN') {
-                //         $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
-                //     } elseif ($row->status == 'ACC') {
-                //         $c = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span> <b class="text-purple">' . $row->status . '</b>';
-                //     } elseif ($row->status == 'HOLD') {
-                //         $c = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span> <b class="text-orange">' . $row->status . '</b>';
-                //     } elseif ($row->status == 'REJECT') {
-                //         $c = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span> <b class="text-red">' . $row->status . '</b>';
-                //     } elseif ($row->status == 'PROSES PEMBELIAN') {
-                //         $c = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span> <b class="text-lime">' . $row->status . '</b>';
-                //     } elseif ($row->status == 'DIBELI') {
-                //         $c = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span> <b class="text-green">' . $row->status . '</b>';
-                //     } elseif ($row->status == 'DITERIMA') {
-                //         $c = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span> <b class="text-teal">' . $row->status . '</b>';
-                //     } else {
-                //         $c = '<span class="status-dot status-dot-animated status-dark"></span> <b class="text-dark">' . $row->status . '</b>';
-                //     }
-                //     return $c;
-                // })
+                ->addColumn('mesin', function ($row) {
+                    $permintaanController = new PermintaanController();
+                    $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    return $m;
+                })
+                ->addColumn('status', function ($row) {
+                    if ($row->status == 'PROSES PERSETUJUAN') {
+                        $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
+                    } elseif ($row->status == 'ACC') {
+                        $c = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span> <b class="text-purple">' . $row->status . '</b>';
+                    } elseif ($row->status == 'HOLD') {
+                        $c = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span> <b class="text-orange">' . $row->status . '</b>';
+                    } elseif ($row->status == 'REJECT') {
+                        $c = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span> <b class="text-red">' . $row->status . '</b>';
+                    } elseif ($row->status == 'PROSES PEMBELIAN') {
+                        $c = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span> <b class="text-lime">' . $row->status . '</b>';
+                    } elseif ($row->status == 'DIBELI') {
+                        $c = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span> <b class="text-green">' . $row->status . '</b>';
+                    } elseif ($row->status == 'DITERIMA') {
+                        $c = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span> <b class="text-teal">' . $row->status . '</b>';
+                    } else {
+                        $c = '<span class="status-dot status-dot-animated status-dark"></span> <b class="text-dark">' . $row->status . '</b>';
+                    }
+                    return $c;
+                })
                 ->addColumn('action', function ($row) {
                     // Menampilkan button edit jika kondisi edited di dalam db = 0
                     if (($row->edited == 0 || $row->edited == null) && $row->status == 'PROSES PERSETUJUAN') {
@@ -140,7 +144,10 @@ class PermintaanList extends Controller
                         </div>';
                     return $btn;
                 })
-                ->rawColumns(['action', 'stt', 'tgl'])
+                ->editColumn('select_orders', function ($row) {
+                    return '';
+                })
+                ->rawColumns(['action', 'select_orders', 'status', 'tgl'])
                 ->make(true);
         }
 

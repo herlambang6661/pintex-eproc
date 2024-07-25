@@ -852,7 +852,7 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaanItem.index') }}",
+                    "url": "{{ route('getPermintaan.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
