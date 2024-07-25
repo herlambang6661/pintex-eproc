@@ -102,13 +102,12 @@
                                 </ul>
                                 <ul class="nav">
                                     <a href="#tabs-profile-8"
-                                        class="nav-link btn btn-primary d-sm-none btn-icon border border-primary"
+                                        class="active btn btn-primary d-sm-none btn-icon border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab"
                                         aria-label="List Item Permintaan" style="margin-right: 10px">
                                         <i class="fa-solid fa-list-ul"></i>
                                     </a>
-                                    <a href="#tabs-home-8"
-                                        class="nav-link btn btn-warning d-sm-none btn-icon border border-warning"
+                                    <a href="#tabs-home-8" class="btn btn-warning d-sm-none btn-icon border border-warning"
                                         data-bs-toggle="tab" aria-selected="true" role="tab"
                                         aria-label="Tambah Permintaan">
                                         <i class="fa-solid fa-hand-holding-medical"></i>
@@ -143,7 +142,7 @@
                                                     <tr>
                                                         <td>
                                                             <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()" value="{{ date('Y-01-01') }}">
+                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
                                                         </td>
                                                         <td>
                                                             <input type="date" id="idfilter_sampai"
@@ -218,7 +217,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="control-group col-lg-9">
-                                                    <div class="card">
+                                                    <div class="card mb-2">
                                                         <div class="card-stamp card-stamp-lg">
                                                             <div class="card-stamp-icon bg-primary text-white">
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
