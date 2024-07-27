@@ -360,6 +360,71 @@
         </div>
     </div>
     {{-- Modal Start --}}
+    <div class="modal modal-blur fade" id="modalChecklistQty" tabindex="-1" role="dialog" aria-hidden="true">
+        <style>
+            .overlay {
+                position: fixed;
+                top: 0;
+                z-index: 100;
+                width: 100%;
+                height: 100%;
+                display: none;
+                background: rgba(0, 0, 0, 0.6);
+            }
+
+            .cv-spinner {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .spinner {
+                width: 40px;
+                height: 40px;
+                border: 4px #ddd solid;
+                border-top: 4px #2e93e6 solid;
+                border-radius: 50%;
+                animation: sp-anime 0.8s infinite linear;
+            }
+
+            @keyframes sp-anime {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .is-hide {
+                display: none;
+            }
+        </style>
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form id="formCheckWawancara" name="formCheckWawancara" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fa-solid fa-user-check" style="margin-right: 5px"></i> Proses
+                            Qty Acc Permintaan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-qtyacc-checklist"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="filterTableQtyPermintaan"
         aria-labelledby="filterTableQtyPermintaan">
         <div class="offcanvas-header">
@@ -514,7 +579,7 @@
                         className: 'btn btn-blue',
                         text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg> Proses Acc Qty Permintaan',
                         action: function(e, node, config) {
-                            $('#myModalCheck').modal('show')
+                            $('#modalChecklistQty').modal('show')
                         }
                     },
                 ],
@@ -624,6 +689,45 @@
                     },
                 ],
 
+            });
+
+            var selected = new Array();
+
+            $('#modalChecklistQty').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tablePermintaan.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePermintaan.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccQty') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-qtyacc-checklist').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
             });
         });
 

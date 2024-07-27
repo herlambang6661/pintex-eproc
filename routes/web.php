@@ -132,6 +132,7 @@ Route::controller(PermintaanController::class)->group(function () {
 Route::controller(PersetujuanController::class)->group(function () {
     Route::get('pengadaan/persetujuan', 'persetujuan')->name('pengadaan/persetujuan');
     Route::post('/persetujuan/ajax_list_prosesQTY', 'ajax_list_prosesQTY')->name('proses.qty');
+    Route::post('checkAccQty', 'checkAccQty');
 });
 
 Route::controller(EmailController::class)->group(function () {
