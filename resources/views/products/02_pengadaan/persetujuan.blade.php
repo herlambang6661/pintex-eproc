@@ -643,49 +643,49 @@
                         title: 'Tgl Permintaan',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'Kodeseri',
                         data: 'kodeseri',
                         name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'Noform',
                         data: 'noform',
                         name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'Barang',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 clickable"
+                        className: "cuspad0 clickable cursor-pointer"
                     },
                     {
                         title: 'QTY Minta',
                         data: 'qty',
                         name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'Satuan',
                         data: 'satuan',
                         name: 'satuan',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'Pemesan',
                         data: 'pemesan',
                         name: 'pemesan',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'Unit/Mesin',
                         data: 'mesin',
                         name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
 
