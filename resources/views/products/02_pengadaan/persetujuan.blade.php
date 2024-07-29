@@ -35,7 +35,6 @@
         @include('shared.sidebar')
         <!-- Navbar -->
         @include('shared.navbar')
-
         <div class="page-wrapper">
             <!-- Page header -->
             <div class="page-header d-print-none">
@@ -605,10 +604,11 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "type": "POST",
+                    "url": "{{ route('getACCPermintaan.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
-                        data.tipe = $('#qtyacc').val();
+                        data.tipe = 'qtyacc';
                         data.dari = $('#fqtydari').val();
                         data.sampai = $('#fqtysampai').val();
 
@@ -770,9 +770,11 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "type": "POST",
+                    "url": "{{ route('getACCPermintaan.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
+                        data.tipe = 'persetujuan';
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
                     }
@@ -885,9 +887,11 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "type": "POST",
+                    "url": "{{ route('getACCPermintaan.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
+                        data.tipe = 'reject';
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
                     }
@@ -1003,9 +1007,11 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "type": "POST",
+                    "url": "{{ route('getACCPermintaan.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
+                        data.tipe = 'hold';
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
                     }

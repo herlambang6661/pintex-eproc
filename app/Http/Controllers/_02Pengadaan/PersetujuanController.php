@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\_02Pengadaan;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
 
@@ -26,6 +28,81 @@ class PersetujuanController extends Controller
         );
     }
 
+    public function getACCPermintaan(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-01');
+            }
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-28');
+            }
+
+            if ($request->tipe == 'qtyacc') {
+                $status = "PROSES PERSETUJUAN";
+            } elseif ($request->tipe == 'persetujuan') {
+                $status = "MENUNGGU ACC";
+            } elseif ($request->tipe == 'reject') {
+                $status = "REJECT";
+            } elseif ($request->tipe == 'hold') {
+                $status = "HOLD";
+            }
+
+            $data = DB::table('permintaanitm AS pe')
+                ->whereBetween('pe.tgl', [$dari, $sampai])
+                ->where('pe.status', 'like', $status)
+                ->orderBy('pe.kodeseri', 'desc')
+                ->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('tgl', function ($row) {
+                    $m = Carbon::parse($row->tgl)->format('d/m/Y');
+                    return $m;
+                })
+                ->addColumn('action', function ($row) {
+                    $m = Carbon::parse($row->tgl)->format('d/m/Y');
+                    return $m;
+                })
+                ->addColumn('mesin', function ($row) {
+                    $permintaanController = new PermintaanController();
+                    $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    return $m;
+                })
+                ->addColumn('status', function ($row) {
+                    if ($row->status == 'PROSES PERSETUJUAN') {
+                        $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
+                    } elseif ($row->status == 'ACC') {
+                        $c = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span> <b class="text-purple">' . $row->status . '</b>';
+                    } elseif ($row->status == 'HOLD') {
+                        $c = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span> <b class="text-orange">' . $row->status . '</b>';
+                    } elseif ($row->status == 'REJECT') {
+                        $c = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span> <b class="text-red">' . $row->status . '</b>';
+                    } elseif ($row->status == 'PROSES PEMBELIAN') {
+                        $c = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span> <b class="text-lime">' . $row->status . '</b>';
+                    } elseif ($row->status == 'DIBELI') {
+                        $c = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span> <b class="text-green">' . $row->status . '</b>';
+                    } elseif ($row->status == 'DITERIMA') {
+                        $c = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span> <b class="text-teal">' . $row->status . '</b>';
+                    } else {
+                        $c = '<span class="status-dot status-dot-animated status-dark"></span> <b class="text-dark">' . $row->status . '</b>';
+                    }
+                    return $c;
+                })
+                ->editColumn('select_orders', function ($row) {
+                    return '';
+                })
+                ->rawColumns(['select_orders', 'status', 'tgl'])
+                ->make(true);
+        }
+
+        return view('products.02_pengadaan.persetujuan');
+    }
+
     public function checkAccQty(Request $request)
     {
         $permintaanController = new PermintaanController();
@@ -34,16 +111,23 @@ class PersetujuanController extends Controller
             echo "<center>Tidak ada data yang dipilih</center>";
         } else {
             $jml = count($request->id);
+            $dataPembeli = DB::table('person')->where('pembelian', '=', 1)->get();
+            // $dataEstimasi = DB::table('barang')->where('', '=', '')->first();
+            echo '<datalist id="pembeli">';
+            foreach ($dataPembeli as $p) {
+                echo '<option value="' . strtoupper($p->nama) . '">' . strtoupper($p->nama) . '</option>';
+            }
+            echo '</datalist>';
 
             echo '
                     <div class="row">
                         <div class="col-lg-3 col-md-12">
                                 <label class="form-label">Tanggal</label>
-                                <input type="date" class="form-control" name="tglwawancara" value="' . date("Y-m-d") . '">
+                                <input name="tgl" type="date" class="form-control bg-secondary-lt cursor-not-allowed" readonly value="' . date("Y-m-d") . '">
                         </div>
                         <div class="col-lg-9 col-md-12">
                                 <label class="form-label">Pembeli</label>
-                                <input type="text" class="form-control" name="user" placeholder="User yang ikut mewawancarai" value="Kartika Dewi, ">
+                                <input name="pembeli" list="pembeli" type="text" class="form-control" value="ANDRI">
                         </div>
                     </div>
                     <hr>
@@ -53,7 +137,7 @@ class PersetujuanController extends Controller
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('permintaanitm')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
-                    echo  '<input type="hidden" name="idlamaran[]" value="' . $u->id . '" >';
+                    echo  '<input type="hidden" name="idpermintaan[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '" >';
                     echo '
                         <style>
@@ -66,11 +150,13 @@ class PersetujuanController extends Controller
                                     transform: scale(1.01);
                                 }
                         </style>
-                        <div class="card cards shadow border-green table-hover">
+                        <div class="card cards shadow border-green table-hover" id="kartu-' . $u->id . '">
                             <div class="row g-0">
                                 <div class="col-auto">
                                     <div class="card-body">
-                                        <div class="avatar avatar-md shadow" style="background-image: url(./static/jobs/job-1.jpg)"></div>
+                                        <div class="avatar avatar-md shadow cursor-pointer bg-orange-lt">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col">
@@ -82,7 +168,7 @@ class PersetujuanController extends Controller
                                             <div class="col-sm-4">
                                                 <h3 class="mb-0">Qty : ' . $u->qty . ' ' . $u->satuan . '</h3>
                                             </div>
-                                            <div class="col-auto font-italic text-green">Qty ACC : <input type="number" style="width: 100px" name="" id=""></div>
+                                            <div class="col-auto font-italic text-green">Qty ACC : <input name="qtyAcc[]" type="number" style="width: 100px" id="" value="' . $u->qty . '"></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md">
@@ -117,21 +203,56 @@ class PersetujuanController extends Controller
                                             </div>
                                             <div class="col-md-auto">
                                                 <div class="mt-3 badges">
-                                                    <div class="badge badge-outline text-secondary fw-normal badge-pill">' . $u->pemesan . '</div>
-                                                    <div class="badge badge-outline text-secondary fw-normal badge-pill">' . $u->unit . '</div>
-                                                    <div class="badge badge-outline text-secondary fw-normal badge-pill">' . $permintaanController->getMesinPermintaan($u->mesin) . '</div>
-                                                    <i class="text-green">Estimasi Harga : <input type="number" style="width: 100px" name="" id=""></i>
+                                                    <i class="text-green">Estimasi Harga : <input name="estimasiHarga[]" type="number" style="width: 100px"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card-footer pt-0 ps-0 pe-0 pb-0">
+                                    <table class="table table-sm table-card text-center text-blue">
+                                        <tr>
+                                            <td>Pemesan: ' . $u->pemesan . '</td>
+                                            <td>' . $u->unit . '</td>
+                                            <td>Mesin: ' . $permintaanController->getMesinPermintaan($u->mesin) . '</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         ';
+
+                    echo '
+                    <div id="hasilcari-' . $u->id . '"></div>
+                    <div id="tunggu-' . $u->id . '"></div>';
                 }
             }
             echo '      </div>';
+            echo '
+                    <script>
+                        function getDetails(id, namabrg) {
+                            $.ajax({
+                                type: "POST",
+                                url: "persetujuan/carihistory",
+                                data: {
+                                    keyword: namabrg,
+                                },
+                                beforeSend: function() {
+                                    $("#hasilcari-id").hide();
+                                    $("#tunggu-id").html(
+                                        "<center><p style="color:black"><strong>Tunggu sebentar, Sedang menarik data...</strong></p></center>"
+                                    );
+                                },
+                                success: function(html) {
+                                    $("#overlay2").fadeOut(300);
+                                    $("#tunggu-id").html("");
+                                    $("#hasilcari-id").show();
+                                    $("#hasilcari-id").html(html);
+                                }
+                            });
+                        }
+                    </script>
+                ';
         }
     }
 }

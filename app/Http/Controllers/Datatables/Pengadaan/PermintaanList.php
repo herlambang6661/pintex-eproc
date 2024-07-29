@@ -40,23 +40,8 @@ class PermintaanList extends Controller
                 $sampai = date('Y-m-28');
             }
 
-            if ($request->tipe == 'qtyacc') {
-                $status = "PROSES PERSETUJUAN";
-            } else {
-                $status = '%%';
-            }
-
-            // $data = DB::table('permintaanitm AS pe')
-            //     ->whereBetween('pe.tgl', [$dari, $sampai])
-            //     ->orderBy('pe.kodeseri', 'desc')
-            //     ->get();
-
             $data = DB::table('permintaanitm AS pe')
-                // ->select('pe.id', 'pe.kodeseri', 'pe.noform', 'pe.tgl', 'pe.namaBarang', 'pe.keterangan', 'pe.katalog', 'pe.part', 'mi.merk', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli', 'pe.status', 'pe.edited', 'pe.unit')
-                // ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_mesinitm')
                 ->whereBetween('pe.tgl', [$dari, $sampai])
-                // ->where('pe.unit', 'like', $unit)
-                ->where('pe.status', 'like', $status)
                 ->orderBy('pe.kodeseri', 'desc')
                 ->get();
 
@@ -151,7 +136,7 @@ class PermintaanList extends Controller
                 ->make(true);
         }
 
-        return view('products.02_administrasi.suratkontrak');
+        return view('products.02_pengadaan.permintaan');
     }
 
     public function destroy($id)
