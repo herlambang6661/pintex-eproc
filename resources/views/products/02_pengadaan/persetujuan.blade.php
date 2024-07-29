@@ -404,11 +404,13 @@
         </div>
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <form id="formCheckWawancara" name="formCheckWawancara" method="post" action="javascript:void(0)">
+                <form id="formQtyACCPermintaan" name="formQtyACCPermintaan" method="post" action="javascript:void(0)">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title"><i class="fa-solid fa-user-check" style="margin-right: 5px"></i> Proses
-                            Qty Acc Permintaan</h5>
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-user-check" style="margin-right: 5px"></i> 
+                            Proses Qty Acc Permintaan
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -612,7 +614,6 @@
                         data.dari = $('#fqtydari').val();
                         data.sampai = $('#fqtysampai').val();
 
-
                         // data.dari = $('#idfilter_dari').val();
                         // data.sampai = $('#idfilter_sampai').val();
                         // data.mesin = $('#idfilter_mesin').val();
@@ -729,6 +730,84 @@
                     }, 500);
                 });
             });
+            
+            if ($("#formQtyACCPermintaan").length > 0) {
+                $("#formQtyACCPermintaan").validate({
+                    rules: {
+                        pembeli: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        pembeli: {
+                            required: "Masukkan Pembeli",
+                        },
+                    },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitCheck').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitCheck").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storeQtyPermintaan') }}",
+                            type: "POST",
+                            data: $('#formQtyACCPermintaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                                tablePermintaan.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalChecklistQty').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tablePermintaan.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
         });
 
         //---------------PERSETUJUAN----------------------------------//

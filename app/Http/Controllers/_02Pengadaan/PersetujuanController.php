@@ -118,7 +118,6 @@ class PersetujuanController extends Controller
                 echo '<option value="' . strtoupper($p->nama) . '">' . strtoupper($p->nama) . '</option>';
             }
             echo '</datalist>';
-
             echo '
                     <div class="row">
                         <div class="col-lg-3 col-md-12">
@@ -133,7 +132,41 @@ class PersetujuanController extends Controller
                     <hr>
                     <div class="space-y">
                     ';
+            echo '
+                    <script>
+                        function getDetails(id, kodeseri, nama) {
+                            $.ajax({
+                                type: "POST",
+                                url: "' . route("persetujuan/carihistory") . '",
+                                data: {
+                                    "_token": "' . $request->_token . '",
+                                    keyword: nama,
+                                },
+                                beforeSend: function() {
+                                    $(".open-"+id).hide();
+                                    $(".close-"+id).show();
 
+                                    $("#tunggu-"+id).show();
+                                    $("#hasilcari-"+id).hide();
+                                    $("#tunggu-"+id).html(
+                                        `<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari riwayat Pembelian `+nama+`<span class="animated-dots"></span></strong></p></center>`
+                                    );
+                                },
+                                success: function(html) {
+                                    $("#overlay2").fadeOut(300);
+                                    $("#tunggu-"+id).html("");
+                                    $("#hasilcari-"+id).show();
+                                    $("#hasilcari-"+id).html(html);
+                                }
+                            });
+                        }
+                        function closeDetails(id) {
+                            $("#hasilcari-"+id).hide();
+                            $(".open-"+id).show();
+                            $(".close-"+id).hide();
+                        }
+                    </script>
+                ';
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('permintaanitm')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
@@ -154,8 +187,11 @@ class PersetujuanController extends Controller
                             <div class="row g-0">
                                 <div class="col-auto">
                                     <div class="card-body">
-                                        <div class="avatar avatar-md shadow cursor-pointer bg-orange-lt">
+                                        <div class="avatar avatar-md shadow cursor-pointer bg-yellow-lt open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+                                        </div>
+                                        <div class="avatar avatar-md shadow cursor-pointer bg-red-lt close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +204,7 @@ class PersetujuanController extends Controller
                                             <div class="col-sm-4">
                                                 <h3 class="mb-0">Qty : ' . $u->qty . ' ' . $u->satuan . '</h3>
                                             </div>
-                                            <div class="col-auto font-italic text-green">Qty ACC : <input name="qtyAcc[]" type="number" style="width: 100px" id="" value="' . $u->qty . '"></div>
+                                            <div class="col-auto font-italic text-green">Qty ACC : <input name="qtyAcc[]" type="number" min="1" style="width: 100px" id="" value="' . $u->qty . '"></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md">
@@ -223,36 +259,66 @@ class PersetujuanController extends Controller
                         ';
 
                     echo '
-                    <div id="hasilcari-' . $u->id . '"></div>
-                    <div id="tunggu-' . $u->id . '"></div>';
+                    <div id="hasilcari-' . $u->id . '" style="display:none"></div>
+                    <div id="tunggu-' . $u->id . '" style="display:none"></div>';
                 }
             }
             echo '      </div>';
-            echo '
-                    <script>
-                        function getDetails(id, namabrg) {
-                            $.ajax({
-                                type: "POST",
-                                url: "persetujuan/carihistory",
-                                data: {
-                                    keyword: namabrg,
-                                },
-                                beforeSend: function() {
-                                    $("#hasilcari-id").hide();
-                                    $("#tunggu-id").html(
-                                        "<center><p style="color:black"><strong>Tunggu sebentar, Sedang menarik data...</strong></p></center>"
-                                    );
-                                },
-                                success: function(html) {
-                                    $("#overlay2").fadeOut(300);
-                                    $("#tunggu-id").html("");
-                                    $("#hasilcari-id").show();
-                                    $("#hasilcari-id").html(html);
-                                }
-                            });
-                        }
-                    </script>
-                ';
+        }
+    }
+
+    public function cariRiwayat(Request $request)
+    {
+        if (!empty($request->keyword)) {
+            $cari = trim(strip_tags($request->keyword));
+            if ($cari == '') {
+            } else {
+                // $dataPem = $this->permintaan->getDetailBarangPembelian($cari);
+                // $dataQty = $this->permintaan->getDetailBarangQtyGudang($cari);
+?>
+                <div class="row" style="color:black">
+                    <div class="col-lg-6">
+                        <label style="color:black;">Riwayat Pembelian <strong><?= $cari ?></strong></label>
+                        <div class="card-body" style="overflow-y: scroll; height: 200px">
+                            <table border="1" class="text-nowrap" style="width:100%;color:black;text-transform:uppercase;text-align: center;font-size: 12px">
+                                <thead class="bg-dark text-white" style="font-size:12px;">
+                                    <tr>
+                                        <td>Tanggal</td>
+                                        <td>Kodeseri</td>
+                                        <td>Barang</td>
+                                        <td>Deskripsi</td>
+                                        <td>Merk</td>
+                                        <td>Qty</td>
+                                        <td>Harga Satuan</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label style="color:black;">Detail Qty <strong><?= $cari ?></strong> di Gudang</label>
+                        <div class="card-body" style="overflow-y: scroll; height: 260px">
+                            <table border="1" class="text-nowrap" style="width:100%;color:black;text-transform:uppercase;text-align: center;font-size: 12px">
+                                <thead class="bg-dark text-white" style="font-size:12px;">
+                                    <tr>
+                                        <td>Kodeseri</td>
+                                        <td>Barang</td>
+                                        <td>Deskripsi</td>
+                                        <td>Merk</td>
+                                        <td>Qty Terima</td>
+                                        <td>Qty Diambil</td>
+                                        <td>Sisa</td>
+                                        <td>Satuan</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+<?php
+            }
         }
     }
 }

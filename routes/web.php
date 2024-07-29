@@ -133,7 +133,7 @@ Route::controller(PersetujuanController::class)->group(function () {
     Route::get('pengadaan/persetujuan', 'persetujuan')->name('pengadaan/persetujuan');
     Route::post('/persetujuan/ajax_list_prosesQTY', 'ajax_list_prosesQTY')->name('proses.qty');
     Route::post('checkAccQty', 'checkAccQty');
-    Route::post('carihistory', 'carihistory');
+    Route::post('persetujuan/carihistory', 'cariRiwayat')->name('persetujuan/carihistory');
     Route::post('getACCPermintaan', 'getACCPermintaan')->name('getACCPermintaan.index');
 });
 
