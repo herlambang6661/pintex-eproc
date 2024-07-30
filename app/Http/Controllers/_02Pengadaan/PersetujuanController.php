@@ -279,7 +279,7 @@ class PersetujuanController extends Controller
                 <div class="row" style="color:black">
                     <div class="col-lg-6">
                         <label style="color:black;">Riwayat Pembelian <strong><?= $cari ?></strong></label>
-                        <div class="card-body" style="overflow-y: scroll; height: 200px">
+                        <div class="card-body" style="overflow-y: scroll; height: 150px">
                             <table border="1" class="text-nowrap" style="width:100%;color:black;text-transform:uppercase;text-align: center;font-size: 12px">
                                 <thead class="bg-dark text-white" style="font-size:12px;">
                                     <tr>
@@ -299,7 +299,7 @@ class PersetujuanController extends Controller
                     </div>
                     <div class="col-lg-6">
                         <label style="color:black;">Detail Qty <strong><?= $cari ?></strong> di Gudang</label>
-                        <div class="card-body" style="overflow-y: scroll; height: 260px">
+                        <div class="card-body" style="overflow-y: scroll; height: 150px">
                             <table border="1" class="text-nowrap" style="width:100%;color:black;text-transform:uppercase;text-align: center;font-size: 12px">
                                 <thead class="bg-dark text-white" style="font-size:12px;">
                                     <tr>
@@ -320,5 +320,37 @@ class PersetujuanController extends Controller
 <?php
             }
         }
+    }
+
+    public function storeQtyPermintaan(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+                'pembeli' => 'required',
+            ],
+        );
+        $jml = count($request->kodeseri);
+
+        for ($i = 0; $i < $jml; $i++) {
+            $check = DB::table('permintaanitm')
+                ->where('id', $request->idpermintaan[$i])
+                ->limit(1)
+                ->update(
+                    array(
+                        'pembeli' => $request->pembeli,
+                        'qtyacc' => $request->qtyAcc[$i],
+                        'estimasiharga' => $request->estimasiHarga[$i],
+                        'status' => 'MENUNGGU ACC',
+                        'remember_token' => $request->_token,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+        }
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        }
+        return Response()->json($arr);
     }
 }

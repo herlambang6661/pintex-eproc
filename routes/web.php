@@ -135,6 +135,7 @@ Route::controller(PersetujuanController::class)->group(function () {
     Route::post('checkAccQty', 'checkAccQty');
     Route::post('persetujuan/carihistory', 'cariRiwayat')->name('persetujuan/carihistory');
     Route::post('getACCPermintaan', 'getACCPermintaan')->name('getACCPermintaan.index');
+    Route::post('storeQtyPermintaan', 'storeQtyPermintaan')->name('storeQtyPermintaan');
 });
 
 Route::controller(EmailController::class)->group(function () {

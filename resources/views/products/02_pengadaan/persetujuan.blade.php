@@ -295,7 +295,6 @@
                                             {{-- <div class="table-responsive"> --}}
                                             <table style="width:100%; height: 100%;font-size:13px;"
                                                 class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
-                                                </thead>
                                             </table>
                                             {{-- </div> --}}
                                             {{-- </div> --}}
@@ -415,6 +414,74 @@
                     </div>
                     <div class="modal-body">
                         <div class="fetched-data-qtyacc-checklist"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal modal-blur fade" id="modalAccept" tabindex="-1" role="dialog" aria-hidden="true">
+        <style>
+            .overlay {
+                position: fixed;
+                top: 0;
+                z-index: 100;
+                width: 100%;
+                height: 100%;
+                display: none;
+                background: rgba(0, 0, 0, 0.6);
+            }
+
+            .cv-spinner {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .spinner {
+                width: 40px;
+                height: 40px;
+                border: 4px #ddd solid;
+                border-top: 4px #2e93e6 solid;
+                border-radius: 50%;
+                animation: sp-anime 0.8s infinite linear;
+            }
+
+            @keyframes sp-anime {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .is-hide {
+                display: none;
+            }
+        </style>
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form id="formACCPermintaan" name="formACCPermintaan" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-check" style="margin-right: 5px"></i> 
+                            Proses Acc Permintaan
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-acc-checklist"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
@@ -830,7 +897,7 @@
                     "className": 'btn btn-info',
                     "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
                     "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
+                        $('#modalAccept').modal('show')
                     }
                 }],
                 "language": {
@@ -847,6 +914,12 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses ACC ",
+                        }
+                    },
                 },
                 "ajax": {
                     "type": "POST",
@@ -858,68 +931,74 @@
                         data.sampai = $('#idfilter_sampai').val();
                     }
                 },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": false,
+                    'className': 'select-checkbox',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                select: {
+                    'style': 'multi',
+                    "selector": 'td:not(:nth-child(2))',
+                },
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         title: 'TGL PERMINTAAN',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        className: "cuspad0 clickable cursor-pointer"
                     },
                     {
                         title: 'MESIN',
                         data: 'mesin',
                         name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'DESKRIPSI',
                         data: 'keterangan',
                         name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'QTY MINTA',
                         data: 'qty',
                         name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'SATUAN',
                         data: 'satuan',
                         name: 'satuan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'PEMESAN',
                         data: 'pemesan',
                         name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'UNIT/MESIN',
                         data: 'unit',
                         name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
-                ],
-                columnDefs: [{
-                    orderable: false,
-                    targets: 0
-                }],
+                ]
             });
 
             $('#filter_id').on('click change', function() {
