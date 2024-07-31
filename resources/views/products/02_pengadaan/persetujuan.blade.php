@@ -358,7 +358,6 @@
         </div>
     </div>
     {{-- Modal Start --}}
-    <div class="modal modal-blur fade" id="modalChecklistQty" tabindex="-1" role="dialog" aria-hidden="true">
         <style>
             .overlay {
                 position: fixed;
@@ -396,6 +395,7 @@
                 display: none;
             }
         </style>
+    <div class="modal modal-blur fade" id="modalChecklistQty" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="overlay">
             <div class="cv-spinner">
                 <span class="spinner"></span>
@@ -427,43 +427,6 @@
     </div>
     
     <div class="modal modal-blur fade" id="modalAccept" tabindex="-1" role="dialog" aria-hidden="true">
-        <style>
-            .overlay {
-                position: fixed;
-                top: 0;
-                z-index: 100;
-                width: 100%;
-                height: 100%;
-                display: none;
-                background: rgba(0, 0, 0, 0.6);
-            }
-
-            .cv-spinner {
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .spinner {
-                width: 40px;
-                height: 40px;
-                border: 4px #ddd solid;
-                border-top: 4px #2e93e6 solid;
-                border-radius: 50%;
-                animation: sp-anime 0.8s infinite linear;
-            }
-
-            @keyframes sp-anime {
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            .is-hide {
-                display: none;
-            }
-        </style>
         <div class="overlay">
             <div class="cv-spinner">
                 <span class="spinner"></span>
@@ -611,7 +574,10 @@
         }
 
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-qty-persetujuan').DataTable({
+            var selected = new Array();
+            // TABLE ---------------------------------------------------------//
+            //---------------QTY PERSETUJUAN----------------------------------//
+            var tablePermintaanQty = $('.datatable-qty-persetujuan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -698,7 +664,7 @@
                 }],
                 select: {
                     'style': 'multi',
-                    "selector": 'td:not(:nth-child(2))',
+                    // "selector": 'td:not(:nth-child(2))',
                 },
                 "columns": [{
                         data: 'select_orders',
@@ -759,127 +725,8 @@
 
             });
 
-            var selected = new Array();
-
-            $('#modalChecklistQty').on('show.bs.modal', function(e) {
-                $(".overlay").fadeIn(300);
-                itemTables = [];
-                // console.log(count);
-
-                $.each(tablePermintaan.rows('.selected').nodes(), function(index, rowId) {
-                    var rows_selected = tablePermintaan.rows('.selected').data();
-                    itemTables.push(rows_selected[index]['id']);
-                });
-                console.log(itemTables);
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                //menggunakan fungsi ajax untuk pengambilan data
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('checkAccQty') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        id: itemTables,
-                        jml: itemTables.length,
-                    },
-                    success: function(data) {
-                        //menampilkan data ke dalam modal
-                        $('.fetched-data-qtyacc-checklist').html(data);
-                        // alert(itemTables);
-                    }
-                }).done(function() {
-                    setTimeout(function() {
-                        $(".overlay").fadeOut(300);
-                    }, 500);
-                });
-            });
-            
-            if ($("#formQtyACCPermintaan").length > 0) {
-                $("#formQtyACCPermintaan").validate({
-                    rules: {
-                        pembeli: {
-                            required: true,
-                        },
-                    },
-                    messages: {
-                        pembeli: {
-                            required: "Masukkan Pembeli",
-                        },
-                    },
-
-                    submitHandler: function(form) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $('#submitCheck').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                        $("#submitCheck").attr("disabled", true);
-                        $.ajax({
-                            url: "{{ url('storeQtyPermintaan') }}",
-                            type: "POST",
-                            data: $('#formQtyACCPermintaan').serialize(),
-                            beforeSend: function() {
-                                Swal.fire({
-                                    title: 'Mohon Menunggu',
-                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
-                                    showConfirmButton: false,
-                                    timerProgressBar: true,
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                })
-                            },
-                            success: function(response) {
-                                console.log('Completed.');
-                                $('#submitCheck').html(
-                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
-                                );
-                                $("#submitCheck").attr("disabled", false);
-                                tablePermintaan.ajax.reload();
-                                const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 4000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
-                                    }
-                                });
-                                Toast.fire({
-                                    icon: "success",
-                                    title: response.msg,
-                                });
-                                $('#modalChecklistQty').modal('hide');
-                            },
-                            error: function(data) {
-                                console.log('Error:', data);
-                                tablePermintaan.ajax.reload();
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Gagal Input',
-                                    html: data.responseJSON.message,
-                                    showConfirmButton: true
-                                });
-                                $('#submitCheck').html(
-                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
-                                );
-                                $("#submitCheck").attr("disabled", false);
-                            }
-                        });
-                    }
-                })
-            }
-        });
-
-        //---------------PERSETUJUAN----------------------------------//
-        $(document).ready(function() {
-            var tablePermintaan = $('.datatable-persetujuan').DataTable({
+            //---------------PERSETUJUAN-------------------------------------//
+            var tablePermintaanAcc = $('.datatable-persetujuan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -941,7 +788,7 @@
                 }],
                 select: {
                     'style': 'multi',
-                    "selector": 'td:not(:nth-child(2))',
+                    // "selector": 'td:not(:nth-child(2))',
                 },
                 "columns": [{
                         data: 'select_orders',
@@ -1001,14 +848,8 @@
                 ]
             });
 
-            $('#filter_id').on('click change', function() {
-                tablePermintaan.ajax.reload(null, false);
-            });
-        });
-
-        //---------------REJECT----------------------------------------//
-        $(document).ready(function() {
-            var tablePermintaan = $('.datatable-reject').DataTable({
+            //---------------REJECT-----------------------------------------//
+            var tablePermintaanRjt = $('.datatable-reject').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -1120,15 +961,8 @@
                 ],
             });
 
-            $('#filter_id').on('click change', function() {
-                tablePermintaan.ajax.reload(null, false);
-            });
-        });
-
-
-        //---------------HOLD-----------------------------------------//
-        $(document).ready(function() {
-            var tablePermintaan = $('.datatable-hold').DataTable({
+            //---------------HOLD------------------------------------------//
+            var tablePermintaanHld = $('.datatable-hold').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -1241,6 +1075,172 @@
                 ],
 
             });
+
+            //---------------FILTER------------------------------------------//
+            $('#filter_id').on('click change', function() {
+                tablePermintaanQty.ajax.reload(null, false);
+            });
+
+            $('#filter_id').on('click change', function() {
+                tablePermintaanQty.ajax.reload(null, false);
+            });
+            // TABLE ---------------------------------------------------------//
+
+            // FORM INPUT ---------------------------------------------------------//
+            if ($("#formQtyACCPermintaan").length > 0) {
+                $("#formQtyACCPermintaan").validate({
+                    rules: {
+                        pembeli: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        pembeli: {
+                            required: "Masukkan Pembeli",
+                        },
+                    },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitCheck').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitCheck").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storeQtyPermintaan') }}",
+                            type: "POST",
+                            data: $('#formQtyACCPermintaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                                tablePermintaanQty.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalChecklistQty').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tablePermintaanQty.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+            // FORM INPUT ---------------------------------------------------------//
+            
+            // MODAL ---------------------------------------------------------//
+            $('#modalChecklistQty').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tablePermintaanQty.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePermintaanQty.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccQty') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-qtyacc-checklist').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('#modalAccept').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tablePermintaanAcc.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePermintaanAcc.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccept') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-acc-checklist').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            // MODAL ---------------------------------------------------------//
         });
     </script>
 @endsection

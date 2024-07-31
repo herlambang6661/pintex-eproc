@@ -135,7 +135,10 @@ Route::controller(PersetujuanController::class)->group(function () {
     Route::get('pengadaan/persetujuan', 'persetujuan')->name('pengadaan/persetujuan');
     Route::post('/persetujuan/ajax_list_prosesQTY', 'ajax_list_prosesQTY')->name('proses.qty');
     Route::post('checkAccQty', 'checkAccQty');
+    Route::post('checkAccept', 'checkAccept');
+
     Route::post('persetujuan/carihistory', 'cariRiwayat')->name('persetujuan/carihistory');
+    Route::post('persetujuan/cariDetail', 'cariDetailbarang')->name('persetujuan/cariDetail');
     Route::post('getACCPermintaan', 'getACCPermintaan')->name('getACCPermintaan.index');
     Route::post('storeQtyPermintaan', 'storeQtyPermintaan')->name('storeQtyPermintaan');
 });
