@@ -31,24 +31,29 @@ class PersetujuanController extends Controller
     public function getACCPermintaan(Request $request)
     {
         if ($request->ajax()) {
-            if ($request->dari) {
-                $dari = $request->dari;
-            } else {
-                $dari = date('Y-m-01');
-            }
-            if ($request->sampai) {
-                $sampai = $request->sampai;
-            } else {
-                $sampai = date('Y-m-28');
-            }
-
             if ($request->tipe == 'qtyacc') {
+                if ($request->dari) {
+                    $dari = $request->dari;
+                } else {
+                    $dari = date('Y-m-01');
+                }
+                if ($request->sampai) {
+                    $sampai = $request->sampai;
+                } else {
+                    $sampai = date('Y-m-28');
+                }
                 $status = "PROSES PERSETUJUAN";
             } elseif ($request->tipe == 'persetujuan') {
+                $dari = date('2021-m-d');
+                $sampai = date('Y-m-d');
                 $status = "MENUNGGU ACC";
             } elseif ($request->tipe == 'reject') {
+                $dari = date('2021-m-d');
+                $sampai = date('Y-m-d');
                 $status = "REJECT";
             } elseif ($request->tipe == 'hold') {
+                $dari = date('2021-m-d');
+                $sampai = date('Y-m-d');
                 $status = "HOLD";
             }
 
@@ -94,7 +99,22 @@ class PersetujuanController extends Controller
                     return $c;
                 })
                 ->editColumn('select_orders', function ($row) {
-                    return '';
+                    if ($row->urgent == 1) {
+                        $opsi = '
+                            <div data-bs-toggle="tooltip" data-bs-placement="top" title="Urgent">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-filled icon-tada text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M17.451 2.344a1 1 0 0 1 1.41 -.099a12.05 12.05 0 0 1 3.048 4.064a1 1 0 1 1 -1.818 .836a10.05 10.05 0 0 0 -2.54 -3.39a1 1 0 0 1 -.1 -1.41z" stroke-width="0" fill="currentColor"></path>
+                                    <path d="M5.136 2.245a1 1 0 0 1 1.312 1.51a10.05 10.05 0 0 0 -2.54 3.39a1 1 0 1 1 -1.817 -.835a12.05 12.05 0 0 1 3.045 -4.065z" stroke-width="0" fill="currentColor"></path>
+                                    <path d="M14.235 19c.865 0 1.322 1.024 .745 1.668a3.992 3.992 0 0 1 -2.98 1.332a3.992 3.992 0 0 1 -2.98 -1.332c-.552 -.616 -.158 -1.579 .634 -1.661l.11 -.006h4.471z" stroke-width="0" fill="currentColor"></path>
+                                    <path d="M12 2c1.358 0 2.506 .903 2.875 2.141l.046 .171l.008 .043a8.013 8.013 0 0 1 4.024 6.069l.028 .287l.019 .289v2.931l.021 .136a3 3 0 0 0 1.143 1.847l.167 .117l.162 .099c.86 .487 .56 1.766 -.377 1.864l-.116 .006h-16c-1.028 0 -1.387 -1.364 -.493 -1.87a3 3 0 0 0 1.472 -2.063l.021 -.143l.001 -2.97a8 8 0 0 1 3.821 -6.454l.248 -.146l.01 -.043a3.003 3.003 0 0 1 2.562 -2.29l.182 -.017l.176 -.004z" stroke-width="0" fill="currentColor"></path>
+                                </svg>
+                            </div>
+                        ';
+                    } else {
+                        $opsi = '';
+                    }
+                    return $opsi;
                 })
                 ->rawColumns(['select_orders', 'status', 'tgl'])
                 ->make(true);
@@ -172,6 +192,18 @@ class PersetujuanController extends Controller
                 foreach ($data as $u) {
                     echo  '<input type="hidden" name="idpermintaan[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '" >';
+                    if ($u->urgent == 1) {
+                        $urgent = 'border-cyan bg-cyan-lt';
+                        $ribbon = '
+                            <div class="ribbon ribbon-bottom ribbon-start bg-red">
+                                <svg style="margin-right:5px" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tada icon-tabler icons-tabler-outline icon-tabler-bell-ringing"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /><path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" /><path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" /></svg>
+                                Urgent
+                            </div>
+                        ';
+                    } else {
+                        $urgent = 'border-green';
+                        $ribbon = '';
+                    }
                     echo '
                         <style>
                                 .cards{
@@ -183,7 +215,8 @@ class PersetujuanController extends Controller
                                     transform: scale(1.01);
                                 }
                         </style>
-                        <div class="card cards shadow border-green table-hover" id="kartu-' . $u->id . '">
+                        <div class="card cards shadow ' . $urgent . ' table-hover" id="kartu-' . $u->id . '">
+                            ' . $ribbon . '
                             <div class="row g-0">
                                 <div class="col-auto">
                                     <div class="card-body">
@@ -286,7 +319,7 @@ class PersetujuanController extends Controller
                                 url: "' . route("persetujuan/cariDetail") . '",
                                 data: {
                                     "_token": "' . $request->_token . '",
-                                    keyword: nama,
+                                    keyword: kodeseri,
                                 },
                                 beforeSend: function() {
                                     $(".open-"+id).hide();
@@ -295,7 +328,7 @@ class PersetujuanController extends Controller
                                     $("#tunggu-"+id).show();
                                     $("#hasilcari-"+id).hide();
                                     $("#tunggu-"+id).html(
-                                        `<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari riwayat Pembelian `+nama+`<span class="animated-dots"></span></strong></p></center>`
+                                        `<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari Detail Pembelian `+nama+`<span class="animated-dots"></span></strong></p></center>`
                                     );
                                 },
                                 success: function(html) {
@@ -333,7 +366,7 @@ class PersetujuanController extends Controller
                             <div class="row g-0">
                                 <div class="col-auto">
                                     <div class="card-body">
-                                        <div class="avatar avatar-md shadow cursor-pointer bg-pink-lt open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
+                                        <div class="avatar avatar-md shadow cursor-pointer bg-green-lt open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-list-details"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 5h8" /><path d="M13 9h5" /><path d="M13 15h8" /><path d="M13 19h5" /><path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></svg>
                                         </div>
                                         <div class="avatar avatar-md shadow cursor-pointer bg-red-lt close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
@@ -348,14 +381,14 @@ class PersetujuanController extends Controller
                                                 <h3 class="mb-0">' . $u->namaBarang . '</h3>
                                             </div>
                                             <div class="col-sm-4">
-                                                <h3 class="mb-0">Qty : ' . $u->qty . ' ' . $u->satuan . '</h3>
+                                                <h3 class="mb-0">Qty : ' . $u->qtyacc . ' ' . $u->satuan . '</h3>
                                             </div>
                                             <div class="col-auto font-italic text-green">
                                                 Status ACC : 
-                                                <select name="statusAcc" id="statusAcc">
+                                                <select name="statusAcc[]" id="statusAcc">
                                                     <option value="ACC">ACC</option>
-                                                    <option value="ACC">HOLD</option>
-                                                    <option value="ACC">REJECT</option>
+                                                    <option value="HOLD">HOLD</option>
+                                                    <option value="REJECT">REJECT</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -390,20 +423,28 @@ class PersetujuanController extends Controller
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-auto">
+                                                <div class="mt-3 badges">
+                                                    <i class="text-green">Ket. Acc. : <input name="ketAcc[]" type="text" style="width: 150px"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer pt-0 ps-0 pe-0 pb-0">
-                                    <table class="table table-sm table-card text-center text-blue">
-                                        <tr>
+                                    <table class="table table-sm table-card text-blue">
+                                        <tr class="text-center">
                                             <td>Pemesan: ' . $u->pemesan . '</td>
                                             <td>' . $u->unit . '</td>
                                             <td>Mesin: ' . $permintaanController->getMesinPermintaan($u->mesin) . '</td>
                                         </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div id="hasilcari-' . $u->id . '" style="display:none"></div>
+                                                <div id="tunggu-' . $u->id . '" style="display:none"></div>
+                                            </td>
+                                        </tr>
                                     </table>
-                                    
-                                    <div id="hasilcari-' . $u->id . '" style="display:none"></div>
-                                    <div id="tunggu-' . $u->id . '" style="display:none"></div>
                                 </div>
                             </div>
                         </div>
@@ -476,31 +517,49 @@ class PersetujuanController extends Controller
             $cari = trim(strip_tags($request->keyword));
             if ($cari == '') {
             } else {
-                // $dataPem = $this->permintaan->getDetailBarangPembelian($cari);
-                // $dataQty = $this->permintaan->getDetailBarangQtyGudang($cari);
+                $dataPermintaan = DB::table('permintaanitm')->where('kodeseri', '=', $cari)->first();
                 echo '
-                <div class="row" style="color:black">
-                    <div class="col-lg-6">
-                        <label style="color:black;">Riwayat Pembelian <strong><?= $cari ?></strong></label>
-                        <div class="card-body" style="overflow-y: scroll; height: 150px">
-                            <table border="1" class="text-nowrap" style="width:100%;color:black;text-transform:uppercase;text-align: center;font-size: 12px">
-                                <thead class="bg-dark text-white" style="font-size:12px;">
-                                    <tr>
-                                        <td>Tanggal</td>
-                                        <td>Kodeseri</td>
-                                        <td>Barang</td>
-                                        <td>Deskripsi</td>
-                                        <td>Merk</td>
-                                        <td>Qty</td>
-                                        <td>Harga Satuan</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>';
+                    <div class="table-responsive">
+                        <table class="table table-sm table-vcenter card-table">
+                            <tbody>
+                                <tr>
+                                    <td>Tanggal</td>
+                                    <td class="text-secondary"> : ' . Carbon::parse($dataPermintaan->tgl)->format('d/m/Y') . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td>Kodeseri</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->estimasiharga . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Barang</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->namaBarang . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td>Deskripsi</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->keterangan . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Merk</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->part . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td>Qty Permintaan</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->qty . ' ' . $dataPermintaan->satuan . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Estimasi Harga</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->estimasiharga . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td>Peruntukan</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->peruntukan . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Dibeli</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->dibeli . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td></td>
+                                    <td class="text-secondary"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>';
             }
         }
     }
@@ -521,11 +580,42 @@ class PersetujuanController extends Controller
                 ->limit(1)
                 ->update(
                     array(
+                        'tgl_qty_acc' => date('Y-m-d'),
                         'pembeli' => $request->pembeli,
                         'qtyacc' => $request->qtyAcc[$i],
                         'estimasiharga' => $request->estimasiHarga[$i],
                         'status' => 'MENUNGGU ACC',
                         'remember_token' => $request->_token,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+        }
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
+    public function storeAccPermintaan(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+            ],
+        );
+        $jml = count($request->kodeseri);
+
+        for ($i = 0; $i < $jml; $i++) {
+            $check = DB::table('permintaanitm')
+                ->where('id', $request->idpermintaan[$i])
+                ->limit(1)
+                ->update(
+                    array(
+                        'status' => $request->statusAcc[$i],
+                        'statusACC' => $request->statusAcc[$i],
+                        'keteranganACC' => $request->ketAcc[$i],
+                        'tgl_acc' => date('Y-m-d'),
                         'updated_at' => date('Y-m-d H:i:s'),
                     )
                 );

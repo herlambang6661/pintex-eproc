@@ -76,7 +76,7 @@ class PermintaanController extends Controller
         if ($request->has('q')) {
             $search = $request->q;
             $mesin = DB::table('mastermesin AS me')
-                ->select(DB::raw('DISTINCT(merk),me.id, mesin, id_mesinitm, unit'))
+                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm, mesin, id_mesinitm as id, unit'))
                 ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
                 ->where('me.mesin', 'LIKE', "%$search%")
                 ->orWhere('mi.merk', 'LIKE', "%$search%")
@@ -84,7 +84,7 @@ class PermintaanController extends Controller
                 ->get();
         } else {
             $mesin = DB::table('mastermesin AS me')
-                ->select(DB::raw('DISTINCT(merk),me.id, mesin, id_mesinitm, unit'))
+                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm, mesin, id_mesinitm as id, unit'))
                 ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
                 ->orderBy('me.mesin', 'ASC')
                 ->get();
@@ -186,6 +186,12 @@ class PermintaanController extends Controller
             //     $this->permintaan->savedesk($inputDataDeskripsi); // <====================== INPUT
             // }
 
+            if ($request->urgent[$i] == '1') {
+                $urgent = '1';
+            } else {
+                $urgent = '0';
+            }
+
             $check = DB::table('permintaanitm')->insert([
 
                 'remember_token'    => $request->_token,
@@ -208,7 +214,7 @@ class PermintaanController extends Controller
                 'proses_email' => '0',
                 'proses_po' => '0',
                 'partial' => '0',
-                'urgent' => '0',
+                'urgent' => $urgent,
                 'status' => "PROSES PERSETUJUAN",
                 'DIBUAT'            => Auth::user()->name,
                 'created_at'        => date('Y-m-d H:i:s'),
