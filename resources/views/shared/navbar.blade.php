@@ -185,8 +185,11 @@
                                 <path d="M21 21l-6 -6" />
                             </svg>
                         </span>
-                        <input type="text" value="" class="form-control" placeholder="Search…"
-                            aria-label="Search in website">
+                        <select class="searchengine" id="searchengine" class="form-control" style="width:100%;"
+                            data-id="12"></select>
+
+                        {{-- <input type="text" value="" class="form-control" placeholder="Search…"
+                            aria-label="Search in website"> --}}
                     </div>
                 </form>
             </div>

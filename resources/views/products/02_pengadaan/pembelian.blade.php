@@ -44,16 +44,15 @@
                         <div class="col">
                             <!-- Page pre-title -->
                             <h2 class="page-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                    class="icon icon-tabler icon-tabler-shopping-cart-dollar" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                    <path d="M13 17h-7v-14h-2" />
-                                    <path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" />
-                                    <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
-                                    <path d="M19 21v1m0 -8v1" />
+                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 17h-11v-14h-2" />
+                                    <path d="M6 5l14 1l-1 7h-13" />
                                 </svg>
                                 Pembelian
                             </h2>
@@ -64,7 +63,7 @@
                                     <li class="breadcrumb-item"><a href="https://pintex.co.id/apps/HR/Recruitment"><i
                                                 class="fa-solid fa-basket-shopping"></i> Pengadaan</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-paste"></i> Pembelian</a></li>
+                                                class="fas fa-cart-shopping"></i> Pembelian</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -95,70 +94,53 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#tabs-qty-persetujuan" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-transaction-euro">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M21 12.8c-.523 -.502 -1.172 -.8 -1.875 -.8c-1.727 0 -3.125 1.791 -3.125 4s1.398 4 3.125 4c.703 0 1.352 -.298 1.874 -.8" />
-                                                    <path d="M15 16h4" />
-                                                    <path d="M5 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                    <path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                    <path d="M7 5h8" />
-                                                    <path d="M7 5v8a3 3 0 0 0 3 3h1" />
-                                                </svg>
-                                                Detail Pembelian
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
                                             <a href="#tabs-persetujuan" class="nav-link active" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-credit-card-pay">
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 19h-6a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5" />
-                                                    <path d="M3 10h18" />
-                                                    <path d="M16 19h6" />
-                                                    <path d="M19 16l3 3l-3 3" />
-                                                    <path d="M7.005 15h.005" />
-                                                    <path d="M11 15h2" />
+                                                    <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                    <path d="M13 17h-7v-14h-2" />
+                                                    <path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" />
+                                                    <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                                    <path d="M19 21v1m0 -8v1" />
                                                 </svg>
                                                 List Pembelian
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#tabs-list-reject" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-navigation-check">
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-list-check">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M17.487 14.894l-5.487 -11.894l-7.97 17.275c-.07 .2 -.017 .424 .135 .572c.15 .148 .374 .193 .57 .116l6.275 -2.127" />
-                                                    <path d="M15 19l2 2l4 -4" />
+                                                    <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M11 6l9 0" />
+                                                    <path d="M11 12l9 0" />
+                                                    <path d="M11 18l9 0" />
                                                 </svg>
                                                 Form Checklist Pembelian
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#tabs-list-hold" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-list-details">
+                                            <a href="#tabs-list-hold" class="nav-link" data-bs-toggle="tab"><svg
+                                                    xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-settings-cancel">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M13 5h8" />
-                                                    <path d="M13 9h5" />
-                                                    <path d="M13 15h8" />
-                                                    <path d="M13 19h5" />
                                                     <path
-                                                        d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-                                                    <path
-                                                        d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                                        d="M12.29 20.977c-.818 .132 -1.724 -.3 -1.965 -1.294a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c.983 .238 1.416 1.126 1.298 1.937" />
+                                                    <path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                                    <path d="M17 21l4 -4" />
+                                                    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                                 </svg>
                                                 Form Checklist Servis
                                             </a>
@@ -166,56 +148,6 @@
                                     </ul>
                                 </div>
                                 <div class="tab-content">
-                                    <div class="tab-pane" id="tabs-qty-persetujuan">
-                                        <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center">Tgl Awal</th>
-                                                            <th class="text-center">Tgl Akhir</th>
-                                                            <th class="text-center"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="date" id="idfilter_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"
-                                                                            fill="none" />
-                                                                        <path
-                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                        <path d="M21 21l-6 -6" />
-                                                                    </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table style="width:100%; height: 100%;font-size:13px;"
-                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-detail-pembelian">
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="tab-pane active show" id="tabs-persetujuan">
                                         <div class="card card-xl shadow rounded border border-blue">
                                             <div class="table-responsive">

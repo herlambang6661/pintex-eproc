@@ -35,3 +35,123 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script src="{{ asset('assets/extentions/richtext/jquery.richtext.min.js') }}"></script>
 <script src="{{ asset('assets/extentions/jquery.mask.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $(".searchengine").select2({
+            language: "id",
+            theme: "bootstrap",
+            placeholder: "Pencarian Barang",
+            minimumInputLength: 3,
+            ajax: {
+                url: "/getKodeseriNama",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            },
+        });
+    });
+    $(document.body).on("change", ".searchengine", function() {
+        // console.log(this.value);
+
+        var kodeseri = this.value;
+        console.log("Mencari: " + this.value);
+        // $("#modal_body1").html(this.value);
+        $("#overlaySearch").fadeIn(300);
+        $('#modalSearchEngine').modal('show');
+        $.ajax({
+            type: 'POST',
+            url: '/searchEngineModal',
+            data: {
+                kodeseri: kodeseri
+            },
+            success: function(data) {
+                $('.fetched-data-search').html(data); //menampilkan data ke dalam modal
+            }
+        }).done(function() {
+            setTimeout(function() {
+                $("#overlaySearch").fadeOut(300);
+            }, 500);
+        });
+    });
+</script>
+
+<!-- Start Modal Detail -->
+<div class="modal fade" id="modalSearchEngine" role="dialog">
+    <style>
+        #overlaySearch {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinnerSearch {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinnerSearch {
+            width: 40px;
+            height: 40px;
+            border: 4px #ddd solid;
+            border-top: 4px #2e93e6 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+
+        @keyframes sp-anime {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .is-hide {
+            display: none;
+        }
+
+        .modal-full {
+            min-width: 100%;
+            margin: 10 10 10 10;
+        }
+
+        .modal-full .modal-content {
+            min-height: 100%;
+        }
+    </style>
+    <div id="overlaySearch">
+        <div class="cv-spinnerSearch">
+            <span class="spinnerSearch"></span>
+        </div>
+    </div>
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa-solid fa-circle-info"></i> Detail Barang</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="min-height:100%">
+                <div class="fetched-data-search"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Detail -->
