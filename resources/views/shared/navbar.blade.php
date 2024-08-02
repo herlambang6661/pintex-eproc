@@ -176,7 +176,6 @@
                 <form action="./" method="get" autocomplete="off" novalidate>
                     <div class="input-icon">
                         <span class="input-icon-addon">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/search -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -185,9 +184,7 @@
                                 <path d="M21 21l-6 -6" />
                             </svg>
                         </span>
-                        <select class="searchengine" id="searchengine" class="form-control" style="width:100%;"
-                            data-id="12"></select>
-
+                        <select class="form-control searchengine" id="searchengine"></select>
                         {{-- <input type="text" value="" class="form-control" placeholder="Search…"
                             aria-label="Search in website"> --}}
                     </div>

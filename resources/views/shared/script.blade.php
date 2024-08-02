@@ -39,22 +39,29 @@
     $(document).ready(function() {
         $(".searchengine").select2({
             language: "id",
-            theme: "bootstrap",
-            placeholder: "Pencarian Barang",
+            width: '700px',
             minimumInputLength: 3,
+            placeholder: "Pencarian Barang. Masukkan Kodeseri atau Nama Barang",
             ajax: {
-                url: "/getKodeseriNama",
-                type: "post",
+                url: "/getSearchEngine",
                 dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
+                delay: 200,
                 processResults: function(response) {
+                    console.log(response);
                     return {
-                        results: response
+                        results: $.map(response, function(item) {
+                            return {
+                                id: item.kodeseri,
+                                text: item.kodeseri +
+                                    " - " + item.namaBarang.toUpperCase() +
+                                    " " + (item.keterangan == null ? "" : item.keterangan
+                                        .toUpperCase()) +
+                                    " " + (item.katalog == null ? "" : item.katalog
+                                        .toUpperCase()) +
+                                    " " + (item.part == null ? "" : item.part
+                                        .toUpperCase()),
+                            }
+                        })
                     };
                 },
                 cache: true

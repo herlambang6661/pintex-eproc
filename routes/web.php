@@ -33,6 +33,7 @@ use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
 use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
 use App\Http\Controllers\_05Laporan\LaporanPembelianController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,10 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
 
+// Rute Dashboard
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('getSearchEngine', 'CariBarangSearchEngine')->name('getSearchEngine');
+});
 
 //Rute Master
 Route::controller(UangController::class)->group(function () {
