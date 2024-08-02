@@ -607,14 +607,20 @@ class PersetujuanController extends Controller
         $jml = count($request->kodeseri);
 
         for ($i = 0; $i < $jml; $i++) {
+            if ($request->statusAcc[$i] == 'ACC') {
+                $status = 'PROSES PEMBELIAN';
+            } else {
+                $status = $request->statusAcc[$i];
+            }
             $check = DB::table('permintaanitm')
                 ->where('id', $request->idpermintaan[$i])
                 ->limit(1)
                 ->update(
                     array(
-                        'status' => $request->statusAcc[$i],
+                        'status' => $status,
                         'statusACC' => $request->statusAcc[$i],
                         'keteranganACC' => $request->ketAcc[$i],
+                        'acc' => Auth::user()->name,
                         'tgl_acc' => date('Y-m-d'),
                         'updated_at' => date('Y-m-d H:i:s'),
                     )

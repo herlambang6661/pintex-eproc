@@ -35,6 +35,7 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script src="{{ asset('assets/extentions/richtext/jquery.richtext.min.js') }}"></script>
 <script src="{{ asset('assets/extentions/jquery.mask.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
 <script>
     $(document).ready(function() {
         $(".searchengine").select2({

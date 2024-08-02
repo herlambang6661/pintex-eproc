@@ -485,7 +485,6 @@
         </div>
     </div>
     {{-- End Modals --}}
-    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
     <script type="text/javascript">
         var unit = 'Unit 1';
 

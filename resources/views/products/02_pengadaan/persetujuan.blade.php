@@ -425,7 +425,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal modal-blur fade" id="modalAccept" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="overlay">
             <div class="cv-spinner">
