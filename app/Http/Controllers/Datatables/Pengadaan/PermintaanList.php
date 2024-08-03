@@ -37,7 +37,7 @@ class PermintaanList extends Controller
             if ($request->sampai) {
                 $sampai = $request->sampai;
             } else {
-                $sampai = date('Y-m-28');
+                $sampai = date('Y-m-d');
             }
 
             $data = DB::table('permintaanitm AS pe')

@@ -54,16 +54,16 @@
                             <div class="btn-list">
                                 <ul class="nav">
                                     <a href="#tabs-profile-8"
-                                        class="active btn btn-warning d-none d-sm-inline-block border border-warning"
+                                        class="active btn btn-white d-none d-sm-inline-block border border-primary"
                                         data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
                                         style="margin-right: 10px">
-                                        <i class="fa-solid fa-truck"></i>
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-rotate-3d"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a7 7 0 0 1 7 7v4l-3 -3" /><path d="M22 11l-3 3" /><path d="M8 15.5l-5 -3l5 -3l5 3v5.5l-5 3z" /><path d="M3 12.5v5.5l5 3" /><path d="M8 15.545l5 -3.03" /></svg>
                                         Pengambilan Barang
                                     </a>
                                     <a href="#tabs-home-8"
-                                        class="btn btn-primary d-none d-sm-inline-block border border-primary"
+                                        class="btn btn-white d-none d-sm-inline-block border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab">
-                                        <i class="fa-solid fa-list"></i>
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-checkup-list"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14h.01" /><path d="M9 17h.01" /><path d="M12 16l1 1l3 -3" /></svg>
                                         List Item Pengambilan
                                     </a>
                                 </ul>
@@ -102,10 +102,8 @@
                                                 <div class="control-group col-lg-3">
                                                     <div class="mb-1">
                                                         <label class="form-label">Kodeseri</label>
-                                                        <input name="text" class="form-control "
-                                                            placeholder="Scan QR atau Kodeseri " id="datepicker-icon"
-                                                            value="" />
-                                                        <small class="text-danger">Scan QR / Kodeseri</small>
+                                                        <input name="text" class="form-control " placeholder="Kodeseri Barang 12*****" value="" id="kodeseri" autofocus/>
+                                                        <small class="text-dark">Masukkan Kodeseri dan tekan Enter</small>
                                                     </div>
                                                 </div>
                                                 <div class="control-group col-lg-9">
@@ -131,18 +129,16 @@
                                                             </div>
                                                         </div>
                                                         <div class="card-body shadow">
-                                                            <hr>
+                                                            <div id="tunggu"></div>
                                                             <div class="col">
                                                                 <div id="hasil_cari"></div>
-                                                                <div id="tunggu"></div>
                                                                 <span id="success-msg"></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="hr-text text-blue">Pengambilan Barang</div>
-                                            <div class="row">
+                                            <div class="hr-text text-blue">Formulir Pengambilan Barang</div>
                                                 <div class="card">
                                                     <div class="card-stamp card-stamp-lg">
                                                         <div class="card-stamp-icon bg-warning text-white">
@@ -166,18 +162,8 @@
                                                         <div class="row" style="max-width: 900px;">
                                                             <div class="col-lg-4">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Kodeseri</label>
-                                                                    <input name="text" class="form-control"
-                                                                        placeholder="Scan QR atau Kodeseri" id="kodeseri"
-                                                                        value="" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Tanggal</label>
-                                                                    <input name="date" type="date"
-                                                                        class="form-control" placeholder="Pilih Tanggal"
-                                                                        id="tanggal" value="" />
+                                                                    <label class="form-label">Tanggal Formulir</label>
+                                                                    <input name="tgl" type="date" class="form-control" id="tanggal" value="{{ date('Y-m-d') }}" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
@@ -225,7 +211,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -321,8 +306,32 @@
 
             dt.ajax.reload();
         }
-
         $(document).ready(function() {
+            $("#kodeseri").keyup(function(event) {
+                if (event.keyCode === 13) {
+                    var id = document.getElementById("kodeseri").value;
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('teknik/pengambilan/cariBarang') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            keyword: id,
+                        },
+                        beforeSend: function() {
+                            $("#hasil_cari").hide();
+                            $("#tunggu").html('<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari Barang dengan kodeseri: '+id+' <span class="animated-dots"></span></strong></p></center>');
+                        },
+                        success: function(html) {
+                            $("#tunggu").html('');
+                            $("#hasil_cari").show();
+                            $("#hasil_cari").html(html);
+                            document.getElementById("kodeseri").value = "";
+                            document.getElementById("kodeseri").focus();
+                        }
+                    });
+                }
+            });
+
             var tablePengambilan = $('.datatable-pengambilan').DataTable({
                 "processing": true,
                 "serverSide": false,
@@ -372,7 +381,7 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "url": "{{ route('getPengambilan.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();

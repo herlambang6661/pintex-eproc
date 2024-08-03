@@ -6,32 +6,34 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\_01Master\UangController;
 use App\Http\Controllers\_01Master\MesinController;
+use App\Http\Controllers\_04Teknik\ReturController;
 use App\Http\Controllers\_01Master\LockerController;
+use App\Http\Controllers\_03Gudang\MutasiController;
+use App\Http\Controllers\_03Gudang\SampleController;
+use App\Http\Controllers\_04Teknik\ServisController;
 use App\Http\Controllers\_01Master\SuplierController;
+use App\Http\Controllers\_04Teknik\BarcodeController;
+use App\Http\Controllers\_02Pengadaan\EmailController;
 use App\Http\Controllers\Pengaturan\PenggunaController;
 use App\Http\Controllers\_01Master\BarangJasaController;
 use App\Http\Controllers\_01Master\TarifPajakController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-use App\Http\Controllers\_01Master\MasterBarangController;
-use App\Http\Controllers\_02Pengadaan\EmailController;
-use App\Http\Controllers\_02Pengadaan\PembelianController;
-use App\Http\Controllers\_02Pengadaan\PermintaanController;
-use App\Http\Controllers\_02Pengadaan\PersetujuanController;
-use App\Http\Controllers\_02Pengadaan\StatusBarangController;
-use App\Http\Controllers\_03Gudang\BarangTransitController;
-use App\Http\Controllers\_03Gudang\MutasiController;
 use App\Http\Controllers\_03Gudang\PenerimaanController;
 use App\Http\Controllers\_03Gudang\PengirimanController;
-use App\Http\Controllers\_03Gudang\SampleController;
-use App\Http\Controllers\_04Teknik\BarcodeController;
 use App\Http\Controllers\_04Teknik\PengambilanController;
-use App\Http\Controllers\_04Teknik\ReturController;
-use App\Http\Controllers\_04Teknik\ServisController;
-use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
-use App\Http\Controllers\_05Laporan\LaporanPembelianController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\_01Master\MasterBarangController;
+use App\Http\Controllers\_02Pengadaan\PembelianController;
 use App\Http\Controllers\_05Laporan\LaporanStokController;
+use App\Http\Controllers\_02Pengadaan\PermintaanController;
+use App\Http\Controllers\_03Gudang\BarangTransitController;
+use App\Http\Controllers\Datatables\Teknik\PengambilanList;
+use App\Http\Controllers\_02Pengadaan\PersetujuanController;
+use App\Http\Controllers\_02Pengadaan\StatusBarangController;
 use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
+use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
+use App\Http\Controllers\_05Laporan\LaporanPembelianController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,7 @@ Route::get('/', function () {
 });
 
 Route::resource('getPermintaan', PermintaanList::class);
+Route::resource('getPengambilan', PengambilanList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -57,6 +60,10 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
 
+// Rute Dashboard
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('getSearchEngine', 'CariBarangSearchEngine')->name('getSearchEngine');
+});
 
 //Rute Master
 Route::controller(UangController::class)->group(function () {
@@ -132,9 +139,13 @@ Route::controller(PersetujuanController::class)->group(function () {
     Route::get('pengadaan/persetujuan', 'persetujuan')->name('pengadaan/persetujuan');
     Route::post('/persetujuan/ajax_list_prosesQTY', 'ajax_list_prosesQTY')->name('proses.qty');
     Route::post('checkAccQty', 'checkAccQty');
+    Route::post('checkAccept', 'checkAccept');
+
     Route::post('persetujuan/carihistory', 'cariRiwayat')->name('persetujuan/carihistory');
+    Route::post('persetujuan/cariDetail', 'cariDetailbarang')->name('persetujuan/cariDetail');
     Route::post('getACCPermintaan', 'getACCPermintaan')->name('getACCPermintaan.index');
     Route::post('storeQtyPermintaan', 'storeQtyPermintaan')->name('storeQtyPermintaan');
+    Route::post('storeAccPermintaan', 'storeAccPermintaan')->name('storeAccPermintaan');
 });
 
 Route::controller(EmailController::class)->group(function () {
@@ -143,6 +154,9 @@ Route::controller(EmailController::class)->group(function () {
 
 Route::controller(PembelianController::class)->group(function () {
     Route::get('pengadaan/pembelian', 'pembelian');
+    Route::post('getPembelian', 'getDataPembelian')->name('getPembelian.index');
+    Route::post('getService', 'getDataService')->name('getService.index');
+    Route::post('checkPembelian', 'checkPembelian');
 });
 
 Route::controller(StatusBarangController::class)->group(function () {
@@ -187,6 +201,7 @@ Route::controller(BarcodeController::class)->group(function () {
 
 Route::controller(PengambilanController::class)->group(function () {
     Route::get('teknik/pengambilan', 'pengambilan');
+    Route::POST('teknik/pengambilan/cariBarang', 'pencarianBarang')->name('teknik/pengambilan/cariBarang');
 });
 
 //ROUTE LAPORAN

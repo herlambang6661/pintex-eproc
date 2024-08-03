@@ -294,7 +294,7 @@
                                             </div>
                                             {{-- <div class="table-responsive"> --}}
                                             <table style="width:100%; height: 100%;font-size:13px;"
-                                                class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
+                                                class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
                                             </table>
                                             {{-- </div> --}}
                                             {{-- </div> --}}
@@ -358,44 +358,44 @@
         </div>
     </div>
     {{-- Modal Start --}}
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px #ddd solid;
+            border-top: 4px #2e93e6 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+
+        @keyframes sp-anime {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .is-hide {
+            display: none;
+        }
+    </style>
     <div class="modal modal-blur fade" id="modalChecklistQty" tabindex="-1" role="dialog" aria-hidden="true">
-        <style>
-            .overlay {
-                position: fixed;
-                top: 0;
-                z-index: 100;
-                width: 100%;
-                height: 100%;
-                display: none;
-                background: rgba(0, 0, 0, 0.6);
-            }
-
-            .cv-spinner {
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .spinner {
-                width: 40px;
-                height: 40px;
-                border: 4px #ddd solid;
-                border-top: 4px #2e93e6 solid;
-                border-radius: 50%;
-                animation: sp-anime 0.8s infinite linear;
-            }
-
-            @keyframes sp-anime {
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            .is-hide {
-                display: none;
-            }
-        </style>
         <div class="overlay">
             <div class="cv-spinner">
                 <span class="spinner"></span>
@@ -407,7 +407,7 @@
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">
-                            <i class="fa-solid fa-user-check" style="margin-right: 5px"></i> 
+                            <i class="fa-solid fa-user-check" style="margin-right: 5px"></i>
                             Proses Qty Acc Permintaan
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -425,45 +425,7 @@
             </div>
         </div>
     </div>
-    
     <div class="modal modal-blur fade" id="modalAccept" tabindex="-1" role="dialog" aria-hidden="true">
-        <style>
-            .overlay {
-                position: fixed;
-                top: 0;
-                z-index: 100;
-                width: 100%;
-                height: 100%;
-                display: none;
-                background: rgba(0, 0, 0, 0.6);
-            }
-
-            .cv-spinner {
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .spinner {
-                width: 40px;
-                height: 40px;
-                border: 4px #ddd solid;
-                border-top: 4px #2e93e6 solid;
-                border-radius: 50%;
-                animation: sp-anime 0.8s infinite linear;
-            }
-
-            @keyframes sp-anime {
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            .is-hide {
-                display: none;
-            }
-        </style>
         <div class="overlay">
             <div class="cv-spinner">
                 <span class="spinner"></span>
@@ -475,7 +437,7 @@
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">
-                            <i class="fa-solid fa-check" style="margin-right: 5px"></i> 
+                            <i class="fa-solid fa-check" style="margin-right: 5px"></i>
                             Proses Acc Permintaan
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -484,7 +446,7 @@
                         <div class="fetched-data-acc-checklist"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
+                        <button type="submit" class="btn btn-blue" id="submitAccept"><i class="fas fa-save"
                                 style="margin-right: 5px"></i> Proses</button>
                         <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
                                 class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
@@ -493,6 +455,67 @@
             </div>
         </div>
     </div>
+    <div class="modal modal-blur fade" id="modalReject" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form id="formRejectPermintaan" name="formRejectPermintaan" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-check" style="margin-right: 5px"></i>
+                            Proses Acc Permintaan
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-reject-checklist"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitAccept"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-blur fade" id="modalHold" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form id="formHoldPermintaan" name="formHoldPermintaan" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-check" style="margin-right: 5px"></i>
+                            Proses Acc Permintaan
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-hold-checklist"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitAccept"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="offcanvas offcanvas-end" tabindex="-1" id="filterTableQtyPermintaan"
         aria-labelledby="filterTableQtyPermintaan">
         <div class="offcanvas-header">
@@ -611,7 +634,10 @@
         }
 
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-qty-persetujuan').DataTable({
+            var selected = new Array();
+            // TABLE ---------------------------------------------------------//
+            //---------------QTY PERSETUJUAN----------------------------------//
+            var tablePermintaanQty = $('.datatable-qty-persetujuan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -698,13 +724,13 @@
                 }],
                 select: {
                     'style': 'multi',
-                    "selector": 'td:not(:nth-child(2))',
+                    // "selector": 'td:not(:nth-child(2))',
                 },
                 "columns": [{
                         data: 'select_orders',
                         name: 'select_orders',
                         className: 'cuspad2',
-                        orderable: false,
+                        orderable: true,
                         searchable: false
                     },
                     {
@@ -759,127 +785,8 @@
 
             });
 
-            var selected = new Array();
-
-            $('#modalChecklistQty').on('show.bs.modal', function(e) {
-                $(".overlay").fadeIn(300);
-                itemTables = [];
-                // console.log(count);
-
-                $.each(tablePermintaan.rows('.selected').nodes(), function(index, rowId) {
-                    var rows_selected = tablePermintaan.rows('.selected').data();
-                    itemTables.push(rows_selected[index]['id']);
-                });
-                console.log(itemTables);
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                //menggunakan fungsi ajax untuk pengambilan data
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('checkAccQty') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        id: itemTables,
-                        jml: itemTables.length,
-                    },
-                    success: function(data) {
-                        //menampilkan data ke dalam modal
-                        $('.fetched-data-qtyacc-checklist').html(data);
-                        // alert(itemTables);
-                    }
-                }).done(function() {
-                    setTimeout(function() {
-                        $(".overlay").fadeOut(300);
-                    }, 500);
-                });
-            });
-            
-            if ($("#formQtyACCPermintaan").length > 0) {
-                $("#formQtyACCPermintaan").validate({
-                    rules: {
-                        pembeli: {
-                            required: true,
-                        },
-                    },
-                    messages: {
-                        pembeli: {
-                            required: "Masukkan Pembeli",
-                        },
-                    },
-
-                    submitHandler: function(form) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $('#submitCheck').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                        $("#submitCheck").attr("disabled", true);
-                        $.ajax({
-                            url: "{{ url('storeQtyPermintaan') }}",
-                            type: "POST",
-                            data: $('#formQtyACCPermintaan').serialize(),
-                            beforeSend: function() {
-                                Swal.fire({
-                                    title: 'Mohon Menunggu',
-                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
-                                    showConfirmButton: false,
-                                    timerProgressBar: true,
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                })
-                            },
-                            success: function(response) {
-                                console.log('Completed.');
-                                $('#submitCheck').html(
-                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
-                                );
-                                $("#submitCheck").attr("disabled", false);
-                                tablePermintaan.ajax.reload();
-                                const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 4000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
-                                    }
-                                });
-                                Toast.fire({
-                                    icon: "success",
-                                    title: response.msg,
-                                });
-                                $('#modalChecklistQty').modal('hide');
-                            },
-                            error: function(data) {
-                                console.log('Error:', data);
-                                tablePermintaan.ajax.reload();
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Gagal Input',
-                                    html: data.responseJSON.message,
-                                    showConfirmButton: true
-                                });
-                                $('#submitCheck').html(
-                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
-                                );
-                                $("#submitCheck").attr("disabled", false);
-                            }
-                        });
-                    }
-                })
-            }
-        });
-
-        //---------------PERSETUJUAN----------------------------------//
-        $(document).ready(function() {
-            var tablePermintaan = $('.datatable-persetujuan').DataTable({
+            //---------------PERSETUJUAN-------------------------------------//
+            var tablePermintaanAcc = $('.datatable-persetujuan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -927,8 +834,6 @@
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.tipe = 'persetujuan';
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
                     }
                 },
                 columnDefs: [{
@@ -941,13 +846,13 @@
                 }],
                 select: {
                     'style': 'multi',
-                    "selector": 'td:not(:nth-child(2))',
+                    // "selector": 'td:not(:nth-child(2))',
                 },
                 "columns": [{
                         data: 'select_orders',
                         name: 'select_orders',
                         className: 'cuspad2',
-                        orderable: false,
+                        orderable: true,
                         searchable: false
                     },
                     {
@@ -960,6 +865,24 @@
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Deskripsi',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
                         className: "cuspad0 clickable cursor-pointer"
                     },
                     {
@@ -1001,134 +924,8 @@
                 ]
             });
 
-            $('#filter_id').on('click change', function() {
-                tablePermintaan.ajax.reload(null, false);
-            });
-        });
-
-        //---------------REJECT----------------------------------------//
-        $(document).ready(function() {
-            var tablePermintaan = $('.datatable-reject').DataTable({
-                "processing": true,
-                "serverSide": false,
-                "scrollX": false,
-                "scrollCollapse": false,
-                "pagingType": 'full_numbers',
-                "dom": "<'card-header h3' B>" +
-                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
-                    "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
-                "lengthMenu": [
-                    [10, 10, 25, 50, -1],
-                    ['Default', '10', '25', '50', 'Semua']
-                ],
-                "buttons": [{
-                    "className": 'btn btn-danger',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Ubah Data',
-                    "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
-                    }
-                }, ],
-                "language": {
-                    "lengthMenu": "Menampilkan _MENU_",
-                    "zeroRecords": "Data Tidak Ditemukan",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
-                    "infoEmpty": "Data Tidak Ditemukan",
-                    "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
-                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
-                    "paginate": {
-                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
-                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
-                    },
-                },
-                "ajax": {
-                    "type": "POST",
-                    "url": "{{ route('getACCPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.tipe = 'reject';
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
-                "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
-                    },
-                    {
-                        title: 'TGL PERMINTAAN',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'KODESERI',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
-                        className: "cuspad0 text-center clickable"
-                    },
-                    {
-                        title: 'NOFORM',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'QTY MINTA',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'SATUAN',
-                        data: 'satuan',
-                        name: 'satuan',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'PEMESAN',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'UNIT/MESIN',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'KETERANGAN REJECT',
-                        data: 'keteranganACC',
-                        name: 'keteranganACC',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                ],
-            });
-
-            $('#filter_id').on('click change', function() {
-                tablePermintaan.ajax.reload(null, false);
-            });
-        });
-
-
-        //---------------HOLD-----------------------------------------//
-        $(document).ready(function() {
-            var tablePermintaan = $('.datatable-hold').DataTable({
+            //---------------REJECT-----------------------------------------//
+            var tablePermintaanRjt = $('.datatable-reject').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -1144,11 +941,11 @@
                 ],
                 "buttons": [{
                     "className": 'btn btn-info',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Ubah Data',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
                     "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
+                        $('#modalReject').modal('show')
                     }
-                }, ],
+                }],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -1163,6 +960,153 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses ACC ",
+                        }
+                    },
+                },
+                "ajax": {
+                    "type": "POST",
+                    "url": "{{ route('getACCPermintaan.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.tipe = 'reject';
+                        data.dari = $('#idfilter_dari').val();
+                        data.sampai = $('#idfilter_sampai').val();
+                    }
+                },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": false,
+                    'className': 'select-checkbox',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                select: {
+                    'style': 'multi',
+                    // "selector": 'td:not(:nth-child(2))',
+                },
+                "columns": [{
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2',
+                        orderable: true,
+                        searchable: false
+                    },
+                    {
+                        title: 'TGL PERMINTAAN',
+                        data: 'tgl',
+                        name: 'tgl',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'BARANG',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Deskripsi',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'MESIN',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'DESKRIPSI',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'QTY MINTA',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'SATUAN',
+                        data: 'satuan',
+                        name: 'satuan',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'PEMESAN',
+                        data: 'pemesan',
+                        name: 'pemesan',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'UNIT/MESIN',
+                        data: 'unit',
+                        name: 'unit',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                ]
+            });
+
+            //---------------HOLD------------------------------------------//
+            var tablePermintaanHld = $('.datatable-hold').DataTable({
+                "processing": true,
+                "serverSide": false,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                "lengthMenu": [
+                    [10, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                    "className": 'btn btn-info',
+                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
+                    "action": function(e, node, config) {
+                        $('#modalHold').modal('show')
+                    }
+                }],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses ACC ",
+                        }
+                    },
                 },
                 "ajax": {
                     "type": "POST",
@@ -1174,73 +1118,549 @@
                         data.sampai = $('#idfilter_sampai').val();
                     }
                 },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": false,
+                    'className': 'select-checkbox',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                select: {
+                    'style': 'multi',
+                    // "selector": 'td:not(:nth-child(2))',
+                },
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
-
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2',
+                        orderable: true,
+                        searchable: false
                     },
                     {
                         title: 'TGL PERMINTAAN',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'KODESERI',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
-                        className: "cuspad0 text-center clickable"
-                    },
-                    {
-                        title: 'NOFORM',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Deskripsi',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'MESIN',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'DESKRIPSI',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'QTY MINTA',
                         data: 'qty',
                         name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'SATUAN',
                         data: 'satuan',
                         name: 'satuan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'PEMESAN',
                         data: 'pemesan',
                         name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'UNIT/MESIN',
                         data: 'unit',
                         name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
-                    {
-                        title: 'KETERANGAN REJECT',
-                        data: 'keteranganACC',
-                        name: 'keteranganACC',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                ],
+                ]
 
             });
+
+            //---------------FILTER------------------------------------------//
+            $('#filter_id').on('click change', function() {
+                tablePermintaanQty.ajax.reload(null, false);
+            });
+
+            $('#filter_id').on('click change', function() {
+                tablePermintaanQty.ajax.reload(null, false);
+            });
+            // TABLE ---------------------------------------------------------//
+
+            // FORM INPUT ---------------------------------------------------------//
+            if ($("#formQtyACCPermintaan").length > 0) {
+                $("#formQtyACCPermintaan").validate({
+                    rules: {
+                        pembeli: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        pembeli: {
+                            required: "Masukkan Pembeli",
+                        },
+                    },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitCheck').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitCheck").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storeQtyPermintaan') }}",
+                            type: "POST",
+                            data: $('#formQtyACCPermintaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                                tablePermintaanQty.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalChecklistQty').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tablePermintaanQty.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+
+            if ($("#formACCPermintaan").length > 0) {
+                $("#formACCPermintaan").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitAccept').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitAccept").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storeAccPermintaan') }}",
+                            type: "POST",
+                            data: $('#formACCPermintaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitAccept').html(
+                                    '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Proses'
+                                );
+                                $("#submitAccept").attr("disabled", false);
+                                tablePermintaanAcc.ajax.reload();
+                                tablePermintaanRjt.ajax.reload();
+                                tablePermintaanHld.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalAccept').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tablePermintaanAcc.ajax.reload();
+                                tablePermintaanRjt.ajax.reload();
+                                tablePermintaanHld.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitAccept').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitAccept").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+            if ($("#formHoldPermintaan").length > 0) {
+                $("#formHoldPermintaan").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitAccept').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitAccept").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storeAccPermintaan') }}",
+                            type: "POST",
+                            data: $('#formHoldPermintaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitAccept').html(
+                                    '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Proses'
+                                );
+                                $("#submitAccept").attr("disabled", false);
+                                tablePermintaanAcc.ajax.reload();
+                                tablePermintaanRjt.ajax.reload();
+                                tablePermintaanHld.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalHold').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tablePermintaanAcc.ajax.reload();
+                                tablePermintaanRjt.ajax.reload();
+                                tablePermintaanHld.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitAccept').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitAccept").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+            if ($("#formRejectPermintaan").length > 0) {
+                $("#formRejectPermintaan").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitAccept').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitAccept").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storeAccPermintaan') }}",
+                            type: "POST",
+                            data: $('#formRejectPermintaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitAccept').html(
+                                    '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Proses'
+                                );
+                                $("#submitAccept").attr("disabled", false);
+                                tablePermintaanAcc.ajax.reload();
+                                tablePermintaanRjt.ajax.reload();
+                                tablePermintaanHld.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalReject').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tablePermintaanAcc.ajax.reload();
+                                tablePermintaanRjt.ajax.reload();
+                                tablePermintaanHld.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitAccept').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitAccept").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+            // FORM INPUT ---------------------------------------------------------//
+
+            // MODAL ---------------------------------------------------------//
+            $('#modalChecklistQty').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tablePermintaanQty.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePermintaanQty.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccQty') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-qtyacc-checklist').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('#modalAccept').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tablePermintaanAcc.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePermintaanAcc.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccept') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-acc-checklist').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('#modalReject').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tablePermintaanRjt.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePermintaanRjt.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccept') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-reject-checklist').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('#modalHold').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tablePermintaanHld.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePermintaanHld.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccept') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-hold-checklist').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            // MODAL ---------------------------------------------------------//
         });
     </script>
 @endsection
