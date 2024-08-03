@@ -67,50 +67,49 @@ Route::controller(UangController::class)->group(function () {
 });
 
 Route::controller(TarifPajakController::class)->group(function () {
-    Route::get('/pajak', 'index');
+    Route::get('/pajak', 'index')->name('pajak.index');
     Route::post('/pajak/store', 'store')->name('pajak.store');
     Route::put('/pajak/update/{id}', 'update')->name('pajak.update');
     Route::delete('/pajak/destroy/{id}', 'destroy');
 });
 
 Route::controller(SuplierController::class)->group(function () {
-    Route::get('/suplier', 'index');
+    Route::get('/suplier', 'index')->name('suplier.index');
     Route::post('/suplier/store', 'store')->name('suplier.store');
     Route::put('/suplier/update/{id}', 'update')->name('suplier.update');
     Route::delete('/suplier/destroy/{id}', 'destroy');
 });
 
 Route::controller(BarangJasaController::class)->group(function () {
-    Route::get('/barang', 'index');
+    Route::get('/barang', 'index')->name('barangJasa.index');
     Route::post('/barang/store', 'store')->name('barang.store');
     Route::put('/barang/update/{id}', 'update')->name('barang.update');
     Route::delete('/barang/destroy/{id}', 'destroy');
 });
 
 Route::controller(MesinController::class)->group(function () {
-    Route::get('/mesin', 'index');
+    Route::get('/mesin', 'index')->name('mesin.index');
     Route::post('/mesin/store', 'store')->name('mesin.store');
     Route::put('/mesin/update/{id}', 'update')->name('mesin.update');
     Route::delete('/mesin/destroy/{id}', 'destroy');
     //---------------MASTER MESIN ITM-------------------------//
     Route::post('/itm/store', 'itmStore')->name('mesinitm.store');
-    Route::put('/itm/update{id}', 'itmUpdate')->name('mesinitm.update');
-    Route::post('/itm/destroy/{id}', 'itmDestroy');
+    Route::put('/itm/update/{id}', 'itmUpdate')->name('itm.update');
+    Route::delete('/itm/destroy/{id}', 'itmDestroy');
 });
 
 Route::controller(MasterBarangController::class)->group(function () {
-    Route::get('/masterBarang', 'index');
+    Route::get('/masterBarang', 'index')->name('masterBarang.index');
     Route::post('/masterBarang/store', 'store')->name('masterbarang.store');
     Route::put('/masterBarang/update/{id}', 'update')->name('masterbarang.update');
     Route::delete('/masterBarang/destroy/{id}', 'destroy');
 });
 
 Route::controller(LockerController::class)->group(function () {
-    Route::get('/locker', 'index');
+    Route::get('/locker', 'index')->name('locker.index');
     Route::post('/locker/store', 'store')->name('locker.store');
     Route::put('/locker/update/{id}', 'update')->name('locker.update');
     Route::delete('/locker/destroy/{id}', 'destroy');
-    Route::get('/locker/download', 'download')->name('locker.download');
 });
 
 //Rute Pengadaaan

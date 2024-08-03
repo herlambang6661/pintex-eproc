@@ -15,13 +15,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -89,23 +89,6 @@
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
-                                <form action="{{ route('locker.download') }}" method="GET">
-                                    <button type="submit" class="btn btn-success">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                            <path
-                                                d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                            <path d="M8 11h8v7h-8z" />
-                                            <path d="M8 15h8" />
-                                            <path d="M11 11v7" />
-                                        </svg>
-                                        Export to Excel
-                                    </button>
-                                </form>
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block mr-2"
                                     data-bs-toggle="modal" data-bs-target="#modal-add" data-bs-backdrop="static"
                                     data-bs-keyboard="false">
@@ -146,7 +129,7 @@
                                         <div style="overflow-x: auto;">
                                             <table style="width:100%;font-size:13px;"
                                                 class="table table-bordered table-vcenter card-table table-hover text-nowrap"
-                                                id="example">
+                                                id="locker">
                                                 <thead>
                                                     <tr class="text-center">
                                                         <th class="text-center">OPSI</th>
@@ -157,42 +140,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($locker as $item)
-                                                        <tr class="text-center">
-                                                            <td>
-                                                                <a href="javascript:void(0)"
-                                                                    data-bs-target="#modal-detail{{ $item->id }}"
-                                                                    data-bs-toggle="modal"
-                                                                    class="btn btn-outline-success btn-sm btn-icon edit-btn"><i
-                                                                        class="fa-solid fa-fw fa-eye"></i>
-                                                                </a>
-                                                                <a href="javascript:void(0)"
-                                                                    data-bs-target="#modal-edit{{ $item->id }}"
-                                                                    data-bs-toggle="modal"
-                                                                    class="btn btn-outline-info btn-sm btn-icon edit-btn"><i
-                                                                        class="fa-solid fa-fw fa-edit"></i>
-                                                                </a>
-                                                                <form id="deleteForm{{ $item->id }}"
-                                                                    action="/locker/destroy/{{ $item->id }}"
-                                                                    method="POST" class="d-inline">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-danger btn-sm btn-icon"
-                                                                        onclick="confirmDelete(event, {{ $item->id }})">
-                                                                        <i class="fa-solid fa-fw fa-trash-can"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
-                                                            <td>
-                                                                <img src="{{ asset($item->qrcode) }}" alt="QR Code"
-                                                                    width="40" height="40">
-                                                            </td>
-                                                            <td>{{ $item->gudang }}</td>
-                                                            <td>{{ $item->inisial }}</td>
-                                                            <td>{{ $item->keterangan }}</td>
-                                                        </tr>
-                                                    @endforeach
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -233,8 +181,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Keterangan</label>
-                            <input type="text" class="form-control" name="keterangan"
-                                placeholder="Input placeholder">
+                            <textarea class="form-control" name="keterangan" rows="6" placeholder="Isi keterangan"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -248,103 +195,291 @@
     {{-- end modal add --}}
 
     {{-- modal edit --}}
-    @foreach ($locker as $item)
-        <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit {{ $judul }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+    <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit {{ $judul }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" action="javascript:void(0)" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="fetched-edit-locker"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="submitLocker" class="btn btn-primary"
+                                data-bs-dismiss="modal">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end modal edit --}}
+
+    {{-- modal detail --}}
+    <div class="modal modal-blur fade" id="modal-detail" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detail {{ $judul }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="detailForm" action="">
                     <div class="modal-body">
-                        <form action="{{ route('locker.update', $item->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-3">
-                                <div class="form-label">Gudang</div>
-                                <select class="form-select" name="gudang">
-                                    <option value="">--Pilih Gudang--</option>
-                                    <option value="99"{{ old('gudang', $item->gudang) == '99' ? 'selected' : '' }}>
-                                        Gudang Induk</option>
-                                    <option value="1"{{ old('gudang', $item->gudang) == '1' ? 'selected' : '' }}>
-                                        Gudang 2-1</option>
-                                    <option value="2"{{ old('gudang', $item->gudang) == '2' ? 'selected' : '' }}>
-                                        Gudang 2-2</option>
-                                    <option value="3"{{ old('gudang', $item->gudang) == '3' ? 'selected' : '' }}>
-                                        Gudang 2-3</option>
-                                </select>
-                            </div>
+                        <div class="fetched-detail-locker"></div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end modal detail --}}
+
+    <script>
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+
+            dt.one('preXhr', function(e, s, data) {
+                data.start = 0;
+                data.length = 2147483647;
+
+                dt.one('preDraw', function(e, settings) {
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    }
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+            });
+
+            dt.ajax.reload();
+        }
+
+        $(document).ready(function() {
+            $('#locker').DataTable({
+                "processing": true,
+                "serverSide": false,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                "lengthMenu": [
+                    [10, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                ajax: {
+                    url: '{{ route('locker.index') }}',
+                },
+                columns: [{
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center',
+                    },
+                    {
+                        data: 'qrcode',
+                        name: 'qrcode',
+                        className: 'text-center',
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
+                        data: 'gudang',
+                        name: 'gudang',
+                        className: 'text-center',
+                    },
+                    {
+                        data: 'inisial',
+                        name: 'inisial',
+                        className: 'text-center',
+                    },
+                    {
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: 'text-center',
+                    },
+                ],
+            });
+        });
+
+        //-------------------------------------------------------UPDATE-----------------------------------------------//
+        $(document).ready(function() {
+            // Event listener untuk tombol update
+            $('#submitLocker').on('click', function(e) {
+                e.preventDefault();
+                var form = $('#editForm');
+                var url = form.attr('action');
+
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: response.msg,
+                                showConfirmButton: false,
+                                html: '<div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div>',
+                                timer: 3000,
+                                toast: true
+                            }).then((result) => {
+                                // Refresh halaman setelah SweetAlert menghilang
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    location.reload();
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        // Tampilkan notifikasi kesalahan
+                        var errors = xhr.responseJSON.errors;
+                        var errorMessage = '';
+                        $.each(errors, function(key, value) {
+                            errorMessage += value + '\n';
+                        });
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Error',
+                            text: errorMessage,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            toast: true
+                        });
+                    }
+                });
+            });
+
+            // Event listener untuk tombol edit
+            $(document).on('click', '.detail-btn', function() {
+                var id = $(this).data('id');
+                var gudang = $(this).data('gudang');
+                var inisial = $(this).data('inisial');
+                var keterangan = $(this).data('keterangan');
+
+                var formAction = '/locker/update/' + id;
+                $('#editForm').attr('action', formAction);
+
+                $('#modal-edit .fetched-edit-locker').html(`
+           <div class="mb-3">
+            <div class="form-label">Gudang</div>
+            <select class="form-select" name="gudang">
+                <option value="">--Pilih Gudang--</option>
+                <option value="99" ${gudang == '99' ? 'selected' : ''}>Gudang Induk</option>
+                <option value="1" ${gudang == '1' ? 'selected' : ''}>Gudang 2-1</option>
+                <option value="2" ${gudang == '2' ? 'selected' : ''}>Gudang 2-2</option>
+                <option value="3" ${gudang == '3' ? 'selected' : ''}>Gudang 2-3</option>
+            </select>
+        </div>
                             <div class="mb-3">
                                 <label class="form-label">Nama Locker</label>
                                 <input type="text" class="form-control" name="inisial"
-                                    placeholder="Input placeholder" value="{{ old('inisial', $item->inisial) }}">
+                                    placeholder="Input placeholder" value="` + inisial + `">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Keterangan</label>
                                 <input type="text" class="form-control" name="keterangan"
-                                    placeholder="Input placeholder" value="{{ old('keterangan', $item->keterangan) }}">
+                                    placeholder="Input placeholder" value="` + keterangan + `">
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save
-                                    changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-    {{-- end modal edit --}}
+        `);
 
-    {{-- modal detail --}}
-    @foreach ($locker as $item)
-        <div class="modal modal-blur fade" id="modal-detail{{ $item->id }}" tabindex="-1" role="dialog"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Detail {{ $judul }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <!-- Card sebelah kiri -->
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
+                $('#modal-edit').modal('show');
+            });
+        });
 
-                                        <div class="text-center">
-                                            <p>Tanggal Pembuatan: {{ $item->created_at->format('d-m-Y') }}</p>
-                                            <img src="{{ asset($item->qrcode) }}" alt="QR Code" width="150"
-                                                height="150">
-                                            <hr>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Inisial</label>
-                                            <input type="text" class="form-control" name="inisial"
-                                                placeholder="Masukkan Nama" value="{{ old('inisial', $item->inisial) }}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Keterangan</label>
-                                            <input type="text" class="form-control" name="keterangan"
-                                                placeholder="Masukkan Nama"
-                                                value="{{ old('keterangan', $item->keterangan) }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        //--------------------------------------------------DETAIL----------------------------------------------------//
+        $(document).ready(function() {
+
+            $(document).on('click', '.detail-btn', function() {
+                var id = $(this).data('id');
+                var qrcode = $(this).data('qrcode');
+                var inisial = $(this).data('inisial');
+                var keterangan = $(this).data('keterangan');
+
+                $('#detailForm').attr('action');
+
+                $('#modal-detail .fetched-detail-locker').html(`
+          <div class="row">
+            <!-- Card sebelah kiri -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="${qrcode}" alt="QR Code" width="150" height="150">
+                            <hr>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Inisial</label>
+                            <input type="text" class="form-control" name="inisial" placeholder="Masukkan Nama" value="${inisial}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Keterangan</label>
+                            <input type="text" class="form-control" name="keterangan" placeholder="Masukkan Nama" value="${keterangan}" disabled>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-
-
-                    </div>
                 </div>
             </div>
         </div>
-    @endforeach
-    {{-- end modal detail --}}
+        `);
+
+                $('#modal-detail').modal('show');
+            });
+        });
+    </script>
 @endsection

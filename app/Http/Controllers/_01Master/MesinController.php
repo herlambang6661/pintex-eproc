@@ -6,19 +6,50 @@ use App\Models\Master\MesinItmModel;
 use App\Models\Master\MesinModel;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class MesinController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $mesin = MesinModel::all();
-        $mesinitm = MesinItmModel::all();
+        if ($request->ajax()) {
+            if ($request->has('model') && $request->model === 'mesin') {
+                $mesin = MesinModel::all();
+                return DataTables::of($mesin)
+                    ->addColumn('action', function ($row) {
+                        $editBtn = '<a href="javascript:void(0)" data-bs-target="#modal-edit-mesin"  data-bs-toggle="modal" data-id="' . $row->id . '" data-mesin="' . $row->mesin . '" data-unit="' . $row->unit . '" class="btn btn-outline-info btn-sm btn-icon edit-btn"><i class="fa-solid fa-fw fa-edit"></i></a>';
+                        $deleteForm = '<form id="deleteForm' . $row->id . '" action="/mesin/destroy/' . $row->id . '" method="POST" class="d-inline">' . csrf_field() . method_field('DELETE') . '<button type="button" class="btn btn-outline-danger btn-sm btn-icon" onclick="confirmDelete(event, ' . $row->id . ')"><i class="fa-solid fa-fw fa-trash-can"></i></button></form>';
+                        return $editBtn . ' ' . $deleteForm;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
 
+            if ($request->has('model') && $request->model === 'mesinitm') {
+                $mesinitm = MesinItmModel::with('mesin')->get();
+                return DataTables::of($mesinitm)
+                    ->addColumn('action', function ($row) {
+                        $editBtn = '<a href="javascript:void(0)" data-bs-target="#modal-edit-mesinitm" data-id_itm="' . $row->id_itm . '" data-id_mesin="' . $row->id_mesin . '" data-merk="' . $row->merk . '" data-kode_nomor="' . $row->kode_nomor . '" data-bs-toggle="modal" class="btn btn-outline-info btn-sm btn-icon edit-btn"><i class="fa-solid fa-fw fa-edit"></i></a>';
+                        $deleteForm = '<form id="deleteForm' . $row->id_itm . '" action="/itm/destroy/' . $row->id_itm . '" method="POST" class="d-inline">' . csrf_field() . method_field('DELETE') . '<button type="button" class="btn btn-outline-danger btn-sm btn-icon" onclick="confirmDelete(event, ' . $row->id_itm . ')"><i class="fa-solid fa-fw fa-trash-can"></i></button></form>';
+                        return $editBtn . ' ' . $deleteForm;
+                    })
+                    ->addColumn('mesin_nama', function ($row) {
+                        return $row->mesin->mesin;
+                    })
+                    ->addColumn('mesin_unit', function ($row) {
+                        return $row->mesin->unit;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+        }
+
+        // Pass the required data to the view
         return view('products.01_master.mesin.index', [
             'judul' => 'Halaman Mesin',
-            'mesin' => $mesin,
-            'mesinitm' => $mesinitm,
-            'active' => 'Mesin'
+            'active' => 'Mesin',
+            'mesin' => MesinModel::all() // Add this line to ensure $mesin is available in the view
         ]);
     }
 
@@ -44,22 +75,21 @@ class MesinController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'mesin' => 'required',
-            'unit' => 'required',
+        $validatedData = $request->validate([
+            'mesin' => 'required|string|max:255',
+            'unit' => 'required|string|max:255',
         ]);
 
-        $mesin = MesinModel::find($id);
-        $mesin->mesin = $request->input('mesin');
-        $mesin->unit = $request->input('unit');
-        $mesin->save();
+        $mesin = MesinModel::findOrFail($id);
+        $mesin->update($validatedData);
 
-        if ($mesin->save()) {
-            return redirect('/mesin')->with('success', 'Data mesin berhasil di update');
-        } else {
-            return redirect()->back()->with('error', 'Data mesin gagal di update , silahkan coba kembali');
-        }
+        return response()->json([
+            'status' => true,
+            'msg' => 'Mesin updated successfully!',
+        ]);
     }
+
+
 
     public function destroy($id)
     {
@@ -105,23 +135,19 @@ class MesinController extends Controller
 
     public function itmUpdate(Request $request, $id)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'id_mesin' => 'required',
             'merk' => 'required',
             'kode_nomor' => 'required',
         ]);
 
-        $mesinitm =  MesinItmModel::find($id);
-        $mesinitm->id_mesin = $request->input('id_mesin');
-        $mesinitm->merk = $request->input('merk');
-        $mesinitm->kode_nomor = $request->input('kode_nomor');
-        $mesinitm->save();
+        $mesinitm =  MesinItmModel::findOrFail($id);
+        $mesinitm->update($validatedData);
 
-        if ($mesinitm->save()) {
-            return redirect('/mesin')->with('success', 'Data mesinItm berhasil di tambahkan');
-        } else {
-            return redirect()->back()->with('error', 'Data mesinItm gagal di tambahkan, silahkan coba kembali');
-        }
+        return response()->json([
+            'status' => true,
+            'msg' => 'Mesinitm updated successfully'
+        ]);
     }
 
     public function itmDestroy($id)
