@@ -542,7 +542,7 @@
                 "dom": "<'card-header h3' B>" +
                     "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 "lengthMenu": [
                     [10, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
@@ -817,6 +817,10 @@
                 tableCheckPembelian.ajax.reload(null, false);
             });
 
+            //Enabling the tooltip
+            bootstrap.Tooltip.getOrCreateInstance("#tooltip1");
+            // Enabling the popover
+            bootstrap.Popover.getOrCreateInstance("#popover1");
 
             // document.addEventListener("DOMContentLoaded", function() {
             //     let options = {

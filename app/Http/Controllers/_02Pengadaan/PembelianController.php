@@ -105,6 +105,21 @@ class PembelianController extends Controller
             echo "<center>Tidak ada data yang dipilih</center>";
         } else {
             $permintaanController = new PermintaanController();
+            $uang = DB::table("uang")->get();
+            $supplier = DB::table("person")->where('tipe', '=', 'ENTITAS')->orderBy('nama')->get();
+
+            $noform = DB::table("pembelianitm")->max('noform');
+            $noform++;
+
+            $nofaktur = DB::table("pembelianitm")->max('nofaktur');
+            $y = substr($nofaktur, 7, 2);
+            if (date('y') == $y) {
+                $noUrut2 = substr($nofaktur, 10, 7);
+                $na = $noUrut2 + 1;
+                $NOPO = "P-INVN-" . $y . "-" . sprintf("%07s", $na);
+            } else {
+                $NOPO = "P-INVN-" . date('y') . "-" . "0000001";
+            }
             $jml = count($request->id);
             echo '
                     <div class="row">
@@ -120,30 +135,62 @@ class PembelianController extends Controller
                                             </div>
                                             <div class="mb-2">
                                                 <label class="form-label">Supplier</label>
-                                                <input name="supplier" type="text" class="form-control">
+                                                <select name="supplier" id="vendorcheck" class="form-select" required>
+                                                    <option value="">-- Pilih Supplier --</option>';
+            foreach ($supplier as $show) {
+                echo '                              <option value="' . $show->nama . '" data-alamat="' . $show->alamat . '">' . $show->nama . '</option>';
+            }
+            echo '
+                                                </select>
                                             </div>
                                             <div class="mb-2">
                                                 <label class="form-label">Dibeli Oleh</label>
-                                                <input name="dibeli" type="text" class="form-control">
+                                                <select name="dibeli" class="form-select" required>
+                                                    <option value="">-- Pilih Pembeli --</option>
+                                                    <option value="ANDRI">ANDRI</option>
+                                                    <option value="LOBIARTO">LOBIARTO</option>
+                                                    <option value="MANTI">MANTI</option>
+                                                    <option value="MARNI">MARNI</option>
+                                                    <option value="NURLAELA">NURLAELA</option>
+                                                    <option value="PUJI NURRETI">PUJI NURRETI</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">No. Form</label>
-                                                <input type="text" class="form-control bg-secondary-lt cursor-not-allowed" disabled>
+                                                <input type="text" class="form-control bg-secondary-lt cursor-not-allowed" disabled value="' . $noform . '">
                                             </div>
                                             <div class="mb-2">
-                                                <label class="form-label">No. PO</label>
-                                                <input type="text" class="form-control">
+                                                <label class="form-label">No. PO / Faktur</label>
+                                                <input type="text" class="form-control" value="' . $NOPO . '">
                                             </div>
                                             <div class="mb-2">
                                                 <label class="form-label">Mata Uang</label>
                                                 <div class="row">
-                                                    <div class="col">
-                                                        <input type="text" class="form-control">
+                                                    <div class="col-lg-7">
+                                                        <select class="form-control" name="uang" id="uangcheck">
+                                                            <option value="">-- Pilih Mata Uang --</option>
+                                                        ';
+            foreach ($uang as $key) {
+                echo '                                      <option value="' . $key->inisial . '" data-kursuang="' . $key->kurs . '">' . $key->inisial . ' - ' . $key->negara . '</option>';
+            }
+            echo '                                      </select>
+                                                        <script>
+                                                            $("#uangcheck").on("change", function() {
+                                                                const kurs = $("#uangcheck option:selected").data("kursuang");
+                                                                $("[name=kurscheck]").val(kurs);
+                                                            });
+                                                            
+                                                            $("#vendorcheck").on("change", function() {
+                                                                const alamat = $("#vendorcheck option:selected").data("alamat");
+                                                                $("[name=alamatcheck]").val(alamat);
+                                                                $("[name=kirimcheck]").val(alamat);
+                                                            });
+                                                        </script>
                                                     </div>
                                                     <div class="col">
-                                                        <input type="text" class="form-control" placeholder="Kurs">
+                                                        <input name="kurscheck" type="number" class="form-control" placeholder="Kurs">
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,11 +205,11 @@ class PembelianController extends Controller
                                     <div class="row">
                                         <div class="col">
                                             <label class="form-label">Alamat</label>
-                                            <textarea id="alamat1" class="form-control bg-secondary-lt border border-blue" rows="8" placeholder="Pilih Supplier dan alamat akan terisi..."></textarea>
+                                            <textarea id="alamat1" name="alamatcheck" disabled class="form-control bg-secondary-lt border border-blue cursor-not-allowed" rows="8" placeholder="Pilih Supplier dan alamat akan terisi..."></textarea>
                                         </div>
                                         <div class="col">
                                             <label class="form-label">Alamat Kirim</label>
-                                            <textarea id="alamat2" class="form-control border border-blue" rows="8"></textarea>
+                                            <textarea id="alamat2" name="kirimcheck" class="form-control border border-blue" rows="8"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -172,21 +219,24 @@ class PembelianController extends Controller
                     <hr>
                     <div class="space-y">
                     <div class="table-responsive shadow">
-                        <table class="table table-sm table-bordered text-nowrap text-dark transparent-card card-xl rounded border border-dark" style="text-transform: uppercase;font-weight: bold;font-size:12px;">
-                            <thead class="bg-dark-lt text-dark">
+                        <table class="table table-sm table-bordered text-nowrap text-dark transparent-card card-xl rounded border border-dark" style="text-transform: uppercase;font-weight: bold;font-size:10px;">
+                            <thead class="bg-purple-lt text-dark">
                                 <tr>
-                                    <td class="text-center">Tanggal</td>
-                                    <td class="text-center">Kodeseri</td>
-                                    <td class="text-center">Barang</td>
-                                    <td class="text-center">Deskripsi</td>
-                                    <td class="text-center">Qty</td>
-                                    <td class="text-center">Qty Beli</td>
-                                    <td class="text-center">Satuan</td>
-                                    <td class="text-center">Harga Satuan</td>
-                                    <td class="text-center">Jumlah</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Tanggal</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Kodeseri</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Barang</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Deskripsi</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Qty</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Qty Beli</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Satuan</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Harga Satuan</td>
+                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Jumlah</td>
                                     <td class="text-center">Estimasi</td>
                                     <td class="text-center">Garansi</td>
-                                    <td class="text-center">Pajak</td>
+                                    <td class="text-center" style="padding-top:15px;padding-bottom:15px" rowspan="2" colspan="3">Pajak</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" colspan="2">(Hari)</td>
                                 </tr>
                             </thead>
                             <tbody class="text-dark">
@@ -194,20 +244,27 @@ class PembelianController extends Controller
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('permintaanitm')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
+                    if ($u->urgent == 1) {
+                        $stturgent = '<span class="badge bg-red ms-auto badge-blink"></span> ';
+                    } else {
+                        $stturgent = '';
+                    }
                     echo '
                             <tr>
-                                <td class="text-center">' . Carbon::parse($u->tgl)->format('d/m/Y') . '</td>
-                                <td class="text-center">' . $u->kodeseri . '</td>
-                                <td>' . $u->namaBarang . '</td>
-                                <td>' . $u->keterangan . '</td>
-                                <td class="text-center">' . $u->qtyacc . '</td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:1px;padding-bottom:1px"><input class="form-control" type="number" value="' . $u->qtyacc . '"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:1px;padding-bottom:1px"><input class="form-control" type="text" value="' . $u->satuan . '"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:1px;padding-bottom:1px"><input class="form-control" type="number" value="0"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:1px;padding-bottom:1px"><input class="form-control" type="number"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:1px;padding-bottom:1px"><input class="form-control" type="number"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:1px;padding-bottom:1px"><input class="form-control" type="number"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:1px;padding-bottom:1px"><input class="form-control" type="number"></td>
+                                <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . Carbon::parse($u->tgl)->format('d/m/Y') . '</td>
+                                <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->kodeseri . '</td>
+                                <td style="padding-top:10px;padding-bottom:10px">' . $stturgent . $u->namaBarang . ' </td>
+                                <td style="padding-top:10px;padding-bottom:10px">' . $u->keterangan . '</td>
+                                <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->qtyacc . '</td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="number" value="' . $u->qtyacc . '"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="text" value="' . $u->satuan . '"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="number"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="number"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="number"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="number"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="number"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="number"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px"><input class="form-control form-control-sm" type="number"></td>
                             </tr>
                             ';
                 }
