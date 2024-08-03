@@ -15,13 +15,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -158,43 +158,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($suplier as $item)
-                                                        <tr class="text-center suplier-row"
-                                                            data-tipe="{{ $item->tipe }}">
-                                                            <td>
-                                                                <a href="javascript:void(0)"
-                                                                    data-bs-target="#modal-detail{{ $item->id }}"
-                                                                    data-bs-toggle="modal"
-                                                                    class="btn btn-outline-info btn-sm btn-icon edit-btn"><i
-                                                                        class="fa-solid fa-fw fa-eye"></i>
-                                                                </a>
-                                                                <a href="javascript:void(0)"
-                                                                    data-bs-target="#modal-edit{{ $item->id }}"
-                                                                    data-bs-toggle="modal"
-                                                                    class="btn btn-outline-success btn-sm btn-icon edit-btn"><i
-                                                                        class="fa-solid fa-fw fa-edit"></i>
-                                                                </a>
-                                                                <form id="deleteForm{{ $item->id }}"
-                                                                    action="/suplier/destroy/{{ $item->id }}"
-                                                                    method="POST" class="d-inline">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-danger btn-sm btn-icon"
-                                                                        onclick="confirmDelete(event, {{ $item->id }})">
-                                                                        <i class="fa-solid fa-fw fa-trash-can"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
-                                                            <td>{{ $item->nama }}</td>
-                                                            <td>{{ $item->tipe }}</td>
-                                                            <td>{{ $item->telp }}</td>
-                                                            <td>{{ $item->contact }}</td>
-                                                            <td>{{ $item->kota }}</td>
-                                                            <td>{{ $item->provinsi }}</td>
-                                                            <td>{{ $item->email }}</td>
-                                                        </tr>
-                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -431,168 +394,35 @@
     {{-- end modal add supplier --}}
 
     {{-- modal edit suplier --}}
-    @foreach ($suplier as $item)
-        <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
-            aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit {{ $judul }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('suplier.update', $item->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="row">
-                                <!-- Card sebelah kiri -->
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="text-center">
-                                                <img src="{{ asset('assets/static/avatar.png') }}"
-                                                    class="avatar img-circle img-thumbnail"
-                                                    style="height: 150px; width: 150px;" alt="avatar">
-                                                <hr>
-                                            </div>
+    <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit {{ $judul }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" action="javascript:void(0)" method="POST">
+                        @csrf
+                        @method('PUT')
 
-                                            <div class="mb-3">
-                                                <label class="form-label">Nama</label>
-                                                <input type="text" class="form-control" name="nama"
-                                                    placeholder="Masukkan Nama" value="{{ old('nama', $item->nama) }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Contact</label>
-                                                <input type="text" class="form-control" name="contact"
-                                                    placeholder="Masukkan Contact"
-                                                    value="{{ old('contact', $item->contact) }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Telepon</label>
-                                                <input type="text" class="form-control" name="telp"
-                                                    placeholder="Masukkan Telepon"
-                                                    value="{{ old('telp', $item->telp) }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Edit Informasi Tambahan</h5>
-                                            <div class="row">
-                                                <!-- Form kiri -->
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Tipe</label>
-                                                        <select class="form-select" name="tipe">
-                                                            <option value="">Pilih Tipe</option>
-                                                            <option value="entitas"
-                                                                {{ old('tipe', $item->tipe) == 'entitas' ? 'selected' : '' }}>
-                                                                Entitas</option>
-                                                            <option value="individu"
-                                                                {{ old('tipe', $item->tipe) == 'individu' ? 'selected' : '' }}>
-                                                                Individu</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Jabatan</label>
-                                                        <input type="text" class="form-control" name="jabatan"
-                                                            placeholder="Masukkan Jabatan"
-                                                            value="{{ old('jabatan', $item->jabatan) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">NPWP</label>
-                                                        <input type="text" class="form-control" name="npwp"
-                                                            placeholder="Masukkan NPWP"
-                                                            value="{{ old('npwp', $item->npwp) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Jenis Mata Uang</label>
-                                                        <select class="form-select" name="uang_id">
-                                                            <option value="">--Pilih Uang--</option>
-                                                            @foreach ($uang as $currency)
-                                                                <option value="{{ $currency->id }}"
-                                                                    {{ old('uang_id', $item->uang_id) == $currency->id ? 'selected' : '' }}>
-                                                                    {{ $currency->inisial }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Provinsi</label>
-                                                        <input type="text" class="form-control" name="provinsi"
-                                                            placeholder="Masukkan Provinsi"
-                                                            value="{{ old('provinsi', $item->provinsi) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Catatan</label>
-                                                        <textarea class="form-control" name="catatan" rows="3" placeholder="Masukkan Catatan">{{ old('catatan', $item->catatan) }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <!-- Form kanan -->
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Fax</label>
-                                                        <input type="text" class="form-control" name="fax"
-                                                            placeholder="Masukkan Fax"
-                                                            value="{{ old('fax', $item->fax) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Alamat</label>
-                                                        <input type="text" class="form-control" name="alamat"
-                                                            placeholder="Masukkan Alamat"
-                                                            value="{{ old('alamat', $item->alamat) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Kode Pos</label>
-                                                        <input type="text" class="form-control" name="kopos"
-                                                            placeholder="Masukkan Kode Pos"
-                                                            value="{{ old('kopos', $item->kopos) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Kota</label>
-                                                        <input type="text" class="form-control" name="kota"
-                                                            placeholder="Masukkan Kota"
-                                                            value="{{ old('kota', $item->kota) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Email</label>
-                                                        <input type="text" class="form-control" name="email"
-                                                            placeholder="Masukkan Email"
-                                                            value="{{ old('email', $item->email) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Website</label>
-                                                        <input type="text" class="form-control" name="website"
-                                                            placeholder="Masukkan Website"
-                                                            value="{{ old('website', $item->website) }}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="fecthed-edit-suplier"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="submitSuplier" class="btn btn-primary"
+                                data-bs-dismiss="modal">Save
+                                changes</button>
+                        </div>
+                    </form>
 
-
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save
-                                    changes</button>
-                            </div>
-                        </form>
-
-                    </div>
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
     {{-- end modal edit suplier --}}
 
     {{-- modal detail suplier --}}
-    @foreach ($suplier as $item)
+    {{-- @foreach ($suplier as $item)
         <div class="modal modal-blur fade" id="modal-detail{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
@@ -733,7 +563,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    @endforeach --}}
     {{-- end modal suplier --}}
 
     <script>
@@ -751,6 +581,331 @@
                 } else {
                     row.style.display = 'none';
                 }
+            });
+        });
+    </script>
+
+    <script>
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+
+            dt.one('preXhr', function(e, s, data) {
+                data.start = 0;
+                data.length = 2147483647;
+
+                dt.one('preDraw', function(e, settings) {
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    }
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+            });
+
+            dt.ajax.reload();
+        }
+
+        //---------------------------------------------------RENDER-----------------------------------------------------------------------------//
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "processing": true,
+                "serverSide": false,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                "lengthMenu": [
+                    [10, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                ajax: {
+                    url: '{{ route('suplier.index') }}',
+                },
+                columns: [{
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'tipe',
+                        name: 'tipe',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'telp',
+                        name: 'telp',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'contact',
+                        name: 'contact',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'kota',
+                        name: 'kota',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'provinsi',
+                        name: 'provinsi',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email',
+                        className: 'text-center'
+                    },
+
+                ],
+            });
+        });
+
+        //------------------------------------------------UPADATE----------------------------------------------------------------------------------//
+        $(document).ready(function() {
+            // Event listener untuk tombol update
+            $('#submitSuplier').on('click', function(e) {
+                e.preventDefault();
+                var form = $('#editForm');
+                var url = form.attr('action');
+
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: response.msg,
+                                showConfirmButton: false,
+                                html: '<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div></div>',
+                                timer: 3000,
+                                toast: true
+                            }).then((result) => {
+                                // Refresh halaman setelah SweetAlert menghilang
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    location.reload();
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        // Tampilkan notifikasi kesalahan
+                        var errors = xhr.responseJSON.errors;
+                        var errorMessage = '';
+                        $.each(errors, function(key, value) {
+                            errorMessage += value + '\n';
+                        });
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Error',
+                            text: errorMessage,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            toast: true
+                        });
+                    }
+                });
+            });
+
+            // Event listener untuk tombol edit
+            $(document).on('click', '.edit-btn', function() {
+                var id = $(this).data('id');
+                var nama = $(this).data('nama');
+                var tipe = $(this).data('tipe');
+                var jabatan = $(this).data('jabatan');
+                var npwp = $(this).data('npwp');
+                var alamat = $(this).data('alamat');
+                var kopos = $(this).data('kopos');
+                var kota = $(this).data('kota');
+                var provinsi = $(this).data('provinsi');
+                var telp = $(this).data('telp');
+                var contact = $(this).data('contact');
+                var fax = $(this).data('fax');
+                var email = $(this).data('email');
+                var website = $(this).data('website');
+                var catatan = $(this).data('catatan');
+                var uang_id = $(this).data('uang_id');
+
+                var formAction = '/suplier/update/' + id;
+                $('#editForm').attr('action', formAction);
+
+                $('#modal-edit .fecthed-edit-suplier').html(`
+            <div class="row">
+                <!-- Card sebelah kiri -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <img src="{{ asset('assets/static/avatar.png') }}"
+                                    class="avatar img-circle img-thumbnail"
+                                    style="height: 150px; width: 150px;" alt="avatar">
+                                <hr>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nama</label>
+                                <input type="text" class="form-control" name="nama"
+                                    placeholder="Masukkan Nama" value="` + nama + `">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contact</label>
+                                <input type="text" class="form-control" name="contact"
+                                    placeholder="Masukkan Contact"
+                                    value="` + contact + `">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Telepon</label>
+                                <input type="text" class="form-control" name="telp"
+                                    placeholder="Masukkan Telepon" value="` + telp + `">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card sebelah kanan -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Edit Informasi Tambahan</h5>
+                            <div class="row">
+                                <!-- Form kiri -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tipe</label>
+                                        <select class="form-select" name="tipe">
+                                            <option value="">Pilih Tipe</option>
+                                            <option value="ENTITAS" ` + (tipe == 'ENTITAS' ? 'selected' : '') + `>Entitas</option>
+                                            <option value="INDIVIDU" ` + (tipe == 'INDIVIDU' ? 'selected' : '') + `>Individu</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Jabatan</label>
+                                        <input type="text" class="form-control" name="jabatan"
+                                            placeholder="Masukkan Jabatan" value="` + jabatan + `">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">NPWP</label>
+                                        <input type="text" class="form-control" name="npwp"
+                                            placeholder="Masukkan NPWP" value="` + npwp + `">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Jenis Mata Uang</label>
+                                        <select class="form-select" name="uang_id">
+                                            <option value="">--Pilih Uang--</option>
+                                            @foreach ($uang as $currency)
+                                                <option value="{{ $currency->id }}" ` + (uang_id ==
+                        '{{ $currency->id }}' ? 'selected' : '') + `>{{ $currency->inisial }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Provinsi</label>
+                                        <input type="text" class="form-control" name="provinsi"
+                                            placeholder="Masukkan Provinsi" value="` + provinsi +
+                    `">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Catatan</label>
+                                        <textarea class="form-control" name="catatan" rows="3" placeholder="Masukkan Catatan">` +
+                    catatan + `</textarea>
+                                    </div>
+                                </div>
+                                <!-- Form kanan -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Fax</label>
+                                        <input type="text" class="form-control" name="fax"
+                                            placeholder="Masukkan Fax" value="` + fax + `">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Alamat</label>
+                                        <input type="text" class="form-control" name="alamat"
+                                            placeholder="Masukkan Alamat" value="` + alamat + `">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Kode Pos</label>
+                                        <input type="text" class="form-control" name="kopos"
+                                            placeholder="Masukkan Kode Pos" value="` + kopos + `">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Kota</label>
+                                        <input type="text" class="form-control" name="kota"
+                                            placeholder="Masukkan Kota" value="` + kota + `">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="text" class="form-control" name="email"
+                                            placeholder="Masukkan Email" value="` + email + `">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Website</label>
+                                        <input type="text" class="form-control" name="website"
+                                            placeholder="Masukkan Website" value="` + website + `">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+
+                $('#modal-edit').modal('show');
             });
         });
     </script>

@@ -15,13 +15,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
         }
 
         .unselectable {
@@ -112,31 +112,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($masterbarang as $item)
-                                                    <tr class="text-center">
-                                                        <td>
-                                                            <a href="javascript:void(0)"
-                                                                data-bs-target="#modal-edit{{ $item->id_masterbarang }}"
-                                                                data-bs-toggle="modal"
-                                                                class="btn btn-outline-info btn-sm btn-icon edit-btn"><i
-                                                                    class="fa-solid fa-fw fa-edit"></i>
-                                                            </a>
-                                                            <form id="deleteForm{{ $item->id_masterbarang }}"
-                                                                action="/masterBarang/destroy/{{ $item->id_masterbarang }}"
-                                                                method="POST" class="d-inline">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="button"
-                                                                    class="btn btn-outline-danger btn-sm btn-icon"
-                                                                    onclick="confirmDelete(event, {{ $item->id_masterbarang }})">
-                                                                    <i class="fa-solid fa-fw fa-trash-can"></i>
-                                                                </button>
-                                                            </form>
-                                                        </td>
-                                                        <td>{{ $item->kodebarang }}</td>
-                                                        <td>{{ $item->nama }}</td>
-                                                    </tr>
-                                                @endforeach
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -219,39 +195,213 @@
     </div>
 
     {{-- modal edit --}}
-    @foreach ($masterbarang as $item)
-        <div class="modal modal-blur fade" id="modal-edit{{ $item->id_masterbarang }}" tabindex="-1" role="dialog"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('masterbarang.update', $item->id_masterbarang) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-3">
-                                <label class="form-label">Inisial</label>
-                                <input type="text" class="form-control" name="inisial"
-                                    placeholder="Input placeholder" value="{{ old('inisial', $item->inisial) }}"
-                                    disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Nama Barang</label>
-                                <input type="text" class="form-control" name="nama"
-                                    placeholder="Input placeholder" value="{{ old('nama', $item->nama) }}">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">UPdate</button>
-                            </div>
-                        </form>
-                    </div>
+    <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit {{ $judul }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" action="javascript:void(0)" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="fetched-edit-masterbarang"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="submitMasterBarang" class="btn btn-primary"
+                                data-bs-dismiss="modal">Update</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
     {{-- end modal edit --}}
+
+    <script>
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+
+            dt.one('preXhr', function(e, s, data) {
+                data.start = 0;
+                data.length = 2147483647;
+
+                dt.one('preDraw', function(e, settings) {
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    }
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+            });
+
+            dt.ajax.reload();
+        }
+
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "processing": true,
+                "serverSide": false,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                "lengthMenu": [
+                    [10, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                ajax: {
+                    url: '{{ route('masterBarang.index') }}',
+                },
+                columns: [{
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center',
+                    },
+                    {
+                        data: 'kodebarang',
+                        name: 'kodebarang',
+                        className: 'text-center',
+
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama',
+                        className: 'text-center',
+
+                    },
+                ],
+            });
+        });
+
+        $(document).ready(function() {
+            // Event listener untuk tombol update
+            $('#submitMasterBarang').on('click', function(e) {
+                e.preventDefault();
+                var form = $('#editForm');
+                var url = form.attr('action');
+
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: response.msg,
+                                showConfirmButton: false,
+                                html: '<div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div>',
+                                timer: 3000,
+                                toast: true
+                            }).then((result) => {
+                                // Refresh halaman setelah SweetAlert menghilang
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    location.reload();
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        // Tampilkan notifikasi kesalahan
+                        var errors = xhr.responseJSON.errors;
+                        var errorMessage = '';
+                        $.each(errors, function(key, value) {
+                            errorMessage += value + '\n';
+                        });
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Error',
+                            text: errorMessage,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            toast: true
+                        });
+                    }
+                });
+            });
+
+            // Event listener untuk tombol edit
+            $(document).on('click', '.edit-btn', function() {
+                var id_masterbarang = $(this).data('id_masterbarang');
+                var kodebarang = $(this).data('kodebarang');
+                var nama = $(this).data('nama');
+
+                var formAction = '/masterBarang/update/' + id_masterbarang;
+                $('#editForm').attr('action', formAction);
+
+                $('#modal-edit .fetched-edit-masterbarang').html(`
+            <div class="card-stamp card-stamp-lg">
+                                            <div class="card-stamp-icon bg-primary">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Kodebarang</label>
+                                            <input type="text" class="form-control" name="kodebarang"
+                                                placeholder="Input placeholder" value="` + kodebarang + `">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Nama Barang</label>
+                                            <input type="text" class="form-control" name="nama"
+                                                placeholder="Input placeholder" value="` + nama + `">
+                                        </div>
+        `);
+
+                $('#modal-edit').modal('show');
+            });
+
+        });
+    </script>
 @endsection

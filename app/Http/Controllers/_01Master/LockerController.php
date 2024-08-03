@@ -10,18 +10,36 @@ use Endroid\QrCode\Builder\Builder;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LockerExport;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class LockerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $locker = LockerModel::all();
+        if ($request->ajax()) {
+            $data = DB::table('locker')->select('id', 'qr', 'inisial', 'gudang', 'keterangan', 'qrcode');
+
+            return DataTables::of($data)
+                ->addColumn('action', function ($row) {
+                    $detailBtn = '<a href="javascript:void(0)" data-bs-target="#modal-detail" data-id="' . $row->id . '" data-qrcode="' . $row->qrcode . '" data-inisial="' . $row->inisial . '" data-keterangan="' . $row->keterangan . '" data-bs-toggle="modal" class="btn btn-outline-success btn-sm btn-icon detail-btn"><i class="fa-solid fa-fw fa-eye"></i></a>';
+                    $editBtn = '<a href="javascript:void(0)" data-bs-target="#modal-edit" data-id="' . $row->id . '" data-gudang="' . $row->gudang . '" data-inisial="' . $row->inisial . '" data-keterangan="' . $row->keterangan . '" data-bs-toggle="modal" class="btn btn-outline-info btn-sm btn-icon edit-btn"><i class="fa-solid fa-fw fa-edit"></i></a>';
+                    $deleteBtn = '<form id="deleteForm' . $row->id . '" action="/locker/destroy/' . $row->id . '" method="POST" class="d-inline">' . csrf_field() . method_field('DELETE') . '<button type="button" class="btn btn-outline-danger btn-sm btn-icon" onclick="confirmDelete(event, ' . $row->id . ')"><i class="fa-solid fa-fw fa-trash-can"></i></button></form>';
+                    return $detailBtn . ' ' . $editBtn . ' ' . $deleteBtn;
+                })
+                ->addColumn('qrcode', function ($row) {
+                    return '<img src="' . asset($row->qrcode) . '" alt="QR Code" width="40" height="40">';
+                })
+                ->rawColumns(['action', 'qrcode'])
+                ->make(true);
+        }
+
         return view('products.01_master.locker.index', [
             'judul' => 'Halaman Locker',
-            'locker' => $locker,
             'active' => 'Locker'
         ]);
     }
+
 
     public function store(Request $request)
     {
@@ -108,22 +126,18 @@ class LockerController extends Controller
         Log::info('Attempting to save QR code', ['filename' => $filename]);
 
         // Save QR code to storage
-        $saveSuccess = Storage::put($filename, $result->getString());
-        if (!$saveSuccess) {
-            Log::error('Failed to save QR code to storage', ['filename' => $filename]);
-            return redirect()->back()->with('error', 'Failed to save QR code');
-        }
+        Storage::put($filename, $result->getString());
 
         // Set path qrcode in the model
         $locker->qr = $qrValue;
         $locker->qrcode = str_replace('public/', 'storage/', $filename);
 
         // Save data to database
-        if ($locker->save()) {
-            return redirect('/locker')->with('success', 'Data locker berhasil diperbarui');
-        } else {
-            return redirect()->back()->with('error', 'Data locker gagal diperbarui, silakan coba kembali');
-        }
+        return response()->json([
+            'status' => true,
+            'msg' => 'Locker updated successfully',
+            'data' => $locker
+        ]);
     }
 
     public function destroy($id)
@@ -143,10 +157,5 @@ class LockerController extends Controller
         } else {
             return redirect()->back()->with('error', 'Data locker gagal dihapus, silakan coba kembali');
         }
-    }
-
-    public function download()
-    {
-        return Excel::download(new LockerExport, 'Data Locker.xlsx');
     }
 }
