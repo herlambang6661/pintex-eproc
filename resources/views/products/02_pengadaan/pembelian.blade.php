@@ -360,14 +360,14 @@
         }
     </style>
     <div class="modal modal-blur fade" id="modalPembelian" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="overlay">
+        <div class="overlay cursor-wait">
             <div class="cv-spinner">
                 <span class="spinner"></span>
             </div>
         </div>
         <div class="modal-dialog modal-full-width" role="document">
             <div class="modal-content">
-                <form id="formPermintaan" name="formPermintaan" method="post" action="javascript:void(0)">
+                <form id="formPembelian" name="formPembelian" method="post" action="javascript:void(0)">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">
@@ -390,7 +390,7 @@
                         <div class="fetched-data-pembelian"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
+                        <button type="submit" class="btn btn-blue" id="submitPembelian"><i class="fas fa-save"
                                 style="margin-right: 5px"></i> Proses</button>
                         <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
                                 class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
@@ -439,7 +439,7 @@
             //----------------------------------------------LIST PEMBLIAN-----------------------------------------//
             tablePembelian = $('.datatable-detail-pembelian').DataTable({
                 "processing": true,
-                "serverSide": false,
+                "serverSide": true,
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -448,7 +448,7 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
-                    [10, 10, 25, 50, -1],
+                    [50, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
@@ -485,49 +485,53 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "#",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('getPembelianList.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                    }
+                },
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                    },
-                    {
-                        title: 'TANGGAL',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        title: 'Kodeseri',
+                        data: 'kode',
+                        name: 'kode',
+                        className: "cuspad0 cuspad1 text-center",
                     },
                     {
                         title: 'NO FAKTUR',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'nofaktur',
+                        name: 'nofaktur',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'Barang',
+                        data: 'namabarang',
+                        name: 'namabarang',
+                        className: "cuspad0 cuspad1",
+                    },
+                    {
+                        title: 'Qty Beli',
+                        data: 'kts',
+                        name: 'kts',
+                        className: "cuspad0 cuspad1 text-center",
+                    },
+                    {
+                        title: 'Harga Satuan',
+                        data: 'harga',
+                        name: 'harga',
+                        className: "cuspad0 cuspad1 text-center",
                     },
                     {
                         title: 'SUPPLIER',
-                        data: 'noform',
-                        name: 'noform',
+                        data: 'supplier',
+                        name: 'supplier',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
                         title: 'SUBTOTAL',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
+                        data: 'jumlah',
+                        name: 'jumlah',
                         className: "cuspad0 text-center clickable"
-                    },
-                    {
-                        title: 'DISKON',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
                     },
                 ],
 
@@ -822,22 +826,112 @@
             // Enabling the popover
             bootstrap.Popover.getOrCreateInstance("#popover1");
 
-            // document.addEventListener("DOMContentLoaded", function() {
-            //     let options = {
-            //         selector: "#tinymce-default",
-            //         height: 300,
-            //         menubar: false,
-            //         statusbar: false,
+            if ($("#formPembelian").length > 0) {
+                $("#formPembelian").validate({
+                    rules: {
+                        tgl: {
+                            required: true,
+                        },
+                        supplier: {
+                            required: true,
+                        },
+                        dibeli: {
+                            required: true,
+                        },
+                        nopo: {
+                            required: true,
+                        },
+                        uang: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        tgl: {
+                            required: "Masukkan Tanggal Faktur",
+                        },
+                        supplier: {
+                            required: "Masukkan Supplier",
+                        },
+                        dibeli: {
+                            required: "Masukkan Dibeli Oleh",
+                        },
+                        nopo: {
+                            required: "Masukkan Nomor PO / Faktur",
+                        },
+                        uang: {
+                            required: "Masukkan Mata Uang",
+                        },
+                    },
 
-            //         toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
-            //         content_style: "body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }"
-            //     }
-            //     if (localStorage.getItem("tablerTheme") === "dark") {
-            //         options.skin = "oxide-dark";
-            //         options.content_css = "dark";
-            //     }
-            //     tinyMCE.init(options);
-            // });
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $('#submitPembelian').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Mohon Menunggu...');
+                        $("#submitPembelian").attr("disabled", true);
+
+                        $.ajax({
+                            url: "{{ url('storedataPembelian') }}",
+                            type: "POST",
+                            data: $('#formPembelian').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Menyimpan Data',
+                                    html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Result:', response);
+                                $('#submitPembelian').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitPembelian").attr("disabled", false);
+                                tablePermintaan.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                document.getElementById("formPembelian").reset();
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tablePembelian.ajax.reload();
+                                tableCheckPembelian.ajax.reload();
+                                tableCheckServis.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitPembelian').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitPembelian").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
         });
     </script>
 @endsection

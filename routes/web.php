@@ -34,6 +34,7 @@ use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
 use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
 use App\Http\Controllers\_05Laporan\LaporanPembelianController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Datatables\Pengadaan\PembelianList;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ Route::get('/', function () {
 
 Route::resource('getPermintaan', PermintaanList::class);
 Route::resource('getPengambilan', PengambilanList::class);
+Route::resource('getPembelianList', PembelianList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -157,6 +159,7 @@ Route::controller(PembelianController::class)->group(function () {
     Route::post('getPembelian', 'getDataPembelian')->name('getPembelian.index');
     Route::post('getService', 'getDataService')->name('getService.index');
     Route::post('checkPembelian', 'checkPembelian');
+    Route::post('storedataPembelian', 'storePembelian');
 });
 
 Route::controller(StatusBarangController::class)->group(function () {
