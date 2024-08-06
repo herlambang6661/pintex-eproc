@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('namabarang')->nullable();
             $table->integer('kts')->nullable();
             $table->string('satuan')->nullable();
-            $table->float('harga')->nullable();
+            $table->float('harga', 10, 2)->nullable();
             $table->integer('pajak')->nullable();
             $table->integer('nmpajak')->nullable();
             $table->integer('pj')->nullable();
-            $table->float('jumlah')->nullable();
+            $table->float('jumlah', 10, 2)->nullable();
             $table->string('supplier')->nullable();
             $table->integer('estimasi')->nullable();
             $table->date('estimasi_tgl')->nullable();

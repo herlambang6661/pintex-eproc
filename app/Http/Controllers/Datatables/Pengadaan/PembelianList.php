@@ -27,16 +27,14 @@ class PembelianList extends Controller
     {
 
         if ($request->ajax()) {
-            $data = DB::table('pembelianitm')
-                ->orderBy('id', 'desc')
-                ->get();
+            $data = DB::table('pembelianitm')->orderBy('id', 'desc')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->editColumn('select_orders', function ($row) {
-                    return '';
-                })
-                ->rawColumns(['action', 'select_orders', 'status', 'tgl'])
+                // ->editColumn('select_orders', function ($row) {
+                //     return '';
+                // })
+                ->rawColumns([''])
                 ->make(true);
         }
 
@@ -45,7 +43,7 @@ class PembelianList extends Controller
 
     public function destroy($id)
     {
-        DB::table('permintaanitm')->where('kodeseri', '=', $id)->delete();
+        DB::table('pembelianitm')->where('kodeseri', '=', $id)->delete();
         return response()->json(['success' => 'Record deleted successfully.']);
     }
 }

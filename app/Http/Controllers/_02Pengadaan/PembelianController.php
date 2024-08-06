@@ -366,15 +366,15 @@ class PembelianController extends Controller
                     }
                     echo '
                             <tr>
-                                <input type="hidden" name="kodeseri[]">
+                                <input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">
                                 <td class="text-center" style="padding-top:10px;padding-bottom:10px;width:75px">' . Carbon::parse($u->tgl)->format('d/m/Y') . '</td>
                                 <td class="text-center" style="padding-top:10px;padding-bottom:10px;width:75px">' . $u->kodeseri . '</td>
                                 <td style="padding-top:10px;padding-bottom:10px">' . $stturgent . $u->namaBarang . ' </td>
                                 <td style="padding-top:10px;padding-bottom:10px">' . $u->keterangan . '</td>
                                 <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->qtyacc . '</td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="qtybeli[]" id="qtybeli-' . $u->kodeseri . '" value="' . $u->qtyacc . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="text" name="satuan[]" id="satuan-' . $u->kodeseri . '" value="' . $u->satuan . '" min="0" style="text-align:center;"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="harga[]" id="harga-' . $u->kodeseri . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;"></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="qtybeli[]" id="qtybeli-' . $u->kodeseri . '" value="' . $u->qtyacc . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="text" name="satuan[]" id="satuan-' . $u->kodeseri . '" value="' . $u->satuan . '" style="text-align:center;" required></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="harga[]" id="harga-' . $u->kodeseri . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required></td>
                                 <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="padding-right:1px;padding-left:1px;padding-top:10px;padding-bottom:1px">
                                     <i id="txtjumlah-' . $u->kodeseri . '"></i>
                                     <input type="hidden" id="jumlah-' . $u->kodeseri . '">
@@ -494,6 +494,7 @@ class PembelianController extends Controller
 
         // Initiate Noform
         $noform = DB::table("pembelianitm")->max('noform');
+        $noform++;
         $check = DB::table('pembelian')->insert([
             'nofkt' => $request->nopo,
             'noform' => $noform,
@@ -554,7 +555,7 @@ class PembelianController extends Controller
                 'mesin' => $getbarang->mesin,
                 'satuan' => $getbarang->satuan,
                 'qty_permintaan' => $getbarang->qty,
-                'qty_acc' => $getbarang->qty_acc,
+                'qty_acc' => $getbarang->qtyacc,
                 'pemesan' => $getbarang->pemesan,
                 'unit' => $getbarang->unit,
                 'peruntukan' => $getbarang->peruntukan,
@@ -569,7 +570,7 @@ class PembelianController extends Controller
                 'harga_jumlah' => $request->totalitem[$i],
                 'supplier' => $request->supplier,
                 'garansi' => $request->garansi[$i],
-                'tgl_garansi' => '',
+                // 'tgl_garansi' => '',
                 'tgl_permintaan' => $getbarang->tgl,
                 'tgl_qty_acc' => $getbarang->tgl_qty_acc,
                 'tgl_acc' => $getbarang->tgl_acc,
@@ -577,8 +578,6 @@ class PembelianController extends Controller
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-
-            $noform++;
         }
 
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);

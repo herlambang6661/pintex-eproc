@@ -159,7 +159,7 @@ Route::controller(PembelianController::class)->group(function () {
     Route::post('getPembelian', 'getDataPembelian')->name('getPembelian.index');
     Route::post('getService', 'getDataService')->name('getService.index');
     Route::post('checkPembelian', 'checkPembelian');
-    Route::post('storedataPembelian', 'storePembelian');
+    Route::post('storedataPembelian', 'storePembelian')->name('storedataPembelian');
 });
 
 Route::controller(StatusBarangController::class)->group(function () {

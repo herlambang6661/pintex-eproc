@@ -777,55 +777,6 @@
                     targets: 0
                 }],
             });
-            // TABLE =============================================================================================//
-            // MODAL =============================================================================================//
-
-            // MODAL ---------------------------------------------------------//
-            $('#modalPembelian').on('show.bs.modal', function(e) {
-                $(".overlay").fadeIn(300);
-                itemTables = [];
-                // console.log(count);
-
-                $.each(tableCheckPembelian.rows('.selected').nodes(), function(index, rowId) {
-                    var rows_selected = tableCheckPembelian.rows('.selected').data();
-                    itemTables.push(rows_selected[index]['id']);
-                });
-                console.log(itemTables);
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                //menggunakan fungsi ajax untuk pengambilan data
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('checkPembelian') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        id: itemTables,
-                        jml: itemTables.length,
-                    },
-                    success: function(data) {
-                        //menampilkan data ke dalam modal
-                        $('.fetched-data-pembelian').html(data);
-                    }
-                }).done(function() {
-                    setTimeout(function() {
-                        $(".overlay").fadeOut(300);
-                    }, 500);
-                });
-            });
-            // MODAL ========================================================================//
-            $('#filter_id').on('click change', function() {
-                tableCheckPembelian.ajax.reload(null, false);
-            });
-
-            //Enabling the tooltip
-            bootstrap.Tooltip.getOrCreateInstance("#tooltip1");
-            // Enabling the popover
-            bootstrap.Popover.getOrCreateInstance("#popover1");
-
             if ($("#formPembelian").length > 0) {
                 $("#formPembelian").validate({
                     rules: {
@@ -894,7 +845,6 @@
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
                                 );
                                 $("#submitPembelian").attr("disabled", false);
-                                tablePermintaan.ajax.reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",
@@ -911,6 +861,10 @@
                                     title: response.msg,
                                 });
                                 document.getElementById("formPembelian").reset();
+                                tablePembelian.ajax.reload();
+                                tableCheckPembelian.ajax.reload();
+                                tableCheckServis.ajax.reload();
+                                $('#modalPembelian').modal('hide');
                             },
                             error: function(data) {
                                 console.log('Error:', data);
@@ -932,6 +886,55 @@
                     }
                 })
             }
+            // TABLE =============================================================================================//
+            // MODAL =============================================================================================//
+
+            // MODAL ---------------------------------------------------------//
+            $('#modalPembelian').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tableCheckPembelian.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tableCheckPembelian.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkPembelian') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-pembelian').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            // MODAL ========================================================================//
+            $('#filter_id').on('click change', function() {
+                tableCheckPembelian.ajax.reload(null, false);
+            });
+
+            //Enabling the tooltip
+            bootstrap.Tooltip.getOrCreateInstance("#tooltip1");
+            // Enabling the popover
+            bootstrap.Popover.getOrCreateInstance("#popover1");
+
         });
     </script>
 @endsection

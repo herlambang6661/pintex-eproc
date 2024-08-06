@@ -39,7 +39,7 @@ return new class extends Migration
             $table->float('harga_satuan', 10, 2)->nullable();
             $table->float('pajak', 10, 2)->nullable();
             $table->float('harga_jumlah', 10, 2)->nullable();
-            $table->float('supplier', 10, 2)->nullable();
+            $table->string('supplier')->nullable();
             $table->integer('garansi')->nullable();
             $table->date('tgl_garansi')->nullable();
             $table->date('tgl_permintaan')->nullable();
