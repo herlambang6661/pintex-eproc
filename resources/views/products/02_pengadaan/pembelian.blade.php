@@ -137,24 +137,19 @@
                                         <div class="card card-xl shadow rounded border border-blue">
                                             <div class="table-responsive">
                                                 <table class="table mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center">Tgl Awal</th>
-                                                            <th class="text-center">Tgl Akhir</th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
-                                                        </tr>
-                                                    </thead>
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="date" id="idfilter_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
+                                                                <input type="date" id="tablePembelian_dari"
+                                                                    onchange="syn()"
+                                                                    class="form-control border border-blue"
+                                                                    value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
-                                                                <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
+                                                                <input type="date" id="tablePembelian_sampai"
+                                                                    onchange="syn()"
+                                                                    class="form-control  border border-blue"
+                                                                    value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
                                                                 <select class="form-select">
@@ -432,14 +427,14 @@
         var tablePembelian, tableCheckPembelian, tableCheckServis;
 
         function syn() {
-            tableCheckPembelian.ajax.reload();
+            tablePembelian.ajax.reload();
         }
         $(function() {
             // TABLE =============================================================================================//
             //----------------------------------------------LIST PEMBLIAN-----------------------------------------//
             tablePembelian = $('.datatable-detail-pembelian').DataTable({
                 "processing": true,
-                "serverSide": true,
+                "serverSide": false,
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -448,7 +443,7 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
-                    [50, 10, 25, 50, -1],
+                    [15, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
@@ -489,9 +484,19 @@
                     "url": "{{ route('getPembelianList.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
+                        data.dari = $('#tablePembelian_dari').val();
+                        data.sampai = $('#tablePembelian_sampai').val();
                     }
                 },
+                order: [
+                    [0, 'desc']
+                ],
                 "columns": [{
+                        title: 'Tanggal',
+                        data: 'tgl',
+                        name: 'tgl',
+                        className: "cuspad0 cuspad1 text-center",
+                    }, {
                         title: 'Kodeseri',
                         data: 'kode',
                         name: 'kode',
@@ -510,28 +515,34 @@
                         className: "cuspad0 cuspad1",
                     },
                     {
-                        title: 'Qty Beli',
+                        title: 'Qty',
                         data: 'kts',
                         name: 'kts',
                         className: "cuspad0 cuspad1 text-center",
                     },
                     {
-                        title: 'Harga Satuan',
+                        title: 'Curr',
+                        data: 'currid',
+                        name: 'currid',
+                        className: "cuspad0 cuspad1 text-center",
+                    },
+                    {
+                        title: 'Harga',
                         data: 'harga',
                         name: 'harga',
                         className: "cuspad0 cuspad1 text-center",
+                    },
+                    {
+                        title: 'Total',
+                        data: 'jumlah',
+                        name: 'jumlah',
+                        className: "cuspad0 text-center clickable"
                     },
                     {
                         title: 'SUPPLIER',
                         data: 'supplier',
                         name: 'supplier',
                         className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'SUBTOTAL',
-                        data: 'jumlah',
-                        name: 'jumlah',
-                        className: "cuspad0 text-center clickable"
                     },
                 ],
 
@@ -590,7 +601,7 @@
                 },
                 columnDefs: [{
                     'targets': 0,
-                    "orderable": false,
+                    "orderable": true,
                     'className': 'select-checkbox',
                     'checkboxes': {
                         'selectRow': true
@@ -772,10 +783,6 @@
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                 ],
-                columnDefs: [{
-                    orderable: false,
-                    targets: 0
-                }],
             });
             if ($("#formPembelian").length > 0) {
                 $("#formPembelian").validate({

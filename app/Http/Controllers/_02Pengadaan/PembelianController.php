@@ -14,6 +14,9 @@ class PembelianController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        date_default_timezone_set('Asia/Jakarta');
+        setlocale(LC_TIME, 'id_ID');
+        \Carbon\Carbon::setLocale('id');
     }
     public function pembelian()
     {
@@ -110,10 +113,10 @@ class PembelianController extends Controller
             $supplier = DB::table("person")->where('tipe', '=', 'ENTITAS')->orderBy('nama')->get();
             $pajak = DB::table("pajak")->get();
 
-            $noform = DB::table("pembelianitm")->max('noform');
+            $noform = DB::table("pembelian")->max('noform');
             $noform++;
 
-            $nofaktur = DB::table("pembelianitm")->max('nofaktur');
+            $nofaktur = DB::table("pembelianitm")->where('nofaktur', 'LIKE', '%P-INVN-%')->max('nofaktur');
             $y = substr($nofaktur, 7, 2);
             if (date('y') == $y) {
                 $noUrut2 = substr($nofaktur, 10, 7);
@@ -180,7 +183,7 @@ class PembelianController extends Controller
                                                         <script>
                                                             $("#uangcheck").on("change", function() {
                                                                 const kurs = $("#uangcheck option:selected").data("kursuang");
-                                                                $("[name=kurscheck]").val(kurs);
+                                                                $("[name=kurs]").val(kurs);
                                                             });
                                                             
                                                             $("#vendorcheck").on("change", function() {
@@ -319,7 +322,7 @@ class PembelianController extends Controller
                                     <div class="row">
                                         <div class="col">
                                             <label class="form-label">Alamat</label>
-                                            <textarea id="alamat1" name="alamatcheck" disabled class="form-control bg-secondary-lt border border-blue cursor-not-allowed" rows="8" placeholder="Pilih Supplier dan alamat akan terisi..."></textarea>
+                                            <textarea id="alamat1" name="alamatcheck" readonly class="form-control bg-secondary-lt border border-blue cursor-not-allowed" rows="8" placeholder="Pilih Supplier dan alamat akan terisi..."></textarea>
                                         </div>
                                         <div class="col">
                                             <label class="form-label">Alamat Kirim</label>
@@ -493,7 +496,7 @@ class PembelianController extends Controller
         );
 
         // Initiate Noform
-        $noform = DB::table("pembelianitm")->max('noform');
+        $noform = DB::table("pembelian")->max('noform');
         $noform++;
         $check = DB::table('pembelian')->insert([
             'nofkt' => $request->nopo,
@@ -534,7 +537,7 @@ class PembelianController extends Controller
                 "jumlah" => $request->totalitem[$i],
                 "supplier" => $request->supplier,
                 "estimasi" => $request->estimasi[$i],
-                "estimasi_tgl" => Carbon::now()->subDays($request->estimasi[$i]),
+                "estimasi_tgl" => date('Y-m-d', strtotime($request->estimasi[$i] . " days")),
                 "garansi" => $request->garansi[$i],
                 // "garansi_tgl" => '',
                 // "parsial" => '',
@@ -542,6 +545,14 @@ class PembelianController extends Controller
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
+
+            DB::table('permintaanitm')
+                ->where('kodeseri', $request->kodeseri[$i])
+                ->update([
+                    'dibeli' => $request->dibeli,
+                    'status' => 'DIBELI',
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
 
             DB::table('barang')->insert([
                 'jenis' => $getbarang->jenis,
@@ -560,7 +571,7 @@ class PembelianController extends Controller
                 'unit' => $getbarang->unit,
                 'peruntukan' => $getbarang->peruntukan,
                 'pembeli' => $getbarang->pembeli,
-                'dibeli' => $getbarang->dibeli,
+                'dibeli' => $request->dibeli,
                 'status' => 'DIBELI',
                 'urgent' => $getbarang->urgent,
                 'no_faktur' => $request->nopo,
@@ -575,6 +586,8 @@ class PembelianController extends Controller
                 'tgl_qty_acc' => $getbarang->tgl_qty_acc,
                 'tgl_acc' => $getbarang->tgl_acc,
                 'tgl_pembelian' => $request->tgl,
+                'proses_email' => $request->proses_email,
+                'proses_po' => $request->proses_po,
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);

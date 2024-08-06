@@ -23,10 +23,10 @@ return new class extends Migration
             $table->string('part')->nullable();
             $table->string('mesin')->nullable();
             $table->string('satuan')->nullable();
-            $table->float('qty_permintaan', 10, 2)->nullable();
-            $table->float('qty_acc', 10, 2)->nullable();
-            $table->float('qty_diterima', 10, 2)->nullable();
-            $table->float('qty_diambil', 10, 2)->nullable();
+            $table->integer('qty_permintaan')->nullable();
+            $table->integer('qty_acc')->nullable();
+            $table->integer('qty_diterima')->nullable();
+            $table->integer('qty_diambil')->nullable();
             $table->string('pemesan')->nullable();
             $table->string('unit')->nullable();
             $table->string('peruntukan')->nullable();

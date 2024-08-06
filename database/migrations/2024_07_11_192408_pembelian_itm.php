@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pembelianitm', function (Blueprint $table) {
             $table->id();
-            $table->string('noform')->nullable();
+            $table->integer('noform')->nullable();
             $table->string('nofaktur')->nullable();
             $table->string('kode')->nullable();
             $table->string('namabarang')->nullable();

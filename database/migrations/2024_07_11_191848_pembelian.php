@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('alamat')->nullable();
             $table->string('kirim')->nullable();
             $table->string('pajak')->nullable();
-            $table->string('noform')->nullable();
+            $table->integer('noform')->nullable();
             $table->float('subtotal')->nullable();
             $table->float('diskon')->nullable();
             $table->float('diskonint')->nullable();
