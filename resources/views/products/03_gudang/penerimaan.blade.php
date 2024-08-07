@@ -62,8 +62,8 @@
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="https://pintex.co.id/apps/HR/Recruitment"><i
                                                 class="fa-solid fa-basket-shopping"></i> Gudang</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-paste"></i> Penerimaan</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><a href="#">
+                                            <i class="fa-solid fa-truck-arrow-right"></i> Penerimaan</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -94,10 +94,11 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#tabs-qty-persetujuan" class="nav-link" data-bs-toggle="tab">
+                                            <a href="#tabs-pertama" class="nav-link active" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    style="margin-right:5px" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-list-check">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
@@ -111,25 +112,31 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#tabs-persetujuan" class="nav-link active" data-bs-toggle="tab">
+                                            <a href="#tabs-kedua" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-activity">
+                                                    style="margin-right:5px" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-package-import">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M3 12h4l3 8l4 -16l3 8h4" />
+                                                    <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5" />
+                                                    <path d="M12 12l8 -4.5" />
+                                                    <path d="M12 12v9" />
+                                                    <path d="M12 12l-8 -4.5" />
+                                                    <path d="M22 18h-7" />
+                                                    <path d="M18 15l-3 3l3 3" />
                                                 </svg>
                                                 Checklist Penerimaan
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#tabs-list-reject" class="nav-link" data-bs-toggle="tab">
+                                            <a href="#tabs-ketiga" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="currentColor"
-                                                    class="icon icon-tabler icons-tabler-filled icon-tabler-parking-circle">
+                                                    style="margin-right:5px" viewBox="0 0 24 24" fill="currentColor"
+                                                    class="icon icon-tabler icons-tabler-filled icon-tabler-star-half">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
-                                                        d="M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -20 0l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72m1.334 5h-3.334a1 1 0 0 0 -1 1v8a1 1 0 0 0 1 1l.117 -.007a1 1 0 0 0 .883 -.993v-3h2.334c1.516 0 2.666 -1.38 2.666 -3s-1.15 -3 -2.666 -3m0 2c.323 0 .666 .411 .666 1s-.343 1 -.666 1h-2.334v-2z" />
+                                                        d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z" />
                                                 </svg>
                                                 Partial Penerimaan
                                             </a>
@@ -137,7 +144,7 @@
                                     </ul>
                                 </div>
                                 <div class="tab-content">
-                                    <div class="tab-pane" id="tabs-qty-persetujuan">
+                                    <div class="tab-pane active show" id="tabs-pertama">
                                         <div class="card card-xl shadow rounded border border-blue">
                                             <div class="table-responsive">
                                                 <table class="table mb-0">
@@ -187,7 +194,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane active show" id="tabs-persetujuan">
+                                    <div class="tab-pane" id="tabs-kedua">
                                         <div class="card card-xl shadow rounded border border-blue">
                                             <div class="table-responsive">
                                                 <table class="table mb-0">
@@ -239,7 +246,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tabs-list-reject">
+                                    <div class="tab-pane" id="tabs-ketiga">
                                         <div class="card card-xl shadow rounded border border-blue">
                                             <div class="table-responsive">
                                                 <table class="table mb-0">
@@ -300,6 +307,75 @@
             @include('shared.footer')
         </div>
     </div>
+    {{-- Modal Start --}}
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px #ddd solid;
+            border-top: 4px #2e93e6 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+
+        @keyframes sp-anime {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .is-hide {
+            display: none;
+        }
+    </style>
+    <div class="modal modal-blur fade" id="modalPenerimaan" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form id="formPenerimaan" name="formPenerimaan" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-user-check" style="margin-right: 5px"></i>
+                            Proses Penerimaan
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-penerimaan"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Modal End --}}
 
     <script type="text/javascript">
         function newexportaction(e, dt, button, config) {
@@ -456,10 +532,7 @@
                 ],
 
             });
-        });
-
-        //----------------------------------------------CHECKLLIS PENERIMAAN-----------------------------------------//
-        $(document).ready(function() {
+            //----------------------------------------------CHECKLLIS PENERIMAAN-----------------------------------------//
             var tableChecklistPenerimaan = $('.datatable-checklist-penerimaan').DataTable({
                 "processing": true,
                 "serverSide": false,
@@ -469,16 +542,16 @@
                 "dom": "<'card-header h3' B>" +
                     "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 "lengthMenu": [
                     [10, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                    "className": 'btn btn-success',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Penerimaan',
+                    "className": 'btn btn-blue',
+                    "text": '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg> Proses Penerimaan',
                     "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
+                        $('#modalPenerimaan').modal('show')
                     }
                 }, ],
                 "language": {
@@ -495,79 +568,81 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
-                },
-                // "ajax": {
-                //     "url": "#",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
-                "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses Penerimaan Barang",
                         }
                     },
-                    {
-                        title: 'TGL',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                },
+                "ajax": {
+                    "url": "{{ route('getPenerimaan.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.tipe = 'qtyacc';
+                        data.dari = $('#fqtydari').val();
+                        data.sampai = $('#fqtysampai').val();
+                    }
+                },
+                select: {
+                    'style': 'multi',
+                    // "selector": 'td:not(:nth-child(2))',
+                },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": false,
+                    'className': 'select-checkbox cursor-pointer',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                "columns": [{
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2 cursor-pointer',
+                        orderable: true,
+                        searchable: false
                     },
                     {
                         title: 'KODESERI',
                         data: 'kodeseri',
                         name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'BARANG',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'PEMESAN',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'QTY',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Deskripsi',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'SATUAN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'SUPPLIER',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'JENIS',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
 
             });
-        });
-
-        //---------------------------------------------PARSIAL PENERIMAAN-----------------------------------//
-        $(document).ready(function() {
+            //---------------------------------------------PARSIAL PENERIMAAN-----------------------------------//
             var tablePermintaan = $('.datatable-partial-penerimaan').DataTable({
                 "processing": true,
                 "serverSide": false,
@@ -691,6 +766,45 @@
             $('#filter_id').on('click change', function() {
                 tablePermintaan.ajax.reload(null, false);
             });
+
+            // MODAL ---------------------------------------------------------//
+            $('#modalPenerimaan').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tableChecklistPenerimaan.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tableChecklistPenerimaan.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkPenerimaan') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-penerimaan').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            // MODAL ---------------------------------------------------------//
         });
     </script>
 @endsection

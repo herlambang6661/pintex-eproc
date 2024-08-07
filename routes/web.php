@@ -4,6 +4,7 @@ use App\Http\Controllers\Pengadaan;
 use App\Models\Pengadaan\Permintaan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\_01Master\UangController;
 use App\Http\Controllers\_01Master\MesinController;
 use App\Http\Controllers\_04Teknik\ReturController;
@@ -24,17 +25,17 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\_01Master\MasterBarangController;
 use App\Http\Controllers\_02Pengadaan\PembelianController;
 use App\Http\Controllers\_05Laporan\LaporanStokController;
+use App\Http\Controllers\Datatables\Gudang\PenerimaanList;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
 use App\Http\Controllers\_03Gudang\BarangTransitController;
 use App\Http\Controllers\Datatables\Teknik\PengambilanList;
 use App\Http\Controllers\_02Pengadaan\PersetujuanController;
+use App\Http\Controllers\Datatables\Pengadaan\PembelianList;
 use App\Http\Controllers\_02Pengadaan\StatusBarangController;
 use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
 use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
 use App\Http\Controllers\_05Laporan\LaporanPembelianController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Datatables\Pengadaan\PembelianList;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,7 @@ Route::get('/', function () {
 Route::resource('getPermintaan', PermintaanList::class);
 Route::resource('getPengambilan', PengambilanList::class);
 Route::resource('getPembelianList', PembelianList::class);
+Route::resource('getPenerimaan', PenerimaanList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -170,6 +172,7 @@ Route::controller(StatusBarangController::class)->group(function () {
 //ROUTE GUDANG
 Route::controller(PenerimaanController::class)->group(function () {
     Route::get('gudang/penerimaan', 'penerimaan');
+    Route::post('checkPenerimaan', 'checkPenerimaan');
 });
 
 Route::controller(PengirimanController::class)->group(function () {

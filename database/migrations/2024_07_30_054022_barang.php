@@ -27,6 +27,9 @@ return new class extends Migration
             $table->integer('qty_acc')->nullable();
             $table->integer('qty_diterima')->nullable();
             $table->integer('qty_diambil')->nullable();
+            $table->integer('partial')->nullable();
+            $table->string('npb')->nullable();
+            $table->string('locker')->nullable();
             $table->string('pemesan')->nullable();
             $table->string('unit')->nullable();
             $table->string('peruntukan')->nullable();
@@ -42,6 +45,7 @@ return new class extends Migration
             $table->string('supplier')->nullable();
             $table->integer('garansi')->nullable();
             $table->date('tgl_garansi')->nullable();
+            $table->date('tgl_estimasi')->nullable();
             $table->date('tgl_permintaan')->nullable();
             $table->date('tgl_qty_acc')->nullable();
             $table->date('tgl_acc')->nullable();

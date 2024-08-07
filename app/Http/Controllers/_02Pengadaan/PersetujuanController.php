@@ -15,6 +15,9 @@ class PersetujuanController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        date_default_timezone_set('Asia/Jakarta');
+        setlocale(LC_TIME, 'id_ID');
+        \Carbon\Carbon::setLocale('id');
     }
 
     public function persetujuan()
@@ -518,16 +521,46 @@ class PersetujuanController extends Controller
             if ($cari == '') {
             } else {
                 $dataPermintaan = DB::table('permintaanitm')->where('kodeseri', '=', $cari)->first();
-                echo '
+                if ($request->tipe == 'penerimaan') {
+                    echo '
                     <div class="table-responsive">
-                        <table class="table table-sm table-vcenter card-table">
+                        <table class="table table-sm table-vcenter card-table table-hover">
                             <tbody>
                                 <tr>
                                     <td>Tanggal</td>
                                     <td class="text-secondary"> : ' . Carbon::parse($dataPermintaan->tgl)->format('d/m/Y') . '</td>
                                     <td class="text-secondary"></td>
                                     <td>Kodeseri</td>
-                                    <td class="text-secondary"> : ' . $dataPermintaan->estimasiharga . '</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->kodeseri . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Barang</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->namaBarang . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td>Deskripsi</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->keterangan . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Merk</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->part . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td>Qty Permintaan</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->qty . ' ' . $dataPermintaan->satuan . '</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>';
+                } else {
+                    echo '
+                    <div class="table-responsive">
+                        <table class="table table-sm table-vcenter card-table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>Tanggal</td>
+                                    <td class="text-secondary"> : ' . Carbon::parse($dataPermintaan->tgl)->format('d/m/Y') . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td>Kodeseri</td>
+                                    <td class="text-secondary"> : ' . $dataPermintaan->kodeseri . '</td>
                                 </tr>
                                 <tr>
                                     <td>Barang</td>
@@ -560,6 +593,7 @@ class PersetujuanController extends Controller
                             </tbody>
                         </table>
                     </div>';
+                }
             }
         }
     }

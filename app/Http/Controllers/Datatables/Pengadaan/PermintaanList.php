@@ -55,6 +55,11 @@ class PermintaanList extends Controller
                     $m = Carbon::parse($row->tgl)->format('d/m/Y');
                     return $m;
                 })
+                ->addColumn('mesin', function ($row) {
+                    $permintaanController = new PermintaanController();
+                    $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    return $m;
+                })
                 ->addColumn('status', function ($row) {
                     if ($row->status == 'PROSES PERSETUJUAN') {
                         $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
