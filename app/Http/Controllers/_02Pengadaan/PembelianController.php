@@ -375,7 +375,10 @@ class PembelianController extends Controller
                                 <td style="padding-top:10px;padding-bottom:10px">' . $stturgent . $u->namaBarang . ' </td>
                                 <td style="padding-top:10px;padding-bottom:10px">' . $u->keterangan . '</td>
                                 <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->qtyacc . '</td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="qtybeli[]" id="qtybeli-' . $u->kodeseri . '" value="' . $u->qtyacc . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required></td>
+                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px">
+                                    <input class="form-control form-control-sm" type="number" name="qtybeli[]" id="qtybeli-' . $u->kodeseri . '" value="' . $u->qtyacc . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required>
+                                    <input type="hidden" name="qtypermintaan[]" value="' . $u->qtyacc . '">
+                                </td>
                                 <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="text" name="satuan[]" id="satuan-' . $u->kodeseri . '" value="' . $u->satuan . '" style="text-align:center;" required></td>
                                 <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="harga[]" id="harga-' . $u->kodeseri . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required></td>
                                 <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="padding-right:1px;padding-left:1px;padding-top:10px;padding-bottom:1px">
@@ -498,6 +501,7 @@ class PembelianController extends Controller
         // Initiate Noform
         $noform = DB::table("pembelian")->max('noform');
         $noform++;
+        // input Pembelian
         $check = DB::table('pembelian')->insert([
             'nofkt' => $request->nopo,
             'noform' => $noform,
@@ -523,6 +527,7 @@ class PembelianController extends Controller
         $jml_mbl = count($request->kodeseri);
         for ($i = 0; $i < $jml_mbl; $i++) {
             $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+            // input pembelian items
             DB::table('pembelianitm')->insert([
                 "noform" => $noform,
                 "nofaktur" => $request->nopo,
@@ -545,52 +550,155 @@ class PembelianController extends Controller
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-
-            DB::table('permintaanitm')
-                ->where('kodeseri', $request->kodeseri[$i])
-                ->update([
+            // Jika Qty Beli lebih besar sama dengan permintaan maka akan normal
+            // tetapi jika qty beli lebih kecil, maka akan partial dan
+            // akan buat kodeseri baru di permintaan
+            if ($request->qtypermintaan[$i] <= $request->qtybeli[$i]) {
+                DB::table('permintaanitm')
+                    ->where('kodeseri', $request->kodeseri[$i])
+                    ->update([
+                        'dibeli' => $request->dibeli,
+                        'status' => 'DIBELI',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+                // input barang
+                DB::table('barang')->insert([
+                    'jenis' => $getbarang->jenis,
+                    'kodeseri' => $getbarang->kodeseri,
+                    'form_permintaan' => $getbarang->noform,
+                    'kodeproduk' => $getbarang->kodeproduk,
+                    'namaBarang' => $getbarang->namaBarang,
+                    'keterangan' => $getbarang->keterangan,
+                    'katalog' => $getbarang->katalog,
+                    'part' => $getbarang->part,
+                    'mesin' => $getbarang->mesin,
+                    'satuan' => $getbarang->satuan,
+                    'qty_permintaan' => $getbarang->qty,
+                    'qty_acc' => $getbarang->qtyacc,
+                    'pemesan' => $getbarang->pemesan,
+                    'unit' => $getbarang->unit,
+                    'peruntukan' => $getbarang->peruntukan,
+                    'pembeli' => $getbarang->pembeli,
                     'dibeli' => $request->dibeli,
                     'status' => 'DIBELI',
+                    'urgent' => $getbarang->urgent,
+                    'no_faktur' => $request->nopo,
+                    'estimasi_harga' => $getbarang->estimasiharga,
+                    'harga_satuan' => $request->harga[$i],
+                    'pajak' => $request->itempajak[$i],
+                    'harga_jumlah' => $request->totalitem[$i],
+                    'supplier' => $request->supplier,
+                    'garansi' => $request->garansi[$i],
+                    // 'tgl_garansi' => '',
+                    'tgl_permintaan' => $getbarang->tgl,
+                    'tgl_qty_acc' => $getbarang->tgl_qty_acc,
+                    'tgl_acc' => $getbarang->tgl_acc,
+                    'tgl_pembelian' => $request->tgl,
+                    'proses_email' => $request->proses_email,
+                    'proses_po' => $request->proses_po,
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            } else {
+                $getItem = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+                $latestKodeseri = DB::table('permintaanitm')->latest('kodeseri')->first();
+                $newKodeseri = $latestKodeseri->kodeseri + 1;
+                $newQty = $request->qtypermintaan[$i] - $request->qtybeli[$i];
+                // update qty dan status permintaan lama
+                DB::table('permintaanitm')
+                    ->where('kodeseri', $request->kodeseri[$i])
+                    ->update([
+                        'qty' => $request->qtybeli[$i],
+                        'qtyacc' => $request->qtybeli[$i],
+                        'dibeli' => $request->dibeli,
+                        'status' => 'DIBELI',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+
+                DB::table('permintaanitm')->insert([
+                    'jenis' => $getItem->jenis,
+                    'tgl' => $getItem->tgl,
+                    'kodeseri' => $newKodeseri,
+                    'noform' => $getItem->noform,
+                    'kodeproduk' => $getItem->kodeproduk,
+                    'namaBarang' => $getItem->namaBarang,
+                    'keterangan' => $getItem->keterangan,
+                    'katalog' => $getItem->katalog,
+                    'part' => $getItem->part,
+                    'mesin' => $getItem->mesin,
+                    'qty' => $newQty,
+                    'satuan' => $getItem->satuan,
+                    'pemesan' => $getItem->pemesan,
+                    'unit' => $getItem->unit,
+                    'peruntukan' => $getItem->peruntukan,
+                    'dibeli' => $getItem->dibeli,
+                    'acc' => $getItem->acc,
+                    'qtyterima' => $getItem->qtyterima,
+                    'qtyacc' => $newQty,
+                    'qtyakhir' => $getItem->qtyakhir,
+                    'qtyselisih' => $getItem->qtyselisih,
+                    'pembeli' => $getItem->pembeli,
+                    'status' => 'PROSES PEMBELIAN',
+                    'urgent' => $getItem->urgent,
+                    'nsupp' => $getItem->nsupp,
+                    'partial' => 1,
+                    'qtypenerimaan_partial' => $getItem->qtypenerimaan_partial,
+                    'kodeseri_partial' => $request->kodeseri[$i],
+                    'estimasiharga' => $getItem->estimasiharga,
+                    'statusACC' => $getItem->statusACC,
+                    'keteranganACC' => $getItem->keteranganACC,
+                    'qty_sample' => $getItem->qty_sample,
+                    'file_sample' => $getItem->file_sample,
+                    'tgl_qty_acc' => $getItem->tgl_qty_acc,
+                    'tgl_acc' => $getItem->tgl_acc,
+                    'proses_email' => $getItem->proses_email,
+                    'proses_po' => $getItem->proses_po,
+                    'dibuat' => $getItem->dibuat,
+                    'edited' => $getItem->edited,
+                    'remember_token' => $getItem->remember_token,
+                    'created_at' => $getItem->created_at,
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
 
-            DB::table('barang')->insert([
-                'jenis' => $getbarang->jenis,
-                'kodeseri' => $getbarang->kodeseri,
-                'form_permintaan' => $getbarang->noform,
-                'kodeproduk' => $getbarang->kodeproduk,
-                'namaBarang' => $getbarang->namaBarang,
-                'keterangan' => $getbarang->keterangan,
-                'katalog' => $getbarang->katalog,
-                'part' => $getbarang->part,
-                'mesin' => $getbarang->mesin,
-                'satuan' => $getbarang->satuan,
-                'qty_permintaan' => $getbarang->qty,
-                'qty_acc' => $getbarang->qtyacc,
-                'pemesan' => $getbarang->pemesan,
-                'unit' => $getbarang->unit,
-                'peruntukan' => $getbarang->peruntukan,
-                'pembeli' => $getbarang->pembeli,
-                'dibeli' => $request->dibeli,
-                'status' => 'DIBELI',
-                'urgent' => $getbarang->urgent,
-                'no_faktur' => $request->nopo,
-                'estimasi_harga' => $getbarang->estimasiharga,
-                'harga_satuan' => $request->harga[$i],
-                'pajak' => $request->itempajak[$i],
-                'harga_jumlah' => $request->totalitem[$i],
-                'supplier' => $request->supplier,
-                'garansi' => $request->garansi[$i],
-                // 'tgl_garansi' => '',
-                'tgl_permintaan' => $getbarang->tgl,
-                'tgl_qty_acc' => $getbarang->tgl_qty_acc,
-                'tgl_acc' => $getbarang->tgl_acc,
-                'tgl_pembelian' => $request->tgl,
-                'proses_email' => $request->proses_email,
-                'proses_po' => $request->proses_po,
-                'dibuat' => Auth::user()->name,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
+                // input barang
+                DB::table('barang')->insert([
+                    'jenis' => $getbarang->jenis,
+                    'kodeseri' => $getbarang->kodeseri,
+                    'form_permintaan' => $getbarang->noform,
+                    'kodeproduk' => $getbarang->kodeproduk,
+                    'namaBarang' => $getbarang->namaBarang,
+                    'keterangan' => $getbarang->keterangan,
+                    'katalog' => $getbarang->katalog,
+                    'part' => $getbarang->part,
+                    'mesin' => $getbarang->mesin,
+                    'satuan' => $getbarang->satuan,
+                    'qty_permintaan' => $getbarang->qty,
+                    'qty_acc' => $newQty,
+                    'pemesan' => $getbarang->pemesan,
+                    'unit' => $getbarang->unit,
+                    'peruntukan' => $getbarang->peruntukan,
+                    'pembeli' => $getbarang->pembeli,
+                    'dibeli' => $request->dibeli,
+                    'status' => 'DIBELI',
+                    'urgent' => $getbarang->urgent,
+                    'no_faktur' => $request->nopo,
+                    'estimasi_harga' => $getbarang->estimasiharga,
+                    'harga_satuan' => $request->harga[$i],
+                    'pajak' => $request->itempajak[$i],
+                    'harga_jumlah' => $request->totalitem[$i],
+                    'supplier' => $request->supplier,
+                    'garansi' => $request->garansi[$i],
+                    // 'tgl_garansi' => '',
+                    'tgl_permintaan' => $getbarang->tgl,
+                    'tgl_qty_acc' => $getbarang->tgl_qty_acc,
+                    'tgl_acc' => $getbarang->tgl_acc,
+                    'tgl_pembelian' => $request->tgl,
+                    'proses_email' => $request->proses_email,
+                    'proses_po' => $request->proses_po,
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
         }
 
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);

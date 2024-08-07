@@ -489,9 +489,16 @@
                     }
                 },
                 order: [
-                    [0, 'desc']
+                    [1, 'desc']
                 ],
                 "columns": [{
+                        title: '',
+                        data: 'action',
+                        name: 'action',
+                        className: "cuspad0 cuspad1 text-center",
+                        orderable: true,
+                        searchable: false
+                    }, {
                         title: 'Tanggal',
                         data: 'tgl',
                         name: 'tgl',
@@ -625,49 +632,61 @@
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'KODESERI',
+                        title: 'Kodeseri',
+                        data: 'kodeseri',
+                        name: 'kodeseri',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Barang',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable cursor-pointer"
+                        className: "cuspad0 clickable cursor-pointer"
                     },
                     {
-                        title: 'NOFORM',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
-                    },
-                    {
-                        title: 'BARANG',
+                        title: 'Deskripsi',
                         data: 'keterangan',
                         name: 'keterangan',
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'DESKRIPSI',
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Qty',
                         data: 'qty',
                         name: 'qty',
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'QTY MINTA',
+                        title: 'Satuan',
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'SATUAN',
+                        title: 'Pemesan',
                         data: 'pemesan',
                         name: 'pemesan',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'PEMESAN',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
-                    },
-                    {
-                        title: 'UNIT/MESIN',
+                        title: 'Unit',
                         data: 'unit',
                         name: 'unit',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
