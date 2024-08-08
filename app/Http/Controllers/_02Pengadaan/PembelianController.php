@@ -575,6 +575,7 @@ class PembelianController extends Controller
                     'satuan' => $getbarang->satuan,
                     'qty_permintaan' => $getbarang->qty,
                     'qty_acc' => $getbarang->qtyacc,
+                    "qty_beli" => $request->qtybeli[$i],
                     'pemesan' => $getbarang->pemesan,
                     'unit' => $getbarang->unit,
                     'peruntukan' => $getbarang->peruntukan,

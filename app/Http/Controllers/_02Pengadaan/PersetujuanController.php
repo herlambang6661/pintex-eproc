@@ -520,37 +520,38 @@ class PersetujuanController extends Controller
             $cari = trim(strip_tags($request->keyword));
             if ($cari == '') {
             } else {
-                $dataPermintaan = DB::table('permintaanitm')->where('kodeseri', '=', $cari)->first();
                 if ($request->tipe == 'penerimaan') {
+                    $dataBarang = DB::table('barang')->where('kodeseri', '=', $cari)->first();
                     echo '
                     <div class="table-responsive">
                         <table class="table table-sm table-vcenter card-table table-hover">
                             <tbody>
                                 <tr>
                                     <td>Tanggal</td>
-                                    <td class="text-secondary"> : ' . Carbon::parse($dataPermintaan->tgl)->format('d/m/Y') . '</td>
+                                    <td class="text-secondary"> : ' . /* Carbon::parse($dataPermintaan->tgl)->format('d/m/Y') */ '' . '</td>
                                     <td class="text-secondary"></td>
-                                    <td>Kodeseri</td>
-                                    <td class="text-secondary"> : ' . $dataPermintaan->kodeseri . '</td>
+                                    <td>Barang</td>
+                                    <td class="text-secondary fw-bolder"> : ' . (empty($dataBarang->namaBarang) ? " --- " : $dataBarang->namaBarang) . '</td>
                                 </tr>
                                 <tr>
-                                    <td>Barang</td>
-                                    <td class="text-secondary"> : ' . $dataPermintaan->namaBarang . '</td>
-                                    <td class="text-secondary"></td>
                                     <td>Deskripsi</td>
-                                    <td class="text-secondary"> : ' . $dataPermintaan->keterangan . '</td>
+                                    <td class="text-blue"> : ' . (empty($dataBarang->keterangan) ? " --- " : $dataBarang->keterangan) . '</td>
+                                    <td class="text-secondary"></td>
+                                    <td>Katalog</td>
+                                    <td class="text-secondary"> : ' . (empty($dataBarang->katalog) ? " --- " : $dataBarang->katalog) . '</td>
                                 </tr>
                                 <tr>
                                     <td>Merk</td>
-                                    <td class="text-secondary"> : ' . $dataPermintaan->part . '</td>
+                                    <td class="text-secondary"> : ' . (empty($dataBarang->part) ? " --- " : $dataBarang->part) . '</td>
                                     <td class="text-secondary"></td>
                                     <td>Qty Permintaan</td>
-                                    <td class="text-secondary"> : ' . $dataPermintaan->qty . ' ' . $dataPermintaan->satuan . '</td>
+                                    <td class="text-secondary"> : ' . $dataBarang->qty_permintaan . ' ' . $dataBarang->satuan . '</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>';
                 } else {
+                    $dataPermintaan = DB::table('permintaanitm')->where('kodeseri', '=', $cari)->first();
                     echo '
                     <div class="table-responsive">
                         <table class="table table-sm table-vcenter card-table table-hover">

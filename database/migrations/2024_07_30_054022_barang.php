@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('satuan')->nullable();
             $table->integer('qty_permintaan')->nullable();
             $table->integer('qty_acc')->nullable();
+            $table->integer('qty_beli')->nullable();
             $table->integer('qty_diterima')->nullable();
             $table->integer('qty_diambil')->nullable();
             $table->integer('partial')->nullable();

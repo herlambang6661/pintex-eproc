@@ -27,7 +27,7 @@ class PenerimaanList extends Controller
             if ($request->dari) {
                 $dari = $request->dari;
             } else {
-                $dari = date('Y-m-01');
+                $dari = date('Y-01-01');
             }
             if ($request->sampai) {
                 $sampai = $request->sampai;

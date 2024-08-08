@@ -35,7 +35,6 @@
         @include('shared.sidebar')
         <!-- Navbar -->
         @include('shared.navbar')
-
         <div class="page-wrapper">
             <!-- Page header -->
             <div class="page-header d-print-none">
@@ -108,7 +107,7 @@
                                                     <path d="M11 12l9 0" />
                                                     <path d="M11 18l9 0" />
                                                 </svg>
-                                                List Penerimaan
+                                                List
                                             </a>
                                         </li>
                                         <li class="nav-item">
@@ -126,7 +125,7 @@
                                                     <path d="M22 18h-7" />
                                                     <path d="M18 15l-3 3l3 3" />
                                                 </svg>
-                                                Checklist Penerimaan
+                                                Penerimaan
                                             </a>
                                         </li>
                                         <li class="nav-item">
@@ -138,7 +137,7 @@
                                                     <path
                                                         d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z" />
                                                 </svg>
-                                                Partial Penerimaan
+                                                Partial
                                             </a>
                                         </li>
                                     </ul>
@@ -407,7 +406,8 @@
         }
 
         $(document).ready(function() {
-            var tableListPenerimaan = $('.datatable-list-penerimaan').DataTable({
+            var tableListPenerimaan, tableChecklistPenerimaan, tablePartial;
+            tableListPenerimaan = $('.datatable-list-penerimaan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -456,11 +456,12 @@
                     },
                 },
                 // "ajax": {
-                //     "url": "#",
+                //     "url": "{{ route('getPenerimaan.index') }}",
                 //     "data": function(data) {
                 //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
+                //         data.tipe = 'qtyacc';
+                //         data.dari = $('#fqtydari').val();
+                //         data.sampai = $('#fqtysampai').val();
                 //     }
                 // },
                 "columns": [{
@@ -533,7 +534,7 @@
 
             });
             //----------------------------------------------CHECKLLIS PENERIMAAN-----------------------------------------//
-            var tableChecklistPenerimaan = $('.datatable-checklist-penerimaan').DataTable({
+            tableChecklistPenerimaan = $('.datatable-checklist-penerimaan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -643,7 +644,7 @@
 
             });
             //---------------------------------------------PARSIAL PENERIMAAN-----------------------------------//
-            var tablePermintaan = $('.datatable-partial-penerimaan').DataTable({
+            tablePartial = $('.datatable-partial-penerimaan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -762,6 +763,79 @@
                     targets: 0
                 }],
             });
+
+
+            if ($("#formPenerimaan").length > 0) {
+                $("#formPenerimaan").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitCheck').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitCheck").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storeAccPermintaan') }}",
+                            type: "POST",
+                            data: $('#formPenerimaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitCheck').html(
+                                    '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                                tableListPenerimaan.ajax.reload();
+                                tableChecklistPenerimaan.ajax.reload();
+                                tablePartial.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalPenerimaan').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tableListPenerimaan.ajax.reload();
+                                tableChecklistPenerimaan.ajax.reload();
+                                tablePartial.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
 
             $('#filter_id').on('click change', function() {
                 tablePermintaan.ajax.reload(null, false);
