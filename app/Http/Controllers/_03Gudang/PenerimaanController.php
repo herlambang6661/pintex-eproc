@@ -35,17 +35,25 @@ class PenerimaanController extends Controller
             $jml = count($request->id);
             echo '
                     <div class="row">
-                        <div class="col-lg-3 col-md-12">
+                        <div class="col-lg-4 col-md-12">
                                 <label class="form-label">Tanggal Penerimaan</label>
                                 <input name="tgl" type="date" class="form-control" value="' . date("Y-m-d") . '">
                         </div>
-                        <div class="col-lg-9 col-md-12">
+                        <div class="col-lg-8 col-md-12">
                                 <label class="form-label">Penerimaan</label>
                                 <input name="penerima" type="text" class="form-control" value="FAHMI FAHRURROZI">
                         </div>
                     </div>
-                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Catatan</label>
+                            <textarea name="keterangan" id="keterangan" rows="1" class="form-control" placeholder="Masukkan Catatan Tambahan..."></textarea>
+                        </div>
+                    </div>
                     <div class="space-y">
+                    <label class="fw-bold mt-2 mb-0">
+                        Total Barang : ' . $jml . '
+                    </label> 
                     ';
             echo '
                     <script>
@@ -71,18 +79,29 @@ class PenerimaanController extends Controller
                                 success: function(html) {
                                     $("#overlay2").fadeOut(300);
                                     $(".tunggu-"+id).html("");
-                                    $(".hasilcari-"+id).show();
+                                    $(".hasilcari-"+id).fadeIn();
                                     $(".hasilcari-"+id).html(html);
                                 }
                             });
                         }
                         function closeDetails(id) {
-                            $(".hasilcari-"+id).hide();
+                            $(".hasilcari-"+id).fadeOut();
                             $(".open-"+id).show();
                             $(".close-"+id).hide();
                         }
+                            
+                        function openOption(id, param){
+                            if (param == "terima") {
+                                $(".opLocker-"+id).fadeIn();
+                                $(".opDiambil-"+id).hide();
+                            } else if (param == "diambil") {
+                                $(".opLocker-"+id).hide();
+                                $(".opDiambil-"+id).fadeIn();
+                            }
+                        }
                     </script>
                 ';
+            $z = 1;
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('barang')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
@@ -216,7 +235,7 @@ class PenerimaanController extends Controller
 
                             .bottom-view {
                                 padding: 20px;
-                                background-color: #f6f6fa;
+                                background-color: #fff;
                                 height: 100%;
 
                                 ul {
@@ -285,75 +304,71 @@ class PenerimaanController extends Controller
                                 }
                             }
                         </style>
-                        <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
-                            <div class="card cards shadow-lg border-blue table-hover" id="kartu-' . $u->id . '">
-                                <div class="row g-0">
-                                    <div class="col-auto">
-                                        <div class="card-body">
-                                            <div class="avatar avatar-md shadow cursor-pointer bg-green-lt open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-list-details"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 5h8" /><path d="M13 9h5" /><path d="M13 15h8" /><path d="M13 19h5" /><path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></svg>
+                        <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary d-sm-block d-none">
+                            <div class="container-customCard rounded-3 shadow-lg">
+                                <div class="header-customCard rounded-3 pt-2">
+                                    <div class="navbar-customCard pt-2">
+                                        <button type="button" class="btn-link text-white open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
+                                            <i class="fa fa-bars" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn-link text-white close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
+                                            <i class="fas fa-xmark"></i>
+                                        </button>
+                                        <div class="main-account-customCard">
+                                            <h4>' . strtoupper($u->namaBarang) . '</h4>
+                                        </div>
+                                    </div>
+                                    <div class="top-view-customCard rounded-3 pt-1">
+                                        <div class="payment-infos">
+                                            <div class="text-white">
+                                                Kodeseri : ' . $u->kodeseri . '
                                             </div>
-                                            <div class="avatar avatar-md shadow cursor-pointer bg-red-lt close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
+                                            <div class="price">
+                                                <input type="number" value="' . $u->qty_beli . '" class="form-control" style="width: 50%">
+                                            </div>
+                                            <div class="btc">
+                                                Qty Permintaan: ' . $u->qty_beli . ' ' . strtoupper($u->satuan) . '
+                                            </div>
+                                        </div>
+                                        <div class="qr-code-customCard">
+                                            <div class="img-thumbnail border rounded-3">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Qrcode_wikipedia_fr_v2clean.png" alt="">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <div class="card-body ps-0">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h2 class="mb-0 fw-bold">' . $u->namaBarang . '</h2>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <h3 class="mb-0">Qty : ' . $u->qty_permintaan . ' ' . $u->satuan . '</h3>
-                                                </div>
-                                                <div class="col-auto font-italic text-green">
-                                                    Qty Terima : <input name="qtyTerima[]" type="number" min="1" style="width: 100px" id="" value="' . $u->qty_permintaan . '">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md">
-                                                    <div class="list-inline-item cursor-pointer"  data-bs-toggle="tooltip" data-bs-placement="top" title="Deskripsi Barang : ' . $u->keterangan . '">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
-                                                        ' . $u->keterangan . '
-                                                    </div>
-                                                    <div class="list-inline-item cursor-pointer"  data-bs-toggle="tooltip" data-bs-placement="top" title="Katalog Barang : ' . $u->katalog . '">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
-                                                        ' . $u->katalog . '
-                                                    </div>
-                                                    <div class="list-inline-item cursor-pointer"  data-bs-toggle="tooltip" data-bs-placement="top" title="Part Barang : ' . $u->part . '">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></svg>
-                                                        ' . $u->part . '
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-auto">
-                                                    <div class="mt-3 badges">
-                                                        <i class="text-green">Loker : <input name="locker[]" type="text" style="width: 150px"></i>
-                                                    </div>
-                                                    <div class="mt-3 badges">
-                                                        <i class="text-green">Foto Penerimaan : <input name="imgPenerimaan-' . $u->kodeseri . '" type="file" style="width: 150px"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="ctas pt-1">
+                                        <button type="button" class="bg-green shadow-lg text-white fw-bold" onclick="openOption(`' . $u->id . '`, `terima`)">Terima</button>
+                                        <button type="button" class="bg-cyan shadow-lg text-white fw-bold" onclick="openOption(`' . $u->id . '`, `diambil`)">Diambil User</button>
+                                        <label for="isi" class="mt-2 mb-2 text-white">Foto Penerimaan</label>
+                                        <input type="file" class="form-control">
+                                        <div class="opLocker-' . $u->id . '" style="display:none">
+                                            <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
+                                            <input type="text" class="form-control" placeholder="Masukkan Loker Gudang">
+                                        </div>
+                                        <div class="opDiambil-' . $u->id . '" style="display:none">
+                                            <label for="isi" class="mt-2 mb-2 text-white">Diambil Oleh</label>
+                                            <input type="text" class="form-control" placeholder="Masukkan Nama">
                                         </div>
                                     </div>
-                                    <div class="card-footer pt-0 ps-0 pe-0 pb-0">
-                                        <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
-                                            <table class="table table-sm table-card text-orange">
-                                                <tr class="text-center">
-                                                    <td class="fw-bolder text-azure">' . $u->kodeseri . '</td>
-                                                    <td>Pemesan: ' . $u->pemesan . '</td>
-                                                    <td>Mesin: ' . $permintaanController->getMesinPermintaan($u->mesin) . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3">
-                                                        <div class="hasilcari-' . $u->id . '" style="display:none"></div>
-                                                        <div class="tunggu-' . $u->id . '" style="display:none"></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="gradient-overlay"></div>
+                                <div class="bottom-view rounded-3 pt-1 pb-1">
+                                    <ul>
+                                        <li>
+                                            <div class="payment-card">
+                                                <div class="hour text-danger">' . Carbon::parse($u->tgl_permintaan)->format('d/m/Y') . '</div>
+                                                <div class="price text-green">' . $permintaanController->getMesinPermintaan($u->mesin) . '</div>
+                                                <div class="token">
+                                                    ' . strtoupper($u->namaBarang) . '
+                                                    <span>' . $u->keterangan . " " . $u->katalog . " " . $u->part . '</span>
+                                                </div>
+                                                <h5> <span>' . ucfirst($u->supplier) . '</span> </h5>
+                                                <div class="hasilcari-' . $u->id . '" style="display:none"></div>
+                                                <div class="tunggu-' . $u->id . '" style="display:none"></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <span class="badge bg-indigo float-end">' . $z . ' / ' . $jml . '</span>
                                 </div>
                             </div>
                         </div>
@@ -362,10 +377,10 @@ class PenerimaanController extends Controller
                             <div class="container-customCard rounded-3 shadow-lg">
                                 <div class="header-customCard rounded-3">
                                     <div class="navbar-customCard">
-                                        <button class="btn-link text-white open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
+                                        <button type="button" class="btn-link text-white open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
                                             <i class="fa fa-bars" aria-hidden="true"></i>
                                         </button>
-                                        <button class="btn-link text-white close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
+                                        <button type="button" class="btn-link text-white close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
                                             <i class="fas fa-xmark"></i>
                                         </button>
                                         <div class="main-account-customCard">
@@ -381,7 +396,7 @@ class PenerimaanController extends Controller
                                                 <input type="number" value="' . $u->qty_beli . '" class="form-control" style="width: 50%">
                                             </div>
                                             <div class="btc">
-                                                ' . $u->qty_beli . ' ' . strtoupper($u->satuan) . '
+                                                Qty Permintaan: ' . $u->qty_beli . ' ' . strtoupper($u->satuan) . '
                                             </div>
                                         </div>
                                         <div class="qr-code-customCard">
@@ -389,8 +404,18 @@ class PenerimaanController extends Controller
                                         </div>
                                     </div>
                                     <div class="ctas">
-                                        <button class="bg-green shadow-lg text-white fw-bold">Terima</button>
-                                        <button class="bg-cyan shadow-lg text-white fw-bold">Diambil User</button>
+                                        <button type="button" class="bg-green shadow-lg text-white fw-bold" onclick="openOption(`' . $u->id . '`, `terima`)">Terima</button>
+                                        <button type="button" class="bg-cyan shadow-lg text-white fw-bold" onclick="openOption(`' . $u->id . '`, `diambil`)">Diambil User</button>
+                                        <label for="isi" class="mt-2 mb-2 text-white">Foto Penerimaan</label>
+                                        <input type="file" class="form-control">
+                                        <div class="opLocker-' . $u->id . '" style="display:none">
+                                            <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
+                                            <input type="text" class="form-control" placeholder="Masukkan Loker Gudang">
+                                        </div>
+                                        <div class="opDiambil-' . $u->id . '" style="display:none">
+                                            <label for="isi" class="mt-2 mb-2 text-white">Diambil Oleh</label>
+                                            <input type="text" class="form-control" placeholder="Masukkan Nama">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="gradient-overlay"></div>
@@ -410,12 +435,13 @@ class PenerimaanController extends Controller
                                             </div>
                                         </li>
                                     </ul>
+                                    <span class="badge bg-indigo float-end">' . $z . ' / ' . $jml . '</span>
                                 </div>
                             </div>
                         </div>
                         ';
 
-                    echo '';
+                    $z++;
                 }
             }
             echo '      </div>';

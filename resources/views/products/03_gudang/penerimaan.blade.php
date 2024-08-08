@@ -344,13 +344,14 @@
             display: none;
         }
     </style>
-    <div class="modal modal-blur fade" id="modalPenerimaan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modalPenerimaan" tabindex="-1" role="dialog" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel">
         <div class="overlay">
             <div class="cv-spinner">
                 <span class="spinner"></span>
             </div>
         </div>
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <form id="formPenerimaan" name="formPenerimaan" method="post" action="javascript:void(0)">
                     @csrf
