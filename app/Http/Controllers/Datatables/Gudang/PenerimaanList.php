@@ -36,7 +36,7 @@ class PenerimaanList extends Controller
             }
 
             $data = DB::table('barang')
-                ->where('status', '=', 'DIBELI')
+                ->where('status', '=', 'DITERIMA')
                 // ->whereBetween('pe.tgl', [$dari, $sampai])
                 ->orderBy('kodeseri', 'desc')
                 ->get();

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('qty_diambil')->nullable();
             $table->integer('partial')->nullable();
             $table->string('npb')->nullable();
+            $table->string('gudang')->nullable();
             $table->string('locker')->nullable();
             $table->string('pemesan')->nullable();
             $table->string('unit')->nullable();

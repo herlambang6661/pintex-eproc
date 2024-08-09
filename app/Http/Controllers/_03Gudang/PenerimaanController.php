@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\_03Gudang;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
-use Carbon\Carbon;
 
 class PenerimaanController extends Controller
 {
@@ -324,7 +326,7 @@ class PenerimaanController extends Controller
                                                 Kodeseri : ' . $u->kodeseri . '
                                             </div>
                                             <div class="price">
-                                                <input type="number" value="' . $u->qty_beli . '" class="form-control" style="width: 50%">
+                                                <input type="number" name="diterima[]" value="' . $u->qty_beli . '" class="form-control" style="width: 50%">
                                             </div>
                                             <div class="btc">
                                                 Qty Permintaan: ' . $u->qty_beli . ' ' . strtoupper($u->satuan) . '
@@ -343,11 +345,11 @@ class PenerimaanController extends Controller
                                         <input type="file" class="form-control">
                                         <div class="opLocker-' . $u->id . '" style="display:none">
                                             <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Loker Gudang">
+                                            <input name="locker[]" type="text" class="form-control" placeholder="Masukkan Loker Gudang">
                                         </div>
                                         <div class="opDiambil-' . $u->id . '" style="display:none">
-                                            <label for="isi" class="mt-2 mb-2 text-white">Diambil Oleh</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Nama">
+                                            <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
+                                            <input type="text" class="form-control bg-secondary-lt" placeholder="Tidak perlu mengisi loker" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -410,11 +412,11 @@ class PenerimaanController extends Controller
                                         <input type="file" class="form-control">
                                         <div class="opLocker-' . $u->id . '" style="display:none">
                                             <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Loker Gudang">
+                                            <input name="locker[]" type="text" class="form-control" placeholder="Masukkan Loker Gudang">
                                         </div>
                                         <div class="opDiambil-' . $u->id . '" style="display:none">
-                                            <label for="isi" class="mt-2 mb-2 text-white">Diambil Oleh</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Nama">
+                                            <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
+                                            <input type="text" class="form-control bg-secondary-lt" placeholder="Tidak perlu mengisi loker" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -459,16 +461,65 @@ class PenerimaanController extends Controller
         );
         $jml = count($request->kodeseri);
 
+        // Get NPB
+        $latestKodeseri = DB::table('penerimaan')->latest('npb')->first();
+        if ($latestKodeseri) {
+            $y = substr($latestKodeseri->npb, 3, 2);
+            $m = substr($latestKodeseri->npb, 6, 2);
+            $d = substr($latestKodeseri->npb, 8, 2);
+            if (date('ymd') == $y . $m . $d) {
+                $noUrut = (int) substr($latestKodeseri->npb, -4);
+                $noUrut++;
+                $char = date('y-md');
+                $NPB = "PN-" . $char . sprintf("%04s", $noUrut);
+            } else {
+                $NPB = "PN-" . date('y') . "-" . date('md') . "0001";
+            }
+        } else {
+            $NPB = "PN-" . date('y') . "-" . date('md') . "0001";
+        }
+
+        // input Penerimaan
+        $penerimaan = DB::table('penerimaan')->insert([
+            'npb' => $NPB,
+            'tanggal' => $request->tgl,
+            'penerima' => $request->penerima,
+            'keterangan' => $request->keterangan,
+            'dibuat' => Auth::user()->name,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
         for ($i = 0; $i < $jml; $i++) {
+            $getItem = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+            // input Penerimaan Item
+            $penerimaanItm = DB::table('penerimaanitm')->insert([
+                'npb' => $NPB,
+                'tanggal' => $request->tgl,
+                'kodeseri' => $request->kodeseri[$i],
+                'nama' => $getItem->namaBarang,
+                'katalog' => $getItem->katalog,
+                'mesin' => $getItem->mesin,
+                'kts' => $request->diterima[$i],
+                'satuan' => $getItem->satuan,
+                'pemesan' => $getItem->pemesan,
+                'urgent' => $getItem->urgent,
+                'dibeli' => $getItem->dibeli,
+                'locker' => $request->locker[$i],
+                'partial' => 0,
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // Update Barang
             $check = DB::table('barang')
                 ->where('kodeseri', $request->kodeseri[$i])
                 ->limit(1)
                 ->update(
                     array(
-                        'qty_diterima' => '',
-                        'tgl_penerimaan' => $request->pembeli,
-                        'npb' => $request->qtyAcc[$i],
-                        'estimasiharga' => $request->estimasiHarga[$i],
+                        'tgl_penerimaan' => $request->tgl,
+                        'qty_diterima' => $request->diterima[$i],
+                        'npb' => $NPB,
+                        'locker' => $request->locker[$i],
+                        'partial' => 0,
                         'status' => 'DITERIMA',
                         'updated_at' => date('Y-m-d H:i:s'),
                     )
@@ -479,5 +530,70 @@ class PenerimaanController extends Controller
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
         }
         return Response()->json($arr);
+    }
+
+    public function getPenerimaanCheck(Request $request)
+    {
+
+        if ($request->ajax()) {
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-01');
+            }
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-d');
+            }
+
+            $data = DB::table('barang')
+                ->where('status', '=', 'DIBELI')
+                // ->whereBetween('tgl', [$dari, $sampai])
+                ->orderBy('kodeseri', 'desc')
+                ->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('mesin', function ($row) {
+                    $permintaanController = new PermintaanController();
+                    $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    return $m;
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = '<div class="btn-list flex-nowrap">
+                                <form method="POST" action="printPermintaan" target="_blank">
+                                    <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                    <button type="submit" class="btn btn-sm btn-link btn-icon">
+                                        <i class="fa-solid fa-eye" style="margin-right:5px;"></i>
+                                    </button>
+                                </form>
+                                <button class="btn btn-sm btn-link align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end" style="">
+                                    <form method="POST" action="printPermintaan" target="_blank">
+                                        <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                        <button type="submit" class="dropdown-item">
+                                            <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon text-blue icon-tabler icons-tabler-outline icon-tabler-printer"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></svg>
+                                            PRINT
+                                        </button>
+                                    </form>
+                                    <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDetailPermintaan" data-id="' . $row->kodeseri . '"">
+                                        <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon text-orange icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                        EDIT
+                                    </a>
+                                </div>
+                            </div>';
+                    return $btn;
+                })
+                ->editColumn('select_orders', function ($row) {
+                    return '';
+                })
+                ->rawColumns(['action', 'select_orders'])
+                ->make(true);
+        }
+
+        return view('products.03_gudang.penerimaan');
     }
 }

@@ -157,11 +157,11 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="date" id="idfilter_dari"
+                                                                <input type="date" id="listpermintaan_dari"
                                                                     class="form-control " value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
-                                                                <input type="date" id="idfilter_sampai"
+                                                                <input type="date" id="listpermintaan_sampai"
                                                                     class="form-control " value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
@@ -209,11 +209,11 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="date" id="idfilter_dari"
+                                                                <input type="date" id="checkpermintaan_dari"
                                                                     class="form-control " value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
-                                                                <input type="date" id="idfilter_sampai"
+                                                                <input type="date" id="checkpermintaan_sampai"
                                                                     class="form-control " value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
@@ -408,6 +408,7 @@
 
         $(document).ready(function() {
             var tableListPenerimaan, tableChecklistPenerimaan, tablePartial;
+            //----------------------------------------------LIST PENERIMAAN-----------------------------------------//
             tableListPenerimaan = $('.datatable-list-penerimaan').DataTable({
                 "processing": true,
                 "serverSide": false,
@@ -461,8 +462,8 @@
                 //     "data": function(data) {
                 //         data._token = "{{ csrf_token() }}";
                 //         data.tipe = 'qtyacc';
-                //         data.dari = $('#fqtydari').val();
-                //         data.sampai = $('#fqtysampai').val();
+                //         data.dari = $('#listpermintaan_dari').val();
+                //         data.sampai = $('#listpermintaan_sampai').val();
                 //     }
                 // },
                 "columns": [{
@@ -472,64 +473,40 @@
                         className: "cuspad0 cuspad1",
                     },
                     {
-                        title: 'NPB',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'TANGGAL',
+                        title: 'KODESERI',
                         data: 'kodeseri',
                         name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'KODESERI',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'NAMA',
+                        title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'KETERANGAN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Deskripsi',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'QTY',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'SATUAN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'PEMESAN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'DIBELI',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'LOCKER',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
 
@@ -578,12 +555,12 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPenerimaan.index') }}",
+                    "type": "POST",
+                    "url": "{{ url('getPenerimaanCheck') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
-                        data.tipe = 'qtyacc';
-                        data.dari = $('#fqtydari').val();
-                        data.sampai = $('#fqtysampai').val();
+                        data.dari = $('#checkpermintaan_dari').val();
+                        data.sampai = $('#checkpermintaan_sampai').val();
                     }
                 },
                 select: {
@@ -681,14 +658,14 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.dari = $('#idfilter_dari').val();
-                        data.sampai = $('#idfilter_sampai').val();
-                    }
-                },
+                // "ajax": {
+                //     "url": "{{ route('getPermintaan.index') }}",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.dari = $('#idfilter_dari').val();
+                //         data.sampai = $('#idfilter_sampai').val();
+                //     }
+                // },
                 "columns": [{
                         title: '',
                         data: 'action',
@@ -778,7 +755,7 @@
                             '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
                         $("#submitCheck").attr("disabled", true);
                         $.ajax({
-                            url: "{{ url('storeAccPermintaan') }}",
+                            url: "{{ url('storePenerimaan') }}",
                             type: "POST",
                             data: $('#formPenerimaan').serialize(),
                             beforeSend: function() {

@@ -174,6 +174,7 @@ Route::controller(PenerimaanController::class)->group(function () {
     Route::get('gudang/penerimaan', 'penerimaan');
     Route::post('checkPenerimaan', 'checkPenerimaan');
     Route::post('storePenerimaan', 'storePenerimaanBarang')->name('storePenerimaan');
+    Route::post('getPenerimaanCheck', 'getPenerimaanCheck')->name('getPenerimaanCheck');
 });
 
 Route::controller(PengirimanController::class)->group(function () {
