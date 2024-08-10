@@ -406,7 +406,7 @@
             dt.ajax.reload();
         }
 
-        $(document).ready(function() {
+        $(function() {
             var tableListPenerimaan, tableChecklistPenerimaan, tablePartial;
             //----------------------------------------------LIST PENERIMAAN-----------------------------------------//
             tableListPenerimaan = $('.datatable-list-penerimaan').DataTable({
@@ -742,7 +742,6 @@
                 }],
             });
 
-
             if ($("#formPenerimaan").length > 0) {
                 $("#formPenerimaan").validate({
                     submitHandler: function(form) {
@@ -774,9 +773,9 @@
                                     '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Proses'
                                 );
                                 $("#submitCheck").attr("disabled", false);
-                                tableListPenerimaan.ajax.reload();
+                                // tableListPenerimaan.ajax.reload();
                                 tableChecklistPenerimaan.ajax.reload();
-                                tablePartial.ajax.reload();
+                                // tablePartial.ajax.reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",

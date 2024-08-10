@@ -460,7 +460,6 @@ class PenerimaanController extends Controller
             ],
         );
         $jml = count($request->kodeseri);
-
         // Get NPB
         $latestKodeseri = DB::table('penerimaan')->latest('npb')->first();
         if ($latestKodeseri) {
@@ -478,7 +477,6 @@ class PenerimaanController extends Controller
         } else {
             $NPB = "PN-" . date('y') . "-" . date('md') . "0001";
         }
-
         // input Penerimaan
         $penerimaan = DB::table('penerimaan')->insert([
             'npb' => $NPB,
@@ -490,40 +488,42 @@ class PenerimaanController extends Controller
         ]);
 
         for ($i = 0; $i < $jml; $i++) {
-            $getItem = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+            // $kdseri = '';
+            // $kdseri = $request->kodeseri[$i];
+            // $getItem = DB::table('permintaanitm')->where('kodeseri', $kdseri)->first();
             // input Penerimaan Item
-            $penerimaanItm = DB::table('penerimaanitm')->insert([
+            $check = DB::table('penerimaanitm')->insert([
                 'npb' => $NPB,
                 'tanggal' => $request->tgl,
                 'kodeseri' => $request->kodeseri[$i],
-                'nama' => $getItem->namaBarang,
-                'katalog' => $getItem->katalog,
-                'mesin' => $getItem->mesin,
+                // 'nama' => $getItem->namaBarang,
+                // 'katalog' => $getItem->katalog,
+                // 'mesin' => $getItem->mesin,
                 'kts' => $request->diterima[$i],
-                'satuan' => $getItem->satuan,
-                'pemesan' => $getItem->pemesan,
-                'urgent' => $getItem->urgent,
-                'dibeli' => $getItem->dibeli,
+                // 'satuan' => $getItem->satuan,
+                // 'pemesan' => $getItem->pemesan,
+                // 'urgent' => $getItem->urgent,
+                // 'dibeli' => $getItem->dibeli,
                 'locker' => $request->locker[$i],
                 'partial' => 0,
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
             // Update Barang
-            $check = DB::table('barang')
-                ->where('kodeseri', $request->kodeseri[$i])
-                ->limit(1)
-                ->update(
-                    array(
-                        'tgl_penerimaan' => $request->tgl,
-                        'qty_diterima' => $request->diterima[$i],
-                        'npb' => $NPB,
-                        'locker' => $request->locker[$i],
-                        'partial' => 0,
-                        'status' => 'DITERIMA',
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    )
-                );
+            // $check = DB::table('barang')
+            //     ->where('kodeseri', $request->kodeseri[$i])
+            //     ->limit(1)
+            //     ->update(
+            //         array(
+            //             'tgl_penerimaan' => $request->tgl,
+            //             'qty_diterima' => $request->diterima[$i],
+            //             'npb' => $NPB,
+            //             'locker' => $request->locker[$i],
+            //             'partial' => 0,
+            //             'status' => 'DITERIMA',
+            //             'updated_at' => date('Y-m-d H:i:s'),
+            //         )
+            //     );
         }
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {
