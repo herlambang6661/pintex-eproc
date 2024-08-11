@@ -58,6 +58,202 @@ class PenerimaanController extends Controller
                     </label> 
                     ';
             echo '
+                    <style>
+                            .cards{
+                                transition: all 0.2s ease;
+                            }
+                            .cards:hover{
+                                box-shadow: 5px 6px 6px 2px #e9ecef;
+                                background-color: #e9ecef;
+                                transform: scale(1.01);
+                            }
+                    </style>
+                    <style>
+                        $purple: #6562ad;
+                        $light-purple: #8b91d1;
+                        $pink: #f9bdbd;
+                        $red: #e46b7b;
+                        $green: #a1e060;
+                        $orange: #fec74b;
+                        $white: #fff;
+                        $grey: #f6f6fa;
+
+                        .container-customCard {
+                            max-width: 305px;
+                            height: 550px;
+                            margin: 20px auto;
+                            box-shadow: 0 0 20px #9a9a9a;
+                            overflow: hidden;
+                            font-family: "Montserrat";
+                            border-radius: 6px;
+                            position: relative;
+                        }
+
+                        .header-customCard {
+                            background: #6562ad;
+                            padding: 20px;
+                        }
+
+                        .navbar-customCard {
+                            color: #fff;
+                            padding-bottom: 10px;
+                            border-bottom: 0.5px solid #7270bb;
+
+                            a {
+                                color: #fff;
+                                text-decoration: none;
+                                font-size: 1.2em;
+                            }
+                        }
+
+                        .main-account-customCard {
+                            float: right;
+
+                            a {
+                                color: #f9bdbd;
+                                font-size: 0.8em;
+                                font-weight: 500;
+                            }
+                        }
+
+                        .top-view-customCard {
+                            padding-top: 20px;
+
+                            .payment-infos {
+                                display: inline-block;
+                                vertical-align: top;
+
+                                .current-balance {
+                                    color: #8b91d1;
+                                    font-size: 0.75em;
+                                }
+
+                                .price {
+                                    font-size: 2.2em;
+                                    font-weight: 500;
+                                    padding-top: 5px;
+                                }
+
+                                .btc {
+                                    color: #fff;
+                                    font-size: 0.8em;
+                                    padding-top: 3px;
+                                }
+                            }
+                        }
+
+                        .qr-code-customCard {
+                            float: right;
+                            position: relative;
+
+                            img {
+                                width: 60px;
+                                height: 60px;
+                                background: ##fff;
+                                padding: 4px;
+                            }
+                        }
+
+                        .ctas {
+                            display: block;
+                            padding: 30px 0 50px;
+                            width: 100%;
+
+                            button {
+                                color: ##fff;
+                                width: 48%;
+                                background-color: #f9bdbd;
+                                border-radius: 40px 40px;
+                                padding: 10px 10%;
+                                font-size: 0.8em;
+                                border: none;
+                                cursor: pointer;
+                            }
+
+                            button:hover {
+                                box-shadow: 0 0 5px #f9bdbd;
+                            }
+
+                            button:focus {
+                                outline: 0;
+                            }
+
+                            .send {
+                                float: right;
+                            }
+                        }
+
+                        .bottom-view {
+                            padding: 20px;
+                            background-color: #fff;
+                            height: 100%;
+
+                            ul {
+                                margin: -50px 0 0;
+                                padding: 0;
+                                list-style: none;
+                            }
+
+                            .payment-card {
+                                vertical-align: top;
+                                background: #fff;
+                                margin-bottom: 15px;
+                                box-shadow: 0 0 6px #808080;
+                                border-radius: 6px;
+                                padding: 10px 18px;
+
+                                .hour {
+                                    vertical-align: top;
+                                    display: inline-block;
+                                    color: #f9bdbd;
+                                    font-size: 0.7em;
+                                    font-weight: 500;
+                                }
+
+                                .price {
+                                    vertical-align: top;
+                                    float: right;
+                                    font-size: 0.7em;
+                                    font-weight: 500;
+
+                                    &.negative {
+                                        color: #e46b7b;
+                                    }
+
+                                    &.positive {
+                                        color: #a1e060;
+                                    }
+                                }
+
+                                .token {
+                                    font-size: 0.8em;
+                                    color: #6562ad;
+                                    font-weight: 500;
+                                    padding: 10px 0;
+                                    border-bottom: 0.5px solid #d8d8d8;
+
+                                    span {
+                                        color: #8b91d1;
+                                        font-size: 0.8em;
+                                        display: block;
+                                        padding-top: 5px;
+                                    }
+                                }
+
+                                .score {
+                                    font-size: 1.5em;
+
+                                    &.green {
+                                        color: #a1e060;
+                                    }
+
+                                    &.orange {
+                                        color: #fec74b;
+                                    }
+                                }
+                            }
+                        }
+                    </style>
                     <script>
                         function getDetails(id, kodeseri, nama) {
                             $.ajax({
@@ -108,204 +304,8 @@ class PenerimaanController extends Controller
                 $data = DB::table('barang')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
                     echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
-                    echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '" >';
+                    echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
                     echo '
-                        <style>
-                                .cards{
-                                    transition: all 0.2s ease;
-                                }
-                                .cards:hover{
-                                    box-shadow: 5px 6px 6px 2px #e9ecef;
-                                    background-color: #e9ecef;
-                                    transform: scale(1.01);
-                                }
-                        </style>
-                        <style>
-                            $purple: #6562ad;
-                            $light-purple: #8b91d1;
-                            $pink: #f9bdbd;
-                            $red: #e46b7b;
-                            $green: #a1e060;
-                            $orange: #fec74b;
-                            $white: #fff;
-                            $grey: #f6f6fa;
-
-                            .container-customCard {
-                                max-width: 305px;
-                                height: 550px;
-                                margin: 20px auto;
-                                box-shadow: 0 0 20px #9a9a9a;
-                                overflow: hidden;
-                                font-family: "Montserrat";
-                                border-radius: 6px;
-                                position: relative;
-                            }
-
-                            .header-customCard {
-                                background: #6562ad;
-                                padding: 20px;
-                            }
-
-                            .navbar-customCard {
-                                color: #fff;
-                                padding-bottom: 10px;
-                                border-bottom: 0.5px solid #7270bb;
-
-                                a {
-                                    color: #fff;
-                                    text-decoration: none;
-                                    font-size: 1.2em;
-                                }
-                            }
-
-                            .main-account-customCard {
-                                float: right;
-
-                                a {
-                                    color: #f9bdbd;
-                                    font-size: 0.8em;
-                                    font-weight: 500;
-                                }
-                            }
-
-                            .top-view-customCard {
-                                padding-top: 20px;
-
-                                .payment-infos {
-                                    display: inline-block;
-                                    vertical-align: top;
-
-                                    .current-balance {
-                                        color: #8b91d1;
-                                        font-size: 0.75em;
-                                    }
-
-                                    .price {
-                                        font-size: 2.2em;
-                                        font-weight: 500;
-                                        padding-top: 5px;
-                                    }
-
-                                    .btc {
-                                        color: #fff;
-                                        font-size: 0.8em;
-                                        padding-top: 3px;
-                                    }
-                                }
-                            }
-
-                            .qr-code-customCard {
-                                float: right;
-                                position: relative;
-
-                                img {
-                                    width: 60px;
-                                    height: 60px;
-                                    background: ##fff;
-                                    padding: 4px;
-                                }
-                            }
-
-                            .ctas {
-                                display: block;
-                                padding: 30px 0 50px;
-                                width: 100%;
-
-                                button {
-                                    color: ##fff;
-                                    width: 48%;
-                                    background-color: #f9bdbd;
-                                    border-radius: 40px 40px;
-                                    padding: 10px 10%;
-                                    font-size: 0.8em;
-                                    border: none;
-                                    cursor: pointer;
-                                }
-
-                                button:hover {
-                                    box-shadow: 0 0 5px #f9bdbd;
-                                }
-
-                                button:focus {
-                                    outline: 0;
-                                }
-
-                                .send {
-                                    float: right;
-                                }
-                            }
-
-                            .bottom-view {
-                                padding: 20px;
-                                background-color: #fff;
-                                height: 100%;
-
-                                ul {
-                                    margin: -50px 0 0;
-                                    padding: 0;
-                                    list-style: none;
-                                }
-
-                                .payment-card {
-                                    vertical-align: top;
-                                    background: #fff;
-                                    margin-bottom: 15px;
-                                    box-shadow: 0 0 6px #808080;
-                                    border-radius: 6px;
-                                    padding: 10px 18px;
-
-                                    .hour {
-                                        vertical-align: top;
-                                        display: inline-block;
-                                        color: #f9bdbd;
-                                        font-size: 0.7em;
-                                        font-weight: 500;
-                                    }
-
-                                    .price {
-                                        vertical-align: top;
-                                        float: right;
-                                        font-size: 0.7em;
-                                        font-weight: 500;
-
-                                        &.negative {
-                                            color: #e46b7b;
-                                        }
-
-                                        &.positive {
-                                            color: #a1e060;
-                                        }
-                                    }
-
-                                    .token {
-                                        font-size: 0.8em;
-                                        color: #6562ad;
-                                        font-weight: 500;
-                                        padding: 10px 0;
-                                        border-bottom: 0.5px solid #d8d8d8;
-
-                                        span {
-                                            color: #8b91d1;
-                                            font-size: 0.8em;
-                                            display: block;
-                                            padding-top: 5px;
-                                        }
-                                    }
-
-                                    .score {
-                                        font-size: 1.5em;
-
-                                        &.green {
-                                            color: #a1e060;
-                                        }
-
-                                        &.orange {
-                                            color: #fec74b;
-                                        }
-                                    }
-                                }
-                            }
-                        </style>
                         <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary d-sm-block d-none">
                             <div class="container-customCard rounded-3 shadow-lg">
                                 <div class="header-customCard rounded-3 pt-2">
@@ -459,7 +459,6 @@ class PenerimaanController extends Controller
                 'penerima' => 'required',
             ],
         );
-        $jml = count($request->kodeseri);
         // Get NPB
         $latestKodeseri = DB::table('penerimaan')->latest('npb')->first();
         if ($latestKodeseri) {
@@ -487,46 +486,46 @@ class PenerimaanController extends Controller
             'created_at' => date('Y-m-d H:i:s'),
         ]);
 
+        $jml = count($request->kodeseri);
         for ($i = 0; $i < $jml; $i++) {
-            // $kdseri = '';
-            // $kdseri = $request->kodeseri[$i];
-            // $getItem = DB::table('permintaanitm')->where('kodeseri', $kdseri)->first();
+            // ambil data permintaan barang untuk deskripsi, katalog dan lain-lain
+            $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
             // input Penerimaan Item
-            $check = DB::table('penerimaanitm')->insert([
+            DB::table('penerimaanitm')->insert([
                 'npb' => $NPB,
                 'tanggal' => $request->tgl,
                 'kodeseri' => $request->kodeseri[$i],
-                // 'nama' => $getItem->namaBarang,
-                // 'katalog' => $getItem->katalog,
-                // 'mesin' => $getItem->mesin,
+                "nama" => $getbarang->namaBarang,
+                'katalog' => $getbarang->katalog,
+                'mesin' => $getbarang->mesin,
                 'kts' => $request->diterima[$i],
-                // 'satuan' => $getItem->satuan,
-                // 'pemesan' => $getItem->pemesan,
-                // 'urgent' => $getItem->urgent,
-                // 'dibeli' => $getItem->dibeli,
+                'satuan' => $getbarang->satuan,
+                'pemesan' => $getbarang->pemesan,
+                'urgent' => $getbarang->urgent,
+                'dibeli' => $getbarang->dibeli,
                 'locker' => $request->locker[$i],
                 'partial' => 0,
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
             // Update Barang
-            // $check = DB::table('barang')
-            //     ->where('kodeseri', $request->kodeseri[$i])
-            //     ->limit(1)
-            //     ->update(
-            //         array(
-            //             'tgl_penerimaan' => $request->tgl,
-            //             'qty_diterima' => $request->diterima[$i],
-            //             'npb' => $NPB,
-            //             'locker' => $request->locker[$i],
-            //             'partial' => 0,
-            //             'status' => 'DITERIMA',
-            //             'updated_at' => date('Y-m-d H:i:s'),
-            //         )
-            //     );
+            $check = DB::table('barang')
+                ->where('kodeseri', $request->kodeseri[$i])
+                ->limit(1)
+                ->update(
+                    array(
+                        'tgl_penerimaan' => $request->tgl,
+                        'qty_diterima' => $request->diterima[$i],
+                        'npb' => $NPB,
+                        'locker' => $request->locker[$i],
+                        'partial' => 0,
+                        'status' => 'DITERIMA',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
         }
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
-        if ($check) {
+        if ($penerimaan) {
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
         }
         return Response()->json($arr);
@@ -549,7 +548,7 @@ class PenerimaanController extends Controller
 
             $data = DB::table('barang')
                 ->where('status', '=', 'DIBELI')
-                // ->whereBetween('tgl', [$dari, $sampai])
+                ->whereBetween('tgl_pembelian', [$dari, $sampai])
                 ->orderBy('kodeseri', 'desc')
                 ->get();
 

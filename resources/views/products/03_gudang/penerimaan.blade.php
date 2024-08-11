@@ -210,27 +210,15 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="date" id="checkpermintaan_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
+                                                                    onchange="synCheck()" class="form-control "
+                                                                    value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
                                                                 <input type="date" id="checkpermintaan_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
+                                                                    onchange="synCheck()" class="form-control "
+                                                                    value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"
-                                                                            fill="none" />
-                                                                        <path
-                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                        <path d="M21 21l-6 -6" />
-                                                                    </svg>
-                                                                </a>
                                                                 <input class="btn btn-primary" type="reset"
                                                                     value="Reset">
                                                             </td>
@@ -406,8 +394,12 @@
             dt.ajax.reload();
         }
 
+        var tableListPenerimaan, tableChecklistPenerimaan, tablePartial;
+
+        function synCheck() {
+            tableChecklistPenerimaan.ajax.reload();
+        }
         $(function() {
-            var tableListPenerimaan, tableChecklistPenerimaan, tablePartial;
             //----------------------------------------------LIST PENERIMAAN-----------------------------------------//
             tableListPenerimaan = $('.datatable-list-penerimaan').DataTable({
                 "processing": true,
@@ -758,6 +750,7 @@
                             type: "POST",
                             data: $('#formPenerimaan').serialize(),
                             beforeSend: function() {
+                                console.log($('#formPenerimaan').serialize());
                                 Swal.fire({
                                     title: 'Mohon Menunggu',
                                     html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
@@ -828,7 +821,7 @@
                     var rows_selected = tableChecklistPenerimaan.rows('.selected').data();
                     itemTables.push(rows_selected[index]['id']);
                 });
-                console.log(itemTables);
+                console.log("Selected Items: " + itemTables);
 
                 $.ajaxSetup({
                     headers: {
