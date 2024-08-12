@@ -7,6 +7,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
+use Carbon\Carbon;
 
 class PenerimaanList extends Controller
 {
@@ -37,12 +38,16 @@ class PenerimaanList extends Controller
 
             $data = DB::table('barang')
                 ->where('status', '=', 'DITERIMA')
-                // ->whereBetween('pe.tgl', [$dari, $sampai])
-                ->orderBy('kodeseri', 'desc')
+                ->whereBetween('tgl_penerimaan', [$dari, $sampai])
+                ->orderBy('tgl_penerimaan', 'desc')
                 ->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('tgl', function ($row) {
+                    $tgl = Carbon::parse($row->tgl_penerimaan)->format('d/m/Y');
+                    return $tgl;
+                })
                 ->addColumn('mesin', function ($row) {
                     $permintaanController = new PermintaanController();
                     $m = $permintaanController->getMesinPermintaan($row->mesin);

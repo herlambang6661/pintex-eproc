@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('qty_acc')->nullable();
             $table->integer('qty_beli')->nullable();
             $table->integer('qty_diterima')->nullable();
+            $table->integer('qty_partial')->nullable();
             $table->integer('qty_diambil')->nullable();
             $table->integer('partial')->nullable();
             $table->string('npb')->nullable();

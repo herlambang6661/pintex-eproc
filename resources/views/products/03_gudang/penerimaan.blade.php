@@ -158,11 +158,13 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="date" id="listpermintaan_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
+                                                                    onchange="syn()" class="form-control "
+                                                                    value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
                                                                 <input type="date" id="listpermintaan_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
+                                                                    onchange="syn()" class="form-control "
+                                                                    value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
                                                                 <a href="#" class="btn btn-primary btn-icon"
@@ -199,8 +201,7 @@
                                                 <table class="table mb-0">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center">Tgl Awal</th>
-                                                            <th class="text-center">Tgl Akhir</th>
+                                                            <th class="text-center" colspan="2">Tanggal Pembelian</th>
                                                             <th class="text-center"></th>
                                                             <th class="text-center"></th>
                                                             <th class="text-center"></th>
@@ -363,6 +364,37 @@
             </div>
         </div>
     </div>
+    <div class="modal modal-blur fade" id="modalPartial" tabindex="-1" role="dialog" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <form id="formPartial" name="formPartial" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-user-check" style="margin-right: 5px"></i>
+                            Proses Penerimaan Partial
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-partial"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitPartial"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- Modal End --}}
 
     <script type="text/javascript">
@@ -398,6 +430,10 @@
 
         function synCheck() {
             tableChecklistPenerimaan.ajax.reload();
+        }
+
+        function syn() {
+            tableListPenerimaan.ajax.reload();
         }
         $(function() {
             //----------------------------------------------LIST PENERIMAAN-----------------------------------------//
@@ -449,20 +485,26 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "{{ route('getPenerimaan.index') }}",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.tipe = 'qtyacc';
-                //         data.dari = $('#listpermintaan_dari').val();
-                //         data.sampai = $('#listpermintaan_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('tbPenerimaan.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.tipe = 'qtyacc';
+                        data.dari = $('#listpermintaan_dari').val();
+                        data.sampai = $('#listpermintaan_sampai').val();
+                    }
+                },
                 "columns": [{
                         title: '',
                         data: 'action',
                         name: 'action',
                         className: "cuspad0 cuspad1",
+                    },
+                    {
+                        title: 'Tgl Penerimaan',
+                        data: 'tgl',
+                        name: 'tgl',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'KODESERI',
@@ -498,6 +540,18 @@
                         title: 'Mesin',
                         data: 'mesin',
                         name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Qty Beli',
+                        data: 'qty_beli',
+                        name: 'qty_beli',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Qty Terima',
+                        data: 'qty_diterima',
+                        name: 'qty_diterima',
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
@@ -575,6 +629,12 @@
                         searchable: false
                     },
                     {
+                        title: 'Tgl Pembelian',
+                        data: 'tgl_pembelian',
+                        name: 'tgl_pembelian',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
                         title: 'KODESERI',
                         data: 'kodeseri',
                         name: 'kodeseri',
@@ -632,7 +692,7 @@
                     "className": 'btn btn-success',
                     "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Penerimaan',
                     "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
+                        $('#modalPartial').modal('show')
                     }
                 }],
                 "language": {
@@ -649,89 +709,89 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
-                },
-                // "ajax": {
-                //     "url": "{{ route('getPermintaan.index') }}",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
-                "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses Penerimaan Barang",
                         }
                     },
+                },
+                "ajax": {
+                    "type": "POST",
+                    "url": "{{ route('getPartial') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        // data.dari = $('#idfilter_dari').val();
+                        // data.sampai = $('#idfilter_sampai').val();
+                    }
+                },
+                select: {
+                    'style': 'multi',
+                },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": false,
+                    'className': 'select-checkbox cursor-pointer',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                "columns": [{
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2 cursor-pointer',
+                        orderable: true,
+                        searchable: false
+                    },
                     {
-                        title: 'TGL',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        title: 'Tgl Pembelian',
+                        data: 'tgl_pembelian',
+                        name: 'tgl_pembelian',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        data: 'kodeseri',
+                        name: 'kodeseri',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'BARANG',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Qty Partial',
+                        data: 'qty_partial',
+                        name: 'qty_partial',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Deskripsi',
                         data: 'keterangan',
                         name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'PEMESAN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'DIBELI',
-                        data: 'satuan',
-                        name: 'satuan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'TERIMA',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'SISA',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'SATUAN',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'SUPPLIER',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'JENIS',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
-                columnDefs: [{
-                    orderable: false,
-                    targets: 0
-                }],
             });
 
             if ($("#formPenerimaan").length > 0) {
@@ -763,12 +823,12 @@
                             success: function(response) {
                                 console.log('Completed.');
                                 $('#submitCheck').html(
-                                    '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Proses'
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
                                 );
                                 $("#submitCheck").attr("disabled", false);
-                                // tableListPenerimaan.ajax.reload();
+                                tableListPenerimaan.ajax.reload();
                                 tableChecklistPenerimaan.ajax.reload();
-                                // tablePartial.ajax.reload();
+                                tablePartial.ajax.reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",
@@ -801,6 +861,79 @@
                                     '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
                                 );
                                 $("#submitCheck").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+
+            if ($("#formPartial").length > 0) {
+                $("#formPartial").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitPartial').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitPartial").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storePartial') }}",
+                            type: "POST",
+                            data: $('#formPartial').serialize(),
+                            beforeSend: function() {
+                                console.log($('#formPartial').serialize());
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitPartial').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitPartial").attr("disabled", false);
+                                tableListPenerimaan.ajax.reload();
+                                tableChecklistPenerimaan.ajax.reload();
+                                tablePartial.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalPartial').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tableListPenerimaan.ajax.reload();
+                                tableChecklistPenerimaan.ajax.reload();
+                                tablePartial.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitPartial').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitPartial").attr("disabled", false);
                             }
                         });
                     }
@@ -840,6 +973,43 @@
                     success: function(data) {
                         //menampilkan data ke dalam modal
                         $('.fetched-data-penerimaan').html(data);
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            $('#modalPartial').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tablePartial.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePartial.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log("Selected Items: " + itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkPartial') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-partial').html(data);
+                        console.log("Data: " + data);
                         // alert(itemTables);
                     }
                 }).done(function() {

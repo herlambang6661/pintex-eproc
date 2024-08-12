@@ -55,7 +55,7 @@ Route::get('/', function () {
 Route::resource('getPermintaan', PermintaanList::class);
 Route::resource('getPengambilan', PengambilanList::class);
 Route::resource('getPembelianList', PembelianList::class);
-Route::resource('getPenerimaan', PenerimaanList::class);
+Route::resource('tbPenerimaan', PenerimaanList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -173,8 +173,11 @@ Route::controller(StatusBarangController::class)->group(function () {
 Route::controller(PenerimaanController::class)->group(function () {
     Route::get('gudang/penerimaan', 'penerimaan');
     Route::post('checkPenerimaan', 'checkPenerimaan');
+    Route::post('checkPartial', 'checkPartial');
     Route::post('storePenerimaan', 'storePenerimaanBarang')->name('storePenerimaan');
+    Route::post('storePartial', 'storePartialBarang')->name('storePartial');
     Route::post('getPenerimaanCheck', 'getPenerimaanCheck')->name('getPenerimaanCheck');
+    Route::post('getPartial', 'getPartial')->name('getPartial');
 });
 
 Route::controller(PengirimanController::class)->group(function () {
