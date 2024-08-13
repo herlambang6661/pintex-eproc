@@ -17,6 +17,38 @@
         @include('shared.sidebar')
         <!-- Navbar -->
         @include('shared.navbar')
+
+        <datalist id="datalistNamaBarang">
+            @foreach ($namaBarang as $item)
+                <option value="{{ strtoupper($item->namaBarang) }}">{{ strtoupper($item->namaBarang) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistDeskripsi">
+            @foreach ($deskripsi as $a)
+                <option value="{{ strtoupper($a->keterangan) }}">{{ strtoupper($a->keterangan) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistKatalog">
+            @foreach ($katalog as $b)
+                <option value="{{ strtoupper($b->katalog) }}">{{ strtoupper($b->katalog) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistPart">
+            @foreach ($part as $c)
+                <option value="{{ strtoupper($c->part) }}">{{ strtoupper($c->part) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistSatuan">
+            @foreach ($satuan as $d)
+                <option value="{{ strtoupper($d->satuan) }}">{{ strtoupper($d->satuan) }}</option>
+            @endforeach
+        </datalist>
+        <datalist id="datalistPeruntukan">
+            @foreach ($peruntukan as $e)
+                <option value="{{ strtoupper($e->peruntukan) }}">{{ strtoupper($e->peruntukan) }}</option>
+            @endforeach
+        </datalist>
+
         <div class="page-wrapper">
             <!-- Page header -->
             <div class="page-header d-print-none">
@@ -25,22 +57,18 @@
                         <div class="col">
                             <!-- Page pre-title -->
                             <h2 class="page-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                    class="icon icon-tabler icon-tabler-home-cog" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-text"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h1.6" />
-                                    <path d="M20 11l-8 -8l-9 9h2v7a2 2 0 0 0 2 2h4.159" />
-                                    <path d="M18 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M18 14.5v1.5" />
-                                    <path d="M18 20v1.5" />
-                                    <path d="M21.032 16.25l-1.299 .75" />
-                                    <path d="M16.27 19l-1.3 .75" />
-                                    <path d="M14.97 16.25l1.3 .75" />
-                                    <path d="M19.733 19l1.3 .75" />
+                                    <path
+                                        d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                    <path
+                                        d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                    <path d="M9 12h6" />
+                                    <path d="M9 16h6" />
                                 </svg>
-                                Servis
+                                Servis Barang
                             </h2>
                             <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
@@ -49,7 +77,7 @@
                                     <li class="breadcrumb-item"><a href="https://pintex.co.id/apps/HR/Recruitment"><i
                                                 class="fa-solid fa-basket-shopping"></i> Teknik</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-paste"></i> Servis</a></li>
+                                                class="fa-regular fa-paste"></i> Servis Barang</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -59,11 +87,11 @@
                             <div class="btn-list">
                                 <ul class="nav">
                                     <a href="#tabs-profile-8"
-                                        class="active btn btn-warning d-none d-sm-inline-block border border-warning"
+                                        class="active btn btn-cyan d-none d-sm-inline-block border border-blue"
                                         data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
                                         style="margin-right: 10px">
                                         <i class="fa-solid fa-list-ul"></i>
-                                        List Item Servis
+                                        List Servis Barang
                                     </a>
                                     <a href="#tabs-home-8"
                                         class="btn btn-primary d-none d-sm-inline-block border border-primary"
@@ -74,15 +102,13 @@
                                 </ul>
                                 <ul class="nav">
                                     <a href="#tabs-profile-8"
-                                        class="nav-link btn btn-primary d-sm-none btn-icon border border-primary"
+                                        class="active btn btn-primary d-sm-none btn-icon border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab"
-                                        aria-label="List Item Permintaan" style="margin-right: 10px">
+                                        aria-label="List Item Servis" style="margin-right: 10px">
                                         <i class="fa-solid fa-list-ul"></i>
                                     </a>
-                                    <a href="#tabs-home-8"
-                                        class="nav-link btn btn-warning d-sm-none btn-icon border border-warning"
-                                        data-bs-toggle="tab" aria-selected="true" role="tab"
-                                        aria-label="Tambah Permintaan">
+                                    <a href="#tabs-home-8" class="btn btn-warning d-sm-none btn-icon border border-warning"
+                                        data-bs-toggle="tab" aria-selected="true" role="tab" aria-label="Tambah Servis">
                                         <i class="fa-solid fa-hand-holding-medical"></i>
                                     </a>
                                 </ul>
@@ -106,36 +132,35 @@
                                                     <tr>
                                                         <th class="text-center">Tgl Awal</th>
                                                         <th class="text-center">Tgl Akhir</th>
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center"></th>
+                                                        <th class="text-center">Mesin</th>
+                                                        <th class="text-center">Unit</th>
+                                                        <th class="text-center">Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <td>
                                                             <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()" value="{{ date('Y-01-01') }}">
+                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" id="idfilter_sampai" class="form-control "
-                                                                onchange="syn()" value="{{ date('Y-m-d') }}">
+                                                            <input type="date" id="idfilter_sampai"
+                                                                class="form-control " onchange="syn()"
+                                                                value="{{ date('Y-m-d') }}">
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="btn btn-primary btn-icon"
-                                                                aria-label="Button">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="1.5"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                    <path d="M21 21l-6 -6" />
-                                                                </svg>
-                                                            </a>
-                                                            <input class="btn btn-primary" type="reset" value="Reset">
+                                                            <select id="idfilter_mesin" onchange="syn()"
+                                                                class="form-select elementmsn text-nowrap"
+                                                                style="text-transform: uppercase;">
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="idfilter_unit" onchange="syn()"
+                                                                class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="idfilter_status" onchange="syn()"
+                                                                class="form-control">
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -152,14 +177,14 @@
                             <div class="tab-pane fade" id="tabs-home-8" role="tabpanel">
                                 <div class="card shadow card-active">
                                     <div class="card-body">
-                                        <form method="POST" name="formPermintaan" id="formPermintaan" class="form"
+                                        <form method="POST" name="formServis" id="formServis" class="form"
                                             enctype="multipart/form-data" accept-charset="utf-8"
                                             onkeydown="return event.key != 'Enter';" data-select2-id="add-form">
                                             @csrf
                                             <div class="row">
                                                 <div class="control-group col-lg-3">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Tanggal Permintaan</label>
+                                                        <label class="form-label">Tanggal Pengajuan Servis</label>
                                                         <div class="input-icon mb-2">
                                                             <input name="tanggal" class="form-control "
                                                                 placeholder="Select a date" id="datepicker-icon"
@@ -191,7 +216,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="control-group col-lg-9">
-                                                    <div class="card">
+                                                    <div class="card mb-2">
                                                         <div class="card-stamp card-stamp-lg">
                                                             <div class="card-stamp-icon bg-primary text-white">
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -213,7 +238,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="card-body shadow">
-                                                            <h3 class="card-title">Repeat Order</h3>
+                                                            <h3 class="card-title">Repeat Servis</h3>
                                                             <div class="control-group col-lg-3">
                                                                 <div class="form-group">
                                                                     <input type="text" class="form-control"
@@ -239,10 +264,10 @@
                                                     Tambah Item
                                                 </button>
                                             </div>
-                                            <div class="hr-text text-blue">Item Permintaan</div>
+                                            <div class="hr-text text-blue">Item Servis</div>
                                             <input id="idf" value="1" type="hidden">
                                             <div style="overflow-x:auto;overflow-x: scroll;">
-                                                <div style="width: 2800px">
+                                                <div>
                                                     <table id="detail_transaksi" class="control-group text-nowrap"
                                                         border="0"
                                                         style="width: 100%;text-align:center;font-weight: bold;">
@@ -251,27 +276,24 @@
                                                                 <td
                                                                     style="border-left-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;width: 50px">
                                                                 </td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    KODEPRODUK</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    BARANG/JASA</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    DESKRIPSI</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    SERIAL NUMBER</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    MESIN</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    QTY</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    SATUAN</td>
-                                                                <td class="bg-primary text-white" style="width: 200px">Qty
+                                                                <td class="bg-primary text-white">
+                                                                    Kodeproduk</td>
+                                                                <td class="bg-primary text-white">
+                                                                    Nama Barang</td>
+                                                                <td class="bg-primary text-white">
+                                                                    Deskripsi</td>
+                                                                <td class="bg-primary text-white">
+                                                                    Serial Number</td>
+                                                                <td class="bg-primary text-white">
+                                                                    Mesin</td>
+                                                                <td class="bg-primary text-white">
+                                                                    Qty
                                                                 </td>
-                                                                <td class="bg-primary text-white" style="width: 200px">
-                                                                    PEMESAN</td>
-                                                                {{-- <th
+                                                                <td class="bg-primary text-white">
+                                                                    Satuan</td>
+                                                                <th class="text-center"
                                                                     style="border-right-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;">
-                                                                    Urgent</th> --}}
+                                                                    Urgent</th>
                                                             </tr>
                                                         </thead>
                                                     </table>
@@ -288,33 +310,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="control-group col-lg-4">
-                                                    <script>
-                                                        var loadFile = function(event) {
-                                                            var output = document.getElementById('blah');
-                                                            output.src = URL.createObjectURL(event.target
-                                                                .files[0]);
-                                                            output.onload = function() {
-                                                                URL.revokeObjectURL(output
-                                                                    .src) // free memory
-                                                            }
-                                                        };
-                                                    </script>
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Unggah Gambar</label>
-                                                        <input type="file" name="gambarKeterangan"
-                                                            id="gambarKeterangan" class="form-control-file"
-                                                            accept=".jpg, .jpeg, .png, .gif" onchange="loadFile(event)">
-                                                    </div>
-                                                    <img id="blah" src="#" alt="Preview" width="300px">
-                                                </div> --}}
                                             </div>
                                             <br>
                                             <div class="float-xl-right">
-                                                <button type="submit" id="submitPermintaan" class="btn btn-primary"><i
+                                                <button type="submit" id="submitServis" class="btn btn-primary"><i
                                                         class="fa-regular fa-floppy-disk" style="margin-right: 5px"></i>
-                                                    Proses</button>
+                                                    Simpan Permintaan</button>
                                             </div>
                                         </form>
                                     </div>
@@ -327,41 +328,412 @@
             @include('shared.footer')
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
-    <script type="text/javascript">
-        function newexportaction(e, dt, button, config) {
-            var self = this;
-            var oldStart = dt.settings()[0]._iDisplayStart;
-
-            dt.one('preXhr', function(e, s, data) {
-                data.start = 0;
-                data.length = 2147483647;
-
-                dt.one('preDraw', function(e, settings) {
-                    if (button[0].className.indexOf('buttons-copy') >= 0) {
-                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
-                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
-                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
-                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
-                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
-                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
-                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
-                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
-                    }
-                    settings._iDisplayStart = oldStart;
-                    data.start = oldStart;
-                });
-            });
-
-            dt.ajax.reload();
+    {{-- Start Modals --}}
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            /* display: none; */
+            background: rgba(0, 0, 0, 0.6);
         }
 
-        $(document).ready(function() {
-            var tableServis = $('.datatable-servis').DataTable({
-                "processing": true,
-                "serverSide": false,
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Loader style */
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            display: block;
+            margin: 15px auto;
+            position: relative;
+            color: #ff0000c3;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        .loader::after,
+        .loader::before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 50%;
+            left: 50%;
+            transform: scale(0.5) translate(0, 0);
+            background-color: #ff0000c3;
+            border-radius: 50%;
+            animation: animloader 1s infinite ease-in-out;
+        }
+
+        .loader::before {
+            background-color: #ffffffba;
+            transform: scale(0.5) translate(-48px, -48px);
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes animloader {
+            50% {
+                transform: scale(1) translate(-50%, -50%);
+            }
+        }
+
+        /* END Loader style */
+    </style>
+    <div class="modal modal-blur fade" id="modalDetailPermintaan" tabindex="-1" style="display: none;"
+        aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="loader"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Detail Permintaan
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="fetched-data-permintaan"></div>
+                </div>
+                <div class="modal-footer">
+                    {{-- <button type="button" class="btn me-auto" data-bs-dismiss="modal">Keluar</button> --}}
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-blur fade" id="modalEditPermintaan" tabindex="-1" style="display: none;"
+        aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="loader"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                        Edit Permintaan (Undone)
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="fetched-data-edit-permintaan"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary me-auto" data-bs-dismiss="modal">Simpan</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- End Modals --}}
+    <script type="text/javascript">
+        var unit = 'Unit 1';
+
+        function tambahItem() {
+            var idf = document.getElementById("idf").value;
+
+            var detail_transaksi = document.getElementById("detail_transaksi");
+
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "btn-remove" + idf);
+
+            // Kolom 1 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.setAttribute("style", "border-left-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;");
+            td.innerHTML += '<button class="btn btn-sm btn-danger btn-icon remove" type="button" onclick="hapusElemen(' +
+                idf +
+                ');"><i class="fa-regular fa-trash-can"></i> </button>';
+            tr.appendChild(td);
+
+            // Kolom 2 Kodeproduk                            
+            var td = document.createElement("td");
+            td.innerHTML += '<input readonly type="text" name="kodeproduk[]" id="kodeproduk"' + idf +
+                '" class="form-control inputNone bg-secondary-lt" value="Service" style="text-transform: uppercase;">';
+            tr.appendChild(td);
+
+            // Kolom 3 Nama Barang / Jasa
+            var td = document.createElement("td");
+            td.innerHTML += '<input type="text" list="datalistNamaBarang" id="namaServis-' + idf +
+                '" name="namaBarang[]" class="form-control  inputNone" style=";text-transform: uppercase;" onblur="openLock(' +
+                idf + ')" onclick="openLock(' + idf + ')" onkeyup="openLock(' + idf + ')">';
+            tr.appendChild(td);
+
+            // Kolom 4 Deskripsi
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='text' list='datalistDeskripsi' name='deskripsi[]' id='deskripsi_" + idf +
+                "' class='form-control inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 5 Serial Number
+            var td = document.createElement("td");
+            td.innerHTML +=
+                "<input readonly type='text' list='datalistSerialnumber' name='serialnumber[]' id='serialnumber_" + idf +
+                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 6 Mesin
+            var td = document.createElement("td");
+            td.innerHTML += "<div name='tampil_mesin_" + idf + "' id='tampil_mesin_" + idf + "'></div>";
+            tr.appendChild(td);
+
+            // Kolom 7 Qty
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly type='number' name='qty[]' id='qty_" + idf +
+                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 8 Satuan
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly list='datalistSatuan' type='text' name='satuan[]' id='satuan_" + idf +
+                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 9 Pemesan
+            var td = document.createElement("td");
+            td.innerHTML += "<div name='tampil_pemesan_" + idf + "' id='tampil_pemesan_" + idf + "'></div>";
+            tr.appendChild(td);
+
+            // Kolom 10 Urgent
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.setAttribute("style", "border-right-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;");
+            td.innerHTML += '<input type="checkbox" name="urgent[]" id="urgent' + idf + '" value="1"><br>';
+            tr.appendChild(td);
+
+            detail_transaksi.appendChild(tr);
+
+            idf = (idf - 1) + 2;
+            document.getElementById("idf").value = idf;
+            $(".element").select2({
+                placeholder: "Pilih Kodeproduk"
+            });
+        }
+
+        function hapusElemen(idf) {
+            $("#btn-remove" + idf).remove();
+        }
+
+        function openLock(idf) {
+            var var_select = document.getElementById("namaServis-" + idf).value;
+            if (var_select) {
+                $('#deskripsi_' + idf).prop('readonly', false);
+                $('#serialnumber_' + idf).prop('readonly', false);
+                $('#qty_' + idf).prop('readonly', false);
+                $('#satuan_' + idf).prop('readonly', false);
+
+                document.getElementById("tampil_mesin_" + idf).innerHTML =
+                    '<select name="mesin[]" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;"><option></option></select>';
+                $('#deskripsi_' + idf).removeClass('cursor-not-allowed bg-secondary-lt');
+                $('#serialnumber_' + idf).removeClass('cursor-not-allowed bg-secondary-lt');
+                $('#qty_' + idf).removeClass('cursor-not-allowed bg-secondary-lt');
+                $('#satuan_' + idf).removeClass('cursor-not-allowed bg-secondary-lt');
+            } else {
+                $('#deskripsi_' + idf).prop('readonly', true);
+                $('#serialnumber_' + idf).prop('readonly', true);
+                $('#qty_' + idf).prop('readonly', true);
+                $('#satuan_' + idf).prop('readonly', true);
+
+                document.getElementById("tampil_mesin_" + idf).innerHTML = '';
+                $('#deskripsi_' + idf).addClass('cursor-not-allowed bg-secondary-lt');
+                $('#serialnumber_' + idf).addClass('cursor-not-allowed bg-secondary-lt');
+                $('#qty_' + idf).addClass('cursor-not-allowed bg-secondary-lt');
+                $('#satuan_' + idf).addClass('cursor-not-allowed bg-secondary-lt');
+            }
+
+            $(document).ready(function() {
+                $(".elementbrg").select2({
+                    language: "id",
+                    placeholder: "Pilih Barang",
+                    ajax: {
+                        url: "/getMasterBarang",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementprm").select2({
+                    language: "id",
+                    placeholder: "Pilih Pemesan",
+                    ajax: {
+                        url: "/getMasterPemesan",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.nama.toUpperCase(),
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementmsn").select2({
+                    language: "id",
+                    width: '250px',
+                    placeholder: "Pilih Mesin",
+                    ajax: {
+                        url: "/getMesin",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            console.log(response);
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.mesin.toUpperCase() + " " + item.merk
+                                            .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
+                                                " (UNIT " + item.unit + ")"),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+            });
+        }
+
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function() {
+            window.Litepicker && (new Litepicker({
+                element: document.getElementById('datepicker-icon'),
+                buttonText: {
+                    previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+                    nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+                },
+            }));
+        });
+        // @formatter:on
+
+        var tablePermintaan;
+
+        function syn() {
+            tablePermintaan.ajax.reload();
+        }
+        $(function() {
+            /*------------------------------------------
+            --------------------------------------------
+            Start Render Select2
+            --------------------------------------------
+            --------------------------------------------*/
+            $(".elementkabag").select2({
+                language: "id",
+                width: '100%',
+                placeholder: "Pilih Kabag",
+                ajax: {
+                    url: "/getKabag",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(response) {
+                        console.log(response);
+                        return {
+                            results: $.map(response, function(item) {
+                                return {
+                                    text: item.nama,
+                                    id: item.nama,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+            });
+            $(".elementmsn").select2({
+                language: "id",
+                width: '250px',
+                placeholder: "Pilih Mesin",
+                ajax: {
+                    url: "/getMesin",
+                    dataType: 'json',
+                    delay: 200,
+                    processResults: function(response) {
+                        console.log(response);
+                        return {
+                            results: $.map(response, function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.mesin.toUpperCase() + " " + item.merk
+                                        .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
+                                            " (UNIT " + item.unit + ")"),
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+            });
+            /*------------------------------------------
+            --------------------------------------------
+            End Render Select2
+            --------------------------------------------
+            --------------------------------------------*/
+            /*------------------------------------------
+            --------------------------------------------
+            Render DataTable
+            --------------------------------------------
+            --------------------------------------------*/
+            tablePermintaan = $('.datatable-servis').DataTable({
+                "processing": true, //Feature control the processing indicator.
+                "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -398,81 +770,416 @@
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                     "infoEmpty": "Data Tidak Ditemukan",
                     "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
                     "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
                     "paginate": {
-                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
                         "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "#",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
-                "columns": [{
+                "ajax": {
+                    "url": "{{ route('getServis.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#idfilter_dari').val();
+                        data.sampai = $('#idfilter_sampai').val();
+                        data.mesin = $('#idfilter_mesin').val();
+                        data.unit = $('#unit').val();
+                        data.status = $('#status').val();
+                    }
+                },
+                columns: [{
                         title: '',
                         data: 'action',
                         name: 'action',
                         className: "cuspad0 cuspad1",
+                        orderable: false,
+                        searchable: false,
                     },
                     {
-                        title: 'TANGGAL',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'NOFORM',
+                        title: 'Kodeseri',
                         data: 'kodeseri',
                         name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'KODESERI',
+                        title: 'Noform',
                         data: 'noform',
                         name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'BARANG',
+                        title: 'Tanggal',
+                        data: 'tgl',
+                        name: 'tgl',
+                        className: "cuspad0 text-center"
+                    },
+                    {
+                        title: 'Barang',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        className: "cuspad0 cuspad1"
                     },
                     {
-                        title: 'DESKRIPSI',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Deskripsi',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 cuspad1"
                     },
                     {
-                        title: 'SERIAL NUMBER',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 cuspad1"
                     },
                     {
-                        title: 'MESIN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1"
                     },
                     {
-                        title: 'STATUS',
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 text-center"
+                    },
+                    {
+                        title: 'Qty PO',
                         data: 'qty',
                         name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 text-center"
+                    },
+                    {
+                        title: 'Qty Acc',
+                        data: 'qtyacc',
+                        name: 'qtyacc',
+                        className: "cuspad0 text-center"
+                    },
+                    {
+                        title: 'Satuan',
+                        data: 'satuan',
+                        name: 'satuan',
+                        className: "cuspad0 text-center"
+                    },
+                    {
+                        title: 'Dibeli',
+                        data: 'dibeli',
+                        name: 'dibeli',
+                        className: "cuspad0 cuspad1 text-center"
+                    },
+                    {
+                        title: 'Status',
+                        data: 'status',
+                        name: 'status',
+                        className: 'text-center cuspad0 text-center'
                     },
                 ],
 
             });
+            /*------------------------------------------==============================================================================================================================================================
+            --------------------------------------------==============================================================================================================================================================
+            Start Create Data
+            --------------------------------------------==============================================================================================================================================================
+            --------------------------------------------==============================================================================================================================================================*/
+            if ($("#formServis").length > 0) {
+                $("#formServis").validate({
+                    rules: {
+                        tanggal: {
+                            required: true,
+                        },
+                        kabag: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        tanggal: {
+                            required: "Masukkan Tanggal",
+                        },
+                        kabag: {
+                            required: "Masukkan Kabag",
+                        },
+                    },
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitServis').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Mohon Menunggu...');
+                        $("#submitServis").attr("disabled", true);
+                        $("body").addClass("cursor-wait");
+                        $.ajax({
+                            url: "{{ url('storedataServis') }}",
+                            type: "POST",
+                            data: $('#formServis').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Menyimpan Data',
+                                    html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                $("body").removeClass("cursor-wait");
+                                console.log('Result:', response);
+                                $('#submitServis').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitServis").attr("disabled", false);
+                                tablePermintaan.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                document.getElementById("formServis").reset();
+                                $('#tabs-profile-8').addClass('active show');
+                                $('#tabs-home-8').removeClass('active show');
+                            },
+                            error: function(data) {
+                                $("body").removeClass("cursor-wait");
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                tablePermintaan.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitServis').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitServis").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+            /*------------------------------------------==============================================================================================================================================================
+            --------------------------------------------==============================================================================================================================================================
+            End Create Data
+            --------------------------------------------==============================================================================================================================================================
+            --------------------------------------------==============================================================================================================================================================*/
+            /*------------------------------------------
+            --------------------------------------------
+            Start Render Ajax Modal
+            --------------------------------------------
+            --------------------------------------------*/
+            $('#modalDetailPermintaan').on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget)
+                var noform = button.data('noform');
+                console.log("Fetch Noform: " + noform + "...");
+                $(".overlay").fadeIn(300);
+                $.ajax({
+                    type: 'POST',
+                    url: 'viewPermintaan',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        noform: noform,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-permintaan').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('#modalEditPermintaan').on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget)
+                var id = button.data('id');
+                console.log("Fetch Id Item: " + id + "...");
+                $(".overlay").fadeIn(300);
+                $.ajax({
+                    type: 'POST',
+                    url: 'viewEditPermintaan',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: id,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-edit-permintaan').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('.datatable-servis').on('click', '.remove', function() {
+                var kodeseri = $(this).data('id');
+                var nama = $(this).data('nama');
+                var desc = $(this).data('desc');
+                var token = $("meta[name='csrf-token']").attr("content");
+                let r = (Math.random() + 1).toString(36).substring(2);
+
+                swal.fire({
+                    title: 'Hapus Data Permintaan',
+                    text: 'Apakah anda yakin ingin menghapus ' + kodeseri + ', Ket : ' + nama +
+                        " " + desc,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '<i class="fa-regular fa-trash-can"></i> Hapus',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        (async () => {
+                            const {
+                                value: password
+                            } = await Swal.fire({
+                                title: "Ketik tulisan dibawah untuk menghapus " +
+                                    kodeseri,
+                                html: '<div class="unselectable">' + r +
+                                    '</div>',
+                                input: "text",
+                                inputPlaceholder: "Enter your password to Delete " +
+                                    nama,
+                                showCancelButton: true,
+                                cancelButtonColor: '#3085d6',
+                                cancelButtonText: 'Batal',
+                                confirmButtonText: 'Ok',
+                                inputAttributes: {
+                                    autocapitalize: "off",
+                                    autocorrect: "off"
+                                },
+                            });
+                            if (password == r) {
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: "{{ route('getPermintaan.store') }}" +
+                                        '/' + kodeseri,
+                                    data: {
+                                        "_token": "{{ csrf_token() }}",
+                                    },
+                                    beforeSend: function() {
+                                        Swal.fire({
+                                            title: 'Mohon Menunggu',
+                                            html: '<center><lottie-player src="https://lottie.host/54b33864-47d1-4f30-b38c-bc2b9bdc3892/1xkjwmUkku.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menghapus data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                            timerProgressBar: true,
+                                            showConfirmButton: false,
+                                            allowOutsideClick: false,
+                                            allowEscapeKey: false,
+                                        })
+                                    },
+                                    success: function(data) {
+                                        tablePermintaan.ajax.reload();
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: "top-end",
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                            timerProgressBar: true,
+                                            didOpen: (toast) => {
+                                                toast.onmouseenter =
+                                                    Swal.stopTimer;
+                                                toast.onmouseleave =
+                                                    Swal
+                                                    .resumeTimer;
+                                            }
+                                        });
+                                        Toast.fire({
+                                            icon: "success",
+                                            title: "Data Permintaan : " +
+                                                nama + " (" + kodeseri +
+                                                ") Terhapus"
+                                        });
+                                    },
+                                    error: function(data) {
+                                        tablePermintaan.ajax.reload();
+                                        console.log('Error:', data
+                                            .responseText);
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal!',
+                                            text: 'Error: ' + data
+                                                .responseText,
+                                            showConfirmButton: true,
+                                        });
+                                    }
+                                });
+                            } else {
+                                tablePermintaan.ajax.reload();
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Gagal",
+                                    text: "Teks yang diketik tidak sama",
+                                });
+                            }
+                        })()
+                    }
+                })
+            });
+            /*------------------------------------------
+            --------------------------------------------
+            End Render Ajax Modal
+            --------------------------------------------
+            --------------------------------------------*/
         });
+
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function(e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = 2147483647;
+                dt.one('preDraw', function(e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                        $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                    }
+                    dt.one('preXhr', function(e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
+                    });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
+                });
+            });
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+        }
 
         document.addEventListener("DOMContentLoaded", function() {
             let options = {

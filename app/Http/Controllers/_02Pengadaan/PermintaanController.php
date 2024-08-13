@@ -160,7 +160,6 @@ class PermintaanController extends Controller
             $kodeSurat = date('y-') . "00001";
         }
 
-
         $jml_mbl = count($request->jenis);
         for ($i = 0; $i < $jml_mbl; $i++) {
             $kdseri = "10000";

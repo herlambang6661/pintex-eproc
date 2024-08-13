@@ -16,6 +16,7 @@ use App\Http\Controllers\_04Teknik\ServisController;
 use App\Http\Controllers\_01Master\SuplierController;
 use App\Http\Controllers\_04Teknik\BarcodeController;
 use App\Http\Controllers\_02Pengadaan\EmailController;
+use App\Http\Controllers\Datatables\Teknik\ServisList;
 use App\Http\Controllers\Pengaturan\PenggunaController;
 use App\Http\Controllers\_01Master\BarangJasaController;
 use App\Http\Controllers\_01Master\TarifPajakController;
@@ -57,6 +58,7 @@ Route::resource('getPermintaan', PermintaanList::class);
 Route::resource('getPengambilan', PengambilanList::class);
 Route::resource('getPembelianList', PembelianList::class);
 Route::resource('tbPenerimaan', PenerimaanList::class);
+Route::resource('getServis', ServisList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -169,7 +171,6 @@ Route::controller(StatusBarangController::class)->group(function () {
     Route::get('pengadaan/status_barang', 'statusBarang');
 });
 
-
 //ROUTE GUDANG
 Route::controller(StockController::class)->group(function () {
     Route::get('gudang/stock', 'stock');
@@ -203,9 +204,9 @@ Route::controller(MutasiController::class)->group(function () {
 });
 
 //ROUTE TEKNIK
-
 Route::controller(ServisController::class)->group(function () {
     Route::get('teknik/servis', 'servis');
+    Route::post('storedataServis', 'storedataServis');
 });
 
 Route::controller(ReturController::class)->group(function () {
