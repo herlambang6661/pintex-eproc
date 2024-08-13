@@ -212,10 +212,6 @@ Route::controller(ReturController::class)->group(function () {
     Route::get('teknik/retur', 'retur');
 });
 
-Route::controller(BarcodeController::class)->group(function () {
-    Route::get('teknik/barcode', 'barcode');
-});
-
 Route::controller(PengambilanController::class)->group(function () {
     Route::get('teknik/pengambilan', 'pengambilan');
     Route::POST('teknik/pengambilan/cariBarang', 'pencarianBarang')->name('teknik/pengambilan/cariBarang');
