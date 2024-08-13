@@ -499,11 +499,11 @@
                         </span>
                     </a>
                     <div
-                        class="dropdown-menu {{ $active == 'Penerimaan' || $active == 'Pengiriman' || $active == 'Sample' || $active == 'BarangTransit' || $active == 'Mutasi' ? 'show' : '' }}">
+                        class="dropdown-menu {{ $active == 'Penerimaan' || $active == 'Pengiriman' || $active == 'Sample' || $active == 'BarangTransit' || $active == 'Mutasi' || $active == 'Stock' ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item" href="{{ url('gudang/stock') }} "
-                                    {{ $active == 'Penerimaan' ? 'active' : '' }}>
+                                    {{ $active == 'Stock' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         style="margin-right: 10px" viewBox="0 0 24 24" fill="none"
                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"

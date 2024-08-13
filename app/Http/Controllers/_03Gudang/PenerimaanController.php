@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PenerimaanController extends Controller
 {
@@ -316,6 +317,7 @@ class PenerimaanController extends Controller
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('barang')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
+                    $qrCodes = QrCode::size(70)->format('png')->generate($u->kodeseri);
                     echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
                     echo  '<input type="hidden" name="partial[]" id="partial-' . $u->id . '" value="0">';
@@ -349,7 +351,7 @@ class PenerimaanController extends Controller
                                             </div>
                                             <div class="qr-code-customCard">
                                                 <div class="img-thumbnail border rounded-3">
-                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Qrcode_wikipedia_fr_v2clean.png" alt="">
+                                                    ' . $qrCodes . '
                                                 </div>
                                             </div>
                                         </div>
@@ -522,7 +524,7 @@ class PenerimaanController extends Controller
                         $white: #fff;
                         $grey: #f6f6fa;
 
-                        .container-customCard {
+                        .container-customCard2 {
                             max-width: 305px;
                             height: 550px;
                             margin: 20px auto;
@@ -533,12 +535,12 @@ class PenerimaanController extends Controller
                             position: relative;
                         }
 
-                        .header-customCard {
+                        .header-customCard2 {
                             background: #006400;
                             padding: 20px;
                         }
 
-                        .navbar-customCard {
+                        .navbar-customCard2 {
                             color: #fff;
                             padding-bottom: 10px;
                             border-bottom: 0.5px solid #fff;
@@ -550,7 +552,7 @@ class PenerimaanController extends Controller
                             }
                         }
 
-                        .main-account-customCard {
+                        .main-account-customCard2 {
                             float: right;
 
                             a {
@@ -560,7 +562,7 @@ class PenerimaanController extends Controller
                             }
                         }
 
-                        .top-view-customCard {
+                        .top-view-customCard2 {
                             padding-top: 20px;
 
                             .payment-infos {
@@ -765,20 +767,20 @@ class PenerimaanController extends Controller
                     echo  '<input type="hidden" name="partial[]" id="partial-' . $u->id . '" value="0">';
                     echo '
                             <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary d-sm-block d-none">
-                                <div class="container-customCard rounded-3 shadow-lg">
-                                    <div class="header-customCard rounded-3 pt-2">
-                                        <div class="navbar-customCard pt-2">
+                                <div class="container-customCard2 rounded-3 shadow-lg">
+                                    <div class="header-customCard2 rounded-3 pt-2">
+                                        <div class="navbar-customCard2 pt-2">
                                             <button type="button" class="btn-link text-white open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
                                                 <i class="fa fa-bars" aria-hidden="true"></i>
                                             </button>
                                             <button type="button" class="btn-link text-white close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
                                                 <i class="fas fa-xmark"></i>
                                             </button>
-                                            <div class="main-account-customCard">
+                                            <div class="main-account-customCard2">
                                                 <h4>' . strtoupper($u->namaBarang) . '</h4>
                                             </div>
                                         </div>
-                                        <div class="top-view-customCard rounded-3 pt-1">
+                                        <div class="top-view-customCard2 rounded-3 pt-1">
                                             <div class="payment-infos">
                                                 <div class="text-white">
                                                     Kodeseri : ' . $u->kodeseri . '

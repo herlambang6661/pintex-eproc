@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\_01Master\UangController;
 use App\Http\Controllers\_01Master\MesinController;
+use App\Http\Controllers\_03Gudang\StockController;
 use App\Http\Controllers\_04Teknik\ReturController;
 use App\Http\Controllers\_01Master\LockerController;
 use App\Http\Controllers\_03Gudang\MutasiController;
@@ -170,6 +171,11 @@ Route::controller(StatusBarangController::class)->group(function () {
 
 
 //ROUTE GUDANG
+Route::controller(StockController::class)->group(function () {
+    Route::get('gudang/stock', 'stock');
+    Route::post('getstock', 'getStockBarang')->name('getstock');
+});
+
 Route::controller(PenerimaanController::class)->group(function () {
     Route::get('gudang/penerimaan', 'penerimaan');
     Route::post('checkPenerimaan', 'checkPenerimaan');

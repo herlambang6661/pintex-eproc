@@ -1009,7 +1009,6 @@
                     success: function(data) {
                         //menampilkan data ke dalam modal
                         $('.fetched-data-partial').html(data);
-                        console.log("Data: " + data);
                         // alert(itemTables);
                     }
                 }).done(function() {
