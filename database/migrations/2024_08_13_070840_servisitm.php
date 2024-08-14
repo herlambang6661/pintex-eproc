@@ -47,6 +47,7 @@ return new class extends Migration
             $table->integer('garansi')->nullable();
             $table->date('estimasi_tgl')->nullable();
             $table->date('garansi_tgl')->nullable();
+            $table->integer('edited')->nullable();
             $table->string('dibuat')->nullable();
             $table->timestamps();
         });

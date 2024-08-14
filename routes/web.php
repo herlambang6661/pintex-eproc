@@ -205,8 +205,11 @@ Route::controller(MutasiController::class)->group(function () {
 
 //ROUTE TEKNIK
 Route::controller(ServisController::class)->group(function () {
+    Route::get('getDataMesinServis', 'getMesin')->name('getDataMesinServis');
     Route::get('teknik/servis', 'servis');
     Route::post('storedataServis', 'storedataServis');
+    Route::post('teknik/printServis', 'printServis')->name('teknik/printServis');
+    Route::post('teknik/viewServis', 'viewServis')->name('teknik/viewServis');
 });
 
 Route::controller(ReturController::class)->group(function () {

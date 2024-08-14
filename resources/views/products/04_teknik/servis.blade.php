@@ -28,24 +28,14 @@
                 <option value="{{ strtoupper($a->keterangan) }}">{{ strtoupper($a->keterangan) }}</option>
             @endforeach
         </datalist>
-        <datalist id="datalistKatalog">
-            @foreach ($katalog as $b)
-                <option value="{{ strtoupper($b->katalog) }}">{{ strtoupper($b->katalog) }}</option>
-            @endforeach
-        </datalist>
-        <datalist id="datalistPart">
-            @foreach ($part as $c)
-                <option value="{{ strtoupper($c->part) }}">{{ strtoupper($c->part) }}</option>
+        <datalist id="datalistSerialnumber">
+            @foreach ($serialnumber as $b)
+                <option value="{{ strtoupper($b->serialnumber) }}">{{ strtoupper($b->serialnumber) }}</option>
             @endforeach
         </datalist>
         <datalist id="datalistSatuan">
             @foreach ($satuan as $d)
                 <option value="{{ strtoupper($d->satuan) }}">{{ strtoupper($d->satuan) }}</option>
-            @endforeach
-        </datalist>
-        <datalist id="datalistPeruntukan">
-            @foreach ($peruntukan as $e)
-                <option value="{{ strtoupper($e->peruntukan) }}">{{ strtoupper($e->peruntukan) }}</option>
             @endforeach
         </datalist>
 
@@ -86,14 +76,14 @@
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <ul class="nav">
-                                    <a href="#tabs-profile-8"
+                                    <a href="#tabs-profile-8" id="btntabs-profile-8"
                                         class="active btn btn-cyan d-none d-sm-inline-block border border-blue"
                                         data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
                                         style="margin-right: 10px">
                                         <i class="fa-solid fa-list-ul"></i>
                                         List Servis Barang
                                     </a>
-                                    <a href="#tabs-home-8"
+                                    <a href="#tabs-home-8" id="btntabs-home-8"
                                         class="btn btn-primary d-none d-sm-inline-block border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab">
                                         <i class="fa-solid fa-hand-holding-medical"></i>
@@ -101,13 +91,14 @@
                                     </a>
                                 </ul>
                                 <ul class="nav">
-                                    <a href="#tabs-profile-8"
+                                    <a href="#tabs-profile-8" id="btntabs-profile-8"
                                         class="active btn btn-primary d-sm-none btn-icon border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab"
                                         aria-label="List Item Servis" style="margin-right: 10px">
                                         <i class="fa-solid fa-list-ul"></i>
                                     </a>
-                                    <a href="#tabs-home-8" class="btn btn-warning d-sm-none btn-icon border border-warning"
+                                    <a href="#tabs-home-8" id="btntabs-home-8"
+                                        class="btn btn-warning d-sm-none btn-icon border border-warning"
                                         data-bs-toggle="tab" aria-selected="true" role="tab" aria-label="Tambah Servis">
                                         <i class="fa-solid fa-hand-holding-medical"></i>
                                     </a>
@@ -291,6 +282,8 @@
                                                                 </td>
                                                                 <td class="bg-primary text-white">
                                                                     Satuan</td>
+                                                                <td class="bg-primary text-white">
+                                                                    Pemesan</td>
                                                                 <th class="text-center"
                                                                     style="border-right-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;">
                                                                     Urgent</th>
@@ -398,8 +391,7 @@
 
         /* END Loader style */
     </style>
-    <div class="modal modal-blur fade" id="modalDetailPermintaan" tabindex="-1" style="display: none;"
-        aria-hidden="true">
+    <div class="modal modal-blur fade" id="modalDetailServis" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="overlay">
             <div class="cv-spinner">
                 <span class="loader"></span>
@@ -410,12 +402,12 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <i class="fa-solid fa-circle-info"></i>
-                        Detail Permintaan
+                        Detail Servis
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="fetched-data-permintaan"></div>
+                    <div class="fetched-data-servis"></div>
                 </div>
                 <div class="modal-footer">
                     {{-- <button type="button" class="btn me-auto" data-bs-dismiss="modal">Keluar</button> --}}
@@ -474,27 +466,27 @@
             // Kolom 2 Kodeproduk                            
             var td = document.createElement("td");
             td.innerHTML += '<input readonly type="text" name="kodeproduk[]" id="kodeproduk"' + idf +
-                '" class="form-control inputNone bg-secondary-lt" value="Service" style="text-transform: uppercase;">';
+                '" class="form-control inputNone bg-secondary-lt" value="Service" style="text-transform: uppercase;width:90px">';
             tr.appendChild(td);
 
             // Kolom 3 Nama Barang / Jasa
             var td = document.createElement("td");
             td.innerHTML += '<input type="text" list="datalistNamaBarang" id="namaServis-' + idf +
-                '" name="namaBarang[]" class="form-control  inputNone" style=";text-transform: uppercase;" onblur="openLock(' +
+                '" name="namaBarang[]" class="form-control  inputNone" style=";text-transform: uppercase;width:150px" onblur="openLock(' +
                 idf + ')" onclick="openLock(' + idf + ')" onkeyup="openLock(' + idf + ')">';
             tr.appendChild(td);
 
             // Kolom 4 Deskripsi
             var td = document.createElement("td");
             td.innerHTML += "<input type='text' list='datalistDeskripsi' name='deskripsi[]' id='deskripsi_" + idf +
-                "' class='form-control inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;'>";
+                "' class='form-control inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;width:150px'>";
             tr.appendChild(td);
 
             // Kolom 5 Serial Number
             var td = document.createElement("td");
             td.innerHTML +=
                 "<input readonly type='text' list='datalistSerialnumber' name='serialnumber[]' id='serialnumber_" + idf +
-                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;'>";
+                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;width:150px'>";
             tr.appendChild(td);
 
             // Kolom 6 Mesin
@@ -505,13 +497,13 @@
             // Kolom 7 Qty
             var td = document.createElement("td");
             td.innerHTML += "<input readonly type='number' name='qty[]' id='qty_" + idf +
-                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;'>";
+                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;width:150px'>";
             tr.appendChild(td);
 
             // Kolom 8 Satuan
             var td = document.createElement("td");
             td.innerHTML += "<input readonly list='datalistSatuan' type='text' name='satuan[]' id='satuan_" + idf +
-                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;'>";
+                "' class='form-control  inputNone cursor-not-allowed bg-secondary-lt' readonly style='text-transform: uppercase;width:90px'>";
             tr.appendChild(td);
 
             // Kolom 9 Pemesan
@@ -530,9 +522,6 @@
 
             idf = (idf - 1) + 2;
             document.getElementById("idf").value = idf;
-            $(".element").select2({
-                placeholder: "Pilih Kodeproduk"
-            });
         }
 
         function hapusElemen(idf) {
@@ -546,9 +535,10 @@
                 $('#serialnumber_' + idf).prop('readonly', false);
                 $('#qty_' + idf).prop('readonly', false);
                 $('#satuan_' + idf).prop('readonly', false);
-
                 document.getElementById("tampil_mesin_" + idf).innerHTML =
                     '<select name="mesin[]" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;"><option></option></select>';
+                document.getElementById("tampil_pemesan_" + idf).innerHTML =
+                    '<select required name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;"><option></option></select>';
                 $('#deskripsi_' + idf).removeClass('cursor-not-allowed bg-secondary-lt');
                 $('#serialnumber_' + idf).removeClass('cursor-not-allowed bg-secondary-lt');
                 $('#qty_' + idf).removeClass('cursor-not-allowed bg-secondary-lt');
@@ -560,6 +550,7 @@
                 $('#satuan_' + idf).prop('readonly', true);
 
                 document.getElementById("tampil_mesin_" + idf).innerHTML = '';
+                document.getElementById("tampil_pemesan_" + idf).innerHTML = '';
                 $('#deskripsi_' + idf).addClass('cursor-not-allowed bg-secondary-lt');
                 $('#serialnumber_' + idf).addClass('cursor-not-allowed bg-secondary-lt');
                 $('#qty_' + idf).addClass('cursor-not-allowed bg-secondary-lt');
@@ -567,45 +558,14 @@
             }
 
             $(document).ready(function() {
-                $(".elementbrg").select2({
-                    language: "id",
-                    placeholder: "Pilih Barang",
-                    ajax: {
-                        url: "/getMasterBarang",
-                        // type: "post",
-                        dataType: 'json',
-                        delay: 200,
-                        // data: function(params) {
-                        //     return {
-                        //         searchTerm: params.term // search term
-                        //     };
-                        // },
-                        processResults: function(response) {
-                            return {
-                                results: $.map(response, function(item) {
-                                    return {
-                                        id: item.id,
-                                        text: item.nama.toUpperCase(),
-                                    }
-                                })
-                            };
-                        },
-                        cache: true
-                    },
-                });
                 $(".elementprm").select2({
                     language: "id",
+                    width: '150px',
                     placeholder: "Pilih Pemesan",
                     ajax: {
                         url: "/getMasterPemesan",
-                        // type: "post",
                         dataType: 'json',
                         delay: 200,
-                        // data: function(params) {
-                        //     return {
-                        //         searchTerm: params.term // search term
-                        //     };
-                        // },
                         processResults: function(response) {
                             return {
                                 results: $.map(response, function(item) {
@@ -621,18 +581,12 @@
                 });
                 $(".elementmsn").select2({
                     language: "id",
-                    width: '250px',
+                    width: '100%',
                     placeholder: "Pilih Mesin",
                     ajax: {
-                        url: "/getMesin",
-                        // type: "post",
+                        url: "/getDataMesinServis",
                         dataType: 'json',
                         delay: 200,
-                        // data: function(params) {
-                        //     return {
-                        //         searchTerm: params.term // search term
-                        //     };
-                        // },
                         processResults: function(response) {
                             console.log(response);
                             return {
@@ -697,12 +651,13 @@
                     cache: true
                 },
             });
+            // select2 input mesin filter list servis
             $(".elementmsn").select2({
                 language: "id",
-                width: '250px',
+                width: '250px%',
                 placeholder: "Pilih Mesin",
                 ajax: {
-                    url: "/getMesin",
+                    url: "/getDataMesinServis",
                     dataType: 'json',
                     delay: 200,
                     processResults: function(response) {
@@ -800,14 +755,14 @@
                     },
                     {
                         title: 'Kodeseri',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
+                        data: 'kodeseri_servis',
+                        name: 'kodeseri_servis',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
                         title: 'Noform',
-                        data: 'noform',
-                        name: 'noform',
+                        data: 'noformservis',
+                        name: 'noformservis',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
@@ -829,46 +784,22 @@
                         className: "cuspad0 cuspad1"
                     },
                     {
-                        title: 'Katalog',
-                        data: 'katalog',
-                        name: 'katalog',
+                        title: 'Serial Number',
+                        data: 'serialnumber',
+                        name: 'serialnumber',
                         className: "cuspad0 cuspad1"
                     },
                     {
-                        title: 'Part',
-                        data: 'part',
-                        name: 'part',
-                        className: "cuspad0 cuspad1"
-                    },
-                    {
-                        title: 'Mesin',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center"
-                    },
-                    {
-                        title: 'Qty PO',
+                        title: 'Qty',
                         data: 'qty',
                         name: 'qty',
                         className: "cuspad0 cuspad1 text-center"
-                    },
-                    {
-                        title: 'Qty Acc',
-                        data: 'qtyacc',
-                        name: 'qtyacc',
-                        className: "cuspad0 text-center"
                     },
                     {
                         title: 'Satuan',
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 text-center"
-                    },
-                    {
-                        title: 'Dibeli',
-                        data: 'dibeli',
-                        name: 'dibeli',
-                        className: "cuspad0 cuspad1 text-center"
                     },
                     {
                         title: 'Status',
@@ -950,6 +881,8 @@
                                     title: response.msg,
                                 });
                                 document.getElementById("formServis").reset();
+                                $('#btntabs-profile-8').addClass('active show');
+                                $('#btntabs-home-8').removeClass('active show');
                                 $('#tabs-profile-8').addClass('active show');
                                 $('#tabs-home-8').removeClass('active show');
                             },
@@ -983,20 +916,20 @@
             Start Render Ajax Modal
             --------------------------------------------
             --------------------------------------------*/
-            $('#modalDetailPermintaan').on('show.bs.modal', function(e) {
+            $('#modalDetailServis').on('show.bs.modal', function(e) {
                 var button = $(e.relatedTarget)
                 var noform = button.data('noform');
                 console.log("Fetch Noform: " + noform + "...");
                 $(".overlay").fadeIn(300);
                 $.ajax({
                     type: 'POST',
-                    url: 'viewPermintaan',
+                    url: 'viewServis',
                     data: {
                         "_token": "{{ csrf_token() }}",
                         noform: noform,
                     },
                     success: function(data) {
-                        $('.fetched-data-permintaan').html(data);
+                        $('.fetched-data-servis').html(data);
                     }
                 }).done(function() {
                     setTimeout(function() {
