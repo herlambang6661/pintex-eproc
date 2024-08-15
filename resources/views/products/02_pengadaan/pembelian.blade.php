@@ -271,11 +271,14 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="date" id="idfilter_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
+                                                                    class="form-control "
+                                                                    value="{{ date('Y-m-d', strtotime(date('Y-m-01') . '-1 month')) }}"
+                                                                    onchange="synServis()">
                                                             </td>
                                                             <td>
                                                                 <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
+                                                                    class="form-control " value="{{ date('Y-m-d') }}"
+                                                                    onchange="synServis()">
                                                             </td>
                                                             <td>
                                                                 <a href="#" class="btn btn-primary btn-icon"
@@ -712,7 +715,7 @@
                     "className": 'btn btn-success',
                     "text": '<i class="fa-solid fa-file-circle-check"></i> Lanjut Proses Pembayaran',
                     "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
+                        $('#modalServis').modal('show')
                     }
                 }],
                 "language": {
@@ -729,76 +732,117 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk proses bayar Servis",
+                        }
+                    },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "type": "POST",
+                    "url": "{{ route('getBayarServis.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
                     }
                 },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": true,
+                    'className': 'select-checkbox',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                select: {
+                    'style': 'multi',
+                    // "selector": 'td:not(:nth-child(2))',
+                },
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2 cursor-pointer',
+                        orderable: true,
+                        searchable: false
                     },
                     {
                         title: 'TGL PERMINTAAN',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'KODESERI',
+                        title: 'Kodeseri',
+                        data: 'kodeseri_servis',
+                        name: 'kodeseri_servis',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Barang',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable cursor-pointer"
+                        className: "cuspad0 clickable cursor-pointer"
                     },
                     {
-                        title: 'NOFORM',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
-                    },
-                    {
-                        title: 'BARANG',
+                        title: 'Deskripsi',
                         data: 'keterangan',
                         name: 'keterangan',
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'DESKRIPSI',
+                        title: 'Serial Number',
+                        data: 'serialnumber',
+                        name: 'serialnumber',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Qty',
                         data: 'qty',
                         name: 'qty',
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'QTY MINTA',
+                        title: 'Qty Kirim',
+                        data: 'qtykirim',
+                        name: 'qtykirim',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Satuan',
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'SATUAN',
+                        title: 'Surat Jalan',
+                        data: 'suratjalan',
+                        name: 'suratjalan',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Pemesan',
                         data: 'pemesan',
                         name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
-                    },
-                    {
-                        title: 'PEMESAN',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
-                    },
-                    {
-                        title: 'UNIT/MESIN',
-                        data: 'unit',
-                        name: 'unit',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                 ],

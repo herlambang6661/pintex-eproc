@@ -162,6 +162,7 @@ Route::controller(EmailController::class)->group(function () {
 Route::controller(PembelianController::class)->group(function () {
     Route::get('pengadaan/pembelian', 'pembelian');
     Route::post('getPembelian', 'getDataPembelian')->name('getPembelian.index');
+    Route::post('getBayarServis', 'getDataServis')->name('getBayarServis.index');
     Route::post('getService', 'getDataService')->name('getService.index');
     Route::post('checkPembelian', 'checkPembelian');
     Route::post('storedataPembelian', 'storePembelian')->name('storedataPembelian');

@@ -38,7 +38,7 @@ return new class extends Migration
             $table->date('tglacc')->nullable();
             $table->string('acc_servis')->nullable();
             $table->string('statusACC')->nullable();
-            $table->string('ket_acc')->nullable();
+            $table->string('keteranganACC')->nullable();
             $table->date('tgl_pengiriman')->nullable();
             $table->date('tgl_diterima')->nullable();
             $table->integer('qty_terima')->nullable();

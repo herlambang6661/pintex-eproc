@@ -70,14 +70,14 @@
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <ul class="nav">
-                                    <a href="#tabs-profile-8" class="active btn btn-outline-danger d-none d-sm-inline-block"
-                                        data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
-                                        style="margin-right: 10px">
+                                    <button type="button" id="selectValue-PERMINTAAN" disabled
+                                        onclick="changeSelectedValue('PERMINTAAN')"
+                                        class="btn btn-outline-warning d-none d-sm-inline-block" style="margin-right: 10px">
                                         <i class="fa-solid fa-list-ul"></i>
                                         Permintaan
-                                    </a>
-                                    <a href="#tabs-home-8" class="btn btn-outline-danger d-none d-sm-inline-block"
-                                        data-bs-toggle="tab" aria-selected="true" role="tab">
+                                    </button>
+                                    <button type="button" id="selectValue-SERVIS" onclick="changeSelectedValue('SERVIS')"
+                                        class="btn btn-outline-warning d-none d-sm-inline-block">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
@@ -87,22 +87,29 @@
                                                 d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
                                         </svg>
                                         Servis
-                                    </a>
+                                    </button>
                                 </ul>
                                 <ul class="nav">
                                     <a href="#tabs-profile-8"
-                                        class="nav-link btn btn-primary d-sm-none btn-icon border border-primary"
-                                        data-bs-toggle="tab" aria-selected="true" role="tab"
-                                        aria-label="List Item Permintaan" style="margin-right: 10px">
+                                        class="active btn btn-icon btn-outline-danger d-sm-none d-sm-inline-block"
+                                        data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
+                                        style="margin-right: 10px;">
                                         <i class="fa-solid fa-list-ul"></i>
                                     </a>
                                     <a href="#tabs-home-8"
-                                        class="nav-link btn btn-warning d-sm-none btn-icon border border-warning"
-                                        data-bs-toggle="tab" aria-selected="true" role="tab"
-                                        aria-label="Tambah Permintaan">
-                                        <i class="fa-solid fa-hand-holding-medical"></i>
+                                        class="btn btn-icon btn-outline-danger d-sm-none d-sm-inline-block"
+                                        data-bs-toggle="tab" aria-selected="true" role="tab">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+                                        </svg>
                                     </a>
                                 </ul>
+                                <input type="hidden" id="selectedValue" value="PERMINTAAN">
                             </div>
                         </div>
                     </div>
@@ -239,7 +246,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <table style="width:100%; height: 100%;font-size:13px;"
+                                                <table
+                                                    style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
                                                     class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-qty-persetujuan">
                                                 </table>
                                             </div>
@@ -293,7 +301,8 @@
                                                 </table>
                                             </div>
                                             {{-- <div class="table-responsive"> --}}
-                                            <table style="width:100%; height: 100%;font-size:13px;"
+                                            <table
+                                                style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
                                                 class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
                                             </table>
                                             {{-- </div> --}}
@@ -342,7 +351,8 @@
                                                 </table>
                                             </div>
                                             <div class="table-responsive">
-                                                <table style="width:100%; height: 100%;font-size:13px;"
+                                                <table
+                                                    style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
                                                     class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-hold">
                                                 </table>
                                             </div>
@@ -632,12 +642,13 @@
 
             dt.ajax.reload();
         }
-
+        var tablePermintaanQty, tablePermintaanAcc, tablePermintaanRjt, tablePermintaanHld;
         $(document).ready(function() {
+            $('html').addClass('cursor-wait');
             var selected = new Array();
             // TABLE ---------------------------------------------------------//
             //---------------QTY PERSETUJUAN----------------------------------//
-            var tablePermintaanQty = $('.datatable-qty-persetujuan').DataTable({
+            tablePermintaanQty = $('.datatable-qty-persetujuan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -671,7 +682,7 @@
                     },
                     {
                         className: 'btn btn-blue',
-                        text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg> Proses Acc Qty Permintaan',
+                        text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg> Proses Acc Qty',
                         action: function(e, node, config) {
                             $('#modalChecklistQty').modal('show')
                         }
@@ -706,6 +717,7 @@
                         data.tipe = 'qtyacc';
                         data.dari = $('#fqtydari').val();
                         data.sampai = $('#fqtysampai').val();
+                        data.selected = $('#selectedValue').val();
 
                         // data.dari = $('#idfilter_dari').val();
                         // data.sampai = $('#idfilter_sampai').val();
@@ -713,6 +725,9 @@
                         // data.unit = $('#unit').val();
                         // data.status = $('#status').val();
                     }
+                },
+                "initComplete": function(settings, json) {
+                    $('html').removeClass('cursor-wait');
                 },
                 columnDefs: [{
                     'targets': 0,
@@ -786,7 +801,7 @@
             });
 
             //---------------PERSETUJUAN-------------------------------------//
-            var tablePermintaanAcc = $('.datatable-persetujuan').DataTable({
+            tablePermintaanAcc = $('.datatable-persetujuan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -834,6 +849,7 @@
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.tipe = 'persetujuan';
+                        data.selected = $('#selectedValue').val();
                     }
                 },
                 columnDefs: [{
@@ -859,6 +875,12 @@
                         title: 'TGL PERMINTAAN',
                         data: 'tgl',
                         name: 'tgl',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'KODESERI',
+                        data: 'kodeseri',
+                        name: 'kodeseri',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
@@ -892,13 +914,7 @@
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'DESKRIPSI',
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
-                    },
-                    {
-                        title: 'QTY MINTA',
+                        title: 'QTY',
                         data: 'qty',
                         name: 'qty',
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
@@ -915,17 +931,11 @@
                         name: 'pemesan',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
-                    {
-                        title: 'UNIT/MESIN',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
-                    },
                 ]
             });
 
             //---------------REJECT-----------------------------------------//
-            var tablePermintaanRjt = $('.datatable-reject').DataTable({
+            tablePermintaanRjt = $('.datatable-reject').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -975,6 +985,7 @@
                         data.tipe = 'reject';
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
+                        data.selected = $('#selectedValue').val();
                     }
                 },
                 columnDefs: [{
@@ -1003,6 +1014,12 @@
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
+                        title: 'KODESERI',
+                        data: 'kodeseri',
+                        name: 'kodeseri',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
@@ -1027,18 +1044,6 @@
                         className: "cuspad0 clickable cursor-pointer"
                     },
                     {
-                        title: 'MESIN',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
-                    },
-                    {
-                        title: 'DESKRIPSI',
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
-                    },
-                    {
                         title: 'QTY MINTA',
                         data: 'qty',
                         name: 'qty',
@@ -1057,16 +1062,16 @@
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'UNIT/MESIN',
-                        data: 'unit',
-                        name: 'unit',
+                        title: 'Ket. ACC',
+                        data: 'keteranganACC',
+                        name: 'keteranganACC',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                 ]
             });
 
             //---------------HOLD------------------------------------------//
-            var tablePermintaanHld = $('.datatable-hold').DataTable({
+            tablePermintaanHld = $('.datatable-hold').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -1116,6 +1121,7 @@
                         data.tipe = 'hold';
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
+                        data.selected = $('#selectedValue').val();
                     }
                 },
                 columnDefs: [{
@@ -1144,6 +1150,12 @@
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
+                        title: 'KODESERI',
+                        data: 'kodeseri',
+                        name: 'kodeseri',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
@@ -1166,12 +1178,6 @@
                         data: 'part',
                         name: 'part',
                         className: "cuspad0 clickable cursor-pointer"
-                    },
-                    {
-                        title: 'MESIN',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'DESKRIPSI',
@@ -1198,9 +1204,9 @@
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'UNIT/MESIN',
-                        data: 'unit',
-                        name: 'unit',
+                        title: 'Ket. ACC',
+                        data: 'keteranganACC',
+                        name: 'keteranganACC',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                 ]
@@ -1296,7 +1302,6 @@
                     }
                 })
             }
-
             if ($("#formACCPermintaan").length > 0) {
                 $("#formACCPermintaan").validate({
                     submitHandler: function(form) {
@@ -1520,7 +1525,7 @@
 
                 $.each(tablePermintaanQty.rows('.selected').nodes(), function(index, rowId) {
                     var rows_selected = tablePermintaanQty.rows('.selected').data();
-                    itemTables.push(rows_selected[index]['id']);
+                    itemTables.push(rows_selected[index]['kodeseri']);
                 });
                 console.log(itemTables);
 
@@ -1557,7 +1562,7 @@
 
                 $.each(tablePermintaanAcc.rows('.selected').nodes(), function(index, rowId) {
                     var rows_selected = tablePermintaanAcc.rows('.selected').data();
-                    itemTables.push(rows_selected[index]['id']);
+                    itemTables.push(rows_selected[index]['kodeseri']);
                 });
                 console.log(itemTables);
 
@@ -1594,7 +1599,7 @@
 
                 $.each(tablePermintaanRjt.rows('.selected').nodes(), function(index, rowId) {
                     var rows_selected = tablePermintaanRjt.rows('.selected').data();
-                    itemTables.push(rows_selected[index]['id']);
+                    itemTables.push(rows_selected[index]['kodeseri']);
                 });
                 console.log(itemTables);
 
@@ -1631,7 +1636,7 @@
 
                 $.each(tablePermintaanHld.rows('.selected').nodes(), function(index, rowId) {
                     var rows_selected = tablePermintaanHld.rows('.selected').data();
-                    itemTables.push(rows_selected[index]['id']);
+                    itemTables.push(rows_selected[index]['kodeseri']);
                 });
                 console.log(itemTables);
 
@@ -1662,5 +1667,33 @@
             });
             // MODAL ---------------------------------------------------------//
         });
+
+        function changeSelectedValue(params) {
+            if (params == "PERMINTAAN") {
+                $("#selectValue-PERMINTAAN").attr("disabled", true);
+                $("#selectValue-SERVIS").attr("disabled", false);
+                $('#selectedValue').val('PERMINTAAN');
+                $('html').addClass('cursor-wait');
+                tablePermintaanQty.ajax.reload();
+                tablePermintaanAcc.ajax.reload();
+                tablePermintaanRjt.ajax.reload();
+                tablePermintaanHld.ajax.reload();
+                setTimeout(function() {
+                    $('html').removeClass('cursor-wait')
+                }, 2000);
+            } else {
+                $("#selectValue-PERMINTAAN").attr("disabled", false);
+                $("#selectValue-SERVIS").attr("disabled", true);
+                $('#selectedValue').val('SERVIS');
+                $('html').addClass('cursor-wait');
+                tablePermintaanQty.ajax.reload();
+                tablePermintaanAcc.ajax.reload();
+                tablePermintaanRjt.ajax.reload();
+                tablePermintaanHld.ajax.reload();
+                setTimeout(function() {
+                    $('html').removeClass('cursor-wait')
+                }, 2000);
+            }
+        }
     </script>
 @endsection

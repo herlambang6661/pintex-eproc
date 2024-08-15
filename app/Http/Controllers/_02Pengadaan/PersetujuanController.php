@@ -34,76 +34,77 @@ class PersetujuanController extends Controller
     public function getACCPermintaan(Request $request)
     {
         if ($request->ajax()) {
-            if ($request->tipe == 'qtyacc') {
-                if ($request->dari) {
-                    $dari = $request->dari;
-                } else {
-                    $dari = date('Y-m-01');
-                }
-                if ($request->sampai) {
-                    $sampai = $request->sampai;
-                } else {
-                    $sampai = date('Y-m-28');
-                }
-                $status = "PROSES PERSETUJUAN";
-            } elseif ($request->tipe == 'persetujuan') {
-                $dari = date('2021-m-d');
-                $sampai = date('Y-m-d');
-                $status = "MENUNGGU ACC";
-            } elseif ($request->tipe == 'reject') {
-                $dari = date('2021-m-d');
-                $sampai = date('Y-m-d');
-                $status = "REJECT";
-            } elseif ($request->tipe == 'hold') {
-                $dari = date('2021-m-d');
-                $sampai = date('Y-m-d');
-                $status = "HOLD";
-            }
-
-            $data = DB::table('permintaanitm AS pe')
-                ->whereBetween('pe.tgl', [$dari, $sampai])
-                ->where('pe.status', 'like', $status)
-                ->orderBy('pe.kodeseri', 'desc')
-                ->get();
-
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('tgl', function ($row) {
-                    $m = Carbon::parse($row->tgl)->format('d/m/Y');
-                    return $m;
-                })
-                ->addColumn('action', function ($row) {
-                    $m = Carbon::parse($row->tgl)->format('d/m/Y');
-                    return $m;
-                })
-                ->addColumn('mesin', function ($row) {
-                    $permintaanController = new PermintaanController();
-                    $m = $permintaanController->getMesinPermintaan($row->mesin);
-                    return $m;
-                })
-                ->addColumn('status', function ($row) {
-                    if ($row->status == 'PROSES PERSETUJUAN') {
-                        $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
-                    } elseif ($row->status == 'ACC') {
-                        $c = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span> <b class="text-purple">' . $row->status . '</b>';
-                    } elseif ($row->status == 'HOLD') {
-                        $c = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span> <b class="text-orange">' . $row->status . '</b>';
-                    } elseif ($row->status == 'REJECT') {
-                        $c = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span> <b class="text-red">' . $row->status . '</b>';
-                    } elseif ($row->status == 'PROSES PEMBELIAN') {
-                        $c = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span> <b class="text-lime">' . $row->status . '</b>';
-                    } elseif ($row->status == 'DIBELI') {
-                        $c = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span> <b class="text-green">' . $row->status . '</b>';
-                    } elseif ($row->status == 'DITERIMA') {
-                        $c = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span> <b class="text-teal">' . $row->status . '</b>';
+            if ($request->selected == "PERMINTAAN") {
+                if ($request->tipe == 'qtyacc') {
+                    if ($request->dari) {
+                        $dari = $request->dari;
                     } else {
-                        $c = '<span class="status-dot status-dot-animated status-dark"></span> <b class="text-dark">' . $row->status . '</b>';
+                        $dari = date('Y-m-01');
                     }
-                    return $c;
-                })
-                ->editColumn('select_orders', function ($row) {
-                    if ($row->urgent == 1) {
-                        $opsi = '
+                    if ($request->sampai) {
+                        $sampai = $request->sampai;
+                    } else {
+                        $sampai = date('Y-m-28');
+                    }
+                    $status = "PROSES PERSETUJUAN";
+                } elseif ($request->tipe == 'persetujuan') {
+                    $dari = date('2021-m-d');
+                    $sampai = date('Y-m-d');
+                    $status = "MENUNGGU ACC";
+                } elseif ($request->tipe == 'reject') {
+                    $dari = date('2021-m-d');
+                    $sampai = date('Y-m-d');
+                    $status = "REJECT";
+                } elseif ($request->tipe == 'hold') {
+                    $dari = date('2021-m-d');
+                    $sampai = date('Y-m-d');
+                    $status = "HOLD";
+                }
+
+                $data = DB::table('permintaanitm AS pe')
+                    ->whereBetween('pe.tgl', [$dari, $sampai])
+                    ->where('pe.status', 'like', $status)
+                    ->orderBy('pe.kodeseri', 'desc')
+                    ->get();
+
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('tgl', function ($row) {
+                        $m = Carbon::parse($row->tgl)->format('d/m/Y');
+                        return $m;
+                    })
+                    ->addColumn('action', function ($row) {
+                        $m = Carbon::parse($row->tgl)->format('d/m/Y');
+                        return $m;
+                    })
+                    ->addColumn('mesin', function ($row) {
+                        $permintaanController = new PermintaanController();
+                        $m = $permintaanController->getMesinPermintaan($row->mesin);
+                        return $m;
+                    })
+                    ->addColumn('status', function ($row) {
+                        if ($row->status == 'PROSES PERSETUJUAN') {
+                            $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
+                        } elseif ($row->status == 'ACC') {
+                            $c = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span> <b class="text-purple">' . $row->status . '</b>';
+                        } elseif ($row->status == 'HOLD') {
+                            $c = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span> <b class="text-orange">' . $row->status . '</b>';
+                        } elseif ($row->status == 'REJECT') {
+                            $c = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span> <b class="text-red">' . $row->status . '</b>';
+                        } elseif ($row->status == 'PROSES PEMBELIAN') {
+                            $c = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span> <b class="text-lime">' . $row->status . '</b>';
+                        } elseif ($row->status == 'DIBELI') {
+                            $c = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span> <b class="text-green">' . $row->status . '</b>';
+                        } elseif ($row->status == 'DITERIMA') {
+                            $c = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span> <b class="text-teal">' . $row->status . '</b>';
+                        } else {
+                            $c = '<span class="status-dot status-dot-animated status-dark"></span> <b class="text-dark">' . $row->status . '</b>';
+                        }
+                        return $c;
+                    })
+                    ->editColumn('select_orders', function ($row) {
+                        if ($row->urgent == 1) {
+                            $opsi = '
                             <div data-bs-toggle="tooltip" data-bs-placement="top" title="Urgent">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-filled icon-tada text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -114,13 +115,109 @@ class PersetujuanController extends Controller
                                 </svg>
                             </div>
                         ';
+                        } else {
+                            $opsi = '';
+                        }
+                        return $opsi;
+                    })
+                    ->rawColumns(['select_orders', 'status', 'tgl'])
+                    ->make(true);
+            } elseif ($request->selected == "SERVIS") {
+                if ($request->tipe == 'qtyacc') {
+                    if ($request->dari) {
+                        $dari = $request->dari;
                     } else {
-                        $opsi = '';
+                        $dari = date('Y-m-01');
                     }
-                    return $opsi;
-                })
-                ->rawColumns(['select_orders', 'status', 'tgl'])
-                ->make(true);
+                    if ($request->sampai) {
+                        $sampai = $request->sampai;
+                    } else {
+                        $sampai = date('Y-m-28');
+                    }
+                    $status = "PROSES PERSETUJUAN";
+                } elseif ($request->tipe == 'persetujuan') {
+                    $dari = date('2021-m-d');
+                    $sampai = date('Y-m-d');
+                    $status = "MENUNGGU ACC";
+                } elseif ($request->tipe == 'reject') {
+                    $dari = date('2021-m-d');
+                    $sampai = date('Y-m-d');
+                    $status = "REJECT";
+                } elseif ($request->tipe == 'hold') {
+                    $dari = date('2021-m-d');
+                    $sampai = date('Y-m-d');
+                    $status = "HOLD";
+                }
+
+                $data = DB::table('servisitm AS pe')
+                    ->whereBetween('pe.tgl_servis', [$dari, $sampai])
+                    ->where('pe.status', 'like', $status)
+                    ->orderBy('pe.kodeseri_servis', 'desc')
+                    ->get();
+
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('tgl', function ($row) {
+                        $m = Carbon::parse($row->tgl_servis)->format('d/m/Y');
+                        return $m;
+                    })
+                    ->addColumn('kodeseri', function ($row) {
+                        $kodeseri = $row->kodeseri_servis;
+                        return $kodeseri;
+                    })
+                    ->addColumn('noform', function ($row) {
+                        $noform = $row->noformservis;
+                        return $noform;
+                    })
+                    ->addColumn('mesin', function ($row) {
+                        $getMesin = DB::table('mastermesinitm AS mi')->select(
+                            'me.mesin',
+                            'mi.merk'
+                        )->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $row->mesin)->first();
+                        $m = $getMesin->mesin . ' ' . $getMesin->merk;
+                        return $m;
+                    })
+                    ->addColumn('status', function ($row) {
+                        if ($row->status == 'PROSES PERSETUJUAN') {
+                            $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
+                        } elseif ($row->status == 'ACC') {
+                            $c = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span> <b class="text-purple">' . $row->status . '</b>';
+                        } elseif ($row->status == 'HOLD') {
+                            $c = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span> <b class="text-orange">' . $row->status . '</b>';
+                        } elseif ($row->status == 'REJECT') {
+                            $c = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span> <b class="text-red">' . $row->status . '</b>';
+                        } elseif ($row->status == 'PROSES PEMBELIAN') {
+                            $c = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span> <b class="text-lime">' . $row->status . '</b>';
+                        } elseif ($row->status == 'DIBELI') {
+                            $c = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span> <b class="text-green">' . $row->status . '</b>';
+                        } elseif ($row->status == 'DITERIMA') {
+                            $c = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span> <b class="text-teal">' . $row->status . '</b>';
+                        } else {
+                            $c = '<span class="status-dot status-dot-animated status-dark"></span> <b class="text-dark">' . $row->status . '</b>';
+                        }
+                        return $c;
+                    })
+                    ->editColumn('select_orders', function ($row) {
+                        if ($row->urgent == 1) {
+                            $opsi = '
+                            <div data-bs-toggle="tooltip" data-bs-placement="top" title="Urgent">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-filled icon-tada text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M17.451 2.344a1 1 0 0 1 1.41 -.099a12.05 12.05 0 0 1 3.048 4.064a1 1 0 1 1 -1.818 .836a10.05 10.05 0 0 0 -2.54 -3.39a1 1 0 0 1 -.1 -1.41z" stroke-width="0" fill="currentColor"></path>
+                                    <path d="M5.136 2.245a1 1 0 0 1 1.312 1.51a10.05 10.05 0 0 0 -2.54 3.39a1 1 0 1 1 -1.817 -.835a12.05 12.05 0 0 1 3.045 -4.065z" stroke-width="0" fill="currentColor"></path>
+                                    <path d="M14.235 19c.865 0 1.322 1.024 .745 1.668a3.992 3.992 0 0 1 -2.98 1.332a3.992 3.992 0 0 1 -2.98 -1.332c-.552 -.616 -.158 -1.579 .634 -1.661l.11 -.006h4.471z" stroke-width="0" fill="currentColor"></path>
+                                    <path d="M12 2c1.358 0 2.506 .903 2.875 2.141l.046 .171l.008 .043a8.013 8.013 0 0 1 4.024 6.069l.028 .287l.019 .289v2.931l.021 .136a3 3 0 0 0 1.143 1.847l.167 .117l.162 .099c.86 .487 .56 1.766 -.377 1.864l-.116 .006h-16c-1.028 0 -1.387 -1.364 -.493 -1.87a3 3 0 0 0 1.472 -2.063l.021 -.143l.001 -2.97a8 8 0 0 1 3.821 -6.454l.248 -.146l.01 -.043a3.003 3.003 0 0 1 2.562 -2.29l.182 -.017l.176 -.004z" stroke-width="0" fill="currentColor"></path>
+                                </svg>
+                            </div>
+                        ';
+                        } else {
+                            $opsi = '';
+                        }
+                        return $opsi;
+                    })
+                    ->rawColumns(['select_orders', 'status', 'tgl'])
+                    ->make(true);
+            }
         }
 
         return view('products.02_pengadaan.persetujuan');
@@ -168,7 +265,6 @@ class PersetujuanController extends Controller
                                 beforeSend: function() {
                                     $(".open-"+id).hide();
                                     $(".close-"+id).show();
-
                                     $("#tunggu-"+id).show();
                                     $("#hasilcari-"+id).hide();
                                     $("#tunggu-"+id).html(
@@ -191,7 +287,16 @@ class PersetujuanController extends Controller
                     </script>
                 ';
             for ($i = 0; $i < $jml; $i++) {
-                $data = DB::table('permintaanitm')->where('id', $request->id[$i])->get();
+                if (substr($request->id[$i], 0, 1) == "S") {
+                    $data = DB::table('servisitm')
+                        ->select('id', 'kodeseri_servis as kodeseri', 'namaBarang', 'qty', 'satuan', 'keterangan', 'katalog', 'serialnumber as part', 'pemesan', 'urgent', 'mesin')
+                        ->where('kodeseri_servis', $request->id[$i])
+                        ->get();
+                    $tipe = "servis";
+                } else {
+                    $data = DB::table('permintaanitm')->where('kodeseri', $request->id[$i])->get();
+                    $tipe = "permintaan";
+                }
                 foreach ($data as $u) {
                     echo  '<input type="hidden" name="idpermintaan[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '" >';
@@ -206,6 +311,12 @@ class PersetujuanController extends Controller
                     } else {
                         $urgent = 'border-green';
                         $ribbon = '';
+                    }
+                    if ($tipe == "servis") {
+                        $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $u->mesin)->first();
+                        $mesin = $getMesin->mesin . " " . $getMesin->merk;
+                    } else {
+                        $mesin = $permintaanController->getMesinPermintaan($u->mesin);
                     }
                     echo '
                         <style>
@@ -265,11 +376,11 @@ class PersetujuanController extends Controller
                                                     </div>
                                                     <div class="list-item">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
-                                                        ' . $u->keterangan . '
+                                                        ' . $u->katalog . '
                                                     </div>
                                                     <div class="list-item">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
-                                                        ' . $u->keterangan . '
+                                                        ' . $u->part . '
                                                     </div>
                                                 </div>
                                             </div>
@@ -285,8 +396,8 @@ class PersetujuanController extends Controller
                                     <table class="table table-sm table-card text-center text-blue">
                                         <tr>
                                             <td>Pemesan: ' . $u->pemesan . '</td>
-                                            <td>' . $u->unit . '</td>
-                                            <td>Mesin: ' . $permintaanController->getMesinPermintaan($u->mesin) . '</td>
+                                            <td>' . (empty($u->unit) ? "" : $u->unit) . '</td>
+                                            <td>Mesin: ' . $mesin . '</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -350,8 +461,23 @@ class PersetujuanController extends Controller
                     </script>
                 ';
             for ($i = 0; $i < $jml; $i++) {
-                $data = DB::table('permintaanitm')->where('id', $request->id[$i])->get();
+                if (substr($request->id[$i], 0, 1) == "S") {
+                    $data = DB::table('servisitm')
+                        ->select('id', 'kodeseri_servis as kodeseri', 'qtykirim as qtyacc', 'namaBarang', 'qty', 'satuan', 'keterangan', 'katalog', 'serialnumber as part', 'pemesan', 'urgent', 'mesin')
+                        ->where('kodeseri_servis', $request->id[$i])
+                        ->get();
+                    $tipe = "servis";
+                } else {
+                    $data = DB::table('permintaanitm')->where('kodeseri', $request->id[$i])->get();
+                    $tipe = "permintaan";
+                }
                 foreach ($data as $u) {
+                    if ($tipe == "servis") {
+                        $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $u->mesin)->first();
+                        $mesin = $getMesin->mesin . " " . $getMesin->merk;
+                    } else {
+                        $mesin = $permintaanController->getMesinPermintaan($u->mesin);
+                    }
                     echo  '<input type="hidden" name="idpermintaan[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '" >';
                     echo '
@@ -381,7 +507,7 @@ class PersetujuanController extends Controller
                                     <div class="card-body ps-0">
                                         <div class="row">
                                             <div class="col">
-                                                <h3 class="mb-0">' . $u->namaBarang . '</h3>
+                                                <h3 class="mb-0">' . strtoupper($u->namaBarang) . '</h3>
                                             </div>
                                             <div class="col-sm-4">
                                                 <h3 class="mb-0">Qty : ' . $u->qtyacc . ' ' . $u->satuan . '</h3>
@@ -438,8 +564,8 @@ class PersetujuanController extends Controller
                                     <table class="table table-sm table-card text-blue">
                                         <tr class="text-center">
                                             <td>Pemesan: ' . $u->pemesan . '</td>
-                                            <td>' . $u->unit . '</td>
-                                            <td>Mesin: ' . $permintaanController->getMesinPermintaan($u->mesin) . '</td>
+                                            <td>' . (!empty($u->unit) ? $u->unit : '') . '</td>
+                                            <td>Mesin: ' . $mesin . '</td>
                                         </tr>
                                         <tr>
                                             <td colspan="3">
