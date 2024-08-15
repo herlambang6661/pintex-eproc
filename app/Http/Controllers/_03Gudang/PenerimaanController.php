@@ -317,7 +317,7 @@ class PenerimaanController extends Controller
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('barang')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
-                    $qrCodes = QrCode::size(70)->format('png')->generate($u->kodeseri);
+                    $qrCodes = QrCode::size(70)->generate($u->kodeseri);
                     echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
                     echo  '<input type="hidden" name="partial[]" id="partial-' . $u->id . '" value="0">';

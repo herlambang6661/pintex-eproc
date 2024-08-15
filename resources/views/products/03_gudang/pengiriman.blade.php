@@ -226,7 +226,8 @@
                                                 </table>
                                             </div>
                                             <div class="table-responsive">
-                                                <table style="width:100%; height: 100%;font-size:13px;"
+                                                <table
+                                                    style="width:100%; height: 100%;font-size:13px;text-transform: uppercase"
                                                     class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-pengiriman">
                                                 </table>
                                             </div>
@@ -241,6 +242,75 @@
             @include('shared.footer')
         </div>
     </div>
+    {{-- Modal Start --}}
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px #ddd solid;
+            border-top: 4px #2e93e6 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+
+        @keyframes sp-anime {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .is-hide {
+            display: none;
+        }
+    </style>
+    <div class="modal modal-blur fade" id="modalPengiriman" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="formPengiriman" name="formPengiriman" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-truck-fast" style="margin-right: 5px"></i>
+                            Proses Pengiriman
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-pengiriman"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Modal End --}}
 
     <script type="text/javascript">
         function newexportaction(e, dt, button, config) {
@@ -270,9 +340,10 @@
 
             dt.ajax.reload();
         }
-
-        $(document).ready(function() {
-            var tableListPengiriman = $('.datatable-list-pengiriman').DataTable({
+        var tableListPengiriman, tablePengiriman;
+        $(function() {
+            //----------------------------------------------LIST PENERIMAAN----------------------------------------------//
+            tableListPengiriman = $('.datatable-list-pengiriman').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -320,19 +391,19 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "#",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('getListPengiriman.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#listpermintaan_dari').val();
+                        data.sampai = $('#listpermintaan_sampai').val();
+                    }
+                },
                 "columns": [{
                         title: '',
                         data: 'action',
                         name: 'action',
-                        className: "cuspad0 cuspad1",
+                        className: "cuspad0 cuspad1 text-center",
                     },
                     {
                         title: 'TANGGAL',
@@ -342,72 +413,69 @@
                     },
                     {
                         title: 'NOFORM',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
+                        data: 'noformpengiriman_itm',
+                        name: 'noformpengiriman_itm',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
+                        title: 'SURAT JALAN',
+                        data: 'suratjalan',
+                        name: 'suratjalan',
+                        className: "cuspad0 cuspad1 clickable text-center"
+                    },
+                    {
                         title: 'KODESERI',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'kodeseri',
+                        name: 'kodeseri',
+                        className: "cuspad0 cuspad1 clickable text-center"
                     },
                     {
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
-                    },
-                    {
-                        title: 'KATALOG',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'PART',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'MESIN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 clickable text-uppercase"
                     },
                     {
                         title: 'QTY',
                         data: 'qty',
                         name: 'qty',
+                        className: "cuspad0 cuspad1 clickable text-center"
+                    },
+                    {
+                        title: 'SATUAN',
+                        data: 'satuan',
+                        name: 'satuan',
+                        className: "cuspad0 cuspad1 clickable text-center"
+                    },
+                    {
+                        title: 'KATALOG',
+                        data: 'katalog',
+                        name: 'katalog',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
-                        title: 'SUPPLIER',
-                        data: 'qty',
-                        name: 'qty',
+                        title: 'PART',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'MESIN',
+                        data: 'mesin',
+                        name: 'mesin',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
                         title: 'EXPEDISI',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'SURAT JALAN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'expedisi',
+                        name: 'expedisi',
+                        className: "cuspad0 cuspad1 clickable text-center"
                     },
                 ],
 
             });
-        });
-
-        //----------------------------------------------CHECKLLIS PENERIMAAN-----------------------------------------//
-        $(document).ready(function() {
-            var tablePengiriman = $('.datatable-pengiriman').DataTable({
+            //----------------------------------------------CHECKLLIS PENERIMAAN-----------------------------------------//
+            tablePengiriman = $('.datatable-pengiriman').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -423,9 +491,9 @@
                 ],
                 "buttons": [{
                     "className": 'btn btn-success',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Pengiriman',
+                    "text": '<i class="fa-solid fa-truck-fast"></i> Proses Pengiriman',
                     "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
+                        $('#modalPengiriman').modal('show')
                     }
                 }, ],
                 "language": {
@@ -442,69 +510,210 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
-                },
-                // "ajax": {
-                //     "url": "#",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
-                "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses Pembelian",
                         }
                     },
+                },
+                "ajax": {
+                    "type": "POST",
+                    "url": "{{ route('getPengiriman.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#filterdari_pembelian').val();
+                        data.sampai = $('#filtersampai_pembelian').val();
+                    }
+                },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": true,
+                    'className': 'select-checkbox',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                select: {
+                    'style': 'multi',
+                    // "selector": 'td:not(:nth-child(2))',
+                },
+                "columns": [{
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2 cursor-pointer',
+                        orderable: true,
+                        searchable: false
+                    },
                     {
-                        title: 'TGL',
+                        title: 'TGL PERMINTAAN',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'KODESERI',
+                        title: 'Kodeseri',
                         data: 'kodeseri',
                         name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
-                        title: 'BARANG',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
-                    },
-                    {
-                        title: 'PEMESAN',
+                        title: 'Barang',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        className: "cuspad0 clickable cursor-pointer"
                     },
                     {
-                        title: 'QTY',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Deskripsi',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'SATUAN',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        title: 'Serial Number/Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
-                        title: 'SUPPLIER',
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Qty',
                         data: 'qty',
                         name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer text-center"
+                    },
+                    {
+                        title: 'Satuan',
+                        data: 'satuan',
+                        name: 'satuan',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Pemesan',
+                        data: 'pemesan',
+                        name: 'pemesan',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Status',
+                        data: 'status',
+                        name: 'status',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                 ],
 
             });
+
+            if ($("#formPengiriman").length > 0) {
+                $("#formPengiriman").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitCheck').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitCheck").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storePenerimaan') }}",
+                            type: "POST",
+                            data: $('#formPengiriman').serialize(),
+                            beforeSend: function() {
+                                console.log($('#formPengiriman').serialize());
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                                tableListPengiriman.ajax.reload();
+                                tablePengiriman.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalPengiriman').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tableListPengiriman.ajax.reload();
+                                tablePengiriman.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+
+            // MODAL ---------------------------------------------------------//
+            $('#modalPengiriman').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                $.each(tablePengiriman.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tablePengiriman.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['kodeseri']);
+                });
+                console.log("Selected Items: " + itemTables);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkPengiriman') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-pengiriman').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            // MODAL ---------------------------------------------------------//
         });
     </script>
 @endsection

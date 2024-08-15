@@ -28,6 +28,7 @@ use App\Http\Controllers\_01Master\MasterBarangController;
 use App\Http\Controllers\_02Pengadaan\PembelianController;
 use App\Http\Controllers\_05Laporan\LaporanStokController;
 use App\Http\Controllers\Datatables\Gudang\PenerimaanList;
+use App\Http\Controllers\Datatables\Gudang\PengirimanList;
 use App\Http\Controllers\_02Pengadaan\PermintaanController;
 use App\Http\Controllers\_03Gudang\BarangTransitController;
 use App\Http\Controllers\Datatables\Teknik\PengambilanList;
@@ -59,6 +60,7 @@ Route::resource('getPengambilan', PengambilanList::class);
 Route::resource('getPembelianList', PembelianList::class);
 Route::resource('tbPenerimaan', PenerimaanList::class);
 Route::resource('getServis', ServisList::class);
+Route::resource('getListPengiriman', PengirimanList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -190,6 +192,9 @@ Route::controller(PenerimaanController::class)->group(function () {
 
 Route::controller(PengirimanController::class)->group(function () {
     Route::get('gudang/pengiriman', 'pengiriman');
+    Route::post('getPengiriman', 'getDataPengiriman')->name('getPengiriman.index');
+    Route::post('checkPengiriman', 'checkPengiriman');
+    Route::post('storePengiriman', 'storePengirimanBarang')->name('storePengiriman');
 });
 
 Route::controller(SampleController::class)->group(function () {
