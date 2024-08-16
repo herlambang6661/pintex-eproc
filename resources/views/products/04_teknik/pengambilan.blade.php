@@ -57,13 +57,35 @@
                                         class="active btn btn-white d-none d-sm-inline-block border border-primary"
                                         data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"
                                         style="margin-right: 10px">
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-rotate-3d"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a7 7 0 0 1 7 7v4l-3 -3" /><path d="M22 11l-3 3" /><path d="M8 15.5l-5 -3l5 -3l5 3v5.5l-5 3z" /><path d="M3 12.5v5.5l5 3" /><path d="M8 15.545l5 -3.03" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-rotate-3d">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3a7 7 0 0 1 7 7v4l-3 -3" />
+                                            <path d="M22 11l-3 3" />
+                                            <path d="M8 15.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+                                            <path d="M3 12.5v5.5l5 3" />
+                                            <path d="M8 15.545l5 -3.03" />
+                                        </svg>
                                         Pengambilan Barang
                                     </a>
                                     <a href="#tabs-home-8"
                                         class="btn btn-white d-none d-sm-inline-block border border-primary"
                                         data-bs-toggle="tab" aria-selected="true" role="tab">
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-checkup-list"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14h.01" /><path d="M9 17h.01" /><path d="M12 16l1 1l3 -3" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-checkup-list">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                            <path
+                                                d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                            <path d="M9 14h.01" />
+                                            <path d="M9 17h.01" />
+                                            <path d="M12 16l1 1l3 -3" />
+                                        </svg>
                                         List Item Pengambilan
                                     </a>
                                 </ul>
@@ -99,14 +121,17 @@
                                             onkeydown="return event.key != 'Enter';" data-select2-id="add-form">
                                             @csrf
                                             <div class="row">
-                                                <div class="control-group col-lg-3">
+                                                <div class="control-group col-lg-2">
                                                     <div class="mb-1">
                                                         <label class="form-label">Kodeseri</label>
-                                                        <input name="text" class="form-control " placeholder="Kodeseri Barang 12*****" value="" id="kodeseri" autofocus/>
-                                                        <small class="text-dark">Masukkan Kodeseri dan tekan Enter</small>
+                                                        <input name="text" class="form-control "
+                                                            placeholder="Kodeseri 12*****" value="" id="kodeseri"
+                                                            autofocus />
+                                                        <small class="text-dark" style="font-size: 9px">Masukkan Kodeseri
+                                                            dan tekan Enter</small>
                                                     </div>
                                                 </div>
-                                                <div class="control-group col-lg-9">
+                                                <div class="control-group col-lg-10">
                                                     <div class="card">
                                                         <div class="card-stamp card-stamp-lg">
                                                             <div class="card-stamp-icon bg-primary text-white">
@@ -131,7 +156,9 @@
                                                         <div class="card-body shadow">
                                                             <div id="tunggu"></div>
                                                             <div class="col">
-                                                                <div id="hasil_cari"></div>
+                                                                <div id="hasil_cari" class="text-center fst-italic">
+                                                                    Masukkan Kodeseri untuk menambahkan
+                                                                    barang</div>
                                                                 <span id="success-msg"></span>
                                                             </div>
                                                         </div>
@@ -139,78 +166,78 @@
                                                 </div>
                                             </div>
                                             <div class="hr-text text-blue">Formulir Pengambilan Barang</div>
-                                                <div class="card">
-                                                    <div class="card-stamp card-stamp-lg">
-                                                        <div class="card-stamp-icon bg-warning text-white">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                class="icon icon-tabler icon-tabler-zoom-replace"
-                                                                width="24" height="24" viewBox="0 0 24 24"
-                                                                stroke-width="1.5" stroke="currentColor" fill="none"
-                                                                stroke-linecap="round" stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M21 21l-6 -6" />
-                                                                <path
-                                                                    d="M3.291 8a7 7 0 0 1 5.077 -4.806a7.021 7.021 0 0 1 8.242 4.403" />
-                                                                <path d="M17 4v4h-4" />
-                                                                <path
-                                                                    d="M16.705 12a7 7 0 0 1 -5.074 4.798a7.021 7.021 0 0 1 -8.241 -4.403" />
-                                                                <path d="M3 16v-4h4" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body shadow">
-                                                        <div class="row" style="max-width: 900px;">
-                                                            <div class="col-lg-4">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Tanggal Formulir</label>
-                                                                    <input name="tgl" type="date" class="form-control" id="tanggal" value="{{ date('Y-m-d') }}" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Diambil Oleh</label>
-                                                                    <input name="text" class="form-control"
-                                                                        placeholder="Diambil Oleh" id="diambil_oleh"
-                                                                        value="" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered">
-                                                                <thead>
-                                                                    <tr class="text-center">
-                                                                        <th>Kodeseri</th>
-                                                                        <th>Barang</th>
-                                                                        <th>Stok</th>
-                                                                        <th>QTY</th>
-                                                                        <th>Mesin</th>
-                                                                        <th>Unit</th>
-                                                                        <th>Keterangan</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <br>
-                                                        <div class="float-xl-right">
-                                                            <button type="submit" id="submitPermintaan"
-                                                                class="btn btn-primary"><i
-                                                                    class="fa-regular fa-floppy-disk"
-                                                                    style="margin-right: 5px"></i>
-                                                                Input</button>
-                                                        </div>
+                                            <div class="card">
+                                                <div class="card-stamp card-stamp-lg">
+                                                    <div class="card-stamp-icon bg-warning text-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="icon icon-tabler icon-tabler-zoom-replace"
+                                                            width="24" height="24" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M21 21l-6 -6" />
+                                                            <path
+                                                                d="M3.291 8a7 7 0 0 1 5.077 -4.806a7.021 7.021 0 0 1 8.242 4.403" />
+                                                            <path d="M17 4v4h-4" />
+                                                            <path
+                                                                d="M16.705 12a7 7 0 0 1 -5.074 4.798a7.021 7.021 0 0 1 -8.241 -4.403" />
+                                                            <path d="M3 16v-4h4" />
+                                                        </svg>
                                                     </div>
                                                 </div>
+                                                <div class="card-body shadow">
+                                                    <div class="row" style="max-width: 900px;">
+                                                        <div class="col-lg-4">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Tanggal Formulir</label>
+                                                                <input name="tgl" type="date" class="form-control"
+                                                                    id="tanggal" value="{{ date('Y-m-d') }}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Diambil Oleh</label>
+                                                                <input name="text" class="form-control"
+                                                                    placeholder="Diambil Oleh" id="diambil_oleh"
+                                                                    value="" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr class="text-center">
+                                                                    <th>Kodeseri</th>
+                                                                    <th>Barang</th>
+                                                                    <th>Stok</th>
+                                                                    <th>QTY</th>
+                                                                    <th>Mesin</th>
+                                                                    <th>Unit</th>
+                                                                    <th>Keterangan</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <br>
+                                                    <div class="float-xl-right">
+                                                        <button type="submit" id="submitPermintaan"
+                                                            class="btn btn-primary"><i class="fa-regular fa-floppy-disk"
+                                                                style="margin-right: 5px"></i>
+                                                            Input</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -319,7 +346,11 @@
                         },
                         beforeSend: function() {
                             $("#hasil_cari").hide();
-                            $("#tunggu").html('<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari Barang dengan kodeseri: '+id+' <span class="animated-dots"></span></strong></p></center>');
+                            $("#tunggu").html(
+                                '<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari Barang dengan kodeseri: ' +
+                                id +
+                                ' <span class="animated-dots"></span></strong></p></center>'
+                            );
                         },
                         success: function(html) {
                             $("#tunggu").html('');
