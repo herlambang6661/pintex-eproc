@@ -315,14 +315,14 @@ class PenerimaanController extends Controller
                 ';
             $z = 1;
             for ($i = 0; $i < $jml; $i++) {
-                $data = DB::table('barang')->where('id', $request->id[$i])->get();
+                $data = DB::table('barang')->where('id', $request->id[$i])->orderBy('kodeseri', 'asc')->get();
                 foreach ($data as $u) {
                     $qrCodes = QrCode::size(70)->generate($u->kodeseri);
                     echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
                     echo  '<input type="hidden" name="partial[]" id="partial-' . $u->id . '" value="0">';
                     echo '
-                            <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary d-sm-block d-none">
+                            <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary">
                                 <div class="container-customCard rounded-3 shadow-lg">
                                     <div class="header-customCard rounded-3 pt-2">
                                         <div class="navbar-customCard pt-2">
@@ -392,74 +392,6 @@ class PenerimaanController extends Controller
                                             <svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-star-half"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z" /></svg>
                                             Partial
                                         </span>
-                                        <span class="badge bg-indigo float-end">' . $z . ' / ' . $jml . '</span>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
-                                <div class="container-customCard rounded-3 shadow-lg">
-                                    <div class="header-customCard rounded-3">
-                                        <div class="navbar-customCard">
-                                            <button type="button" class="btn-link text-white open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
-                                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                            </button>
-                                            <button type="button" class="btn-link text-white close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
-                                                <i class="fas fa-xmark"></i>
-                                            </button>
-                                            <div class="main-account-customCard">
-                                                <h4>' . strtoupper($u->namaBarang) . '</h4>
-                                            </div>
-                                        </div>
-                                        <div class="top-view-customCard rounded-3">
-                                            <div class="payment-infos">
-                                                <div class="text-white">
-                                                    Kodeseri : ' . $u->kodeseri . '
-                                                </div>
-                                                <div class="price">
-                                                    <input type="hidden" name="qtyBeli[]" value="' . $u->qty_beli . '">
-                                                    <input type="number" name="diterima[]" value="' . $u->qty_beli . '" id="diterima-' . $u->id . '" onblur="partialCheck(' . $u->id . ')" onclick="partialCheck(' . $u->id . ')" class="form-control" style="width: 50%" max="' . $u->qty_beli . '" min="0">
-                                                </div>
-                                                <div class="btc">
-                                                    Qty Permintaan: ' . $u->qty_beli . ' ' . strtoupper($u->satuan) . '
-                                                </div>
-                                            </div>
-                                            <div class="qr-code-customCard">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Qrcode_wikipedia_fr_v2clean.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="ctas">
-                                            <button type="button" class="bg-green shadow-lg text-white fw-bold" onclick="openOption(`' . $u->id . '`, `terima`)">Terima</button>
-                                            <button type="button" class="bg-cyan shadow-lg text-white fw-bold" onclick="openOption(`' . $u->id . '`, `diambil`)">Diambil User</button>
-                                            <label for="isi" class="mt-2 mb-2 text-white">Foto Penerimaan</label>
-                                            <input type="file" class="form-control">
-                                            <div class="opLocker-' . $u->id . '" style="display:none">
-                                                <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
-                                                <input name="locker[]" type="text" class="form-control" placeholder="Masukkan Loker Gudang">
-                                            </div>
-                                            <div class="opDiambil-' . $u->id . '" style="display:none">
-                                                <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
-                                                <input type="text" class="form-control bg-secondary-lt" placeholder="Tidak perlu mengisi loker" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="gradient-overlay"></div>
-                                    <div class="bottom-view rounded-3">
-                                        <ul>
-                                            <li>
-                                                <div class="payment-card">
-                                                    <div class="hour text-danger">' . Carbon::parse($u->tgl_permintaan)->format('d/m/Y') . '</div>
-                                                    <div class="price text-green">' . $permintaanController->getMesinPermintaan($u->mesin) . '</div>
-                                                    <div class="token">
-                                                        ' . strtoupper($u->namaBarang) . '
-                                                        <span>' . $u->keterangan . " " . $u->katalog . " " . $u->part . '</span>
-                                                    </div>
-                                                    <h5> <span>' . ucfirst($u->supplier) . '</span> </h5>
-                                                    <div class="hasilcari-' . $u->id . '" style="display:none"></div>
-                                                    <div class="tunggu-' . $u->id . '" style="display:none"></div>
-                                                </div>
-                                            </li>
-                                        </ul>
                                         <span class="badge bg-indigo float-end">' . $z . ' / ' . $jml . '</span>
                                     </div>
                                 </div>
@@ -766,7 +698,7 @@ class PenerimaanController extends Controller
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
                     echo  '<input type="hidden" name="partial[]" id="partial-' . $u->id . '" value="0">';
                     echo '
-                            <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary d-sm-block d-none">
+                            <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary">
                                 <div class="container-customCard2 rounded-3 shadow-lg">
                                     <div class="header-customCard2 rounded-3 pt-2">
                                         <div class="navbar-customCard2 pt-2">
@@ -840,74 +772,6 @@ class PenerimaanController extends Controller
                                     </div>
                                 </div>
                             </div>
-                        
-                            <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
-                                <div class="container-customCard rounded-3 shadow-lg">
-                                    <div class="header-customCard rounded-3">
-                                        <div class="navbar-customCard">
-                                            <button type="button" class="btn-link text-white open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
-                                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                            </button>
-                                            <button type="button" class="btn-link text-white close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
-                                                <i class="fas fa-xmark"></i>
-                                            </button>
-                                            <div class="main-account-customCard">
-                                                <h4>' . strtoupper($u->namaBarang) . '</h4>
-                                            </div>
-                                        </div>
-                                        <div class="top-view-customCard rounded-3">
-                                            <div class="payment-infos">
-                                                <div class="text-white">
-                                                    Kodeseri : ' . $u->kodeseri . '
-                                                </div>
-                                                <div class="price">
-                                                    <input type="hidden" name="qtyBeli[]" value="' . $u->qty_beli . '">
-                                                    <input type="number" name="diterima[]" value="' . $u->qty_beli . '" id="diterima-' . $u->id . '" onblur="partialCheck(' . $u->id . ')" onclick="partialCheck(' . $u->id . ')" class="form-control" style="width: 50%" max="' . $u->qty_beli . '" min="0">
-                                                </div>
-                                                <div class="btc">
-                                                    Qty Permintaan: ' . $u->qty_beli . ' ' . strtoupper($u->satuan) . '
-                                                </div>
-                                            </div>
-                                            <div class="qr-code-customCard">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Qrcode_wikipedia_fr_v2clean.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="ctas">
-                                            <button type="button" class="bg-green shadow-lg text-white fw-bold" onclick="openOption(`' . $u->id . '`, `terima`)">Terima</button>
-                                            <button type="button" class="bg-cyan shadow-lg text-white fw-bold" onclick="openOption(`' . $u->id . '`, `diambil`)">Diambil User</button>
-                                            <label for="isi" class="mt-2 mb-2 text-white">Foto Penerimaan</label>
-                                            <input type="file" class="form-control">
-                                            <div class="opLocker-' . $u->id . '" style="display:none">
-                                                <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
-                                                <input name="locker[]" type="text" class="form-control" placeholder="Masukkan Loker Gudang">
-                                            </div>
-                                            <div class="opDiambil-' . $u->id . '" style="display:none">
-                                                <label for="isi" class="mt-2 mb-2 text-white">Loker</label>
-                                                <input type="text" class="form-control bg-secondary-lt" placeholder="Tidak perlu mengisi loker" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="gradient-overlay"></div>
-                                    <div class="bottom-view rounded-3">
-                                        <ul>
-                                            <li>
-                                                <div class="payment-card">
-                                                    <div class="hour text-danger">' . Carbon::parse($u->tgl_permintaan)->format('d/m/Y') . '</div>
-                                                    <div class="price text-green">' . $permintaanController->getMesinPermintaan($u->mesin) . '</div>
-                                                    <div class="token">
-                                                        ' . strtoupper($u->namaBarang) . '
-                                                        <span>' . $u->keterangan . " " . $u->katalog . " " . $u->part . '</span>
-                                                    </div>
-                                                    <h5> <span>' . ucfirst($u->supplier) . '</span> </h5>
-                                                    <div class="hasilcari-' . $u->id . '" style="display:none"></div>
-                                                    <div class="tunggu-' . $u->id . '" style="display:none"></div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <span class="badge bg-indigo float-end">' . $z . ' / ' . $jml . '</span>
-                                    </div>
-                                </div>
-                            </div>
                         ';
 
                     $z++;
@@ -955,19 +819,13 @@ class PenerimaanController extends Controller
 
         $jml = count($request->kodeseri);
         for ($i = 0; $i < $jml; $i++) {
-
-            if ($request->diterima[$i] < $request->qtyBeli[$i]) {
-                $qty_partial = $request->qtyBeli[$i] - $request->diterima[$i];
-            } else {
-                $qty_partial = 0;
-            }
             // ambil data permintaan barang untuk deskripsi, katalog dan lain-lain
             $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
             // input Penerimaan Item
             DB::table('penerimaanitm')->insert([
                 'npb' => $NPB,
                 'tanggal' => $request->tgl,
-                'kodeseri' => $request->kodeseri[$i],
+                'kodeseri' => $getbarang->kodeseri,
                 "nama" => $getbarang->namaBarang,
                 'katalog' => $getbarang->katalog,
                 'mesin' => $getbarang->mesin,
@@ -981,9 +839,14 @@ class PenerimaanController extends Controller
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
+            if ($request->diterima[$i] < $request->qtyBeli[$i]) {
+                $qty_partial = $request->qtyBeli[$i] - $request->diterima[$i];
+            } else {
+                $qty_partial = 0;
+            }
             // Update Barang
-            $check = DB::table('barang')
-                ->where('kodeseri', $request->kodeseri[$i])
+            DB::table('barang')
+                ->where('kodeseri', $getbarang->kodeseri)
                 ->limit(1)
                 ->update(
                     array(
@@ -992,6 +855,20 @@ class PenerimaanController extends Controller
                         'qty_partial' => $qty_partial,
                         'npb' => $NPB,
                         'locker' => $request->locker[$i],
+                        'partial' => $request->partial[$i],
+                        'status' => 'DITERIMA',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            DB::table('permintaanitm')
+                ->where('kodeseri', $getbarang->kodeseri)
+                ->limit(1)
+                ->update(
+                    array(
+                        'tgl_terima' => $request->tgl,
+                        'qtyterima' => $request->diterima[$i],
+                        'qtypenerimaan_partial' => $qty_partial,
+                        'nsupp' => $NPB,
                         'partial' => $request->partial[$i],
                         'status' => 'DITERIMA',
                         'updated_at' => date('Y-m-d H:i:s'),
@@ -1050,6 +927,7 @@ class PenerimaanController extends Controller
             }
             // ambil data permintaan barang untuk deskripsi, katalog dan lain-lain
             $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+            $getPartialQty = DB::table('barang')->where('kodeseri', '=', $request->kodeseri[$i])->first();
             // input Penerimaan Item
             DB::table('penerimaanitm')->insert([
                 'npb' => $NPB,
@@ -1068,19 +946,37 @@ class PenerimaanController extends Controller
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
+
+            if ($getPartialQty->qty_beli = ($getPartialQty->qty_diterima + $request->diterima[$i])) {
+                $resQty = $getPartialQty->qty_diterima + $request->diterima[$i];
+            } else {
+                $resQty = $request->diterima[$i];
+            }
             // Update Barang
-            $check = DB::table('barang')
+            DB::table('barang')
                 ->where('kodeseri', $request->kodeseri[$i])
                 ->limit(1)
                 ->update(
                     array(
                         'tgl_penerimaan' => $request->tgl,
-                        'qty_diterima' => $request->diterima[$i],
+                        'qty_diterima' => $resQty,
                         'qty_partial' => $qty_partial,
                         'npb' => $NPB,
-                        // 'locker' => $request->locker[$i],
                         'partial' => $request->partial[$i],
                         'status' => 'DITERIMA',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            DB::table('permintaanitm')
+                ->where('kodeseri', $getbarang->kodeseri)
+                ->limit(1)
+                ->update(
+                    array(
+                        'tgl_terima' => $request->tgl,
+                        'qtyterima' => $resQty,
+                        'qtypenerimaan_partial' => $qty_partial,
+                        'nsupp' => $NPB,
+                        'partial' => $request->partial[$i],
                         'updated_at' => date('Y-m-d H:i:s'),
                     )
                 );

@@ -48,6 +48,7 @@ return new class extends Migration
             $table->string('file_sample')->nullable();
             $table->date('tgl_qty_acc')->nullable();
             $table->date('tgl_acc')->nullable();
+            $table->date('tgl_terima')->nullable();
             $table->boolean('proses_email')->nullable();
             $table->boolean('proses_po')->nullable();
             $table->string('dibuat')->nullable();

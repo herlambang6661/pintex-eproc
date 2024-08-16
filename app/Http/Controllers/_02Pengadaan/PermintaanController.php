@@ -148,7 +148,7 @@ class PermintaanController extends Controller
         );
 
         // Initiate Noform
-        $checknoform = DB::table('permintaan')->orderBy('noform', 'desc')->first();
+        $checknoform = DB::table('permintaan')->latest('noform')->first();
         $y = substr($checknoform->noform, 0, 2);
         if (date('y') == $y) {
             $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
@@ -162,40 +162,19 @@ class PermintaanController extends Controller
 
         $jml_mbl = count($request->jenis);
         for ($i = 0; $i < $jml_mbl; $i++) {
-            $kdseri = "10000";
-            $getkodeseri = DB::table('permintaanitm')->orderBy('kodeseri', 'desc')->limit('1')->get();
-            foreach ($getkodeseri as $key) {
-                $kdseri = $key->kodeseri;
-            }
-            $kdseri = $kdseri + 1;
-
-            // $cekMasterBarang = $this->permintaan->cekMaster($namaBarang[$i]);
-            // if ($cekMasterBarang < 1) {
-            //     $dataMB = array(
-            //         'nama' => strtoupper($namaBarang[$i]),
-            //         'tipe' => 'Lain',
-            //         'dibuat' => $dibuat,
-            //     );
-            //     $this->permintaan->saveMB($dataMB); // <====================== INPUT
-            // }
-            // $checkDuplicateDeskripsi = $this->permintaan->checkdesk($keterangan[$i]);
-            // if ($checkDuplicateDeskripsi < 1) {
-            //     $inputDataDeskripsi = array(
-            //         'deskripsi' => $keterangan[$i],
-            //         'katalog' => $katalog[$i],
-            //         'part' => $part[$i]
-            //     );
-            //     $this->permintaan->savedesk($inputDataDeskripsi); // <====================== INPUT
-            // }
-
-            if ($request->urgent[$i] == '1') {
-                $urgent = '1';
+            $getkodeseri = DB::table('permintaanitm')->latest('kodeseri')->first();
+            if ($getkodeseri) {
+                $kdseriR = $getkodeseri->kodeseri;
+                $kdseri = $kdseriR + 1;
             } else {
-                $urgent = '0';
+                $kdseri = '100000';
             }
-
+            if (!empty($request->urgent[$i])) {
+                $urgent = $request->urgent[$i];
+            } else {
+                $urgent = 0;
+            }
             $check = DB::table('permintaanitm')->insert([
-
                 'remember_token'    => $request->_token,
                 'jenis' => $request->jenis[$i],
                 'tgl' => $request->tanggal,
@@ -218,8 +197,8 @@ class PermintaanController extends Controller
                 'partial' => '0',
                 'urgent' => $urgent,
                 'status' => "PROSES PERSETUJUAN",
-                'DIBUAT'            => Auth::user()->name,
-                'created_at'        => date('Y-m-d H:i:s'),
+                'DIBUAT' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
 

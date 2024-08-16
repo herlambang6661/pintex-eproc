@@ -525,15 +525,15 @@
                         className: "cuspad0 cuspad1",
                     },
                     {
-                        title: 'Qty',
-                        data: 'kts',
-                        name: 'kts',
-                        className: "cuspad0 cuspad1 text-center",
-                    },
-                    {
                         title: 'Curr',
                         data: 'currid',
                         name: 'currid',
+                        className: "cuspad0 cuspad1 text-center",
+                    },
+                    {
+                        title: 'Qty',
+                        data: 'kts',
+                        name: 'kts',
                         className: "cuspad0 cuspad1 text-center",
                     },
                     {

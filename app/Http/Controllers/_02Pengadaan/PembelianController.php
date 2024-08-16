@@ -368,7 +368,7 @@ class PembelianController extends Controller
                                                                 var txt2 = document.getElementById("percentageppn").value;
                                                                 
                                                                 var result = (parseFloat(txt1) * parseFloat(txt2))/100;
-                                                                var resTot = parseFloat(txt1) - parseFloat(result);
+                                                                var resTot = parseFloat(txt1) + parseFloat(result);
                                                                 document.getElementById("totalppn").value = result;
                                                                 document.getElementById("totalPembelian").value = resTot;
                                                             }
@@ -377,7 +377,7 @@ class PembelianController extends Controller
                                                                 var txt1 = document.getElementById("totalSub").value;
                                                                 var txt2 = document.getElementById("totalppn").value;
                                                                 
-                                                                var result = parseFloat(txt1) - parseFloat(txt2);
+                                                                var result = parseFloat(txt1) + parseFloat(txt2);
                                                                 document.getElementById("totalPembelian").value = result;
                                                             }
                                                         </script>
