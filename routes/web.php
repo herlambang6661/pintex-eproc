@@ -142,6 +142,7 @@ Route::controller(PermintaanController::class)->group(function () {
     Route::post('pengadaan/printPermintaan', 'printPermintaan')->name('pengadaan/printPermintaan');
     Route::post('pengadaan/viewPermintaan', 'viewPermintaan')->name('pengadaan/viewPermintaan');
     Route::post('pengadaan/viewEditPermintaan', 'viewEditPermintaan')->name('pengadaan/viewEditPermintaan');
+    Route::post('pengadaan/permintaan/repeatOrder', 'repeatOrder')->name('pengadaan/permintaan/repeatOrder');
 });
 
 Route::controller(PersetujuanController::class)->group(function () {

@@ -242,16 +242,19 @@
                                                             <h3 class="card-title">Repeat Order</h3>
                                                             <div class="control-group col-lg-3">
                                                                 <div class="form-group">
-                                                                    <input type="text" class="form-control"
-                                                                        id="repeatOr" onblur="carikodeseri();"
-                                                                        onkeyup="" style="border-color: black;"
-                                                                        placeholder="Masukkan Kodeseri/Barang">
+                                                                    <input type="text"
+                                                                        class="form-control border border-primary bg-primary-lt"
+                                                                        id="repeatOr" placeholder="Kodeseri/Barang...">
                                                                 </div>
                                                             </div>
-                                                            <hr>
+                                                            <div class="hr-text text-blue mb-3 mt-3">Hasil</div>
+                                                            <div id="tunggu"></div>
                                                             <div class="col">
-                                                                <div id="hasil_cari"></div>
-                                                                <div id="tunggu"></div>
+                                                                <div id="hasil_cari" class="fw-bold">
+                                                                    <p class="text-center">
+                                                                        Masukkan Kodeseri untuk Repeat Order
+                                                                    </p>
+                                                                </div>
                                                                 <span id="success-msg"></span>
                                                             </div>
                                                         </div>
@@ -741,6 +744,35 @@
             tablePermintaan.ajax.reload();
         }
         $(function() {
+
+            $("#repeatOr").keyup(function(event) {
+                if (event.keyCode === 13) {
+                    var id = document.getElementById("repeatOr").value;
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('pengadaan/permintaan/repeatOrder') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            keyword: id,
+                        },
+                        beforeSend: function() {
+                            $("#hasil_cari").hide();
+                            $("#tunggu").html(
+                                '<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari Barang dengan kata kunci: ' +
+                                id +
+                                ' <span class="animated-dots"></span></strong></p></center>'
+                            );
+                        },
+                        success: function(html) {
+                            $("#tunggu").html('');
+                            $("#hasil_cari").show();
+                            $("#hasil_cari").html(html);
+                            document.getElementById("repeatOr").value = "";
+                            document.getElementById("repeatOr").focus();
+                        }
+                    });
+                }
+            });
             /*------------------------------------------
             --------------------------------------------
             Start Render Select2
@@ -1277,5 +1309,136 @@
             }
             tinyMCE.init(options);
         })
+
+        $(document).on('click', '.tambahkebawah', function() {
+            document.getElementById("repeatOr").value = "";
+            document.getElementById("repeatOr").focus();
+            $("#hasil_cari").hide();
+            var Rjenis = $(this).data('jenis');
+            var Rkodeproduk = $(this).data('kodeproduk');
+            var Rnamabarang = $(this).data('namabarang');
+            var Rdeskripsi = $(this).data('deskripsi');
+            var Rkatalog = $(this).data('katalog');
+            var Rpart = $(this).data('part');
+            var Rqty = $(this).data('qty');
+            var Rsatuan = $(this).data('satuan');
+            var Runit = $(this).data('unit');
+            var Rperuntukan = $(this).data('peruntukan');
+            var Rsample = $(this).data('sample');
+
+            var idf = document.getElementById("idf").value;
+            var detail_transaksi = document.getElementById("detail_transaksi");
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "btn-remove" + idf);
+
+            // Kolom 0 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.setAttribute("style",
+                "border-left-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;");
+            td.innerHTML +=
+                '<button class="btn btn-sm btn-danger btn-icon remove" type="button" onclick="hapusElemen(' +
+                idf +
+                ');"><i class="fa-regular fa-trash-can"></i> </button>';
+            tr.appendChild(td);
+            // Kolom 2 Jenis
+            var td = document.createElement("td");
+            td.innerHTML += "<select name='jenis[]' id='jenis_" + idf +
+                "' class='form-select inputNone' onchange='tampilkan(" + idf +
+                ")' style='width:100%;text-transform: uppercase;'><option value='" + Rjenis + "'>" + Rjenis +
+                "</option><option value='Standar'>STANDAR</option><option value='Lain'>LAIN-LAIN</option></select>";
+            tr.appendChild(td);
+
+            // Kolom 3 Kodeproduk                            
+            var td = document.createElement("td");
+            td.innerHTML += '<select name="kodeproduk[]" id="kodeproduk' + idf +
+                '" class="form-select  inputNone" style="text-transform: uppercase;"><option value="' +
+                Rkodeproduk +
+                '">' +
+                Rkodeproduk +
+                '</option><option value="8" data-ket="Sparepart">8 - Sparepart</option><option value="17" data-ket="Kendaraan">17 - Kendaraan</option><option value="18" data-ket="Perlengkapan">18 - Perlengkapan</option></select>';
+            tr.appendChild(td);
+
+            // Kolom 4 Nama Barang / Jasa
+            var td = document.createElement("td");
+            td.innerHTML += "<div name='menampilkan_barang_" + idf + "' id='menampilkan_barang_" + idf + "'></div>";
+            tr.appendChild(td);
+
+            // Kolom 5 Deskripsi
+            var td = document.createElement("td");
+            td.innerHTML +=
+                "<input readonly type='text' list='datalistDeskripsi' name='deskripsi[]' id='deskripsi_" + idf +
+                "' class='form-control inputNone' value='" + Rdeskripsi + "' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 6 Katalog
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly type='text' list='datalistKatalog' name='katalog[]' id='katalog" +
+                idf +
+                "'  value='" + Rkatalog + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 7 Part
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly type='text' list='datalistPart' name='part[]' id='part_" + idf +
+                "' class='form-control  inputNone' value='" + Rpart + "' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 8 Mesin
+            var td = document.createElement("td");
+            td.innerHTML += "<div name='tampil_mesin_" + idf + "' id='tampil_mesin_" + idf + "'></div>";
+            tr.appendChild(td);
+
+            // Kolom 9 Qty
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly type='number' name='qty[]' id='qty_" + idf +
+                "' class='form-control  inputNone' value='" + Rqty + "' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 10 Satuan
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly list='datalistSatuan' type='text' name='satuan[]' id='satuan_" + idf +
+                "' class='form-control  inputNone' value='" + Rsatuan + "' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 11 Pemesan
+            var td = document.createElement("td");
+            td.innerHTML += "<div name='tampil_pemesan_" + idf + "' id='tampil_pemesan_" + idf + "'></div>";
+            tr.appendChild(td);
+
+            // Kolom 12 Unit
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='text' name='unit[]' id='unit_" + idf +
+                "' class='form-control  inputNone' value='" + Runit +
+                "' style='text-transform: uppercase;' value='" +
+                unit + "'>";
+            tr.appendChild(td);
+
+            // Kolom 13 Peruntukan
+            var td = document.createElement("td");
+            td.innerHTML += '<input readonly name="peruntukan[]" id="peruntukan_' + idf +
+                '" class="form-control  inputNone"  value="' + Rperuntukan +
+                '" list"datalistPeruntukan" style="text-transform: uppercase;">';
+            tr.appendChild(td);
+
+            // Kolom 14 Sample
+            var td = document.createElement("td");
+            td.innerHTML += '<input readonly type="number" value="' + Rsample +
+                '" name="sample[]" id="sample_' + idf +
+                '" class="form-control " style="">';
+            tr.appendChild(td);
+
+            // Kolom 14 Urgent
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.setAttribute("style",
+                "border-right-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;");
+            td.innerHTML += '<input type="checkbox" name="urgent[]" id="urgent' + idf + '" value="1"><br>';
+            tr.appendChild(td);
+
+            detail_transaksi.appendChild(tr);
+
+            idf = (idf - 1) + 2;
+        });
     </script>
 @endsection

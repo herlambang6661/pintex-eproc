@@ -727,4 +727,51 @@ class PermintaanController extends Controller
         $permintaanItem = DB::table('permintaanitm')->where('noform', $request->noform)->get();
         return view('products/00_print.printPermintaan', ['permintaan' => $permintaan, 'permintaanItem' => $permintaanItem]);
     }
+
+    public function repeatOrder(Request $request)
+    {
+        if (!$request->keyword) {
+            echo '<p class="text-center">Pencarian tidak boleh kosong</p>';
+        } else {
+            $hasil = DB::table('permintaanitm')->where('kodeseri', $request->keyword)->orWhere('namaBarang', 'LIKE', '%' . $request->keyword . '%')->orderBy('kodeseri', 'asc')->get();
+            echo '
+            <div class="table-responsive" style="max-height: 250px;">
+                Hasil : ' . count($hasil) . ' Item untuk pencarian : "' . $request->keyword . '"
+                <table class="text-nowrap table table-sm table-card table-bordered border border-dark" style="width:100%;color:black;text-transform:uppercase;font-size: 12px">
+                    <thead>
+                        <tr>
+                            <td class="text-center" colspan="2">Kodeseri</td>
+                            <td>Hasil</td>
+                            <td class="text-center">Qty</td>
+                        </tr>
+                    </thead>';
+            foreach ($hasil as $key) {
+                echo    '<tbody>';
+                echo        '<td class="text-center">
+                                    <button type="button" class="btn btn-icon btn-sm btn-blue tambahkebawah" 
+                                    data-jenis="' . $key->jenis . '" 
+                                    data-kodeproduk="' . $key->kodeproduk . '" 
+                                    data-namabarang="' . strtoupper($key->namaBarang) . '" 
+                                    data-deskripsi="' . $key->keterangan . '"
+                                    data-katalog="' . $key->katalog . '"
+                                    data-part="' . $key->part . '"
+                                    data-qty="' . $key->qty . '"
+                                    data-satuan="' . $key->satuan . '"
+                                    data-unit="' . $key->unit . '"
+                                    data-peruntukan="' . $key->peruntukan . '"
+                                    data-sample="' . $key->qty_sample . '"
+                                    >
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+                                    </button>
+                                </td>';
+                echo            '<td class="text-center">' . $key->kodeseri . '</td>';
+                echo            '<td>' . $key->namaBarang . ' ' . $key->keterangan . ' ' . $key->katalog . ' ' . $key->part . '</td>';
+                echo            '<td class="text-center">' . $key->qty . ' ' . $key->satuan . '</td>';
+                echo        '</tbody>';
+            }
+            echo    '</table>
+            </div>
+        ';
+        }
+    }
 }

@@ -409,7 +409,12 @@ class PembelianController extends Controller
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <div class="mb-3 mt-3">
+                        <label class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" wfd-id="id151">
+                            <span class="form-check-label">Masukkan Barang yang dipilih menjadi <i class="fw-bold">Packages</i></span>
+                        </label>
+                    </div>
                     <div class="space-y">
                     <div class="table-responsive shadow">
                         <table class="table table-sm table-bordered text-nowrap text-dark transparent-card card-xl rounded border border-dark" style="text-transform: uppercase;font-weight: bold;font-size:10px;">
