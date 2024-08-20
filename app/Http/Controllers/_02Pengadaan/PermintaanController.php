@@ -39,6 +39,11 @@ class PermintaanController extends Controller
         $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $id)->first();
         return $m->mesin . " " . $m->merk;
     }
+    public function getMesinServis($id)
+    {
+        $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk', 'mi.kode_nomor')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $id)->first();
+        return $m->mesin . " " . $m->merk . " " . $m->kode_nomor;
+    }
 
     private function getDatalist($table, $var = null, $value = null, $select = null)
     {
