@@ -223,8 +223,10 @@ Route::controller(ReturController::class)->group(function () {
 });
 
 Route::controller(PengambilanController::class)->group(function () {
+    Route::get('getDataMesinPengambilan', 'getMesin')->name('getDataMesinPengambilan');
     Route::get('teknik/pengambilan', 'pengambilan');
-    Route::POST('teknik/pengambilan/cariBarang', 'pencarianBarang')->name('teknik/pengambilan/cariBarang');
+    Route::post('teknik/pengambilan/cariBarang', 'pencarianBarang')->name('teknik/pengambilan/cariBarang');
+    Route::post('storedataPengambilan', 'storePengambilan');
 });
 
 //ROUTE LAPORAN

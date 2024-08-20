@@ -116,127 +116,106 @@
                             <div class="tab-pane fade active show" id="tabs-profile-8" role="tabpanel">
                                 <div class="card shadow card-active">
                                     <div class="card-body">
-                                        <form method="POST" name="" id="" class="form"
-                                            enctype="multipart/form-data" accept-charset="utf-8"
-                                            onkeydown="return event.key != 'Enter';" data-select2-id="add-form">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="control-group col-lg-2">
-                                                    <div class="mb-1">
-                                                        <label class="form-label">Kodeseri</label>
-                                                        <input name="text" class="form-control "
-                                                            placeholder="Kodeseri 12*****" value="" id="kodeseri"
-                                                            autofocus />
-                                                        <small class="text-dark" style="font-size: 9px">Masukkan Kodeseri
-                                                            dan tekan Enter</small>
-                                                    </div>
+                                        <div class="row">
+                                            <div class="control-group col-lg-2">
+                                                <div class="mb-1">
+                                                    <label class="form-label">Kodeseri</label>
+                                                    <input name="text" class="form-control border border-dark"
+                                                        placeholder="Kodeseri 12*****" value="" id="kodeseri"
+                                                        autofocus />
+                                                    <small class="text-dark" style="font-size: 9px">Masukkan Kodeseri
+                                                        dan tekan Enter</small>
                                                 </div>
-                                                <div class="control-group col-lg-10">
-                                                    <div class="card">
-                                                        <div class="card-stamp card-stamp-lg">
-                                                            <div class="card-stamp-icon bg-primary text-white">
-                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                    class="icon icon-tabler icon-tabler-zoom-replace"
-                                                                    width="24" height="24" viewBox="0 0 24 24"
-                                                                    stroke-width="1.5" stroke="currentColor"
-                                                                    fill="none" stroke-linecap="round"
-                                                                    stroke-linejoin="round">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path d="M21 21l-6 -6" />
-                                                                    <path
-                                                                        d="M3.291 8a7 7 0 0 1 5.077 -4.806a7.021 7.021 0 0 1 8.242 4.403" />
-                                                                    <path d="M17 4v4h-4" />
-                                                                    <path
-                                                                        d="M16.705 12a7 7 0 0 1 -5.074 4.798a7.021 7.021 0 0 1 -8.241 -4.403" />
-                                                                    <path d="M3 16v-4h4" />
-                                                                </svg>
-                                                            </div>
+                                            </div>
+                                            <div class="control-group col-lg-10">
+                                                <div class="card border border-dark">
+                                                    <div class="card-stamp card-stamp-lg">
+                                                        <div class="card-stamp-icon bg-primary text-white">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                class="icon icon-tabler icon-tabler-zoom-replace"
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M21 21l-6 -6" />
+                                                                <path
+                                                                    d="M3.291 8a7 7 0 0 1 5.077 -4.806a7.021 7.021 0 0 1 8.242 4.403" />
+                                                                <path d="M17 4v4h-4" />
+                                                                <path
+                                                                    d="M16.705 12a7 7 0 0 1 -5.074 4.798a7.021 7.021 0 0 1 -8.241 -4.403" />
+                                                                <path d="M3 16v-4h4" />
+                                                            </svg>
                                                         </div>
-                                                        <div class="card-body shadow">
-                                                            <div id="tunggu"></div>
-                                                            <div class="col">
-                                                                <div id="hasil_cari" class="text-center fst-italic">
-                                                                    Masukkan Kodeseri untuk menambahkan
-                                                                    barang</div>
-                                                                <span id="success-msg"></span>
+                                                    </div>
+                                                    <div class="card-body shadow">
+                                                        <div id="tunggu"></div>
+                                                        <div class="col">
+                                                            <div id="hasil_cari" class="fw-bold">
+                                                                <p class="text-center">
+                                                                    Masukkan Kodeseri untuk menambahkan barang
+                                                                </p>
                                                             </div>
+                                                            <span id="success-msg"></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="hr-text text-blue">Formulir Pengambilan Barang</div>
-                                            <div class="card">
-                                                <div class="card-stamp card-stamp-lg">
-                                                    <div class="card-stamp-icon bg-warning text-white">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            class="icon icon-tabler icon-tabler-zoom-replace"
-                                                            width="24" height="24" viewBox="0 0 24 24"
-                                                            stroke-width="1.5" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M21 21l-6 -6" />
-                                                            <path
-                                                                d="M3.291 8a7 7 0 0 1 5.077 -4.806a7.021 7.021 0 0 1 8.242 4.403" />
-                                                            <path d="M17 4v4h-4" />
-                                                            <path
-                                                                d="M16.705 12a7 7 0 0 1 -5.074 4.798a7.021 7.021 0 0 1 -8.241 -4.403" />
-                                                            <path d="M3 16v-4h4" />
-                                                        </svg>
+                                        </div>
+                                        <div class="hr-text text-blue mb-3 mt-3">Formulir Pengambilan Barang</div>
+                                        <form method="POST" name="formPengambilan" id="formPengambilan" class="form"
+                                            enctype="multipart/form-data" accept-charset="utf-8"
+                                            onkeydown="return event.key != 'Enter';" data-select2-id="add-form">
+                                            @csrf
+                                            <div class="row" style="max-width: 900px;">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Tanggal Formulir</label>
+                                                        <input name="tgl" type="date"
+                                                            class="form-control border border-dark" id="tanggal"
+                                                            value="{{ date('Y-m-d') }}" />
                                                     </div>
                                                 </div>
-                                                <div class="card-body shadow">
-                                                    <div class="row" style="max-width: 900px;">
-                                                        <div class="col-lg-4">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tanggal Formulir</label>
-                                                                <input name="tgl" type="date" class="form-control"
-                                                                    id="tanggal" value="{{ date('Y-m-d') }}" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Diambil Oleh</label>
-                                                                <input name="text" class="form-control"
-                                                                    placeholder="Diambil Oleh" id="diambil_oleh"
-                                                                    value="" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr class="text-center">
-                                                                    <th>Kodeseri</th>
-                                                                    <th>Barang</th>
-                                                                    <th>Stok</th>
-                                                                    <th>QTY</th>
-                                                                    <th>Mesin</th>
-                                                                    <th>Unit</th>
-                                                                    <th>Keterangan</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <br>
-                                                    <div class="float-xl-right">
-                                                        <button type="submit" id="submitPermintaan"
-                                                            class="btn btn-primary"><i class="fa-regular fa-floppy-disk"
-                                                                style="margin-right: 5px"></i>
-                                                            Input</button>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Diambil Oleh</label>
+                                                        <input name="diambil" type="text"
+                                                            class="form-control border border-dark"
+                                                            placeholder="Diambil Oleh" id="diambil_oleh"
+                                                            value="" />
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <input id="idf" value="1" type="hidden" />
+                                            <div class="" style="overflow-x:auto;overflow-x: scroll;">
+                                                <table id="detail_transaksi" class="table table-sm text-nowrap"
+                                                    style="width: 100%;text-align:center;font-weight: bold;">
+                                                    <thead>
+                                                        <td width="2%"></td>
+                                                        <td width="5%">Kodeseri</td>
+                                                        <td width="20%">Barang</td>
+                                                        <td width="5%">Stok</td>
+                                                        <td width="10%">Qty</td>
+                                                        <td width="30%">Untuk Mesin</td>
+                                                        <td width="10%">Unit</td>
+                                                        <td width="30%">Keterangan</td>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="float-xl-right mt-2">
+                                                <button type="submit" id="submitPengambilan" class="btn btn-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        class="icon icon-tabler icon-tabler-device-floppy" width="24"
+                                                        height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                        stroke="currentColor" fill="none" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                                                        <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                        <path d="M14 4l0 4l-6 0l0 -4" />
+                                                    </svg>
+                                                    Proses
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -245,49 +224,44 @@
                             <div class="tab-pane fade" id="tabs-home-8" role="tabpanel">
                                 <div class="card card-xl shadow rounded border border-blue">
                                     <div class="table-responsive">
-                                        <form action="#" id="form-filter-items" method="get" autocomplete="off"
-                                            novalidate="" class="">
-                                            <table class="table mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center">Tgl Awal</th>
-                                                        <th class="text-center">Tgl Akhir</th>
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()" value="{{ date('Y-01-01') }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" id="idfilter_sampai"
-                                                                class="form-control " onchange="syn()"
-                                                                value="{{ date('Y-m-d') }}">
-                                                        </td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-primary btn-icon"
-                                                                aria-label="Button">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="1.5"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                    <path d="M21 21l-6 -6" />
-                                                                </svg>
-                                                            </a>
-                                                            <input class="btn btn-primary" type="reset" value="Reset">
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </form>
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Tgl Awal</th>
+                                                    <th class="text-center">Tgl Akhir</th>
+                                                    <th class="text-center"></th>
+                                                    <th class="text-center"></th>
+                                                    <th class="text-center"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="date" id="idfilter_dari" class="form-control"
+                                                            onchange="syn()" value="{{ date('Y-01-01') }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" id="idfilter_sampai" class="form-control "
+                                                            onchange="syn()" value="{{ date('Y-m-d') }}">
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-primary btn-icon"
+                                                            aria-label="Button">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                <path d="M21 21l-6 -6" />
+                                                            </svg>
+                                                        </a>
+                                                        <input class="btn btn-primary" type="reset" value="Reset">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="table-responsive">
                                         <table style="width:100%; height: 100%;font-size:13px;"
@@ -306,33 +280,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
     <script type="text/javascript">
-        function newexportaction(e, dt, button, config) {
-            var self = this;
-            var oldStart = dt.settings()[0]._iDisplayStart;
-
-            dt.one('preXhr', function(e, s, data) {
-                data.start = 0;
-                data.length = 2147483647;
-
-                dt.one('preDraw', function(e, settings) {
-                    if (button[0].className.indexOf('buttons-copy') >= 0) {
-                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
-                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
-                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
-                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
-                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
-                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
-                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
-                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
-                    }
-                    settings._iDisplayStart = oldStart;
-                    data.start = oldStart;
-                });
-            });
-
-            dt.ajax.reload();
-        }
+        var tablePengambilan;
         $(document).ready(function() {
             $("#kodeseri").keyup(function(event) {
                 if (event.keyCode === 13) {
@@ -347,7 +295,7 @@
                         beforeSend: function() {
                             $("#hasil_cari").hide();
                             $("#tunggu").html(
-                                '<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari Barang dengan kodeseri: ' +
+                                '<center><p style="color:black"><strong><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mohon Menunggu, Sedang mencari Barang dengan kata kunci: ' +
                                 id +
                                 ' <span class="animated-dots"></span></strong></p></center>'
                             );
@@ -363,7 +311,7 @@
                 }
             });
 
-            var tablePengambilan = $('.datatable-pengambilan').DataTable({
+            tablePengambilan = $('.datatable-pengambilan').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -420,40 +368,22 @@
                     }
                 },
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                    },
-                    {
-                        title: 'TANGGAL',
-                        data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
-                        title: 'NOFORM',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 text-center clickable"
-                    },
-                    {
                         title: 'KODESERI',
                         data: 'kodeseri',
                         name: 'kodeseri',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable text-center"
                     },
                     {
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        className: "cuspad0 clickable"
                     },
                     {
                         title: 'QTY',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'jumlah',
+                        name: 'jumlah',
+                        className: "cuspad0 cuspad1 clickable text-center"
                     },
                     {
                         title: 'MESIN',
@@ -463,8 +393,8 @@
                     },
                     {
                         title: 'DIAMBIL',
-                        data: 'pemesan',
-                        name: 'pemesan',
+                        data: 'diambil',
+                        name: 'diambil',
                         className: "cuspad0 cuspad1 clickable"
                     },
                     {
@@ -477,31 +407,239 @@
 
             });
         });
+        $(document).on('click', '.tambahkebawah', function() {
+            document.getElementById("kodeseri").value = "";
+            document.getElementById("kodeseri").focus();
+            $("#hasil_cari").hide();
+            var kodeseri = $(this).data('kodeseri');
+            var namabarang = $(this).data('namabarang');
+            var qty = $(this).data('qty');
+            var sisa = $(this).data('sisa');
 
-        document.addEventListener("DOMContentLoaded", function() {
-            let options = {
-                selector: '#tinymce-default',
-                height: 300,
-                menubar: false,
-                statusbar: false,
-                plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount'
-                ],
-                // toolbar: 'undo redo | formatselect | ' +
-                //     'bold italic backcolor | alignleft aligncenter ' +
-                //     'alignright alignjustify | bullist numlist outdent indent | ' +
-                //     'removeformat',
+            var idf = document.getElementById("idf").value;
+            var detail_transaksi = document.getElementById("detail_transaksi");
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "btn-remove" + idf);
 
-                toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }'
+            // Kolom 0 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.innerHTML +=
+                '<button class="btn btn-icon btn-outline-danger" type="button" onclick="hapusElemen(' + idf +
+                ');"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg> </button>';
+            tr.appendChild(td);
+
+            // Kolom 1 Kodeseri
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='hidden' name='kodeseri[]' value='" + kodeseri + "' id='qty_" + idf +
+                "' style='text-transform: uppercase;'>" + kodeseri + "";
+            tr.appendChild(td);
+
+            // Kolom 2 Nama Barang
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='hidden' name='namabarang[]' value='" + namabarang + "' id='qty_" + idf +
+                "' style='text-transform: uppercase;'>" + namabarang + "";
+            tr.appendChild(td);
+
+            // Kolom 3 Stock
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='hidden' name='stock[]' value='" + sisa + "' id='qty_" + idf +
+                "' style='text-transform: uppercase;'>" + sisa + "";
+            tr.appendChild(td);
+
+            // Kolom 4 Qty
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='number' name='qty[]' value='' max='" + sisa + "' min='0' id='harga_" +
+                idf + "' class='form-control border-dark bg-light' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 5 Mesin
+            var td = document.createElement("td");
+            td.innerHTML +=
+                '<select name="mesin[]" class="form-control  elementmsn border-dark bg-light" style="color:black;text-transform: uppercase;width:100%"><option></option></select>';
+            tr.appendChild(td);
+
+            // Kolom 6 Unit
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='text' name='unit[]' value='' id='kurs_" + idf +
+                "' class='form-control  border-dark bg-light' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 7 Keterangan
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='text' name='keterangan[]' value='' id='trucking_" + idf +
+                "' class='form-control  border-dark bg-light' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            detail_transaksi.appendChild(tr);
+
+            idf = (idf - 1) + 2;
+            document.getElementById("idf").value = idf;
+
+            $(".elementmsn").select2({
+                language: "id",
+                width: '250px',
+                placeholder: "Pilih Mesin",
+                ajax: {
+                    url: "/getDataMesinPengambilan",
+                    dataType: 'json',
+                    delay: 200,
+                    processResults: function(response) {
+                        console.log(response);
+                        return {
+                            results: $.map(response, function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.mesin.toUpperCase() + " " + item.merk
+                                        .toUpperCase() + " " + item.kode_nomor
+                                        .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
+                                            " (UNIT " + item.unit + ")"),
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+            });
+        });
+
+        function hapusElemen(idf) {
+            $("#btn-remove" + idf).remove();
+        }
+        $(function() {
+            if ($("#formPengambilan").length > 0) {
+                $("#formPengambilan").validate({
+                    rules: {
+                        tgl: {
+                            required: true,
+                        },
+                        diambil: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        tgl: {
+                            required: "Masukkan Tanggal",
+                        },
+                        diambil: {
+                            required: "Masukkan Diambil Oleh",
+                        },
+                    },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitPengambilan').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Mohon Menunggu...');
+                        $("#submitPengambilan").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storedataPengambilan') }}",
+                            type: "POST",
+                            data: $('#formPengambilan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Menyimpan Data',
+                                    html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Result:', response);
+                                $('#submitPengambilan').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses'
+                                );
+                                $("#submitPengambilan").attr("disabled", false);
+                                tablePengambilan.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                document.getElementById("formPengambilan").reset();
+                                $('#tabs-profile-8').addClass('active show');
+                                $('#tabs-home-8').removeClass('active show');
+                                for (let i = 0; i <= (document.getElementById("idf")
+                                        .value); i++) {
+                                    $("#btn-remove" + i).remove();
+                                }
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                tablePengambilan.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitPengambilan').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitPengambilan").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
             }
-            if (localStorage.getItem("tablerTheme") === 'dark') {
-                options.skin = 'oxide-dark';
-                options.content_css = 'dark';
-            }
-            tinyMCE.init(options);
         })
+
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function(e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = 2147483647;
+                dt.one('preDraw', function(e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                        $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                    }
+                    dt.one('preXhr', function(e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
+                    });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
+                });
+            });
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+        }
     </script>
 @endsection
