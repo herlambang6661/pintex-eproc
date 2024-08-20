@@ -50,13 +50,13 @@ class PengambilanList extends Controller
                     $m = Carbon::parse($row->tanggal)->format('d/m/Y');
                     return $m;
                 })
-                ->addColumn('mesin', function ($row) {
+                ->editColumn('mesin', function ($row) {
                     $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk', 'mi.kode_nomor')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $row->mesin)->first();
 
                     $res =  $getMesin->mesin . " " . $getMesin->merk . " " . $getMesin->kode_nomor;
                     return $res;
                 })
-                ->rawColumns(['action', 'select_orders', 'status', 'tgl'])
+                ->rawColumns(['action', 'select_orders', 'mesin', 'tgl'])
                 ->make(true);
         }
 
