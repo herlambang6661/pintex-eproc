@@ -50,6 +50,7 @@ class StockController extends Controller
                 ->get();
 
             foreach ($getBarang as $key) {
+                $diambil = DB::table('pengambilanitm')->where('kodeseri', $key->kodeseri)->count();
                 echo '
                 <div class="card mb-5 shadow border border-azure">
                     <div class="table-responsive">
@@ -61,9 +62,9 @@ class StockController extends Controller
                                         <div class="display-6 fw-bold my-3">' . (empty($key->locker) ? "-" : $key->locker) . '</div>
                                     </td>
                                     <td class="w-50 ps-4">
-                                        <h2>( ' . $key->kodeseri . ' ) ' . $key->namaBarang . '</h2>
+                                        <h2>( ' . $key->kodeseri . ' ) ' . strtoupper($key->namaBarang) . '</h2>
                                         <div class="text-secondary text-wrap text-uppercase">
-                                            ' . $key->keterangan . ' ' . $key->katalog . ' ' . $key->part . '
+                                            ' . strtoupper($key->keterangan) . ' ' . strtoupper($key->katalog) . ' ' . strtoupper($key->part) . '
                                         </div>
                                     </td>
                                     <td class="text-center">
@@ -72,11 +73,11 @@ class StockController extends Controller
                                     </td>
                                     <td class="text-center">
                                         <div class="text-uppercase text-secondary font-weight-medium">Terpakai</div>
-                                        <div class="display-6 fw-bold my-3">0' . '</div>
+                                        <div class="display-6 fw-bold my-3">' . number_format($diambil, 0, ",", ".") .  '</div>
                                     </td>
                                     <td class="text-center">
                                         <div class="text-uppercase text-secondary font-weight-medium">Stok</div>
-                                        <div class="display-6 fw-bold my-3">' . number_format($key->qty_diterima, 0, ",", ".") . '</div>
+                                        <div class="display-6 fw-bold my-3">' . number_format(($key->qty_diterima - $diambil), 0, ",", ".") . '</div>
                                     </td>
                                 </tr>
                             </thead>

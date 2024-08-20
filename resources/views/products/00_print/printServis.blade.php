@@ -103,13 +103,20 @@
                     <?php $i = 1; ?>
                     <tbody class="text-black" style="border-color: black;">
                         @foreach ($servisItem as $key => $w)
+                            <?php
+                            $m = DB::table('mastermesinitm AS mi')
+                                ->select('me.mesin', 'mi.merk', 'mi.kode_nomor')
+                                ->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')
+                                ->where('mi.id_itm', '=', $w->mesin)
+                                ->first();
+                            ?>
                             <tr>
                                 <td class="text-center">{{ $i }}</td>
                                 <td class="text-center">{{ $w->kodeseri_servis }}</td>
                                 <td class="text-center">{{ $w->namaBarang }}</td>
                                 <td class="text-center">{{ $w->keterangan }}</td>
                                 <td class="text-center">{{ $w->serialnumber }}</td>
-                                <td class="text-center">{{ $w->mesin }}</td>
+                                <td class="text-center">{{ $m->mesin . ' ' . $m->merk . ' ' . $m->kode_nomor }}</td>
                                 <td class="text-center">{{ $w->qty }}</td>
                                 <td class="text-center">{{ $w->satuan }}</td>
                                 <td class="text-center">{{ $w->pemesan }}</td>

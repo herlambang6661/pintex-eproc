@@ -104,6 +104,13 @@
                     <?php $i = 1; ?>
                     <tbody class="text-black" style="border-color: black;">
                         @foreach ($permintaanItem as $key => $w)
+                            <?php
+                            $m = DB::table('mastermesinitm AS mi')
+                                ->select('me.mesin', 'mi.merk')
+                                ->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')
+                                ->where('mi.id_mesinitm', '=', $w->mesin)
+                                ->first();
+                            ?>
                             <tr>
                                 <td class="text-center">{{ $i }}</td>
                                 <td class="text-center">{{ $w->kodeseri }}</td>
@@ -111,7 +118,7 @@
                                 <td class="text-center">{{ $w->keterangan }}</td>
                                 <td class="text-center">{{ $w->katalog }}</td>
                                 <td class="text-center">{{ $w->part }}</td>
-                                <td class="text-center">{{ $w->mesin }}</td>
+                                <td class="text-center">{{ $m->mesin . ' ' . $m->merk }}</td>
                                 <td class="text-center">{{ $w->qty }}</td>
                                 <td class="text-center">{{ $w->satuan }}</td>
                                 <td class="text-center">{{ $w->pemesan }}</td>
