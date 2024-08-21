@@ -203,9 +203,13 @@ class PembelianController extends Controller
             }
             $jml = count($request->id);
             echo '
+                    <input name="package" id="package" type="hidden" value="0">
                     <div class="row">
                         <div class="col-lg-5 col-md-12">
                             <div class="card bg-orange-lt text-dark transparent-card card-xl shadow rounded border border-blue">
+                                <div class="card-header pb-0 pt-1">
+                                    <h5 class="card-title">Data Formulir</h5>
+                                </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
@@ -249,8 +253,8 @@ class PembelianController extends Controller
                                                 <label class="form-label">Mata Uang</label>
                                                 <div class="row">
                                                     <div class="col-lg-7">
-                                                        <select class="form-control" name="uang" id="uangcheck">
-                                                            <option value="">-- Pilih Mata Uang --</option>
+                                                        <select class="form-select" name="uang" id="uangcheck">
+                                                            <option value="">-- Pilih --</option>
                                                         ';
             foreach ($uang as $key) {
                 echo '                                      <option value="' . $key->inisial . '" data-kursuang="' . $key->kurs . '">' . $key->inisial . ' - ' . $key->negara . '</option>';
@@ -380,6 +384,53 @@ class PembelianController extends Controller
                                                                 var result = parseFloat(txt1) + parseFloat(txt2);
                                                                 document.getElementById("totalPembelian").value = result;
                                                             }
+
+                                                            
+
+                                                            function setSubTotalPackage(){
+                                                                var txt1 = document.getElementById("QtyPackage").value;
+                                                                var txt2 = document.getElementById("hargaSatuPackage").value;
+                                                                var result = parseFloat(txt1) * parseFloat(txt2);
+                                                                var hasilAngka = formatRibuan(result);
+                                                                if (!isNaN(result)) {
+                                                                    document.getElementById("package-subtotalcheck").value = result;
+                                                                    document.getElementById("package-totalPembelian").value = result;
+                                                                }
+                                                            }
+
+                                                            function getDiskonsubPackage() {
+                                                                var txt1 = document.getElementById("package-subtotalcheck").value;
+                                                                var txt2 = document.getElementById("package-subdiskon").value;
+                                                                
+                                                                var resDiskon = (parseFloat(txt1) * parseFloat(txt2)) / 100;
+                                                                document.getElementById("package-subHasildiskon").value = resDiskon;
+                                                                
+                                                                var txt3 = document.getElementById("package-subHasildiskon").value;
+
+                                                                var result = parseFloat(txt1) - parseFloat(txt3);
+                                                                if (!isNaN(result)) {
+                                                                    document.getElementById("package-totalSub").value = result;
+                                                                    document.getElementById("package-totalPembelian").value = result;
+                                                                }
+                                                            }
+
+                                                            function getppnPackage() {
+                                                                var txt1 = document.getElementById("package-totalSub").value;
+                                                                var txt2 = document.getElementById("package-percentageppn").value;
+                                                                
+                                                                var result = (parseFloat(txt1) * parseFloat(txt2))/100;
+                                                                var resTot = parseFloat(txt1) + parseFloat(result);
+                                                                document.getElementById("package-totalppn").value = result;
+                                                                document.getElementById("package-totalPembelian").value = resTot;
+                                                            }
+
+                                                            function getTotalPembelianPackage() {
+                                                                var txt1 = document.getElementById("package-totalSub").value;
+                                                                var txt2 = document.getElementById("package-totalppn").value;
+                                                                
+                                                                var result = parseFloat(txt1) + parseFloat(txt2);
+                                                                document.getElementById("package-totalPembelian").value = result;
+                                                            }
                                                         </script>
                                                     </div>
                                                     <div class="col">
@@ -393,7 +444,10 @@ class PembelianController extends Controller
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-12">
-                            <div class="card bg-azure-lt text-dark transparent-card card-xl shadow rounded border border-blue" style="height: 250px">
+                            <div class="card bg-azure-lt text-dark transparent-card card-xl shadow rounded border border-blue" style="height: 280px">
+                                <div class="card-header pb-0 pt-1">
+                                    <h5 class="card-title">Data Alamat</h5>
+                                </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
@@ -411,35 +465,35 @@ class PembelianController extends Controller
                     </div>
                     <div class="mb-3 mt-3">
                         <label class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" wfd-id="id151">
-                            <span class="form-check-label">Masukkan Barang yang dipilih menjadi <i class="fw-bold">Packages</i></span>
+                            <input class="form-check-input" type="checkbox" id="packagesId" value="0" onclick="packages();">
+                            <span class="form-check-label">Masukkan Barang yang dipilih menjadi <i class="fw-bold">Package</i></span>
                         </label>
                     </div>
                     <div class="space-y">
-                    <div class="table-responsive shadow">
-                        <table class="table table-sm table-bordered text-nowrap text-dark transparent-card card-xl rounded border border-dark" style="text-transform: uppercase;font-weight: bold;font-size:10px;">
-                            <thead class="bg-purple-lt text-dark">
-                                <tr>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Tanggal</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Kodeseri</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Barang</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Deskripsi</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Qty</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Qty Beli</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Satuan</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Harga Satuan</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Jumlah</td>
-                                    <td class="text-center">Estimasi</td>
-                                    <td class="text-center">Garansi</td>
-                                    <td class="text-center" style="padding-top:15px;padding-bottom:15px" rowspan="2" colspan="3">Pajak</td>
-                                    <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Total</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center" colspan="2">(Hari)</td>
-                                </tr>
-                            </thead>
-                            <tbody class="text-dark">
-                    ';
+                        <div class="table-responsive shadow pembelianItems">
+                            <table class="table table-sm table-bordered text-nowrap text-dark transparent-card card-xl rounded border border-dark" style="text-transform: uppercase;font-weight: bold;font-size:10px;">
+                                <thead class="bg-purple-lt text-dark">
+                                    <tr>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Tanggal</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Kodeseri</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Barang</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Deskripsi</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Qty</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Qty Beli</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Satuan</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Harga Satuan</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Jumlah</td>
+                                        <td class="text-center">Estimasi</td>
+                                        <td class="text-center">Garansi</td>
+                                        <td class="text-center" style="padding-top:15px;padding-bottom:15px" rowspan="2" colspan="3">Pajak</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Total</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="2">(Hari)</td>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-dark">
+                        ';
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('permintaanitm')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
@@ -449,62 +503,149 @@ class PembelianController extends Controller
                         $stturgent = '';
                     }
                     echo '
-                            <tr>
-                                <input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">
-                                <td class="text-center" style="padding-top:10px;padding-bottom:10px;width:75px">' . Carbon::parse($u->tgl)->format('d/m/Y') . '</td>
-                                <td class="text-center" style="padding-top:10px;padding-bottom:10px;width:75px">' . $u->kodeseri . '</td>
-                                <td style="padding-top:10px;padding-bottom:10px">' . $stturgent . $u->namaBarang . ' </td>
-                                <td style="padding-top:10px;padding-bottom:10px">' . $u->keterangan . '</td>
-                                <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->qtyacc . '</td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px">
-                                    <input class="form-control form-control-sm" type="number" name="qtybeli[]" id="qtybeli-' . $u->kodeseri . '" value="' . $u->qtyacc . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required>
-                                    <input type="hidden" name="qtypermintaan[]" value="' . $u->qtyacc . '">
-                                </td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="text" name="satuan[]" id="satuan-' . $u->kodeseri . '" value="' . $u->satuan . '" style="text-align:center;" required></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="harga[]" id="harga-' . $u->kodeseri . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required></td>
-                                <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="padding-right:1px;padding-left:1px;padding-top:10px;padding-bottom:1px">
-                                    <i id="txtjumlah-' . $u->kodeseri . '"></i>
-                                    <input type="hidden" id="jumlah-' . $u->kodeseri . '">
-                                </td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px"><input class="form-control form-control-sm" type="number" name="estimasi[]" id="estimasi-' . $u->kodeseri . '" min="0"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px"><input class="form-control form-control-sm" type="number" name="garansi[]" id="garansi-' . $u->kodeseri . '" min="0"></td>
-                                <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px">
-                                    
-                                                        <select class="form-control form-control-sm" name="pajak[]" id="pajak-' . $u->kodeseri . '" onblur="getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)">
-                                                            <option value="0">-</option>
-                                                        ';
+                                    <tr>
+                                        <input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">
+                                        <td class="text-center" style="padding-top:10px;padding-bottom:10px;width:75px">' . Carbon::parse($u->tgl)->format('d/m/Y') . '</td>
+                                        <td class="text-center" style="padding-top:10px;padding-bottom:10px;width:75px">' . $u->kodeseri . '</td>
+                                        <td style="padding-top:10px;padding-bottom:10px">' . $stturgent . $u->namaBarang . ' </td>
+                                        <td style="padding-top:10px;padding-bottom:10px">' . $u->keterangan . '</td>
+                                        <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->qtyacc . '</td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px">
+                                            <input class="form-control form-control-sm" type="number" name="qtybeli[]" id="qtybeli-' . $u->kodeseri . '" value="' . $u->qtyacc . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required>
+                                            <input type="hidden" name="qtypermintaan[]" value="' . $u->qtyacc . '">
+                                        </td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="text" name="satuan[]" id="satuan-' . $u->kodeseri . '" value="' . $u->satuan . '" style="text-align:center;" required></td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="harga[]" id="harga-' . $u->kodeseri . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required></td>
+                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="padding-right:1px;padding-left:1px;padding-top:10px;padding-bottom:1px">
+                                            <i id="txtjumlah-' . $u->kodeseri . '"></i>
+                                            <input type="hidden" id="jumlah-' . $u->kodeseri . '">
+                                        </td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px"><input class="form-control form-control-sm" type="number" name="estimasi[]" id="estimasi-' . $u->kodeseri . '" min="0"></td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px"><input class="form-control form-control-sm" type="number" name="garansi[]" id="garansi-' . $u->kodeseri . '" min="0"></td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px">
+                                            
+                                                                <select class="form-control form-control-sm" name="pajak[]" id="pajak-' . $u->kodeseri . '" onblur="getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)">
+                                                                    <option value="0">-</option>
+                                                                ';
                     foreach ($pajak as $p) {
-                        echo '                              <option value="' . $p->tax_code . '" data-nm="' . $p->rate . '">' . $p->tax_code . ' ( ' . $p->rate . ' % )</option>';
+                        echo '                                      <option value="' . $p->tax_code . '" data-nm="' . $p->rate . '">' . $p->tax_code . ' ( ' . $p->rate . ' % )</option>';
                     }
-                    echo '                              </select>
-                                </td>
-                                <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
-                                    <i id="txtinisialpajak-' . $u->kodeseri . '"></i>
-                                    <input type="hidden" id="inisialpajak-' . $u->kodeseri . '" name="inisialpajak[]">
-                                </td>
-                                <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
-                                    <i id="txtitempajak-' . $u->kodeseri . '"></i>
-                                    <input type="hidden" id="itempajak-' . $u->kodeseri . '" name="itempajak[]" value="0">
-                                </td>
-                                <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
-                                    <i id="txttotalitem-' . $u->kodeseri . '"></i>
-                                    <input type="hidden" id="totalitem-' . $u->kodeseri . '" name="totalitem[]">
-                                </td>
-                            </tr>
-                            ';
+                    echo '                                      </select>
+                                        </td>
+                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
+                                            <i id="txtinisialpajak-' . $u->kodeseri . '"></i>
+                                            <input type="hidden" id="inisialpajak-' . $u->kodeseri . '" name="inisialpajak[]">
+                                        </td>
+                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
+                                            <i id="txtitempajak-' . $u->kodeseri . '"></i>
+                                            <input type="hidden" id="itempajak-' . $u->kodeseri . '" name="itempajak[]" value="0">
+                                        </td>
+                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
+                                            <i id="txttotalitem-' . $u->kodeseri . '"></i>
+                                            <input type="hidden" id="totalitem-' . $u->kodeseri . '" name="totalitem[]">
+                                        </td>
+                                    </tr>
+                                ';
                 }
             }
             echo '      
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="shadow packagesItems" style="display:none;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="card bg-yellow-lt text-dark transparent-card card-xl shadow rounded border border-blue">
+                                        <div class="card-header pb-0 pt-1">
+                                            <h3 class="card-title">Data Package</h3>
+                                        </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-3">
+                                                        <div class="mb-0 pb-0 pt-0">
+                                                            <label class="form-label">Jenis</label>
+                                                            <input type="text" class="form-control bg-secondary-lt cursor-not-allowed" value="Lain-Lain" readonly>
+                                                        </div>
+                                                        <div class="mb-0 pb-0 pt-1">
+                                                            <label class="form-label">Nama Package</label>
+                                                            <input type="text" name="packagenamaBarang" class="form-control" placeholder="Nama Package...">
+                                                        </div>
+                                                        <div class="mb-0 pb-0 pt-1">
+                                                            <label class="form-label">Deskripsi</label>
+                                                            <input type="text" name="packagedeskripsi" class="form-control" placeholder="Deskripsi...">
+                                                        </div>
+                                                        <div class="mb-0 pb-0 pt-1">
+                                                            <label class="form-label">Katalog</label>
+                                                            <input type="text" name="packagekatalog" class="form-control" placeholder="Katalog...">
+                                                        </div>
+                                                        <div class="mb-0 pb-2 pt-1">
+                                                            <label class="form-label">Part</label>
+                                                            <input type="text" name="packagepart" class="form-control" placeholder="Part...">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-3">
+                                                        <div class="mb-0 pb-0 pt-0">
+                                                            <label class="form-label">Mesin</label>
+                                                            <select class="form-select elementmesin text-nowrap" name="packagemesin"
+                                                                style="text-transform: uppercase;">
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-0 pb-0 pt-1">
+                                                            <label class="form-label">Qty</label>
+                                                            <input type="number" name="packageqty" class="form-control" placeholder="Qty..." value="1" id="QtyPackage" onblur="setSubTotalPackage()">
+                                                        </div>
+                                                        <div class="mb-0 pb-0 pt-1">
+                                                            <label class="form-label">Satuan</label>
+                                                            <input type="text" name="packagesatuan" class="form-control" placeholder="Satuan...">
+                                                        </div>
+                                                        <div class="mb-0 pb-0 pt-1">
+                                                            <label class="form-label text-primary">Harga</label>
+                                                            <input type="number" name="packagehargaSatuan" class="form-control border border-primary" placeholder="Harga Satuan Package..." id="hargaSatuPackage" onblur="setSubTotalPackage()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6">
+                                                        <div class="table-responsive">
+                                                        <table class="table table-sm table-bordered bg-primary-lt text-nowrap text-dark border border-dark" style="text-transform: uppercase;font-weight: bold;font-size:10px;">
+                                                                <tr>
+                                                                    <th colspan="2" class="fw-bold text-center">Barang dalam Package</th>
+                                                                </tr>
+                                                                <tr class="fw-bold text-center">
+                                                                    <th>Kodeseri</th>
+                                                                    <th>Nama</th>
+                                                                </tr>
+                                                        ';
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('permintaanitm')->where('id', $request->id[$i])->get();
+                foreach ($data as $u) {
+                    echo '
+                                                            <tr>
+                                                                <input type="hidden" name="packagekodeseri[]" value="' . $u->kodeseri . '">
+                                                                <td class="text-center">' . $u->kodeseri . '</td>
+                                                                <td>' . $u->namaBarang . ' ' . $u->keterangan . ' ' . $u->katalog . ' ' . $u->part . '</td>
+                                                            </tr>
+                        ';
+                }
+            }
+            echo '                                          
+                                                        </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col">
                                 <label class="form-label">Catatan</label>
                                 <textarea class="form-control shadow border border-blue" rows="8" name="keteranganform" placeholder="Masukkan Catatan Tambahan..."></textarea>
                             </div>
                             <div class="col">
-                                <div class="card bg-green-lt text-dark transparent-card card-xl shadow rounded border border-green">
+                                <div class="card bg-green-lt text-dark transparent-card card-xl shadow rounded border border-green pembelianItems">
+                                    <div class="card-header pb-0 pt-1">
+                                        <h5 class="card-title">Pembayaran</h5>
+                                    </div>
                                     <div class="card-body">
                                         <table class="text-nowrap" width="100%">
                                             <tr>
@@ -559,6 +700,64 @@ class PembelianController extends Controller
                                         </table>
                                     </div>
                                 </div>
+                                <div class="card bg-cyan-lt text-dark transparent-card card-xl shadow rounded border border-green packagesItems" style="display:none">
+                                    <div class="card-header pb-0 pt-1">
+                                        <h5 class="card-title">Pembayaran Package</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="text-nowrap" width="100%">
+                                            <tr>
+                                                <td>Sub Total</td>
+                                                <td colspan="2">:</td>
+                                                <td><input type="text" class="form-control border border-blue" id="package-subtotalcheck" name="packagesubtotalcheck" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Diskon</td>
+                                                <td>:</td>
+                                                <td style="width:110px">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control border border-blue" value="0" min="0" onblur="getDiskonsubPackage()" id="package-subdiskon" name="packagesubdiskon">
+                                                        <span class="input-group-text border border-blue">
+                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-percentage"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M6 18l12 -12" /></svg>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="package-subHasildiskon" name="packagesubHasildiskon"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td colspan="2"></td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="package-totalSub" name="packagetotalSub"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>PPN</td>
+                                                <td>:</td>
+                                                <td colspan="1" style="width:80px">
+                                                    <input type="number" class="form-control border border-blue" value="0" min="0" id="package-percentageppn" name="packagepercentageppn" onblur="getppnPackage()">
+                                                </td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="package-totalppn" name="packagetotalppn"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-primary btn-icon" aria-label="Button" onclick="getTotalPembelianPackage()">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calculator"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 3m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M8 7m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z" /><path d="M8 14l0 .01" /><path d="M12 14l0 .01" /><path d="M16 14l0 .01" /><path d="M8 17l0 .01" /><path d="M12 17l0 .01" /><path d="M16 17l0 .01" /></svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4"><hr></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Pembelian</td>
+                                                <td>:</td>
+                                                <td colspan="2"><input type="text" value="0" class="form-control border border-blue" id="package-totalPembelian" name="packagetotalPembelian"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 ';
@@ -579,207 +778,394 @@ class PembelianController extends Controller
             ],
         );
 
-        // Initiate Noform
-        $noform = DB::table("pembelian")->max('noform');
-        $noform++;
-        // input Pembelian
-        $check = DB::table('pembelian')->insert([
-            'nofkt' => $request->nopo,
-            'noform' => $noform,
-            'tgl' => $request->tgl,
-            'kurs' => $request->kurs,
-            'currid' => $request->uang,
-            'penjual' => $request->supplier,
-            'pembeli' => $request->dibeli,
-            'alamat' => $request->alamatcheck,
-            'kirim' => $request->kirimcheck,
-            'pajak' => $request->totalppn,
-            'subtotal' => $request->subtotalcheck,
-            'diskon' => $request->subdiskon,
-            'diskonint' => $request->subHasildiskon,
-            'catatan' => $request->keteranganform,
-            'grandtotal' => $request->totalPembelian,
-            'thasil' => $request->totalSub,
-            'totppn' => $request->totalppn,
-            'dibuat' => Auth::user()->name,
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
+        if ($request->package == '1') {
+            $g = DB::table('permintaanitm')->where('kodeseri', '=', $request->packagekodeseri[0])->first();
+            $h = DB::table('permintaan')->where('noform', '=', $g->noform)->first();
+            // buat barang baru di permintaan dari inputan package
+            // Initiate noform permintaan
+            // ======================================================
+            // ======================================================
+            // ====== PERMINTAAN BARU AWAL
+            // ======================================================
+            // ======================================================
+            $noformPermintaan = DB::table('permintaan')->latest('noform')->first();
+            $y = substr($noformPermintaan->noform, 0, 2);
+            if (date('y') == $y) {
+                $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
+                $noUrut = (int) substr($query->noform, -5);
+                $noUrut++;
+                $char = date('y-');
+                $noformPermintaanBaru = $char . sprintf("%05s", $noUrut);
+            } else {
+                $noformPermintaanBaru = date('y-') . "00001";
+            }
+            // Initiate kodeseri
+            $kodeseriBaru = DB::table("permintaanitm")->max('kodeseri');
+            $kodeseriBaru++;
 
-        $jml_mbl = count($request->kodeseri);
-        for ($i = 0; $i < $jml_mbl; $i++) {
-            $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
-            // input pembelian items
-            DB::table('pembelianitm')->insert([
-                "noform" => $noform,
-                "nofaktur" => $request->nopo,
-                "kode" => $getbarang->kodeseri,
-                "namabarang" => $getbarang->namaBarang,
-                "kts" => $request->qtybeli[$i],
-                "satuan" => $getbarang->satuan,
-                "harga" => $request->harga[$i],
-                "pajak" => $request->inisialpajak[$i],
-                "nmpajak" => $request->itempajak[$i],
-                "pj" => $request->itempajak[$i],
-                "jumlah" => $request->totalitem[$i],
-                "supplier" => $request->supplier,
-                "estimasi" => $request->estimasi[$i],
-                "estimasi_tgl" => date('Y-m-d', strtotime($request->estimasi[$i] . " days")),
-                "garansi" => $request->garansi[$i],
-                // "garansi_tgl" => '',
-                // "parsial" => '',
-                // "non" => '',
+            DB::table('permintaan')->insert([
+                'remember_token'    => $request->_token,
+                'tanggal'           => $request->tgl,
+                'noform'            => $noformPermintaanBaru,
+                'kabag'             => $h->kabag,
+                'keteranganform'    => $request->keteranganform,
+                'DIBUAT'            => Auth::user()->name,
+                'created_at'        => date('Y-m-d H:i:s'),
+            ]);
+            DB::table('permintaanitm')->insert([
+                'remember_token'    => $request->_token,
+                'jenis' => 'Lain',
+                'tgl' => $request->tgl,
+                'kodeseri' => $kodeseriBaru,
+                'noform' => $noformPermintaanBaru,
+                'kodeproduk' => '8',
+                'namaBarang' => strtoupper($request->packagenamaBarang),
+                'keterangan' => strtoupper($request->packagedeskripsi),
+                'katalog' => strtoupper($request->packagekatalog),
+                'part' => strtoupper($request->packagepart),
+                'mesin' => strtoupper($request->packagemesin),
+                'qty' => $request->packageqty,
+                'qtyacc' => $request->packageqty,
+                'satuan' => strtoupper($request->packagesatuan),
+                'pemesan' => $g->pemesan,
+                'unit' => $g->unit,
+                'peruntukan' => $g->peruntukan,
+                'qty_sample' => '0',
+                'proses_email' => '0',
+                'proses_po' => '0',
+                'partial' => '0',
+                'urgent' => '0',
+                'status' => "DIBELI",
+                'dibuat' => Auth::user()->name,
+                'dibeli' => $request->dibeli,
+                'pembeli' => $g->pembeli,
+                'acc' => $g->acc,
+                'package' => '1',
+                'statusACC' => $g->statusACC,
+                'tgl_qty_acc' => date('Y-m-d'),
+                'tgl_acc' => date('Y-m-d'),
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // input barang
+            DB::table('barang')->insert([
+                'jenis' => 'Lain',
+                'kodeseri' => $kodeseriBaru,
+                'form_permintaan' => $noformPermintaanBaru,
+                'kodeproduk' => '8',
+                'namaBarang' => $request->packagenamaBarang,
+                'keterangan' => $request->packagedeskripsi,
+                'katalog' => $request->packagekatalog,
+                'part' => $request->packagepart,
+                'mesin' => $request->packagemesin,
+                'satuan' => $request->packagesatuan,
+                'qty_permintaan' => $request->packageqty,
+                'qty_acc' => $request->packageqty,
+                "qty_beli" => $request->packageqty,
+                'dibeli' => $request->dibeli,
+                'status' => 'DIBELI',
+                'no_faktur' => $request->nopo,
+                'harga_satuan' => $request->packagehargaSatuan,
+                'pajak' => $request->packagetotalppn,
+                'harga_jumlah' => $request->packagetotalPembelian,
+                'supplier' => $request->supplier,
+
+                'pemesan' => $g->pemesan,
+                'unit' => $g->unit,
+                'peruntukan' => $g->peruntukan,
+                'pembeli' => $g->pembeli,
+                'estimasi_harga' => '0',
+                'tgl_permintaan' => date('Y-m-d'),
+                'tgl_qty_acc' => date('Y-m-d'),
+                'tgl_acc' => date('Y-m-d'),
+                'tgl_pembelian' => date('Y-m-d'),
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-            // Jika Qty Beli lebih besar sama dengan permintaan maka akan normal
-            // tetapi jika qty beli lebih kecil, maka akan partial dan
-            // akan buat kodeseri baru di permintaan
-            if ($request->qtypermintaan[$i] <= $request->qtybeli[$i]) {
+            // ======================================================
+            // ======================================================
+            // ====== PERMINTAAN BARU AKHIR
+            // ======================================================
+            // ======================================================
+
+            // ======================================================
+            // ======================================================
+            // ====== PEMBELIAN BARU AWAL
+            // ======================================================
+            // ======================================================
+            // Initiate Noform Pembelian
+            $noformpembelian = DB::table("pembelian")->max('noform');
+            $noformpembelian++;
+            // input Pembelian
+            $check = DB::table('pembelian')->insert([
+                'nofkt' => $request->nopo,
+                'noform' => $noformpembelian,
+                'tgl' => $request->tgl,
+                'kurs' => $request->kurs,
+                'currid' => $request->uang,
+                'penjual' => $request->supplier,
+                'pembeli' => $request->dibeli,
+                'alamat' => $request->alamatcheck,
+                'kirim' => $request->kirimcheck,
+
+                'pajak' => $request->packagetotalppn,
+                'subtotal' => $request->packagesubtotalcheck,
+                'diskon' => $request->packagesubdiskon,
+                'diskonint' => $request->packagesubHasildiskon,
+                'catatan' => $request->keteranganform,
+                'grandtotal' => $request->packagetotalPembelian,
+                'thasil' => $request->packagetotalSub,
+                'totppn' => $request->packagetotalppn,
+
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // input pembelian items
+            DB::table('pembelianitm')->insert([
+                "noform" => $noformpembelian,
+                "nofaktur" => $request->nopo,
+                "kode" => $kodeseriBaru,
+                "namabarang" => $request->packagenamaBarang,
+                "kts" => $request->packageqty,
+                "satuan" => $request->packagesatuan,
+                "harga" => $request->packagehargaSatuan,
+                "pajak" => $request->packagetotalppn,
+                "nmpajak" => $request->packagepercentageppn,
+                "pj" => $request->packagepercentageppn,
+                "jumlah" => $request->packagetotalPembelian,
+                "supplier" => $request->supplier,
+                // "estimasi" => $request->estimasi[$i],
+                // "estimasi_tgl" => date('Y-m-d', strtotime($request->estimasi[$i] . " days")),
+                // "garansi" => $request->garansi[$i],
+                // "garansi_tgl" => '',
+                // "parsial" => '',
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // ======================================================
+            // ======================================================
+            // ====== PEMBELIAN BARU AKHIR
+            // ======================================================
+            // ======================================================
+
+            $jml_mbl = count($request->packagekodeseri);
+            for ($i = 0; $i < $jml_mbl; $i++) {
+                $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->packagekodeseri[$i])->first();
                 DB::table('permintaanitm')
-                    ->where('kodeseri', $request->kodeseri[$i])
+                    ->where('kodeseri', $request->packagekodeseri[$i])
                     ->update([
                         'dibeli' => $request->dibeli,
-                        'status' => 'DIBELI',
+                        'qtyterima' => '0',
+                        'qtyakhir' => '0',
+                        'qtyselisih' => '0',
+                        "kd_package" => $kodeseriBaru,
+                        'status' => 'MASUK PACKAGE',
+                        'tgl_terima' => date('Y-m-d'),
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
-                // input barang
-                DB::table('barang')->insert([
-                    'jenis' => $getbarang->jenis,
-                    'kodeseri' => $getbarang->kodeseri,
-                    'form_permintaan' => $getbarang->noform,
-                    'kodeproduk' => $getbarang->kodeproduk,
-                    'namaBarang' => $getbarang->namaBarang,
-                    'keterangan' => $getbarang->keterangan,
-                    'katalog' => $getbarang->katalog,
-                    'part' => $getbarang->part,
-                    'mesin' => $getbarang->mesin,
-                    'satuan' => $getbarang->satuan,
-                    'qty_permintaan' => $getbarang->qty,
-                    'qty_acc' => $getbarang->qtyacc,
-                    "qty_beli" => $request->qtybeli[$i],
-                    'pemesan' => $getbarang->pemesan,
-                    'unit' => $getbarang->unit,
-                    'peruntukan' => $getbarang->peruntukan,
-                    'pembeli' => $getbarang->pembeli,
-                    'dibeli' => $request->dibeli,
-                    'status' => 'DIBELI',
-                    'urgent' => $getbarang->urgent,
-                    'no_faktur' => $request->nopo,
-                    'estimasi_harga' => $getbarang->estimasiharga,
-                    'harga_satuan' => $request->harga[$i],
-                    'pajak' => $request->itempajak[$i],
-                    'harga_jumlah' => $request->totalitem[$i],
-                    'supplier' => $request->supplier,
-                    'garansi' => $request->garansi[$i],
-                    // 'tgl_garansi' => '',
-                    'tgl_permintaan' => $getbarang->tgl,
-                    'tgl_qty_acc' => $getbarang->tgl_qty_acc,
-                    'tgl_acc' => $getbarang->tgl_acc,
-                    'tgl_pembelian' => $request->tgl,
-                    'proses_email' => $request->proses_email,
-                    'proses_po' => $request->proses_po,
+            }
+        } else {
+            // Initiate Noform
+            $noform = DB::table("pembelian")->max('noform');
+            $noform++;
+            // input Pembelian
+            $check = DB::table('pembelian')->insert([
+                'nofkt' => $request->nopo,
+                'noform' => $noform,
+                'tgl' => $request->tgl,
+                'kurs' => $request->kurs,
+                'currid' => $request->uang,
+                'penjual' => $request->supplier,
+                'pembeli' => $request->dibeli,
+                'alamat' => $request->alamatcheck,
+                'kirim' => $request->kirimcheck,
+                'pajak' => $request->totalppn,
+                'subtotal' => $request->subtotalcheck,
+                'diskon' => $request->subdiskon,
+                'diskonint' => $request->subHasildiskon,
+                'catatan' => $request->keteranganform,
+                'grandtotal' => $request->totalPembelian,
+                'thasil' => $request->totalSub,
+                'totppn' => $request->totalppn,
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            $jml_mbl = count($request->kodeseri);
+            for ($i = 0; $i < $jml_mbl; $i++) {
+                $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+                // input pembelian items
+                DB::table('pembelianitm')->insert([
+                    "noform" => $noform,
+                    "nofaktur" => $request->nopo,
+                    "kode" => $getbarang->kodeseri,
+                    "namabarang" => $getbarang->namaBarang,
+                    "kts" => $request->qtybeli[$i],
+                    "satuan" => $getbarang->satuan,
+                    "harga" => $request->harga[$i],
+                    "pajak" => $request->inisialpajak[$i],
+                    "nmpajak" => $request->itempajak[$i],
+                    "pj" => $request->itempajak[$i],
+                    "jumlah" => $request->totalitem[$i],
+                    "supplier" => $request->supplier,
+                    "estimasi" => $request->estimasi[$i],
+                    "estimasi_tgl" => date('Y-m-d', strtotime($request->estimasi[$i] . " days")),
+                    "garansi" => $request->garansi[$i],
+                    // "garansi_tgl" => '',
+                    // "parsial" => '',
+                    // "non" => '',
                     'dibuat' => Auth::user()->name,
                     'created_at' => date('Y-m-d H:i:s'),
                 ]);
-            } else {
-                $getItem = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
-                $latestKodeseri = DB::table('permintaanitm')->latest('kodeseri')->first();
-                $newKodeseri = $latestKodeseri->kodeseri + 1;
-                $newQty = $request->qtypermintaan[$i] - $request->qtybeli[$i];
-                // update qty dan status permintaan lama
-                DB::table('permintaanitm')
-                    ->where('kodeseri', $request->kodeseri[$i])
-                    ->update([
-                        'qty' => $request->qtybeli[$i],
-                        'qtyacc' => $request->qtybeli[$i],
+                // Jika Qty Beli lebih besar sama dengan permintaan maka akan normal
+                // tetapi jika qty beli lebih kecil, maka akan partial dan
+                // akan buat kodeseri baru di permintaan
+                if ($request->qtypermintaan[$i] <= $request->qtybeli[$i]) {
+                    DB::table('permintaanitm')
+                        ->where('kodeseri', $request->kodeseri[$i])
+                        ->update([
+                            'dibeli' => $request->dibeli,
+                            'status' => 'DIBELI',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    // input barang
+                    DB::table('barang')->insert([
+                        'jenis' => $getbarang->jenis,
+                        'kodeseri' => $getbarang->kodeseri,
+                        'form_permintaan' => $getbarang->noform,
+                        'kodeproduk' => $getbarang->kodeproduk,
+                        'namaBarang' => $getbarang->namaBarang,
+                        'keterangan' => $getbarang->keterangan,
+                        'katalog' => $getbarang->katalog,
+                        'part' => $getbarang->part,
+                        'mesin' => $getbarang->mesin,
+                        'satuan' => $getbarang->satuan,
+                        'qty_permintaan' => $getbarang->qty,
+                        'qty_acc' => $getbarang->qtyacc,
+                        "qty_beli" => $request->qtybeli[$i],
+                        'pemesan' => $getbarang->pemesan,
+                        'unit' => $getbarang->unit,
+                        'peruntukan' => $getbarang->peruntukan,
+                        'pembeli' => $getbarang->pembeli,
                         'dibeli' => $request->dibeli,
                         'status' => 'DIBELI',
+                        'urgent' => $getbarang->urgent,
+                        'no_faktur' => $request->nopo,
+                        'estimasi_harga' => $getbarang->estimasiharga,
+                        'harga_satuan' => $request->harga[$i],
+                        'pajak' => $request->itempajak[$i],
+                        'harga_jumlah' => $request->totalitem[$i],
+                        'supplier' => $request->supplier,
+                        'garansi' => $request->garansi[$i],
+                        // 'tgl_garansi' => '',
+                        'tgl_permintaan' => $getbarang->tgl,
+                        'tgl_qty_acc' => $getbarang->tgl_qty_acc,
+                        'tgl_acc' => $getbarang->tgl_acc,
+                        'tgl_pembelian' => $request->tgl,
+                        'proses_email' => $request->proses_email,
+                        'proses_po' => $request->proses_po,
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                } else {
+                    $getItem = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+                    $latestKodeseri = DB::table('permintaanitm')->latest('kodeseri')->first();
+                    $newKodeseri = $latestKodeseri->kodeseri + 1;
+                    $newQty = $request->qtypermintaan[$i] - $request->qtybeli[$i];
+                    // update qty dan status permintaan lama
+                    DB::table('permintaanitm')
+                        ->where('kodeseri', $request->kodeseri[$i])
+                        ->update([
+                            'qty' => $request->qtybeli[$i],
+                            'qtyacc' => $request->qtybeli[$i],
+                            'dibeli' => $request->dibeli,
+                            'status' => 'DIBELI',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+
+                    DB::table('permintaanitm')->insert([
+                        'jenis' => $getItem->jenis,
+                        'tgl' => $getItem->tgl,
+                        'kodeseri' => $newKodeseri,
+                        'noform' => $getItem->noform,
+                        'kodeproduk' => $getItem->kodeproduk,
+                        'namaBarang' => $getItem->namaBarang,
+                        'keterangan' => $getItem->keterangan,
+                        'katalog' => $getItem->katalog,
+                        'part' => $getItem->part,
+                        'mesin' => $getItem->mesin,
+                        'qty' => $newQty,
+                        'satuan' => $getItem->satuan,
+                        'pemesan' => $getItem->pemesan,
+                        'unit' => $getItem->unit,
+                        'peruntukan' => $getItem->peruntukan,
+                        'dibeli' => $getItem->dibeli,
+                        'acc' => $getItem->acc,
+                        'qtyterima' => $getItem->qtyterima,
+                        'qtyacc' => $newQty,
+                        'qtyakhir' => $getItem->qtyakhir,
+                        'qtyselisih' => $getItem->qtyselisih,
+                        'pembeli' => $getItem->pembeli,
+                        'status' => 'PROSES PEMBELIAN',
+                        'urgent' => $getItem->urgent,
+                        'nsupp' => $getItem->nsupp,
+                        'partial' => 1,
+                        'qtypenerimaan_partial' => $getItem->qtypenerimaan_partial,
+                        'kodeseri_partial' => $request->kodeseri[$i],
+                        'estimasiharga' => $getItem->estimasiharga,
+                        'statusACC' => $getItem->statusACC,
+                        'keteranganACC' => $getItem->keteranganACC,
+                        'qty_sample' => $getItem->qty_sample,
+                        'file_sample' => $getItem->file_sample,
+                        'tgl_qty_acc' => $getItem->tgl_qty_acc,
+                        'tgl_acc' => $getItem->tgl_acc,
+                        'proses_email' => $getItem->proses_email,
+                        'proses_po' => $getItem->proses_po,
+                        'dibuat' => $getItem->dibuat,
+                        'edited' => $getItem->edited,
+                        'remember_token' => $getItem->remember_token,
+                        'created_at' => $getItem->created_at,
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
 
-                DB::table('permintaanitm')->insert([
-                    'jenis' => $getItem->jenis,
-                    'tgl' => $getItem->tgl,
-                    'kodeseri' => $newKodeseri,
-                    'noform' => $getItem->noform,
-                    'kodeproduk' => $getItem->kodeproduk,
-                    'namaBarang' => $getItem->namaBarang,
-                    'keterangan' => $getItem->keterangan,
-                    'katalog' => $getItem->katalog,
-                    'part' => $getItem->part,
-                    'mesin' => $getItem->mesin,
-                    'qty' => $newQty,
-                    'satuan' => $getItem->satuan,
-                    'pemesan' => $getItem->pemesan,
-                    'unit' => $getItem->unit,
-                    'peruntukan' => $getItem->peruntukan,
-                    'dibeli' => $getItem->dibeli,
-                    'acc' => $getItem->acc,
-                    'qtyterima' => $getItem->qtyterima,
-                    'qtyacc' => $newQty,
-                    'qtyakhir' => $getItem->qtyakhir,
-                    'qtyselisih' => $getItem->qtyselisih,
-                    'pembeli' => $getItem->pembeli,
-                    'status' => 'PROSES PEMBELIAN',
-                    'urgent' => $getItem->urgent,
-                    'nsupp' => $getItem->nsupp,
-                    'partial' => 1,
-                    'qtypenerimaan_partial' => $getItem->qtypenerimaan_partial,
-                    'kodeseri_partial' => $request->kodeseri[$i],
-                    'estimasiharga' => $getItem->estimasiharga,
-                    'statusACC' => $getItem->statusACC,
-                    'keteranganACC' => $getItem->keteranganACC,
-                    'qty_sample' => $getItem->qty_sample,
-                    'file_sample' => $getItem->file_sample,
-                    'tgl_qty_acc' => $getItem->tgl_qty_acc,
-                    'tgl_acc' => $getItem->tgl_acc,
-                    'proses_email' => $getItem->proses_email,
-                    'proses_po' => $getItem->proses_po,
-                    'dibuat' => $getItem->dibuat,
-                    'edited' => $getItem->edited,
-                    'remember_token' => $getItem->remember_token,
-                    'created_at' => $getItem->created_at,
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
-
-                // input barang
-                DB::table('barang')->insert([
-                    'jenis' => $getbarang->jenis,
-                    'kodeseri' => $getbarang->kodeseri,
-                    'form_permintaan' => $getbarang->noform,
-                    'kodeproduk' => $getbarang->kodeproduk,
-                    'namaBarang' => $getbarang->namaBarang,
-                    'keterangan' => $getbarang->keterangan,
-                    'katalog' => $getbarang->katalog,
-                    'part' => $getbarang->part,
-                    'mesin' => $getbarang->mesin,
-                    'satuan' => $getbarang->satuan,
-                    'qty_permintaan' => $getbarang->qty,
-                    'qty_acc' => $newQty,
-                    'pemesan' => $getbarang->pemesan,
-                    'unit' => $getbarang->unit,
-                    'peruntukan' => $getbarang->peruntukan,
-                    'pembeli' => $getbarang->pembeli,
-                    'dibeli' => $request->dibeli,
-                    'status' => 'DIBELI',
-                    'urgent' => $getbarang->urgent,
-                    'no_faktur' => $request->nopo,
-                    'estimasi_harga' => $getbarang->estimasiharga,
-                    'harga_satuan' => $request->harga[$i],
-                    'pajak' => $request->itempajak[$i],
-                    'harga_jumlah' => $request->totalitem[$i],
-                    'supplier' => $request->supplier,
-                    'garansi' => $request->garansi[$i],
-                    // 'tgl_garansi' => '',
-                    'tgl_permintaan' => $getbarang->tgl,
-                    'tgl_qty_acc' => $getbarang->tgl_qty_acc,
-                    'tgl_acc' => $getbarang->tgl_acc,
-                    'tgl_pembelian' => $request->tgl,
-                    'proses_email' => $request->proses_email,
-                    'proses_po' => $request->proses_po,
-                    'dibuat' => Auth::user()->name,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+                    // input barang
+                    DB::table('barang')->insert([
+                        'jenis' => $getbarang->jenis,
+                        'kodeseri' => $getbarang->kodeseri,
+                        'form_permintaan' => $getbarang->noform,
+                        'kodeproduk' => $getbarang->kodeproduk,
+                        'namaBarang' => $getbarang->namaBarang,
+                        'keterangan' => $getbarang->keterangan,
+                        'katalog' => $getbarang->katalog,
+                        'part' => $getbarang->part,
+                        'mesin' => $getbarang->mesin,
+                        'satuan' => $getbarang->satuan,
+                        'qty_permintaan' => $getbarang->qty,
+                        'qty_acc' => $newQty,
+                        'pemesan' => $getbarang->pemesan,
+                        'unit' => $getbarang->unit,
+                        'peruntukan' => $getbarang->peruntukan,
+                        'pembeli' => $getbarang->pembeli,
+                        'dibeli' => $request->dibeli,
+                        'status' => 'DIBELI',
+                        'urgent' => $getbarang->urgent,
+                        'no_faktur' => $request->nopo,
+                        'estimasi_harga' => $getbarang->estimasiharga,
+                        'harga_satuan' => $request->harga[$i],
+                        'pajak' => $request->itempajak[$i],
+                        'harga_jumlah' => $request->totalitem[$i],
+                        'supplier' => $request->supplier,
+                        'garansi' => $request->garansi[$i],
+                        // 'tgl_garansi' => '',
+                        'tgl_permintaan' => $getbarang->tgl,
+                        'tgl_qty_acc' => $getbarang->tgl_qty_acc,
+                        'tgl_acc' => $getbarang->tgl_acc,
+                        'tgl_pembelian' => $request->tgl,
+                        'proses_email' => $request->proses_email,
+                        'proses_po' => $request->proses_po,
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
             }
         }
 

@@ -432,6 +432,45 @@
         function syn() {
             tablePembelian.ajax.reload();
         }
+
+        function packages() {
+            if (document.getElementById('packagesId').checked) {
+                document.getElementById('package').value = 1;
+                $(".pembelianItems").fadeOut();
+                $(".packagesItems").fadeIn();
+                console.log("switch to Package");
+                $(".elementmesin").select2({
+                    dropdownParent: $('#modalPembelian .modal-content'),
+                    language: "id",
+                    placeholder: "Pilih Mesin",
+                    width: "100%",
+                    ajax: {
+                        url: "/getMesin",
+                        dataType: "json",
+                        delay: 200,
+                        processResults: function(response) {
+                            console.log(response);
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.mesin.toUpperCase() + " " + item.merk
+                                            .toUpperCase() + (item.unit == "88" ? " (UMUM)" :
+                                                " (UNIT " + item.unit + ")"),
+                                    }
+                                })
+                            };
+                        },
+                        cache: false
+                    },
+                });
+            } else {
+                document.getElementById('package').value = 0;
+                $(".pembelianItems").fadeIn();
+                $(".packagesItems").fadeOut();
+                console.log("switch to Normal");
+            }
+        }
         $(function() {
             // TABLE =============================================================================================//
             //----------------------------------------------LIST PEMBLIAN-----------------------------------------//

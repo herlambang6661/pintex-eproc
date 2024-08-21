@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none sticky-top bg-orange-lt">
+<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none sticky-top bg-dark-lt">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
             aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">

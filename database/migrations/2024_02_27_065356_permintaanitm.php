@@ -51,6 +51,7 @@ return new class extends Migration
             $table->date('tgl_terima')->nullable();
             $table->boolean('proses_email')->nullable();
             $table->boolean('proses_po')->nullable();
+            $table->string('kd_package')->nullable();
             $table->string('dibuat')->nullable();
             $table->string('edited')->nullable();
             $table->rememberToken();
