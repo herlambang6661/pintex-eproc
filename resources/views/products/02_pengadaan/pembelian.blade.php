@@ -397,6 +397,46 @@
             </div>
         </div>
     </div>
+    <div class="modal modal-blur fade" id="modalServis" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="overlay cursor-wait">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-full-width" role="document">
+            <div class="modal-content">
+                <form id="formServis" name="formServis" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                <path d="M13 17h-7v-14h-2" />
+                                <path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" />
+                                <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                <path d="M19 21v1m0 -8v1" />
+                            </svg>
+                            Proses Pembayaran Servis
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-servis"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitServis"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- Modal End --}}
 
     <script type="text/javascript">
@@ -995,10 +1035,105 @@
                     }
                 })
             }
+            if ($("#formServis").length > 0) {
+                $("#formServis").validate({
+                    rules: {
+                        tgl: {
+                            required: true,
+                        },
+                        nopo: {
+                            required: true,
+                        },
+                        uang: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        tgl: {
+                            required: "Masukkan Tanggal Faktur",
+                        },
+                        nopo: {
+                            required: "Masukkan Nomor PO / Faktur",
+                        },
+                        uang: {
+                            required: "Masukkan Mata Uang",
+                        },
+                    },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $('#submitServis').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Mohon Menunggu...');
+                        $("#submitServis").attr("disabled", true);
+
+                        $.ajax({
+                            url: "{{ url('storedataPembelianServis') }}",
+                            type: "POST",
+                            data: $('#formServis').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Menyimpan Data',
+                                    html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Result:', response);
+                                $('#submitServis').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitServis").attr("disabled", false);
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                document.getElementById("formServis").reset();
+                                tablePembelian.ajax.reload();
+                                tableCheckPembelian.ajax.reload();
+                                tableCheckServis.ajax.reload();
+                                $('#modalServis').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tablePembelian.ajax.reload();
+                                tableCheckPembelian.ajax.reload();
+                                tableCheckServis.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitServis').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitServis").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
             // TABLE =============================================================================================//
             // MODAL =============================================================================================//
-
-            // MODAL ---------------------------------------------------------//
             $('#modalPembelian').on('show.bs.modal', function(e) {
                 $(".overlay").fadeIn(300);
                 itemTables = [];
@@ -1027,6 +1162,40 @@
                     success: function(data) {
                         //menampilkan data ke dalam modal
                         $('.fetched-data-pembelian').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            $('#modalServis').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+
+                $.each(tableCheckServis.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tableCheckServis.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkServis') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        //menampilkan data ke dalam modal
+                        $('.fetched-data-servis').html(data);
                     }
                 }).done(function() {
                     setTimeout(function() {

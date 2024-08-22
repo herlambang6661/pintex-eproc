@@ -765,6 +765,341 @@ class PembelianController extends Controller
         }
     }
 
+    public function checkServis(Request $request)
+    {
+        if (empty($request->id)) {
+            echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
+            echo "<center>Tidak ada data yang dipilih</center>";
+        } else {
+            $permintaanController = new PermintaanController();
+            $uang = DB::table("uang")->get();
+            $pajak = DB::table("pajak")->get();
+
+            $noform = DB::table("pembelian")->max('noform');
+            $noform++;
+
+            $nofaktur = DB::table("pembelianitm")->where('nofaktur', 'LIKE', '%P-INVN-%')->max('nofaktur');
+            $y = substr($nofaktur, 7, 2);
+            if (date('y') == $y) {
+                $noUrut2 = substr($nofaktur, 10, 7);
+                $na = $noUrut2 + 1;
+                $NOPO = "P-INVN-" . $y . "-" . sprintf("%07s", $na);
+            } else {
+                $NOPO = "P-INVN-" . date('y') . "-" . "0000001";
+            }
+            $jml = count($request->id);
+            echo '
+                    <div class="row mb-3">
+                        <div class="col-lg-5 col-md-12">
+                            <div class="card bg-orange-lt text-dark transparent-card card-xl shadow rounded border border-blue">
+                                <div class="card-header pb-0 pt-1">
+                                    <h5 class="card-title">Data Formulir</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Tanggal Faktur</label>
+                                                <input name="tgl" type="date" class="form-control" value="' . date("Y-m-d") . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">No. PO / Faktur</label>
+                                                <input type="text" name="nopo" class="form-control" value="' . $NOPO . '">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">No. Form</label>
+                                                <input type="text" class="form-control bg-secondary-lt cursor-not-allowed" disabled value="' . $noform . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Mata Uang</label>
+                                                <div class="row">
+                                                    <div class="col-lg-7">
+                                                        <select class="form-select" name="uang" id="uangcheck">
+                                                            <option value="">-- Pilih --</option>
+                                                        ';
+            foreach ($uang as $key) {
+                echo '                                      <option value="' . $key->inisial . '" data-kursuang="' . $key->kurs . '">' . $key->inisial . ' - ' . $key->negara . '</option>';
+            }
+            echo '                                      </select>
+                                                        <script>
+                                                            $("#uangcheck").on("change", function() {
+                                                                const kurs = $("#uangcheck option:selected").data("kursuang");
+                                                                $("[name=kurs]").val(kurs);
+                                                            });
+                                    
+                                                            function jumlahitem(id) {
+                                                                var txt1 = document.getElementById("qty-" + id).value;
+                                                                var txt2 = document.getElementById("harga-" + id).value;
+                                                                var result = parseFloat(txt1) * parseFloat(txt2);
+                                                                var hasilAngka = formatRibuan(result);
+                                                                if (!isNaN(result)) {
+                                                                    document.getElementById("totalitem-" + id).value = result;
+                                                                    document.getElementById("txttotalitem-" + id).innerText = result;
+                                                                }
+                                                            }
+
+                                                            function formatRibuan(angka){
+                                                                var number_string = angka.toString().replace(/[^,\d]/g, ""),
+                                                                split           = number_string.split("."),
+                                                                sisa            = split[0].length % 3,
+                                                                angka_hasil     = split[0].substr(0, sisa),
+                                                                ribuan          = split[0].substr(sisa).match(/\d{3}/gi);
+                                                                // tambahkan titik jika yang di input sudah menjadi angka ribuan
+                                                                if(ribuan){
+                                                                    separator = sisa ? "." : "";
+                                                                    angka_hasil += separator + ribuan.join(".");
+                                                                }
+                                                                angka_hasil = split[1] != undefined ? angka_hasil + "," + split[1] : angka_hasil;
+                                                                return angka_hasil;
+                                                            }
+
+                                                            function getPajak(id) {
+                                                                const pajak = $("#pajak-"+id+" option:selected").data("nm");
+                                                                var jml = document.getElementById("totalitem-" + id).value;
+                                                                if (!isNaN(pajak)) {
+                                                                    document.getElementById("inisialpajak-" + id).value = pajak;
+                                                                    document.getElementById("txtinisialpajak-" + id).innerText = pajak + " %";
+                                                                } else {
+                                                                    document.getElementById("inisialpajak-" + id).value = "0";
+                                                                    document.getElementById("txtinisialpajak-" + id).innerText = "0 %";
+                                                                }
+                                                                var result = (parseFloat(jml) * parseFloat(pajak)) / 100;
+                                                                var hasilAngka = formatRibuan(result);
+                                                                if (!isNaN(result)) {
+                                                                    document.getElementById("itempajak-" + id).value = result;
+                                                                    document.getElementById("txtitempajak-" + id).innerText = result;
+
+                                                                    document.getElementById("totalitem-" + id).value = document.getElementById("totalitem-" + id).value - result;
+                                                                    document.getElementById("txttotalitem-" + id).innerText = document.getElementById("totalitem-" + id).value- result;
+                                                                } else {
+                                                                    document.getElementById("itempajak-" + id).value = "0";
+                                                                    document.getElementById("txtitempajak-" + id).innerText = "0";
+                                                                }
+                                                            }
+
+                                                            function getTotalitem(id){
+                                                                var txt1 = document.getElementById("qty-" + id).value;
+                                                                var txt2 = document.getElementById("harga-" + id).value;
+                                                                var result = parseFloat(txt1) * parseFloat(txt2);
+                                                                var hasilAngka = formatRibuan(result);
+                                                                if (!isNaN(result)) {
+                                                                    document.getElementById("totalitem-" + id).value = result;
+                                                                    document.getElementById("txttotalitem-" + id).innerText = result;
+                                                                }
+                                                                    
+                                                                var arr = document.getElementsByName("totalitem[]");
+                                                                var tot = 0;
+                                                                for (var i = 0; i < arr.length; i++) {
+                                                                    if (parseFloat(arr[i].value))
+                                                                        tot += parseFloat(arr[i].value);
+                                                                }
+                                                                document.getElementById("subtotalcheck").value = tot;
+
+                                                                var txt1 = document.getElementById("subtotalcheck").value;
+                                                                var txt2 = document.getElementById("subdiskon").value;
+                                                                
+                                                                var resDiskon = (parseFloat(txt1) * parseFloat(txt2)) / 100;
+                                                                document.getElementById("subHasildiskon").value = resDiskon;
+                                                                
+                                                                var txt3 = document.getElementById("subHasildiskon").value;
+
+                                                                var result = parseFloat(txt1) - parseFloat(txt3);
+                                                                if (!isNaN(result)) {
+                                                                    document.getElementById("totalSub").value = result;
+                                                                    document.getElementById("totalPembelian").value = result;
+                                                                }
+                                                            }
+
+                                                            function getDiskonsub() {
+                                                                var txt1 = document.getElementById("subtotalcheck").value;
+                                                                var txt2 = document.getElementById("subdiskon").value;
+                                                                
+                                                                var resDiskon = (parseFloat(txt1) * parseFloat(txt2)) / 100;
+                                                                document.getElementById("subHasildiskon").value = resDiskon;
+                                                                
+                                                                var txt3 = document.getElementById("subHasildiskon").value;
+
+                                                                var result = parseFloat(txt1) - parseFloat(txt3);
+                                                                if (!isNaN(result)) {
+                                                                    document.getElementById("totalSub").value = result;
+                                                                }
+                                                            }
+
+                                                            function getppn() {
+                                                                var txt1 = document.getElementById("totalSub").value;
+                                                                var txt2 = document.getElementById("percentageppn").value;
+                                                                
+                                                                var result = (parseFloat(txt1) * parseFloat(txt2))/100;
+                                                                var resTot = parseFloat(txt1) + parseFloat(result);
+                                                                document.getElementById("totalppn").value = result;
+                                                                document.getElementById("totalPembelian").value = resTot;
+                                                            }
+
+                                                            function getTotalPembelian() {
+                                                                var txt1 = document.getElementById("totalSub").value;
+                                                                var txt2 = document.getElementById("totalppn").value;
+                                                                
+                                                                var result = parseFloat(txt1) + parseFloat(txt2);
+                                                                document.getElementById("totalPembelian").value = result;
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                    <div class="col">
+                                                        <input name="kurs" type="number" class="form-control" placeholder="Kurs">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-12">
+                        </div>
+                    </div>
+                    <div class="space-y">
+                        <div class="table-responsive shadow">
+                            <table class="table table-sm table-bordered text-nowrap text-dark transparent-card card-xl rounded border border-dark" style="text-transform: uppercase;font-weight: bold;font-size:10px;">
+                                <thead class="bg-purple-lt text-dark">
+                                    <tr>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Tanggal</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Kodeseri</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Barang</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Deskripsi</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Qty</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Mesin</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Pemesan</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Supplier</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Harga Satuan</td>
+                                        <td class="text-center" style="padding-top:15px;padding-bottom:15px" rowspan="2" colspan="3">Pajak</td>
+                                        <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Total</td>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-dark">
+                        ';
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('servisitm')->where('id', $request->id[$i])->get();
+                foreach ($data as $u) {
+                    if ($u->urgent == 1) {
+                        $stturgent = '<span class="badge bg-red ms-auto badge-blink"></span> ';
+                    } else {
+                        $stturgent = '';
+                    }
+                    echo '
+                                    <tr>
+                                        <input type="hidden" name="kodeseri[]" value="' . $u->kodeseri_servis . '">
+                                        <td class="text-center" style="padding-top:10px;padding-bottom:10px;width:75px">' . Carbon::parse($u->tgl_servis)->format('d/m/Y') . '</td>
+                                        <td class="text-center" style="padding-top:10px;padding-bottom:10px;width:75px">' . $u->kodeseri_servis . '</td>
+                                        <td style="padding-top:10px;padding-bottom:10px">' . $stturgent . $u->namaBarang . ' </td>
+                                        <td style="padding-top:10px;padding-bottom:10px">' . $u->keterangan . '</td>
+                                        <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->qty . ' ' . $u->satuan . '</td>
+                                        <input type="hidden" name="qty[]" id="qty-' . $u->kodeseri_servis . '" value="' . $u->qty . '">
+                                        <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->mesin . '</td>
+                                        <td class="text-center" style="padding-top:10px;padding-bottom:10px">' . $u->pemesan . '</td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="text" name="supplier[]" id="supplier-' . $u->kodeseri_servis . '" value="' . $u->supplier . '" required></td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="harga[]" id="harga-' . $u->kodeseri_servis . '" onblur="jumlahitem(`' . $u->kodeseri_servis . '`);getPajak(`' . $u->kodeseri_servis . '`);getTotalitem(`' . $u->kodeseri_servis . '`)" onkeyup="jumlahitem(`' . $u->kodeseri_servis . '`);getPajak(`' . $u->kodeseri_servis . '`);getTotalitem(`' . $u->kodeseri_servis . '`)" min="0" style="text-align:center;" required></td>
+                                        <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px">
+                                            <select class="form-control form-control-sm" name="pajak[]" id="pajak-' . $u->kodeseri_servis . '" onblur="getPajak(`' . $u->kodeseri_servis . '`);getTotalitem(`' . $u->kodeseri_servis . '`)">
+                                                <option value="0">-</option>
+                            ';
+                    foreach ($pajak as $p) {
+                        echo '                  <option value="' . $p->tax_code . '" data-nm="' . $p->rate . '">' . $p->tax_code . ' ( ' . $p->rate . ' % )</option>';
+                    }
+                    echo '                  </select>
+                                        </td>
+                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
+                                            <i id="txtinisialpajak-' . $u->kodeseri_servis . '"></i>
+                                            <input type="hidden" id="inisialpajak-' . $u->kodeseri_servis . '" name="inisialpajak[]">
+                                        </td>
+                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
+                                            <i id="txtitempajak-' . $u->kodeseri_servis . '"></i>
+                                            <input type="hidden" id="itempajak-' . $u->kodeseri_servis . '" name="itempajak[]" value="0">
+                                        </td>
+                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
+                                            <i id="txttotalitem-' . $u->kodeseri_servis . '"></i>
+                                            <input type="hidden" id="totalitem-' . $u->kodeseri_servis . '" name="totalitem[]">
+                                        </td>
+                                    </tr>
+                                ';
+                }
+            }
+            echo '      
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">Catatan</label>
+                                <textarea class="form-control shadow border border-blue" rows="8" name="keteranganform" placeholder="Masukkan Catatan Tambahan..."></textarea>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-green-lt text-dark transparent-card card-xl shadow rounded border border-green">
+                                    <div class="card-header pb-0 pt-1">
+                                        <h5 class="card-title">Pembayaran</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="text-nowrap" width="100%">
+                                            <tr>
+                                                <td>Sub Total</td>
+                                                <td colspan="2">:</td>
+                                                <td><input type="text" class="form-control border border-blue" id="subtotalcheck" name="subtotalcheck" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Diskon</td>
+                                                <td>:</td>
+                                                <td style="width:110px">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control border border-blue" value="0" min="0" onblur="getDiskonsub()" id="subdiskon" name="subdiskon">
+                                                        <span class="input-group-text border border-blue">
+                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-percentage"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M6 18l12 -12" /></svg>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="subHasildiskon" name="subHasildiskon"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td colspan="2"></td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="totalSub" name="totalSub"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>PPN</td>
+                                                <td>:</td>
+                                                <td colspan="1" style="width:80px">
+                                                    <input type="number" class="form-control border border-blue" value="0" min="0" id="percentageppn" name="percentageppn" onblur="getppn()">
+                                                </td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="totalppn" name="totalppn"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-primary btn-icon" aria-label="Button" onclick="getTotalPembelian()">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calculator"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 3m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M8 7m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z" /><path d="M8 14l0 .01" /><path d="M12 14l0 .01" /><path d="M16 14l0 .01" /><path d="M8 17l0 .01" /><path d="M12 17l0 .01" /><path d="M16 17l0 .01" /></svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4"><hr></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Pembelian</td>
+                                                <td>:</td>
+                                                <td colspan="2"><input type="text" value="0" class="form-control border border-blue" id="totalPembelian" name="totalPembelian"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                ';
+            echo '      </div>';
+        }
+    }
+
     public function storePembelian(Request $request)
     {
         $request->validate(
@@ -1167,6 +1502,122 @@ class PembelianController extends Controller
                     ]);
                 }
             }
+        }
+
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data: ' . $request->nopo . ' telah berhasil disimpan', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
+    public function storeServis(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+                'tgl' => 'required',
+                'nopo' => 'required',
+                'uang' => 'required',
+            ],
+        );
+
+        // Initiate Noform
+        $noform = DB::table("pembelian")->max('noform');
+        $noform++;
+        // input Pembelian
+        $check = DB::table('pembelian')->insert([
+            'nofkt' => $request->nopo,
+            'noform' => $noform,
+            'tgl' => $request->tgl,
+            'kurs' => $request->kurs,
+            'currid' => $request->uang,
+            'penjual' => '',
+            'pembeli' => '',
+            'alamat' => '',
+            'kirim' => '',
+            'pajak' => $request->totalppn,
+            'subtotal' => $request->subtotalcheck,
+            'diskon' => $request->subdiskon,
+            'diskonint' => $request->subHasildiskon,
+            'catatan' => $request->keteranganform,
+            'grandtotal' => $request->totalPembelian,
+            'thasil' => $request->totalSub,
+            'totppn' => $request->totalppn,
+            'dibuat' => Auth::user()->name,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        $jml_mbl = count($request->kodeseri);
+        for ($i = 0; $i < $jml_mbl; $i++) {
+            $getbarang = DB::table('servisitm')->where('kodeseri_servis', '=', $request->kodeseri[$i])->first();
+            // input pembelian items
+            DB::table('pembelianitm')->insert([
+                "noform" => $noform,
+                "nofaktur" => $request->nopo,
+                "kode" => $getbarang->kodeseri_servis,
+                "namabarang" => $getbarang->namaBarang,
+                "kts" => $request->qty[$i],
+                "satuan" => $getbarang->satuan,
+                "harga" => $request->harga[$i],
+                "pajak" => $request->inisialpajak[$i],
+                "nmpajak" => $request->itempajak[$i],
+                "pj" => $request->itempajak[$i],
+                "jumlah" => $request->totalitem[$i],
+                "supplier" => $request->supplier[$i],
+                // "estimasi" => $request->estimasi[$i],
+                // "estimasi_tgl" => date('Y-m-d', strtotime($request->estimasi[$i] . " days")),
+                // "garansi" => $request->garansi[$i],
+                // "garansi_tgl" => '',
+                // "parsial" => '',
+                // "non" => '',
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // Jika Qty Beli lebih besar sama dengan permintaan maka akan normal
+            // tetapi jika qty beli lebih kecil, maka akan partial dan
+            // akan buat kodeseri baru di permintaan
+            DB::table('servisitm')
+                ->where('kodeseri_servis', $request->kodeseri[$i])
+                ->update([
+                    'status' => 'DIBAYAR',
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+            // input barang
+            DB::table('barang')->insert([
+                'jenis' => 'Servis',
+                'kodeseri' => $getbarang->kodeseri_servis,
+                'form_permintaan' => $getbarang->noformservis,
+                'kodeproduk' => $getbarang->kodeproduk_servis,
+                'namaBarang' => $getbarang->namaBarang,
+                'keterangan' => $getbarang->keterangan,
+                'katalog' => $getbarang->katalog,
+                'part' => $getbarang->part,
+                'mesin' => $getbarang->mesin,
+                'satuan' => $getbarang->satuan,
+                'qty_permintaan' => $getbarang->qty,
+                'qty_acc' => $getbarang->qty,
+                "qty_beli" => $request->qty[$i],
+                'pemesan' => $getbarang->pemesan,
+                'unit' => '',
+                'peruntukan' => '',
+                'pembeli' => '',
+                'dibeli' => $request->dibeli,
+                'status' => 'DIBELI',
+                'urgent' => $getbarang->urgent,
+                'no_faktur' => $request->nopo,
+                'harga_satuan' => $request->harga[$i],
+                'pajak' => $request->itempajak[$i],
+                'harga_jumlah' => $request->totalitem[$i],
+                'supplier' => $request->supplier[$i],
+                // 'tgl_garansi' => '',
+                'tgl_permintaan' => $getbarang->tgl_servis,
+                'tgl_qty_acc' => date('Y-m-d'),
+                'tgl_acc' => date('Y-m-d'),
+                'tgl_pembelian' => $request->tgl,
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
         }
 
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
