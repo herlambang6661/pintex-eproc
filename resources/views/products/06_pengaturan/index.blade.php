@@ -88,24 +88,36 @@
 
                                         <br>
                                         <!-- Tambahkan tombol di sini -->
-                                        <div class="mt-auto">
-                                            <button class="btn btn-outline-primary me-2" data-bs-toggle="modal"
-                                                data-bs-target="#modal-reset{{ $item->id }}">
-                                                <i class="fa-solid fa-unlock-keyhole"></i>
-                                            </button>
-                                            <button class="btn btn-outline-warning me-2" data-bs-toggle="modal"
-                                                data-bs-target="#modal-edit{{ $item->id }}"><i
-                                                    class="fas fa-edit"></i></button>
-                                            <form id="deleteForm{{ $item->id }}"
-                                                action="/pengguna/destroy/{{ $item->id }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-outline-danger me-2"
-                                                    onclick="confirmDelete(event, {{ $item->id }})">
-                                                    <i class="fa-solid fa-fw fa-trash-can"></i>
+                                        <div class="row">
+                                            <div class="col">
+                                                <button class="btn btn-outline-green me-2" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-checklist">
+                                                    <i class="fa-solid fa-list-check"></i>
                                                 </button>
-                                            </form>
+                                            </div>
+                                            <div class="col">
+                                                <button class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-reset{{ $item->id }}">
+                                                    <i class="fa-solid fa-unlock-keyhole"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col">
+                                                <button class="btn btn-outline-warning me-2" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-edit{{ $item->id }}"><i
+                                                        class="fas fa-edit"></i></button>
+                                            </div>
+                                            <div class="col">
+                                                <form id="deleteForm{{ $item->id }}"
+                                                    action="/pengguna/destroy/{{ $item->id }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-outline-danger me-2"
+                                                        onclick="confirmDelete(event, {{ $item->id }})">
+                                                        <i class="fa-solid fa-fw fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -162,6 +174,455 @@
         </div>
     </div>
     {{-- end pengguna --}}
+
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px #ddd solid;
+            border-top: 4px #2e93e6 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+
+        @keyframes sp-anime {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .is-hide {
+            display: none;
+        }
+    </style>
+    <div class="modal modal-blur fade" id="modal-checklist" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="overlay cursor-wait">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form id="formPembelian" name="formPembelian" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-carambola">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M17.286 21.09q -1.69 .001 -5.288 -2.615q -3.596 2.617 -5.288 2.616q -2.726 0 -.495 -6.8q -9.389 -6.775 2.135 -6.775h.076q 1.785 -5.516 3.574 -5.516q 1.785 0 3.574 5.516h.076q 11.525 0 2.133 6.774q 2.23 6.802 -.497 6.8" />
+                            </svg>
+                            Otorisasi User
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{-- <div class="fetched-data-pembelian"></div> --}}
+                        <div class="row row-cards">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card card-md">
+                                    <div class="card-body ps-3 pe-3">
+                                        <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                            <div class="display-5 fw-bold my-3">
+                                                <div class="icon-demo-icon icon-demo-stroke-200 icon-demo-size-128 tooltip tooltip-monospaced"
+                                                    data-title="width='128'; height='128'">
+                                                    <span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="icon icon-tabler icon-tabler-shopping-bag-search"
+                                                            width="24" height="24" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M11.5 21h-2.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.117 .761" />
+                                                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                                                            <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                                            <path d="M20.2 20.2l1.8 1.8" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <label class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="packagesId"
+                                                    value="0" onclick="packages();">
+                                                <span class="form-check-label">Pengadaan</span>
+                                            </label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="divide-y">
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Permintaan</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Persetujuan</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Proses Email</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Pembelian</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Status Barang</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <a href="#" class="btn btn-green w-100">Choose plan</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card card-md">
+                                    <div class="card-body ps-3 pe-3">
+                                        <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                            <div class="display-5 fw-bold my-3">
+                                                <div class="icon-demo-icon icon-demo-stroke-200 icon-demo-size-128 tooltip tooltip-monospaced"
+                                                    data-title="width='128'; height='128'">
+                                                    <span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="icon icon-tabler icon-tabler-shopping-bag-search"
+                                                            width="24" height="24" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M11.5 21h-2.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.117 .761" />
+                                                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                                                            <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                                            <path d="M20.2 20.2l1.8 1.8" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <label class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="packagesId"
+                                                    value="0" onclick="packages();">
+                                                <span class="form-check-label">Pengadaan</span>
+                                            </label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="divide-y">
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Permintaan</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Persetujuan</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Proses Email</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Pembelian</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Status Barang</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <a href="#" class="btn btn-green w-100">Choose plan</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card card-md">
+                                    <div class="card-body ps-3 pe-3">
+                                        <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                            <div class="display-5 fw-bold my-3">
+                                                <div class="icon-demo-icon icon-demo-stroke-200 icon-demo-size-128 tooltip tooltip-monospaced"
+                                                    data-title="width='128'; height='128'">
+                                                    <span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="icon icon-tabler icon-tabler-shopping-bag-search"
+                                                            width="24" height="24" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M11.5 21h-2.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.117 .761" />
+                                                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                                                            <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                                            <path d="M20.2 20.2l1.8 1.8" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <label class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="packagesId"
+                                                    value="0" onclick="packages();">
+                                                <span class="form-check-label">Pengadaan</span>
+                                            </label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="divide-y">
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Permintaan</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Persetujuan</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Proses Email</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Pembelian</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Status Barang</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <a href="#" class="btn btn-green w-100">Choose plan</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card card-md">
+                                    <div class="card-body ps-3 pe-3">
+                                        <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                            <div class="display-5 fw-bold my-3">
+                                                <div class="icon-demo-icon icon-demo-stroke-200 icon-demo-size-128 tooltip tooltip-monospaced"
+                                                    data-title="width='128'; height='128'">
+                                                    <span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="icon icon-tabler icon-tabler-shopping-bag-search"
+                                                            width="24" height="24" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M11.5 21h-2.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.117 .761" />
+                                                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                                                            <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                                            <path d="M20.2 20.2l1.8 1.8" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <label class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="packagesId"
+                                                    value="0" onclick="packages();">
+                                                <span class="form-check-label">Pengadaan</span>
+                                            </label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="divide-y">
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Permintaan</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Persetujuan</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Proses Email</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Pembelian</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="row">
+                                                        <span class="col">Status Barang</span>
+                                                        <span class="col-auto">
+                                                            <label class="form-check form-check-single form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    checked="">
+                                                            </label>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <a href="#" class="btn btn-green w-100">Choose plan</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitPembelian"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     {{-- modal edit --}}
     @foreach ($users as $item)
