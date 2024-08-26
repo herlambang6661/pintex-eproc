@@ -84,7 +84,28 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#tabs-supplier" class="nav-link active" data-bs-toggle="tab">
+                                            <a href="#tabs-mesin" class="nav-link active" data-bs-toggle="tab">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-robot">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                                                    <path d="M12 2v2" />
+                                                    <path d="M9 12v9" />
+                                                    <path d="M15 12v9" />
+                                                    <path d="M5 16l4 -2" />
+                                                    <path d="M15 14l4 2" />
+                                                    <path d="M9 18h6" />
+                                                    <path d="M10 8v.01" />
+                                                    <path d="M14 8v.01" />
+                                                </svg>
+                                                Mesin
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-supplier" class="nav-link" data-bs-toggle="tab">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="currentColor"
                                                     class="icon icon-tabler icons-tabler-filled icon-tabler-shopping-cart">
@@ -112,27 +133,6 @@
                                                     <path d="M12 9l0 3" />
                                                 </svg>
                                                 Item
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#tabs-mesin" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-robot">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
-                                                    <path d="M12 2v2" />
-                                                    <path d="M9 12v9" />
-                                                    <path d="M15 12v9" />
-                                                    <path d="M5 16l4 -2" />
-                                                    <path d="M15 14l4 2" />
-                                                    <path d="M9 18h6" />
-                                                    <path d="M10 8v.01" />
-                                                    <path d="M14 8v.01" />
-                                                </svg>
-                                                Mesin
                                             </a>
                                         </li>
                                         <li class="nav-item">
@@ -170,7 +170,7 @@
                                 </div>
 
                                 <div class="tab-content">
-                                    <div class="tab-pane active show" id="tabs-supplier">
+                                    <div class="tab-pane" id="tabs-supplier">
                                         <div class="card card-xl shadow rounded border border-blue">
                                             <div class="table-responsive">
                                                 <table class="table mb-0">
@@ -274,32 +274,43 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tabs-mesin">
+                                    <div class="tab-pane active show" id="tabs-mesin">
                                         <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="card-header">
-                                                <h5>Laporan Pemakaian By Mesin</h5>
-                                            </div>
+                                            <h4 class="card-header bg-azure-lt pt-1 pb-1">Laporan Pemakaian by Mesin</h4>
                                             <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <div class="form-group">
-                                                            <label for="start_date">Start Date</label>
-                                                            <input type="date" class="form-control" id="start_date"
-                                                                name="start_date" required>
+                                                <form id="formReportMesin" class="form-horizontal mb-3">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAwalMesin">Tanggal Awal</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="tanggalAwalMesin" name="tanggalAwalMesin" required
+                                                                    value="{{ date('Y-m-01') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAkhirMesin">Tanggal Akhir</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="tanggalAkhirMesin" name="tanggalAkhirMesin"
+                                                                    required value="{{ date('Y-m-d') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 d-flex align-items-end">
+                                                            <button type="button" class="btn btn-primary btn-block"
+                                                                onclick="cariReportMesin()">
+                                                                <i class="fa fa-search" style="margin-right: 5px"></i>
+                                                                Lihat
+                                                                Data
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-5">
-                                                        <div class="form-group">
-                                                            <label for="end_date">End Date</label>
-                                                            <input type="date" class="form-control" id="end_date"
-                                                                name="end_date" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 d-flex align-items-end">
-                                                        <button type="submit"
-                                                            class="btn btn-primary btn-block">Search</button>
-                                                    </div>
-                                                </div>
+                                                </form>
+
+                                                <div id="hasil_cari"></div>
+                                                <div id="tunggu"></div>
+                                                <span id="success-msg">
                                             </div>
                                         </div>
                                     </div>
@@ -382,6 +393,34 @@
             });
 
             dt.ajax.reload();
+        }
+
+
+        function cariReportMesin() {
+            let tgaw = $('#tanggalAwalMesin').val();
+            let tgak = $('#tanggalAkhirMesin').val();
+            // alert(str);
+            $.ajax({
+                // cache: false,
+                type: "POST",
+                url: "{{ url('laporan/lihatDataMesin') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    startDate: tgaw,
+                    endDate: tgak,
+                },
+                beforeSend: function() {
+                    $("#hasil_cari").hide();
+                    $("#tunggu").html(
+                        '<center><lottie-player src="https://lottie.host/03a70b30-5cc2-4418-941e-09828e26b1d8/ypNkHv3IyB.json" background="#fff" speed="1" style="width: 300px; height: 300px" loop autoplay direction="1" mode="normal"></lottie-player><i class="fa-solid fa-spinner fa-spin"></i> Mohon Menunggu, Sedang Tarik Data...</center>'
+                    );
+                },
+                success: function(html) {
+                    $("#tunggu").html('');
+                    $("#hasil_cari").show();
+                    $("#hasil_cari").html(html);
+                }
+            });
         }
 
         $(document).ready(function() {
