@@ -9,7 +9,7 @@
                 <img src="{{ asset('assets/static/assets.png') }}" width="25px" alt="" srcset="">
             </a>
             <a href="{{ url('dashboard') }}">
-                E-PROC
+                E-PROC {{ Session::get('entitas') }}
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">

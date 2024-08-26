@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" href="{{ asset('assets/static/assets.png') }}">
-    <title>Login - EPROC</title>
+    <title>Landing page - EPROC</title>
     <!-- CSS files -->
     <link href="{{ url('assets/dist/css/tabler.min.css?1684106062') }}" rel="stylesheet" />
     <link href="{{ url('assets/dist/css/tabler-flags.min.css?1684106062') }}" rel="stylesheet" />
@@ -60,7 +60,7 @@
                             <h1 class="text-light">E-PROCUREMENT</h1>
                         </a>
                     </div>
-                    <form class="card card-md" action="./" method="get" autocomplete="off" novalidate="">
+                    <div class="card card-md border border-black">
                         <div class="card-body text-center">
                             <div class="mb-1">
                                 <h1 class="card-title">Pilih Entitas</h1>
@@ -69,21 +69,50 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="mb-4">
-                                        <a class="avatar avatar-xl mb-3 bg-green-lt link-offset-2 link-underline link-underline-opacity-0"
-                                            style="background-image: url(./static/avatars/000m.jpg)">PTX</a>
-                                        <h3>PINTEX</h3>
+                                        <form action="{{ url('Home') }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="entitas" value="ALL">
+                                            <button type="submit"
+                                                class="avatar avatar-xl mb-3 bg-green-lt link-offset-2 link-underline link-underline-opacity-0 border border-green"
+                                                style="background-image: url(./static/avatars/000m.jpg)">
+                                                ALL
+                                            </button>
+                                            <h3>SEMUA</h3>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="mb-4">
-                                        <a class="avatar avatar-xl mb-3 bg-purple-lt link-offset-2 link-underline link-underline-opacity-0"
-                                            style="background-image: url(./static/avatars/000m.jpg)">TFI</a>
-                                        <h3>TFI</h3>
+                                        <form action="{{ url('Home') }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="entitas" value="PINTEX">
+                                            <button type="submit"
+                                                class="avatar avatar-xl mb-3 bg-blue-lt link-offset-2 link-underline link-underline-opacity-0 border border-blue"
+                                                style="background-image: url(./static/avatars/000m.jpg)">
+                                                PTX
+                                            </button>
+                                            <h3>PINTEX</h3>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-4">
+                                        <form action="{{ url('Home') }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="entitas" value="TFI">
+                                            <button type="submit"
+                                                class="avatar avatar-xl mb-3 bg-purple-lt link-offset-2 link-underline link-underline-opacity-0 border border-purple"
+                                                style="background-image: url(./static/avatars/000m.jpg)">
+                                                TFI
+                                            </button>
+                                            <h3>TFI</h3>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

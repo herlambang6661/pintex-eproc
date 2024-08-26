@@ -31,4 +31,8 @@ class DashboardController extends Controller
         }
         return Response()->json($itm);
     }
+    public function landing()
+    {
+        return view('landing');
+    }
 }

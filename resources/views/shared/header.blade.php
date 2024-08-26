@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" href="{{ asset('assets/static/assets.png') }}">
-    <title>{{ $judul }} - EPROC PT PINTEX (Stand Alone)</title>
+    <title>{{ $judul }} - EPROC PT {{ Session::get('entitas') }} (Stand Alone)</title>
     <!-- CSS files -->
     <link href="{{ url('assets/dist/css/tabler.min.css?1684106062') }}" rel="stylesheet" />
     <link href="{{ url('assets/dist/css/tabler-flags.min.css?1684106062') }}" rel="stylesheet" />

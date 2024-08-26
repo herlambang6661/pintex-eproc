@@ -26,7 +26,7 @@ class PermintaanList extends Controller
      */
     public function index(Request $request)
     {
-
+        $entitas = $request->session()->get('entitas');
         if ($request->ajax()) {
             if ($request->dari) {
                 $dari = $request->dari;
@@ -42,6 +42,7 @@ class PermintaanList extends Controller
 
             $data = DB::table('permintaanitm AS pe')
                 ->whereBetween('pe.tgl', [$dari, $sampai])
+                ->where('pe.entitas', 'LIKE', '%' . $entitas . '%')
                 ->orderBy('pe.kodeseri', 'desc')
                 ->get();
 

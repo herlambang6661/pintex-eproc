@@ -65,6 +65,7 @@ Route::resource('getListPengiriman', PengirimanList::class);
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::get('dashboard', [AuthController::class, 'dashboard']);
+Route::post('Home', [AuthController::class, 'setSession'])->name('Home');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
@@ -72,6 +73,7 @@ Route::post('post-registration', [AuthController::class, 'postRegistration'])->n
 // Rute Dashboard
 Route::controller(DashboardController::class)->group(function () {
     Route::get('getSearchEngine', 'CariBarangSearchEngine')->name('getSearchEngine');
+    Route::get('landing', 'landing')->name('landing');
 });
 
 //Rute Master

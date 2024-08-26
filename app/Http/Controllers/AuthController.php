@@ -53,10 +53,17 @@ class AuthController extends Controller
             ]);
         } else {
             if (Auth::attempt($request->only(["username", "password"]))) {
-                return response()->json([
-                    "status" => true,
-                    "redirect" => url("dashboard")
-                ]);
+                if (Auth::user()->entitas_all == 1) {
+                    return response()->json([
+                        "status" => true,
+                        "redirect" => url("landing")
+                    ]);
+                } else {
+                    return response()->json([
+                        "status" => true,
+                        "redirect" => url("dashboard")
+                    ]);
+                }
             } else {
                 return response()->json([
                     "status" => false,
@@ -107,6 +114,24 @@ class AuthController extends Controller
     public function dashboard()
     {
         if (Auth::check()) {
+            return view('products.dashboard', [
+                'active' => 'Dashboard',
+                'judul' => 'Dashboard',
+            ]);
+        }
+
+        return redirect("login")->withSuccess('Opps! You do not have access');
+    }
+
+    public function setSession(Request $request)
+    {
+        if (Auth::check()) {
+            if ($request->entitas == 'ALL') {
+                session(['entitas' => '']);
+            } else {
+                session(['entitas' => $request->entitas]);
+            }
+            // pemanggilan : Session::get('entitas') 
             return view('products.dashboard', [
                 'active' => 'Dashboard',
                 'judul' => 'Dashboard',

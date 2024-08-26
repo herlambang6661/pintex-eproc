@@ -33,13 +33,31 @@
             --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
         }
 
-        body {
-            font-feature-settings: "cv03", "cv04", "cv11";
-        }
-
         .error {
             color: #FF0000;
             font-style: italic;
+        }
+
+        body {
+            font-feature-settings: "cv03", "cv04", "cv11";
+            background: linear-gradient(-45deg, #ffd0d0, #1100ff, #802ece, #ef8120);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
     </style>
 </head>
@@ -51,7 +69,7 @@
             <div class="row align-items-center g-4">
                 <div class="col-lg">
                     <div class="container-tight">
-                        <div class="text-center mb-4 h2">
+                        <div class="text-center mb-4 h2 text-white">
                             E-PROCUREMENT <br>
                             PT PINTEX
                         </div>

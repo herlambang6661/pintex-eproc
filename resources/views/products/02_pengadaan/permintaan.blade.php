@@ -184,9 +184,16 @@
                                             @csrf
                                             <div class="row">
                                                 <div class="control-group col-lg-3">
-                                                    <div class="mb-3">
+                                                    <div class="mb-1">
+                                                        <label class="form-label">Entitas</label>
+                                                        <input type="text" name="entitas" id="entitas"
+                                                            class="form-control {{ Session::get('entitas') == '' ? '' : 'cursor-not-allowed' }}"
+                                                            {{ Session::get('entitas') == '' ? '' : 'disabled' }}
+                                                            value="{{ Session::get('entitas') == '' ? 'PINTEX' : Session::get('entitas') }}">
+                                                    </div>
+                                                    <div class="mb-1">
                                                         <label class="form-label">Tanggal Permintaan</label>
-                                                        <div class="input-icon mb-2">
+                                                        <div class="input-icon mb-0">
                                                             <input name="tanggal" class="form-control "
                                                                 placeholder="Select a date" id="datepicker-icon"
                                                                 value="<?= date('Y-m-d') ?>" />
@@ -208,7 +215,7 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    <div class="mb-1">
+                                                    <div class="mb-3">
                                                         <label class="form-label">Kepala Bagian</label>
                                                         <select name="kabag" id="kabag"
                                                             class="form-select elementkabag" data-select2-id="kabag"
