@@ -36,10 +36,7 @@ class LaporanPemakaianController extends Controller
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-                        <div class="d-flex justify-content-center align-items-center input-group-text">
-                            <p>UNIT 1</p>
-                            <?php echo number_format($sumunit1, 2, ",", "."); ?>
-                        </div>
+                        UNIT 1 <span class="badge bg-blue text-blue-fg"><?php echo number_format($sumunit1, 2, ",", "."); ?></span>
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
@@ -59,64 +56,60 @@ class LaporanPemakaianController extends Controller
                                         </h2>
                                         <div id="panelsStayOpen-collapse<?php echo $show->id ?>" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading<?php echo $show->id ?>">
                                             <div class="accordion-body">
-                                                <div class="card-body">
-                                                    <?php
-                                                    $dataLM = $this->getSubMesin('1', $show->id);
-                                                    foreach ($dataLM as $h) : ?>
-                                                        <div class="card-header bg-info" role="tab" id="section1HeaderId">
-                                                            <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianId" href="#section1ContentId<?php echo $h->id_itm ?>" aria-expanded="true" aria-controls="section1ContentId">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <p class="mb-0"><?php echo $h->merk . " " . $h->kode_nomor ?></p>
-                                                                    <?php //echo ($this->Adm->subsubsumUnit($h->id_itm) == null ? "" : "Rp. ".number_format($this->Adm->subsubsumUnit($h->id_itm),2,",",".")); 
-                                                                    ?>
-                                                                    <?php $result1 = ($this->subsubsumPerkalian($h->id_itm, $startDate, $endDate)) ?>
-                                                                    <?php echo ($result1 == null ? "" : number_format($result1)) ?>
-                                                                    <h5 class="mb-0"><i class="fa-solid fa-angles-down"></i></h5>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                        <div id="section1ContentId<?php echo $h->id_itm ?>" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
-                                                            <div class="card-body">
-
-                                                                <?php
-                                                                $datalapmesin = $this->loadDataLapMesin($h->id_itm, $startDate, $endDate);
-                                                                if (empty($datalapmesin)) {
-                                                                    echo '<center>Tidak ada data yang ditampilkan</center>';
-                                                                } else { ?>
-                                                                    <table class="table table-sm table-bordered">
-                                                                        <thead>
-                                                                            <th class="bg-dark">Kodeseri</th>
-                                                                            <th class="bg-dark">Nama Barang</th>
-                                                                            <th class="bg-dark">Deskripsi</th>
-                                                                            <th class="bg-dark">Katalog</th>
-                                                                            <th class="bg-dark">Part</th>
-                                                                            <th class="bg-dark">Qty</th>
-                                                                            <th class="bg-dark">Harga</th>
-                                                                            <th class="bg-dark">Jumlah</th>
-                                                                        </thead>
-                                                                        <tbody style="color: black">
-                                                                            <?php
-                                                                            foreach ($datalapmesin as $s) : ?>
-                                                                                <tr>
-                                                                                    <td><?php echo $s->kodeseri ?></td>
-                                                                                    <td><?php echo $s->namaBarang ?></td>
-                                                                                    <td><?php echo $s->kodeseri ?></td>
-                                                                                    <td><?php echo $s->kodeseri ?></td>
-                                                                                    <td><?php echo $s->kodeseri ?></td>
-                                                                                    <td><?php echo $s->ambil ?></td>
-                                                                                    <td><?php echo number_format($s->harga) ?></td>
-                                                                                    <td><?php echo number_format(($s->ambil * $s->harga)) ?></td>
-                                                                                </tr>
-                                                                            <?php endforeach;
-                                                                            ?>
-                                                                        </tbody>
-                                                                    </table>
-                                                                <?php }
+                                                <?php
+                                                $dataLM = $this->getSubMesin('1', $show->id);
+                                                foreach ($dataLM as $h) : ?>
+                                                    <div class="card-header bg-info" role="tab" id="section1HeaderId">
+                                                        <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianId" href="#section1ContentId<?php echo $h->id_itm ?>" aria-expanded="true" aria-controls="section1ContentId">
+                                                            <div class="d-flex justify-content-between">
+                                                                <p class="mb-0"><?php echo $h->merk . " " . $h->kode_nomor ?></p>
+                                                                <?php //echo ($this->Adm->subsubsumUnit($h->id_itm) == null ? "" : "Rp. ".number_format($this->Adm->subsubsumUnit($h->id_itm),2,",",".")); 
                                                                 ?>
+                                                                <?php $result1 = ($this->subsubsumPerkalian($h->id_itm, $startDate, $endDate)) ?>
+                                                                <?php echo ($result1 == null ? "" : number_format($result1)) ?>
                                                             </div>
+                                                        </a>
+                                                    </div>
+                                                    <div id="section1ContentId<?php echo $h->id_itm ?>" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
+                                                        <div class="card-body">
+                                                            <?php
+                                                            $datalapmesin = $this->loadDataLapMesin($h->id_itm, $startDate, $endDate);
+                                                            if (empty($datalapmesin)) {
+                                                                echo '<center>Tidak ada data yang ditampilkan</center>';
+                                                            } else { ?>
+                                                                <table class="table table-sm table-bordered">
+                                                                    <thead>
+                                                                        <th class="bg-dark">Kodeseri</th>
+                                                                        <th class="bg-dark">Nama Barang</th>
+                                                                        <th class="bg-dark">Deskripsi</th>
+                                                                        <th class="bg-dark">Katalog</th>
+                                                                        <th class="bg-dark">Part</th>
+                                                                        <th class="bg-dark">Qty</th>
+                                                                        <th class="bg-dark">Harga</th>
+                                                                        <th class="bg-dark">Jumlah</th>
+                                                                    </thead>
+                                                                    <tbody style="color: black">
+                                                                        <?php
+                                                                        foreach ($datalapmesin as $s) : ?>
+                                                                            <tr>
+                                                                                <td><?php echo $s->kodeseri ?></td>
+                                                                                <td><?php echo $s->namaBarang ?></td>
+                                                                                <td><?php echo $s->kodeseri ?></td>
+                                                                                <td><?php echo $s->kodeseri ?></td>
+                                                                                <td><?php echo $s->kodeseri ?></td>
+                                                                                <td><?php echo $s->ambil ?></td>
+                                                                                <td><?php echo number_format($s->harga) ?></td>
+                                                                                <td><?php echo number_format(($s->ambil * $s->harga)) ?></td>
+                                                                            </tr>
+                                                                        <?php endforeach;
+                                                                        ?>
+                                                                    </tbody>
+                                                                </table>
+                                                            <?php }
+                                                            ?>
                                                         </div>
-                                                    <?php endforeach; ?>
-                                                </div>
+                                                    </div>
+                                                <?php endforeach; ?>
                                             </div>
                                         </div>
                                     </div>
