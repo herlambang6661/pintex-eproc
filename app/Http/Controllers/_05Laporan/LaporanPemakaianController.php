@@ -18,379 +18,109 @@ class LaporanPemakaianController extends Controller
 
     public function laporanMesin(Request $request)
     {
-
         $startDate = strval($_POST['startDate']);
         $endDate = $_POST['endDate'];
-        // die();
 
         $sumunit1 = $this->sumUnit(1, $startDate, $endDate);
         $sumunit2 = $this->sumUnit(2, $startDate, $endDate);
         $sumunit3 = $this->sumUnit(15, $startDate, $endDate);
         $sumunit4 = $this->sumUnit(88, $startDate, $endDate);
-        $lapMesin1 = $this->getMesin(1);
-        $lapMesin2 = $this->getMesin(2);
-        $lapMesin3 = $this->getMesin(15);
-        $lapMesin4 = $this->getMesin(88);
 ?>
+        <style>
+            .accordion-button {
+                display: block;
+            }
+        </style>
         <div class="accordion" id="accordionPanelsStayOpenExample">
-            <div class="accordion-item">
+            <div class="accordion-item bg-blue-lt">
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-                        UNIT 1 <span class="badge bg-blue text-blue-fg"><?php echo number_format($sumunit1, 2, ",", "."); ?></span>
+                    <button class="accordion-button collapsed text-center py-1" onclick="getMesin('unit1'); this.onclick=null;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="my-auto">UNIT 1</h3>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="my-auto"><?php echo number_format($sumunit1, 0, ",", "."); ?></h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" my-auto icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 9l6 6l6 -6" />
+                                </svg>
+                            </div>
+                        </div>
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
                     <div class="accordion-body">
-                        <!-- Accordian Value Unit 1 -->
-                        <div id="accordianId" role="tablist" aria-multiselectable="true">
-                            <div class="card">
-                                <?php foreach ($lapMesin1 as $show) : ?>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="panelsStayOpen-heading<?php echo $show->id ?>">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $show->id ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $show->id ?>">
-                                                <div class="d-flex justify-content-between">
-                                                    <p class="mb-0"><?php echo $show->mesin ?></p>
-                                                    <?php echo ($this->subsumUnit($show->id, $startDate, $endDate) == null ? "" : number_format($this->subsumUnit($show->id, $startDate, $endDate), 2, ",", ".")); ?>
-                                                </div>
-                                            </button>
-                                        </h2>
-                                        <div id="panelsStayOpen-collapse<?php echo $show->id ?>" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading<?php echo $show->id ?>">
-                                            <div class="accordion-body">
-                                                <?php
-                                                $dataLM = $this->getSubMesin('1', $show->id);
-                                                foreach ($dataLM as $h) : ?>
-                                                    <div class="card-header bg-info" role="tab" id="section1HeaderId">
-                                                        <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianId" href="#section1ContentId<?php echo $h->id_itm ?>" aria-expanded="true" aria-controls="section1ContentId">
-                                                            <div class="d-flex justify-content-between">
-                                                                <p class="mb-0"><?php echo $h->merk . " " . $h->kode_nomor ?></p>
-                                                                <?php //echo ($this->Adm->subsubsumUnit($h->id_itm) == null ? "" : "Rp. ".number_format($this->Adm->subsubsumUnit($h->id_itm),2,",",".")); 
-                                                                ?>
-                                                                <?php $result1 = ($this->subsubsumPerkalian($h->id_itm, $startDate, $endDate)) ?>
-                                                                <?php echo ($result1 == null ? "" : number_format($result1)) ?>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div id="section1ContentId<?php echo $h->id_itm ?>" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
-                                                        <div class="card-body">
-                                                            <?php
-                                                            $datalapmesin = $this->loadDataLapMesin($h->id_itm, $startDate, $endDate);
-                                                            if (empty($datalapmesin)) {
-                                                                echo '<center>Tidak ada data yang ditampilkan</center>';
-                                                            } else { ?>
-                                                                <table class="table table-sm table-bordered">
-                                                                    <thead>
-                                                                        <th class="bg-dark">Kodeseri</th>
-                                                                        <th class="bg-dark">Nama Barang</th>
-                                                                        <th class="bg-dark">Deskripsi</th>
-                                                                        <th class="bg-dark">Katalog</th>
-                                                                        <th class="bg-dark">Part</th>
-                                                                        <th class="bg-dark">Qty</th>
-                                                                        <th class="bg-dark">Harga</th>
-                                                                        <th class="bg-dark">Jumlah</th>
-                                                                    </thead>
-                                                                    <tbody style="color: black">
-                                                                        <?php
-                                                                        foreach ($datalapmesin as $s) : ?>
-                                                                            <tr>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->namaBarang ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->ambil ?></td>
-                                                                                <td><?php echo number_format($s->harga) ?></td>
-                                                                                <td><?php echo number_format(($s->ambil * $s->harga)) ?></td>
-                                                                            </tr>
-                                                                        <?php endforeach;
-                                                                        ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            <?php }
-                                                            ?>
-                                                        </div>
-                                                    </div>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                        <!-- Accordian Value Unit 1 -->
+                        <div id="hasil_mesin_unit1"></div>
+                        <div id="tunggu_mesin_unit1"></div>
+                        <span id="success-msg">
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item bg-red-lt">
                 <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                        UNIT 2 <?php echo number_format($sumunit2, 2, ",", "."); ?>
+                    <button class="accordion-button collapsed text-center pt-1 pb-1" onclick="getMesin('unit2'); this.onclick=null;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="my-auto">UNIT 2</h3>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="my-auto"><?php echo number_format($sumunit2, 0, ",", "."); ?></h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" my-auto icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 9l6 6l6 -6" />
+                                </svg>
+                            </div>
+                        </div>
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                     <div class="accordion-body">
-                        <div class="card-body">
-                            <!-- Accordian Value Unit 2 -->
-                            <div id="accordianId2" role="tablist" aria-multiselectable="true">
-                                <div class="card">
-                                    <?php foreach ($lapMesin2 as $show) : ?>
-                                        <div class="card-header bg-secondary" role="tab" id="section1HeaderId">
-                                            <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianId2" href="#section1ContentId<?php echo $show->id ?>" aria-expanded="true" aria-controls="section1ContentId">
-                                                <div class="d-flex justify-content-between">
-                                                    <!-- Undone -->
-                                                    <p class="mb-0"><?php echo $show->mesin ?></p>
-                                                    <?php echo ($this->subsumUnit($show->id, $startDate, $endDate) == null ? "" : number_format($this->subsumUnit($show->id, $startDate, $endDate), 2, ",", ".")); ?>
-                                                    <h5 class="mb-0"><i class="fa-solid fa-angles-down"></i></h5>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div id="section1ContentId<?php echo $show->id ?>" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
-                                            <div class="card-body">
-
-                                                <?php
-                                                $dataLM = $this->getSubMesin('2', $show->id);
-                                                foreach ($dataLM as $h) : ?>
-                                                    <div class="card-header bg-info" role="tab" id="section1HeaderId">
-                                                        <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianId" href="#section1ContentId<?php echo $h->id_itm ?>" aria-expanded="true" aria-controls="section1ContentId">
-                                                            <div class="d-flex justify-content-between">
-                                                                <p class="mb-0"><?php echo $h->merk . " " . $h->kode_nomor ?></p>
-                                                                <?php //echo ($this->Adm->subsubsumUnit($h->id_itm) == null ? "" : "Rp. ".number_format($this->Adm->subsubsumUnit($h->id_itm),2,",",".")); 
-                                                                ?>
-                                                                <?php $result2 = ($this->subsubsumPerkalian($h->id_itm, $startDate, $endDate)) ?>
-                                                                <?php echo ($result2 == null ? "" : number_format($result2)) ?>
-                                                                <h5 class="mb-0"><i class="fa-solid fa-angles-down"></i></h5>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div id="section1ContentId<?php echo $h->id_itm ?>" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
-                                                        <div class="card-body">
-
-                                                            <?php
-                                                            $datalapmesin = $this->loadDataLapMesin($h->id_itm, $startDate, $endDate);
-                                                            if (empty($datalapmesin)) {
-                                                                echo '<center>Tidak ada data yang ditampilkan</center>';
-                                                            } else { ?>
-                                                                <table class="table table-sm table-bordered">
-                                                                    <thead>
-                                                                        <th class="bg-dark">Kodeseri</th>
-                                                                        <th class="bg-dark">Nama Barang</th>
-                                                                        <th class="bg-dark">Deskripsi</th>
-                                                                        <th class="bg-dark">Katalog</th>
-                                                                        <th class="bg-dark">Part</th>
-                                                                        <th class="bg-dark">Qty</th>
-                                                                        <th class="bg-dark">Harga</th>
-                                                                        <th class="bg-dark">Jumlah</th>
-                                                                    </thead>
-                                                                    <tbody style="color: black">
-                                                                        <?php
-                                                                        foreach ($datalapmesin as $s) : ?>
-                                                                            <tr>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->namaBarang ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->ambil ?></td>
-                                                                                <td><?php echo $s->harga ?></td>
-                                                                                <td><?php echo $s->ambil * $s->harga ?></td>
-                                                                            </tr>
-                                                                        <?php endforeach;
-                                                                        ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            <?php }
-                                                            ?>
-                                                        </div>
-                                                    </div>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                            <!-- Accordian Value Unit 2 -->
-                        </div>
+                        <div id="hasil_mesin_unit2"></div>
+                        <div id="tunggu_mesin_unit2"></div>
+                        <span id="success-msg">
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item bg-green-lt">
                 <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                        KENDARAAN <?php echo number_format($sumunit3, 2, ",", "."); ?>
+                    <button class="accordion-button collapsed text-center pt-1 pb-1" onclick="getMesin('unit3'); this.onclick=null;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="my-auto">KENDARAAN</h3>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="my-auto text-center"><?php echo number_format($sumunit3, 0, ",", "."); ?></h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" my-auto icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 9l6 6l6 -6" />
+                                </svg>
+                            </div>
+                        </div>
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                     <div class="accordion-body">
-                        <div class="card-body">
-                            <!-- Accordian Value Unit 2 -->
-                            <div id="accordianIdKendaraan" role="tablist" aria-multiselectable="true">
-                                <div class="card">
-                                    <?php foreach ($lapMesin3 as $show) : ?>
-                                        <div class="card-header bg-secondary" role="tab" id="section3HeaderId">
-                                            <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianIdKendaraan" href="#section1ContentId<?php echo $show->id ?>" aria-expanded="true" aria-controls="section1ContentId">
-                                                <div class="d-flex justify-content-between">
-                                                    <!-- Undone -->
-                                                    <p class="mb-0"><?php echo $show->mesin ?></p>
-                                                    <?php echo ($this->subsumUnit($show->id, $startDate, $endDate) == null ? "" : number_format($this->subsumUnit($show->id, $startDate, $endDate), 2, ",", ".")); ?>
-                                                    <h5 class="mb-0"><i class="fa-solid fa-angles-down"></i></h5>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div id="section1ContentId<?php echo $show->id ?>" class="collapse in" role="tabpanel" aria-labelledby="section3HeaderId">
-                                            <div class="card-body">
-                                                <?php
-                                                $dataLM = $this->getSubMesin('15', $show->id);
-                                                foreach ($dataLM as $h) : ?>
-                                                    <div class="card-header bg-info" role="tab" id="section3HeaderId">
-                                                        <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianId" href="#section1ContentId<?php echo $h->id_itm ?>" aria-expanded="true" aria-controls="section1ContentId">
-                                                            <div class="d-flex justify-content-between">
-                                                                <p class="mb-0"><?php echo $h->merk . " " . $h->kode_nomor ?></p>
-                                                                <?php //echo ($this->Adm->subsubsumUnit($h->id_itm) == null ? "" : "Rp. ".number_format($this->Adm->subsubsumUnit($h->id_itm),2,",",".")); 
-                                                                ?>
-                                                                <?php $result2 = ($this->subsubsumPerkalian($h->id_itm, $startDate, $endDate)) ?>
-                                                                <?php echo ($result2 == null ? "" : number_format($result2)) ?>
-                                                                <h5 class="mb-0"><i class="fa-solid fa-angles-down"></i></h5>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div id="section1ContentId<?php echo $h->id_itm ?>" class="collapse in" role="tabpanel" aria-labelledby="section3HeaderId">
-                                                        <div class="card-body">
-
-                                                            <?php
-                                                            $datalapmesin = $this->loadDataLapMesin($h->id_itm, $startDate, $endDate);
-                                                            if (empty($datalapmesin)) {
-                                                                echo '<center>Tidak ada data yang ditampilkan</center>';
-                                                            } else { ?>
-                                                                <table class="table table-sm table-bordered">
-                                                                    <thead>
-                                                                        <th class="bg-dark">Kodeseri</th>
-                                                                        <th class="bg-dark">Nama Barang</th>
-                                                                        <th class="bg-dark">Deskripsi</th>
-                                                                        <th class="bg-dark">Katalog</th>
-                                                                        <th class="bg-dark">Part</th>
-                                                                        <th class="bg-dark">Qty</th>
-                                                                        <th class="bg-dark">Harga</th>
-                                                                        <th class="bg-dark">Jumlah</th>
-                                                                    </thead>
-                                                                    <tbody style="color: black">
-                                                                        <?php
-                                                                        foreach ($datalapmesin as $s) : ?>
-                                                                            <tr>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->namaBarang ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->ambil ?></td>
-                                                                                <td><?php echo $s->harga ?></td>
-                                                                                <td><?php echo $s->ambil * $s->harga ?></td>
-                                                                            </tr>
-                                                                        <?php endforeach;
-                                                                        ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            <?php }
-                                                            ?>
-                                                        </div>
-                                                    </div>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                            <!-- Accordian Value Unit 2 -->
-                        </div>
+                        <div id="hasil_mesin_unit3"></div>
+                        <div id="tunggu_mesin_unit3"></div>
+                        <span id="success-msg">
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item bg-yellow-lt">
                 <h2 class="accordion-header" id="panelsStayOpen-headingFour">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                        UMUM <?php echo number_format($sumunit4, 2, ",", "."); ?>
+                    <button class="accordion-button collapsed text-center pt-1 pb-1" onclick="getMesin('unit4'); this.onclick=null;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="my-auto">UMUM</h3>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="my-auto text-center"><?php echo number_format($sumunit4, 0, ",", "."); ?></h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" my-auto icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 9l6 6l6 -6" />
+                                </svg>
+                            </div>
+                        </div>
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
                     <div class="accordion-body">
-                        <div class="card-body">
-                            <!-- Accordian Value Unit 2 -->
-                            <div id="accordianIdUmum" role="tablist" aria-multiselectable="true">
-                                <div class="card">
-                                    <?php foreach ($lapMesin4 as $show) : ?>
-                                        <div class="card-header bg-secondary" role="tab" id="section3HeaderId">
-                                            <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianIdUmum" href="#section1ContentId<?php echo $show->id ?>" aria-expanded="true" aria-controls="section1ContentId">
-                                                <div class="d-flex justify-content-between">
-                                                    <!-- Undone -->
-                                                    <p class="mb-0"><?php echo $show->mesin ?></p>
-                                                    <?php echo ($this->subsumUnit($show->id, $startDate, $endDate) == null ? "" : number_format($this->subsumUnit($show->id, $startDate, $endDate), 2, ",", ".")); ?>
-                                                    <h5 class="mb-0"><i class="fa-solid fa-angles-down"></i></h5>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div id="section1ContentId<?php echo $show->id ?>" class="collapse in" role="tabpanel" aria-labelledby="section3HeaderId">
-                                            <div class="card-body">
-                                                <?php
-                                                $dataLM = $this->getSubMesin('88', $show->id);
-                                                foreach ($dataLM as $h) : ?>
-                                                    <div class="card-header bg-info" role="tab" id="section3HeaderId">
-                                                        <a data-toggle="collapse" class="text-decoration-none text-white" data-parent="#accordianId" href="#section1ContentId<?php echo $h->id_itm ?>" aria-expanded="true" aria-controls="section1ContentId">
-                                                            <div class="d-flex justify-content-between">
-                                                                <p class="mb-0"><?php echo $h->merk . " " . $h->kode_nomor ?></p>
-                                                                <?php //echo ($this->Adm->subsubsumUnit($h->id_itm) == null ? "" : "Rp. ".number_format($this->Adm->subsubsumUnit($h->id_itm),2,",",".")); 
-                                                                ?>
-                                                                <?php $result2 = ($this->subsubsumPerkalian($h->id_itm, $startDate, $endDate)) ?>
-                                                                <?php echo ($result2 == null ? "" : number_format($result2)) ?>
-                                                                <h5 class="mb-0"><i class="fa-solid fa-angles-down"></i></h5>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div id="section1ContentId<?php echo $h->id_itm ?>" class="collapse in" role="tabpanel" aria-labelledby="section3HeaderId">
-                                                        <div class="card-body">
-
-                                                            <?php
-                                                            $datalapmesin = $this->loadDataLapMesin($h->id_itm, $startDate, $endDate);
-                                                            if (empty($datalapmesin)) {
-                                                                echo '<center>Tidak ada data yang ditampilkan</center>';
-                                                            } else { ?>
-                                                                <table class="table table-sm table-bordered">
-                                                                    <thead>
-                                                                        <th class="bg-dark">Kodeseri</th>
-                                                                        <th class="bg-dark">Nama Barang</th>
-                                                                        <th class="bg-dark">Deskripsi</th>
-                                                                        <th class="bg-dark">Katalog</th>
-                                                                        <th class="bg-dark">Part</th>
-                                                                        <th class="bg-dark">Qty</th>
-                                                                        <th class="bg-dark">Harga</th>
-                                                                        <th class="bg-dark">Jumlah</th>
-                                                                    </thead>
-                                                                    <tbody style="color: black">
-                                                                        <?php
-                                                                        foreach ($datalapmesin as $s) : ?>
-                                                                            <tr>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->namaBarang ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->kodeseri ?></td>
-                                                                                <td><?php echo $s->ambil ?></td>
-                                                                                <td><?php echo $s->harga ?></td>
-                                                                                <td><?php echo $s->ambil * $s->harga ?></td>
-                                                                            </tr>
-                                                                        <?php endforeach;
-                                                                        ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            <?php }
-                                                            ?>
-                                                        </div>
-                                                    </div>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                            <!-- Accordian Value Unit 2 -->
-                        </div>
+                        <div id="hasil_mesin_unit4"></div>
+                        <div id="tunggu_mesin_unit4"></div>
+                        <span id="success-msg">
                     </div>
                 </div>
             </div>
@@ -414,22 +144,64 @@ class LaporanPemakaianController extends Controller
         return $query;
     }
 
-    private function getMesin($unit)
+    public function getMesin(Request $request)
     {
+        if ($request->unit == 'unit1') {
+            $unit = "1";
+        } elseif ($request->unit == 'unit2') {
+            $unit = "2";
+        } elseif ($request->unit == 'unit3') {
+            $unit = "15";
+        } elseif ($request->unit == 'unit4') {
+            $unit = "88";
+        }
         $query = DB::table('mastermesin')
             ->where('unit', $unit)
             ->orderBy("mesin", "ASC")
             ->get();
-        return $query;
+        echo '
+        <div id="accordianId" role="tablist" aria-multiselectable="true">
+            <div class="card my-0">';
+        foreach ($query as $show) {
+            echo '
+                <div class="accordion-item">
+                    <h2 class="accordion-header py-0" id="panelsStayOpen-heading-sub' . $show->id . '">
+                        <button class="accordion-button collapsed my-0 py-1" type="button" onclick="getSubMesin(`' . $request->unit . '`, `' . $show->id . '`); this.onclick=null;" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-sub' . $show->id . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse-sub' . $show->id . '">
+                            <div class="d-flex justify-content-between">
+                                <p class="my-auto">
+                                    ' . strtoupper($show->mesin) . '
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="my-auto">' . ($this->subsumUnit($show->id, $request->startDate, $request->endDate) == null ? "" : number_format($this->subsumUnit($show->id, $request->startDate, $request->endDate), 0, ",", ".")) . '</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" my-auto icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M6 9l6 6l6 -6" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapse-sub' . $show->id . '" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-sub' . $show->id . '">
+                        <div class="accordion-body">
+                            <div id="hasil_sub_mesin_' . $show->id . '"></div>
+                            <div id="tunggu_sub_mesin_' . $show->id . '"></div>
+                            <span id="success-msg">
+                        </div>
+                    </div>
+                </div>';
+        }
+        echo '
+            </div>
+        </div>';
     }
 
-    private function subsumUnit($unit, $awal, $akhir)
+    private function subsumUnit($id, $awal, $akhir)
     {
         $query = DB::table("pengambilanitm AS p")
             ->select(DB::raw('SUM(p.jumlah * b.harga) as total'))
             ->join('mastermesinitm AS i', 'p.mesin', '=', 'i.id_itm')
             ->join('pembelianitm AS b', 'p.kodeseri', '=', 'b.kode')
-            ->where('i.id_mesin', $unit)
+            ->where('i.id_mesin', $id)
             ->whereBetween('p.tanggal', [$awal, $akhir])
             ->first();
         if ($query) {
@@ -438,15 +210,89 @@ class LaporanPemakaianController extends Controller
         return $query;
     }
 
-    private function getSubMesin($unit, $id)
+    public function getSubMesin(Request $request)
     {
+        if ($request->unit == 'unit1') {
+            $unit = "1";
+        } elseif ($request->unit == 'unit2') {
+            $unit = "2";
+        } elseif ($request->unit == 'unit3') {
+            $unit = "15";
+        } elseif ($request->unit == 'unit4') {
+            $unit = "88";
+        }
         $query = DB::table('mastermesinitm AS mi')
             ->join('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
-            ->where('me.id', $id)
+            ->where('me.id', $request->id)
             ->where('unit', $unit)
             ->orderBy("merk", "ASC")
             ->get();
-        return $query;
+        echo '
+        <div id="accordianId" role="tablist" aria-multiselectable="true">
+            <div class="card my-0">';
+        foreach ($query as $show) {
+            $datalapmesin = $this->loadDataLapMesin($show->id_itm, $request->startDate, $request->endDate);
+            echo '
+                <div class="accordion-item">
+                    <h2 class="accordion-header py-0" id="panelsStayOpen-sub-heading' . $show->id_itm . '">
+                        <button class="accordion-button collapsed my-0 py-1" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-sub-' . $show->id_itm . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse-sub-' . $show->id_itm . '">
+                            <div class="d-flex justify-content-between">
+                                <p class="my-auto">
+                                    ' . strtoupper($show->merk) . ' ' . strtoupper($show->kode_nomor) . '
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="my-auto">' . number_format($this->subsubsumPerkalian($show->id_itm, $request->startDate, $request->endDate), 0, ",", ".")  . '</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" my-auto icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M6 9l6 6l6 -6" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapse-sub-' . $show->id_itm . '" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-sub-heading' . $show->id_itm . '">
+                        <div class="accordion-body">';
+            if (empty($datalapmesin)) {
+                echo '      <center>Tidak ada data yang ditampilkan</center>';
+            } else {
+                echo '
+                            <table class="table table-sm table-bordered bg-azure-lt">
+                                <thead>
+                                    <th class="text-center">Kodeseri</th>
+                                    <th class="text-center">Nama Barang</th>
+                                    <th class="text-center">Deskripsi</th>
+                                    <th class="text-center">Katalog</th>
+                                    <th class="text-center">Part</th>
+                                    <th class="text-center">Qty</th>
+                                    <th class="text-center">Harga</th>
+                                    <th class="text-center">Jumlah</th>
+                                </thead>
+                                <tbody style="color: black">';
+                foreach ($datalapmesin as $s) {
+                    echo '
+                                        <tr>
+                                            <td class="text-center">' . $s->kodeseri . '</td>
+                                            <td>' . $s->namaBarang . '</td>
+                                            <td>' . $s->keterangan . '</td>
+                                            <td>' . $s->katalog . '</td>
+                                            <td>' . $s->part . '</td>
+                                            <td class="text-center">' . $s->ambil . '</td>
+                                            <td class="text-center">' . number_format($s->harga) . '</td>
+                                            <td class="text-center">' . number_format(($s->ambil * $s->harga)) . '</td>
+                                        </tr>';
+                }
+                echo '
+                                </tbody>
+                            </table>';
+            }
+            echo '
+                        </div>
+                    </div>
+                </div>';
+        }
+        echo '
+            </div>
+        </div>';
     }
 
     private function subsubsumPerkalian($id, $awal, $akhir)
@@ -467,9 +313,10 @@ class LaporanPemakaianController extends Controller
     private function loadDataLapMesin($id, $awal, $akhir)
     {
         $query = DB::table('pengambilanitm AS p')
-            ->select('p.kodeseri', 'p.namaBarang', 'b.kts', 'b.harga', 'b.jumlah', 'p.jumlah as ambil')
+            ->select('p.kodeseri', 'p.namaBarang', 'a.keterangan', 'a.katalog', 'a.part', 'b.kts', 'b.harga', 'b.jumlah', 'p.jumlah as ambil')
             ->join('pembelianitm AS b', 'p.kodeseri', '=', 'b.kode')
-            ->where('mesin', $id)
+            ->join('barang AS a', 'p.kodeseri', '=', 'a.kodeseri')
+            ->where('p.mesin', $id)
             ->whereBetween('p.tanggal', [$awal, $akhir])
             ->orderBy("namaBarang", "ASC")
             ->get();

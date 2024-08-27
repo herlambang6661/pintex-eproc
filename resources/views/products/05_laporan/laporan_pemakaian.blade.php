@@ -85,9 +85,10 @@
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
                                             <a href="#tabs-mesin" class="nav-link active" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-robot">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
@@ -106,8 +107,8 @@
                                         </li>
                                         <li class="nav-item">
                                             <a href="#tabs-supplier" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="currentColor"
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
                                                     class="icon icon-tabler icons-tabler-filled icon-tabler-shopping-cart">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
@@ -118,9 +119,10 @@
                                         </li>
                                         <li class="nav-item">
                                             <a href="#tabs-item" class="nav-link " data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-sitemap">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
@@ -137,9 +139,10 @@
                                         </li>
                                         <li class="nav-item">
                                             <a href="#tabs-servis" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
@@ -151,9 +154,10 @@
                                         </li>
                                         <li class="nav-item">
                                             <a href="#tabs-grafik" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-brand-codepen">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path d="M3 15l9 6l9 -6l-9 -6l-9 6" />
@@ -395,7 +399,6 @@
             dt.ajax.reload();
         }
 
-
         function cariReportMesin() {
             let tgaw = $('#tanggalAwalMesin').val();
             let tgak = $('#tanggalAkhirMesin').val();
@@ -412,13 +415,66 @@
                 beforeSend: function() {
                     $("#hasil_cari").hide();
                     $("#tunggu").html(
-                        '<center><lottie-player src="https://lottie.host/03a70b30-5cc2-4418-941e-09828e26b1d8/ypNkHv3IyB.json" background="#fff" speed="1" style="width: 300px; height: 300px" loop autoplay direction="1" mode="normal"></lottie-player><i class="fa-solid fa-spinner fa-spin"></i> Mohon Menunggu, Sedang Tarik Data...</center>'
+                        '<center><lottie-player src="https://lottie.host/03a70b30-5cc2-4418-941e-09828e26b1d8/ypNkHv3IyB.json" background="#fff" speed="1" style="width: 300px; height: 300px" loop autoplay direction="1" mode="normal"></lottie-player><i class="fa-solid fa-spinner fa-spin"></i> Mohon Menunggu, Sedang Tarik Data<span class="animated-dots"></span></center>'
                     );
                 },
                 success: function(html) {
                     $("#tunggu").html('');
                     $("#hasil_cari").show();
                     $("#hasil_cari").html(html);
+                }
+            });
+        }
+
+        function getMesin(params) {
+            let tgaw = $('#tanggalAwalMesin').val();
+            let tgak = $('#tanggalAkhirMesin').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ url('laporan/lihatMesin') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    startDate: tgaw,
+                    endDate: tgak,
+                    unit: params,
+                },
+                beforeSend: function() {
+                    $("#hasil_mesin_" + params).hide();
+                    $("#tunggu_mesin_" + params).html(
+                        '<center><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mencari data mesin<span class="animated-dots"></span></center>'
+                    );
+                },
+                success: function(html) {
+                    $("#tunggu_mesin_" + params).html('');
+                    $("#hasil_mesin_" + params).show();
+                    $("#hasil_mesin_" + params).html(html);
+                }
+            });
+        }
+
+        function getSubMesin(params, id) {
+            let tgaw = $('#tanggalAwalMesin').val();
+            let tgak = $('#tanggalAkhirMesin').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ url('laporan/lihatSubMesin') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    startDate: tgaw,
+                    endDate: tgak,
+                    unit: params,
+                    id: id,
+                },
+                beforeSend: function() {
+                    $("#hasil_sub_mesin_" + id).hide();
+                    $("#tunggu_sub_mesin_" + id).html(
+                        '<center><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mencari data sub mesin<span class="animated-dots"></span></center>'
+                    );
+                },
+                success: function(html) {
+                    $("#tunggu_sub_mesin_" + id).html('');
+                    $("#hasil_sub_mesin_" + id).show();
+                    $("#hasil_sub_mesin_" + id).html(html);
                 }
             });
         }
@@ -463,7 +519,7 @@
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                     "infoEmpty": "Data Tidak Ditemukan",
                     "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data<span class="animated-dots"></span></div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
                     "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
                     "paginate": {
                         "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
@@ -586,7 +642,7 @@
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                     "infoEmpty": "Data Tidak Ditemukan",
                     "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data<span class="animated-dots"></span></div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
                     "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
                     "paginate": {
                         "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
