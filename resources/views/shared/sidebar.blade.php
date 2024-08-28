@@ -577,7 +577,7 @@
                                     </svg>
                                     Barang Transit
                                 </a>
-                                <a class="dropdown-item" href="{{ url('gudang/mutasi') }}"
+                                {{-- <a class="dropdown-item" href="{{ url('gudang/mutasi') }}"
                                     {{ $active == 'Mutasi' ? 'active' : '' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-arrows-random" width="24"
@@ -594,7 +594,7 @@
                                         <path d="M20.5 9l-4.5 -5.5" />
                                     </svg>
                                     Mutasi
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                     </div>

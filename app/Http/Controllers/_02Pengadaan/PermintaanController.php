@@ -153,27 +153,61 @@ class PermintaanController extends Controller
         );
 
         // Initiate Noform
-        $checknoform = DB::table('permintaan')->latest('noform')->first();
-        $y = substr($checknoform->noform, 0, 2);
-        if (date('y') == $y) {
-            $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
-            $noUrut = (int) substr($query->noform, -5);
-            $noUrut++;
-            $char = date('y-');
-            $kodeSurat = $char . sprintf("%05s", $noUrut);
+        if ($request->session()->get('entitas') == 'TFI') {
+            $checknoform = DB::table('permintaan')->where('noform', 'like', '%T%')->latest('noform')->first();
+            if ($checknoform) {
+                $y = substr($checknoform->noform, 0, 2);
+                if (date('y') == $y) {
+                    $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
+                    $noUrut = (int) substr($query->noform, -4);
+                    $noUrut++;
+                    $char = date('y-') . 'T';
+                    $kodeSurat = $char . sprintf("%04s", $noUrut);
+                } else {
+                    $kodeSurat = date('y-') . "T0001";
+                }
+            } else {
+                $kodeSurat = date('y-') . "T0001";
+            }
         } else {
-            $kodeSurat = date('y-') . "00001";
+            $checknoform = DB::table('permintaan')->latest('noform')->first();
+            $y = substr($checknoform->noform, 0, 2);
+            if (date('y') == $y) {
+                $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
+                $noUrut = (int) substr($query->noform, -5);
+                $noUrut++;
+                $char = date('y-');
+                $kodeSurat = $char . sprintf("%05s", $noUrut);
+            } else {
+                $kodeSurat = date('y-') . "00001";
+            }
         }
 
         $jml_mbl = count($request->jenis);
         for ($i = 0; $i < $jml_mbl; $i++) {
-            $getkodeseri = DB::table('permintaanitm')->latest('kodeseri')->first();
-            if ($getkodeseri) {
-                $kdseriR = $getkodeseri->kodeseri;
-                $kdseri = $kdseriR + 1;
+            if ($request->session()->get('entitas') == 'TFI') {
+                // generate kodeseri TFI
+                $getkodeseri = DB::table('permintaanitm')->where('kodeseri', 'like', '%T%')->orderBy('kodeseri', 'desc')->first();
+                if ($getkodeseri) {
+                    $kdseri = $getkodeseri->kodeseri;
+                    $noUrutKodeseri = (int) substr($kdseri, -6);
+                    $noUrutKodeseri++;
+                    $charKodeseri = 'T';
+                    $kdseri = $charKodeseri . sprintf("%06s", $noUrutKodeseri);
+                } else {
+                    $kdseri = 'T000001';
+                }
             } else {
-                $kdseri = '100000';
+                // generate kodeseri PINTEX
+                $getkodeseri = DB::table('permintaanitm')->latest('kodeseri')->first();
+                if ($getkodeseri) {
+                    $kdseriR = $getkodeseri->kodeseri;
+                    $kdseri = $kdseriR + 1;
+                } else {
+                    $kdseri = '100000';
+                }
             }
+
             if (!empty($request->urgent[$i])) {
                 $urgent = $request->urgent[$i];
             } else {
@@ -181,6 +215,7 @@ class PermintaanController extends Controller
             }
             $check = DB::table('permintaanitm')->insert([
                 'remember_token'    => $request->_token,
+                'entitas'           => $request->session()->get('entitas'),
                 'jenis' => $request->jenis[$i],
                 'tgl' => $request->tanggal,
                 'kodeseri' => $kdseri,
@@ -208,6 +243,7 @@ class PermintaanController extends Controller
         }
 
         DB::table('permintaan')->insert([
+            'entitas'           => $request->session()->get('entitas'),
             'remember_token'    => $request->_token,
             'tanggal'           => $request->tanggal,
             'noform'            => $kodeSurat,

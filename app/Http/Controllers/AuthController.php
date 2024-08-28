@@ -59,6 +59,12 @@ class AuthController extends Controller
                         "redirect" => url("landing")
                     ]);
                 } else {
+                    if (Auth::user()->entitas_pintex == 1) {
+                        $ent = "PINTEX";
+                    } elseif (Auth::user()->entitas_tfi == 1) {
+                        $ent = "TFI";
+                    }
+                    session(['entitas' => $ent]);
                     return response()->json([
                         "status" => true,
                         "redirect" => url("dashboard")

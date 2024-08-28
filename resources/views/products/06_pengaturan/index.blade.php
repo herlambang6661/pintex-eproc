@@ -240,28 +240,12 @@
                         {{-- <div class="fetched-data-pembelian"></div> --}}
                         <div class="row row-cards">
                             <div class="col-sm-6 col-lg-3">
-                                <div class="card card-md">
-                                    <div class="card-body ps-3 pe-3">
+                                <div class="card card-md bg-green-lt">
+                                    <div class="card-body ps-3 pe-3 pt-3">
+                                        <div class="text-center mt-0 mb-3">
+                                            <span class="fa-solid fa-cart-shopping fa-3x text-green"></span>
+                                        </div>
                                         <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
-                                            <div class="display-5 fw-bold my-3">
-                                                <div class="icon-demo-icon icon-demo-stroke-200 icon-demo-size-128 tooltip tooltip-monospaced"
-                                                    data-title="width='128'; height='128'">
-                                                    <span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            class="icon icon-tabler icon-tabler-shopping-bag-search"
-                                                            width="24" height="24" viewBox="0 0 24 24"
-                                                            stroke-width="1.5" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M11.5 21h-2.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.117 .761" />
-                                                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
-                                                            <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                                            <path d="M20.2 20.2l1.8 1.8" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </div>
                                             <label class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" id="packagesId"
                                                     value="0" onclick="packages();">
@@ -325,47 +309,28 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-center mt-4">
-                                            <a href="#" class="btn btn-green w-100">Choose plan</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-lg-3">
-                                <div class="card card-md">
-                                    <div class="card-body ps-3 pe-3">
+                                <div class="card card-md bg-azure-lt">
+                                    <div class="card-body ps-3 pe-3 pt-3">
+                                        <div class="text-center mt-0 mb-3">
+                                            <i class="fa-solid fa-warehouse fa-3x text-azure"></i>
+                                        </div>
                                         <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
-                                            <div class="display-5 fw-bold my-3">
-                                                <div class="icon-demo-icon icon-demo-stroke-200 icon-demo-size-128 tooltip tooltip-monospaced"
-                                                    data-title="width='128'; height='128'">
-                                                    <span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            class="icon icon-tabler icon-tabler-shopping-bag-search"
-                                                            width="24" height="24" viewBox="0 0 24 24"
-                                                            stroke-width="1.5" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M11.5 21h-2.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.117 .761" />
-                                                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
-                                                            <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                                            <path d="M20.2 20.2l1.8 1.8" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </div>
                                             <label class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" id="packagesId"
                                                     value="0" onclick="packages();">
-                                                <span class="form-check-label">Pengadaan</span>
+                                                <span class="form-check-label">Gudang</span>
                                             </label>
                                         </div>
                                         <div class="mb-3">
                                             <div class="divide-y">
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Permintaan</span>
+                                                        <span class="col">Stok Barang</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox"
@@ -376,7 +341,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Persetujuan</span>
+                                                        <span class="col">Penerimaan</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox">
@@ -386,7 +351,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Proses Email</span>
+                                                        <span class="col">Pengiriman</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox"
@@ -397,7 +362,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Pembelian</span>
+                                                        <span class="col">Sample</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox"
@@ -408,7 +373,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Status Barang</span>
+                                                        <span class="col">Barang Transit</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox"
@@ -418,47 +383,28 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-center mt-4">
-                                            <a href="#" class="btn btn-green w-100">Choose plan</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-lg-3">
-                                <div class="card card-md">
-                                    <div class="card-body ps-3 pe-3">
+                                <div class="card card-md bg-cyan-lt">
+                                    <div class="card-body ps-3 pe-3 pt-3">
+                                        <div class="text-center mt-0 mb-3">
+                                            <i class="fa-solid fa-wrench fa-3x text-cyan"></i>
+                                        </div>
                                         <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
-                                            <div class="display-5 fw-bold my-3">
-                                                <div class="icon-demo-icon icon-demo-stroke-200 icon-demo-size-128 tooltip tooltip-monospaced"
-                                                    data-title="width='128'; height='128'">
-                                                    <span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            class="icon icon-tabler icon-tabler-shopping-bag-search"
-                                                            width="24" height="24" viewBox="0 0 24 24"
-                                                            stroke-width="1.5" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M11.5 21h-2.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.117 .761" />
-                                                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
-                                                            <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                                            <path d="M20.2 20.2l1.8 1.8" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </div>
                                             <label class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" id="packagesId"
                                                     value="0" onclick="packages();">
-                                                <span class="form-check-label">Pengadaan</span>
+                                                <span class="form-check-label">Teknik</span>
                                             </label>
                                         </div>
                                         <div class="mb-3">
                                             <div class="divide-y">
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Permintaan</span>
+                                                        <span class="col">Servis</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox"
@@ -469,7 +415,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Persetujuan</span>
+                                                        <span class="col">Retur</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox">
@@ -479,29 +425,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Proses Email</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Pembelian</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Status Barang</span>
+                                                        <span class="col">Pengambilan</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox"
@@ -511,47 +435,28 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-center mt-4">
-                                            <a href="#" class="btn btn-green w-100">Choose plan</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-lg-3">
-                                <div class="card card-md">
-                                    <div class="card-body ps-3 pe-3">
+                                <div class="card card-md bg-purple-lt">
+                                    <div class="card-body ps-3 pe-3 pt-3">
+                                        <div class="text-center mt-0 mb-3">
+                                            <i class="fa-solid fa-book fa-3x text-purple"></i>
+                                        </div>
                                         <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
-                                            <div class="display-5 fw-bold my-3">
-                                                <div class="icon-demo-icon icon-demo-stroke-200 icon-demo-size-128 tooltip tooltip-monospaced"
-                                                    data-title="width='128'; height='128'">
-                                                    <span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            class="icon icon-tabler icon-tabler-shopping-bag-search"
-                                                            width="24" height="24" viewBox="0 0 24 24"
-                                                            stroke-width="1.5" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M11.5 21h-2.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.117 .761" />
-                                                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
-                                                            <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                                            <path d="M20.2 20.2l1.8 1.8" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </div>
                                             <label class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" id="packagesId"
                                                     value="0" onclick="packages();">
-                                                <span class="form-check-label">Pengadaan</span>
+                                                <span class="form-check-label">Laporan</span>
                                             </label>
                                         </div>
                                         <div class="mb-3">
                                             <div class="divide-y">
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Permintaan</span>
+                                                        <span class="col">Laporan Pemakaian</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox"
@@ -562,7 +467,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Persetujuan</span>
+                                                        <span class="col">Laporan Pembelian</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox">
@@ -572,29 +477,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="row">
-                                                        <span class="col">Proses Email</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Pembelian</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Status Barang</span>
+                                                        <span class="col">Laporan Stock</span>
                                                         <span class="col-auto">
                                                             <label class="form-check form-check-single form-switch">
                                                                 <input class="form-check-input" type="checkbox"
@@ -604,9 +487,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-center mt-4">
-                                            <a href="#" class="btn btn-green w-100">Choose plan</a>
                                         </div>
                                     </div>
                                 </div>
@@ -615,7 +495,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-blue" id="submitPembelian"><i class="fas fa-save"
-                                style="margin-right: 5px"></i> Proses</button>
+                                style="margin-right: 5px"></i> Simpan</button>
                         <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
                                 class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
                     </div>

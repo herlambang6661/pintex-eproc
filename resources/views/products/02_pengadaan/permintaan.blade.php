@@ -188,7 +188,7 @@
                                                         <label class="form-label">Entitas</label>
                                                         <input type="text" name="entitas" id="entitas"
                                                             class="form-control {{ Session::get('entitas') == '' ? '' : 'cursor-not-allowed' }}"
-                                                            {{ Session::get('entitas') == '' ? '' : 'disabled' }}
+                                                            {{ Session::get('entitas') == '' ? '' : 'readonly' }}
                                                             value="{{ Session::get('entitas') == '' ? 'PINTEX' : Session::get('entitas') }}">
                                                     </div>
                                                     <div class="mb-1">

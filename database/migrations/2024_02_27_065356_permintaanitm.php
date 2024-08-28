@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('permintaanitm', function (Blueprint $table) {
             $table->id();
+            $table->string('entitas')->nullable();
             $table->string('jenis');
             $table->date('tgl');
             $table->string('kodeseri');
@@ -48,6 +49,7 @@ return new class extends Migration
             $table->string('file_sample')->nullable();
             $table->date('tgl_qty_acc')->nullable();
             $table->date('tgl_acc')->nullable();
+            $table->date('tgl_pembelian')->nullable();
             $table->date('tgl_terima')->nullable();
             $table->boolean('proses_email')->nullable();
             $table->boolean('proses_po')->nullable();

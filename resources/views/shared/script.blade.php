@@ -40,6 +40,7 @@
     $(document).ready(function() {
         $(".searchengine").select2({
             language: "id",
+            allowClear: true,
             width: '700px',
             minimumInputLength: 3,
             placeholder: "Pencarian Barang. Masukkan Kodeseri atau Nama Barang",
@@ -69,7 +70,7 @@
             },
         });
     });
-    $(document.body).on("change", ".searchengine", function() {
+    $(document.body).on("change click blur select", ".searchengine", function() {
         // console.log(this.value);
 
         var kodeseri = this.value;
@@ -81,6 +82,7 @@
             type: 'POST',
             url: '/searchEngineModal',
             data: {
+                "_token": "{{ csrf_token() }}",
                 kodeseri: kodeseri
             },
             success: function(data) {
@@ -89,6 +91,7 @@
         }).done(function() {
             setTimeout(function() {
                 $("#overlaySearch").fadeOut(300);
+                $('.searchengine').html('');
             }, 500);
         });
     });
@@ -147,17 +150,17 @@
             <span class="spinnerSearch"></span>
         </div>
     </div>
-    <div class="modal-dialog modal-full" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><i class="fa-solid fa-circle-info"></i> Detail Barang</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa-solid fa-circle-info"></i> Pencarian Barang</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="min-height:100%">
+            <div class="modal-body py-0 px-0">
                 <div class="fetched-data-search"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
             </div>
         </div>
     </div>

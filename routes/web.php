@@ -73,6 +73,7 @@ Route::post('post-registration', [AuthController::class, 'postRegistration'])->n
 // Rute Dashboard
 Route::controller(DashboardController::class)->group(function () {
     Route::get('getSearchEngine', 'CariBarangSearchEngine')->name('getSearchEngine');
+    Route::post('searchEngineModal', 'BarangSearchEngineModal')->name('searchEngineModal');
     Route::get('landing', 'landing')->name('landing');
 });
 
