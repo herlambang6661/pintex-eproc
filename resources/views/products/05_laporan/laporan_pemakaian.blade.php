@@ -80,7 +80,7 @@
                 <div class="container-xl">
                     <div class="row row-deck">
                         <div class="col-md-12">
-                            <div class="card transparent-card card-xl shadow rounded border border-blue">
+                            <div class="card transparent-card card-xl shadow rounded">
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
@@ -152,7 +152,7 @@
                                                 Servis
                                             </a>
                                         </li>
-                                        <li class="nav-item">
+                                        {{-- <li class="nav-item">
                                             <a href="#tabs-grafik" class="nav-link" data-bs-toggle="tab">
                                                 <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
                                                     width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -169,113 +169,92 @@
                                                 </svg>
                                                 Grafik
                                             </a>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
 
                                 <div class="tab-content">
                                     <div class="tab-pane" id="tabs-supplier">
-                                        <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center">Tgl Awal</th>
-                                                            <th class="text-center">Tgl Akhir</th>
-                                                            <th class="text-center"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="date" id="idfilter_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"
-                                                                            fill="none" />
-                                                                        <path
-                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                        <path d="M21 21l-6 -6" />
-                                                                    </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                        <div class="card card-xl shadow rounded border border-green">
+                                            <h4 class="card-header bg-green-lt pt-1 pb-1">Laporan Pemakaian by Supplier
+                                            </h4>
+                                            <div class="card-body pb-0">
+                                                <form id="formReportMesin" class="form-horizontal mb-3">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAwalSupplier">Tanggal Awal</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-green"
+                                                                    id="tanggalAwalSupplier" name="tanggalAwalSupplier"
+                                                                    required value="{{ date('Y-m-01') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAkhirSupplier">Tanggal Akhir</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-green"
+                                                                    id="tanggalAkhirSupplier" name="tanggalAkhirSupplier"
+                                                                    required value="{{ date('Y-m-d') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 d-flex align-items-end">
+                                                            <button type="button" id="btn-filter-supplier"
+                                                                class="btn btn-green btn-block">
+                                                                <i class="fa fa-search" style="margin-right: 5px"></i>
+                                                                Lihat Data
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="table-responsive">
-                                                <table style="width:100%; height: 100%;font-size:13px;"
-                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-supplier">
-                                                </table>
-                                            </div>
+                                            <table style="width:100%; height: 100%;font-size:13px;"
+                                                class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-supplier">
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="tab-pane " id="tabs-item">
-                                        <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center">Tgl Awal</th>
-                                                            <th class="text-center">Tgl Akhir</th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="date" id="idfilter_dari"
-                                                                    class="form-control" onchange="syn()"
-                                                                    value="{{ date('Y-01-01') }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " onchange="syn()"
-                                                                    value="{{ date('Y-m-d') }}">
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"
-                                                                            fill="none" />
-                                                                        <path
-                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                        <path d="M21 21l-6 -6" />
-                                                                    </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                        <div class="card card-xl shadow rounded border border-yellow">
+                                            <h4 class="card-header bg-yellow-lt pt-1 pb-1">Laporan Pemakaian by Item
+                                            </h4>
+                                            <div class="card-body pb-0">
+                                                <form id="formReportItem" class="form-horizontal mb-3">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAwalMesin">Tanggal Awal</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-yellow"
+                                                                    id="tanggalAwalMesin" name="tanggalAwalMesin" required
+                                                                    value="{{ date('Y-m-01') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAkhirMesin">Tanggal Akhir</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-yellow"
+                                                                    id="tanggalAkhirMesin" name="tanggalAkhirMesin"
+                                                                    required value="{{ date('Y-m-d') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 d-flex align-items-end">
+                                                            <button type="button" id="btn-filter-mesin"
+                                                                class="btn btn-yellow btn-block">
+                                                                <i class="fa fa-search" style="margin-right: 5px"></i>
+                                                                Lihat Data
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="table-responsive">
-                                                <table style="width:100%; height: 100%;font-size:13px;"
-                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-item">
-                                                </table>
-                                            </div>
+
+                                            <table style="width:100%; height: 100%;font-size:13px;"
+                                                class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-item">
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="tab-pane active show" id="tabs-mesin">
@@ -288,7 +267,8 @@
                                                         <div class="col-md-5">
                                                             <div class="form-group">
                                                                 <label for="tanggalAwalMesin">Tanggal Awal</label>
-                                                                <input type="date" class="form-control"
+                                                                <input type="date"
+                                                                    class="form-control border border-blue"
                                                                     id="tanggalAwalMesin" name="tanggalAwalMesin" required
                                                                     value="{{ date('Y-m-01') }}">
                                                             </div>
@@ -296,7 +276,8 @@
                                                         <div class="col-md-5">
                                                             <div class="form-group">
                                                                 <label for="tanggalAkhirMesin">Tanggal Akhir</label>
-                                                                <input type="date" class="form-control"
+                                                                <input type="date"
+                                                                    class="form-control border border-blue"
                                                                     id="tanggalAkhirMesin" name="tanggalAkhirMesin"
                                                                     required value="{{ date('Y-m-d') }}">
                                                             </div>
@@ -319,32 +300,47 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tabs-servis">
-                                        <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="card-header">
-                                                <h5>Laporan Pemakaian By Servis</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <div class="form-group">
-                                                            <label for="start_date">Start Date</label>
-                                                            <input type="date" class="form-control" id="start_date"
-                                                                name="start_date" required>
+                                        <div class="card card-xl shadow rounded border border-red">
+                                            <h4 class="card-header bg-red-lt pt-1 pb-1">
+                                                Laporan Pemakaian by Servis
+                                            </h4>
+                                            <div class="card-body pb-0">
+                                                <form id="formReportServis" class="form-horizontal mb-3">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAwalServis">Tanggal Awal</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-red"
+                                                                    id="tanggalAwalServis" name="tanggalAwalServis"
+                                                                    required value="{{ date('Y-m-01') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAkhirServis">Tanggal Akhir</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-red"
+                                                                    id="tanggalAkhirServis" name="tanggalAkhirServis"
+                                                                    required value="{{ date('Y-m-d') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 d-flex align-items-end">
+                                                            <button type="button" id="btn-filter-servis"
+                                                                class="btn btn-red btn-block">
+                                                                <i class="fa fa-search" style="margin-right: 5px"></i>
+                                                                Lihat Data
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-5">
-                                                        <div class="form-group">
-                                                            <label for="end_date">End Date</label>
-                                                            <input type="date" class="form-control" id="end_date"
-                                                                name="end_date" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 d-flex align-items-end">
-                                                        <button type="submit"
-                                                            class="btn btn-primary btn-block">Search</button>
-                                                    </div>
-                                                </div>
+                                                </form>
                                             </div>
+
+                                            <table style="width:100%; height: 100%;font-size:13px;"
+                                                class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-servis">
+                                            </table>
+
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tabs-grafik">
@@ -480,9 +476,10 @@
         }
 
         $(document).ready(function() {
+            //---------------SUPPLIER----------------------------------//
             var tableSupplier = $('.datatable-supplier').DataTable({
                 "processing": true,
-                "serverSide": false,
+                "serverSide": true,
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -491,7 +488,7 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
-                    [10, 10, 25, 50, -1],
+                    [20, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
@@ -515,7 +512,7 @@
                 ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
-                    "zeroRecords": "Data Tidak Ditemukan",
+                    "zeroRecords": "Tidak Ada Data yang Ditampilkan",
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                     "infoEmpty": "Data Tidak Ditemukan",
                     "infoFiltered": "(Difilter dari _MAX_ total records)",
@@ -528,84 +525,181 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "{{ route('getPermintaan.index') }}",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('getLaporanSupplier.index') }}",
+                    "type": "POST",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#tanggalAwalSupplier').val();
+                        data.sampai = $('#tanggalAkhirSupplier').val();
+                        data.type = 'supplier';
+                    }
+                },
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                    },
-                    {
                         title: 'TANGGAL',
                         data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "text-center",
                     },
                     {
                         title: 'NO PO',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'nofaktur',
+                        className: "text-center"
+                    },
+                    {
+                        title: '',
+                        data: 'supplier',
+                        className: "text-center"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'kode',
+                        className: "text-center",
                     },
                     {
                         title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        data: 'namabarang',
+                        className: "font-weight-bold",
                     },
                     {
                         title: 'DESKRIPSI',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'namabarang',
+                        className: "font-weight-bold",
                     },
                     {
                         title: 'DIBELI',
-                        data: 'satuan',
-                        name: 'satuan',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'pembeli',
+                        className: "text-center",
+                        "orderable": false
                     },
                     {
                         title: 'QTY',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'kts',
+                        className: "text-center",
                     },
                     {
                         title: '$/CHF',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'harga_luar',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
                     },
                     {
                         title: 'RP',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'harga_dalam',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
                     },
                 ],
+                // Grand Total Footer
+                "footerCallback": function(row, data, start, end, display) {
+                    var api = this.api(),
+                        data;
+                    // converting to interger to find total
+                    var intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i : 0;
+                    };
+                    // computing column Total of the complete result 
+                    var colSem = api
+                        .column(8)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    var colSem2 = api
+                        .column(9)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
 
+                    // Update footer by showing the total with the reference of the column index 
+                    $(api.column(0).footer()).html('Grand Total');
+                    $(api.column(8).footer()).html('Rp. ' + colSem);
+                    $(api.column(9).footer()).html('Rp. ' + colSem2);
+                },
+                // "order": [[ 2, 'asc' ]],
+                // "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'all'
+                    }).nodes();
+                    var last = null;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function(i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i ===
+                            'number' ? i : 0;
+                    };
+                    // const rupiah = (number)=>{
+                    //     return new Intl.NumberFormat("id-ID", {
+                    //     style: "currency",
+                    //     currency: "IDR"
+                    //     }).format(number);
+                    // }
+                    total = [];
+                    total2 = [];
+                    api.column(2, {
+                        page: 'all'
+                    }).data().each(function(group, i) {
+                        // IDR
+                        group_assoc = group.replace(/(\.|&|,| |#039;|\n|amp;)/g, "")
+                            .replace(/"/g, "")
+                            .replace(/'/g, "")
+                            .replace(/\(|\)/g, "")
+                            .replace(/\//g, "");
+                        // console.log(group_assoc);
+                        if (typeof total[group_assoc] != 'undefined') {
+                            // untuk total hasil
+                            total[group_assoc] = total[group_assoc] + intVal(api.column(8)
+                                .data()[
+                                    i]);
+                            total2[group_assoc] = total2[group_assoc] + intVal(api.column(9)
+                                .data()[
+                                    i]);
+                        } else {
+                            total[group_assoc] = intVal(api.column(8).data()[i]);
+                            total2[group_assoc] = intVal(api.column(9).data()[i]);
+                        }
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                // untuk colspan
+                                '<tr class="group font-weight-bold bg-azure-lt"><td colspan="7"><i class="fa-solid fa-angles-right"></i> ' +
+                                group + '</td><td class="' + group_assoc +
+                                ' text-right"></td><td class="' + group_assoc +
+                                'USD text-right"></td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                    for (var key in total) {
+                        let rupiahFormat = total[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        $("." + key).html("<strong class='text-center'>" + rupiahFormat + "</strong>");
+                    }
+                    for (var key2 in total2) {
+                        let rupiahFormat2 = total2[key2].toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                            '.');
+                        $("." + key2 + "USD").html("<strong class='text-center'>" + rupiahFormat2 +
+                            "</strong>");
+                    }
+                }
             });
-        });
+            $('#btn-filter-supplier').click(function() { //button reset event click
+                tableSupplier.ajax.reload(); //just reload table
+            });
 
-        //---------------ITEM----------------------------------//
-        $(document).ready(function() {
+            //---------------ITEM----------------------------------//
             var tableItem = $('.datatable-item').DataTable({
                 "processing": true,
-                "serverSide": false,
+                "serverSide": true,
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -614,7 +708,7 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
-                    [10, 10, 25, 50, -1],
+                    [20, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
@@ -651,80 +745,396 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "{{ route('getPermintaan.index') }}",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('getLaporanSupplier.index') }}",
+                    "type": "POST",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#tanggalAwalItem').val();
+                        data.sampai = $('#tanggalAkhirItem').val();
+                        data.type = 'item';
+                    }
+                },
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
-                    },
-                    {
                         title: 'TANGGAL',
                         data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "text-center",
+                    },
+                    {
+                        title: 'NO PO',
+                        data: 'nofaktur',
+                        className: "text-center"
+                    },
+                    {
+                        title: '',
+                        data: 'namabarang',
+                        className: "text-center"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
-                    },
-                    {
-                        title: 'DESKRIPSI',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'kode',
+                        className: "text-center",
                     },
                     {
                         title: 'SUPPLIER',
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'supplier',
+                        className: "font-weight-bold",
+                    },
+                    {
+                        title: 'DESKRIPSI',
+                        data: 'namabarang',
+                        className: "font-weight-bold",
                     },
                     {
                         title: 'DIBELI',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'pembeli',
+                        className: "text-center",
+                        "orderable": false
                     },
                     {
                         title: 'QTY',
-                        data: 'satuan',
-                        name: 'satuan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'kts',
+                        className: "text-center",
                     },
                     {
                         title: '$/CHF',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'harga_luar',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
                     },
                     {
                         title: 'RP',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'harga_dalam',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
                     },
                 ],
-                columnDefs: [{
-                    orderable: false,
-                    targets: 0
-                }],
+
+                // Grand Total Footer
+                "footerCallback": function(row, data, start, end, display) {
+                    var api = this.api(),
+                        data;
+                    // converting to interger to find total
+                    var intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i : 0;
+                    };
+                    // computing column Total of the complete result 
+                    var colSem = api
+                        .column(8)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    var colSem2 = api
+                        .column(9)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer by showing the total with the reference of the column index 
+                    $(api.column(0).footer()).html('Grand Total');
+                    $(api.column(8).footer()).html('Rp. ' + colSem);
+                    $(api.column(9).footer()).html('Rp. ' + colSem2);
+                },
+                // "order": [[ 2, 'asc' ]],
+                // "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'all'
+                    }).nodes();
+                    var last = null;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function(i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i ===
+                            'number' ? i : 0;
+                    };
+                    // const rupiah = (number)=>{
+                    //     return new Intl.NumberFormat("id-ID", {
+                    //     style: "currency",
+                    //     currency: "IDR"
+                    //     }).format(number);
+                    // }
+                    total = [];
+                    total2 = [];
+                    api.column(2, {
+                        page: 'all'
+                    }).data().each(function(group, i) {
+                        // IDR
+                        group_assoc = group.replace(/(\.|&|,| |#039;|\n|amp;)/g, "")
+                            .replace(/"/g, "")
+                            .replace(/'/g, "")
+                            .replace(/\(|\)/g, "")
+                            .replace(/\//g, "");
+                        // console.log(group_assoc);
+                        if (typeof total[group_assoc] != 'undefined') {
+                            // untuk total hasil
+                            total[group_assoc] = total[group_assoc] + intVal(api.column(8)
+                                .data()[
+                                    i]);
+                            total2[group_assoc] = total2[group_assoc] + intVal(api.column(9)
+                                .data()[
+                                    i]);
+                        } else {
+                            total[group_assoc] = intVal(api.column(8).data()[i]);
+                            total2[group_assoc] = intVal(api.column(9).data()[i]);
+                        }
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                // untuk colspan
+                                '<tr class="group font-weight-bold bg-yellow-lt"><td colspan="7"><i class="fa-solid fa-angles-right"></i> ' +
+                                group + '</td><td class="' + group_assoc +
+                                ' text-right"></td><td class="' + group_assoc +
+                                'USD text-right"></td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                    for (var key in total) {
+                        let rupiahFormat = total[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        $("." + key).html("<strong class='text-center'>" + rupiahFormat + "</strong>");
+                    }
+                    for (var key2 in total2) {
+                        let rupiahFormat2 = total2[key2].toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                            '.');
+                        $("." + key2 + "USD").html("<strong class='text-center'>" + rupiahFormat2 +
+                            "</strong>");
+                    }
+                }
+            });
+            $('#btn-filter-mesin').click(function() {
+                tableItem.ajax.reload(); //just reload table
             });
 
-            $('#filter_id').on('click change', function() {
-                tablePermintaan.ajax.reload(null, false);
+            //---------------SERVIS----------------------------------//
+            var tableServis = $('.datatable-servis').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                "lengthMenu": [
+                    [20, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data<span class="animated-dots"></span></div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                "ajax": {
+                    "url": "{{ route('getLaporanServis.index') }}",
+                    "type": "POST",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#tanggalAwalServis').val();
+                        data.sampai = $('#tanggalAkhirServis').val();
+                    }
+                },
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
+                "columns": [{
+                        title: 'TANGGAL',
+                        data: 'tgl',
+                        className: "text-center",
+                    },
+                    {
+                        title: 'NO PO',
+                        data: 'nofaktur',
+                        className: "text-center"
+                    },
+                    {
+                        title: '',
+                        data: 'namabarang',
+                        className: "text-center"
+                    },
+                    {
+                        title: 'KODESERI',
+                        data: 'kode',
+                        className: "text-center",
+                    },
+                    {
+                        title: 'SUPPLIER',
+                        data: 'supplier',
+                        className: "font-weight-bold",
+                    },
+                    {
+                        title: 'DESKRIPSI',
+                        data: 'namabarang',
+                        className: "font-weight-bold",
+                    },
+                    {
+                        title: 'DIBELI',
+                        data: 'pembeli',
+                        className: "text-center",
+                        "orderable": false
+                    },
+                    {
+                        title: 'QTY',
+                        data: 'kts',
+                        className: "text-center",
+                    },
+                    {
+                        title: '$/CHF',
+                        data: 'harga_luar',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
+                    },
+                    {
+                        title: 'RP',
+                        data: 'harga_dalam',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
+                    },
+                ],
+
+                // Grand Total Footer
+                "footerCallback": function(row, data, start, end, display) {
+                    var api = this.api(),
+                        data;
+                    // converting to interger to find total
+                    var intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i : 0;
+                    };
+                    // computing column Total of the complete result 
+                    var colSem = api
+                        .column(8)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    var colSem2 = api
+                        .column(9)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer by showing the total with the reference of the column index 
+                    $(api.column(0).footer()).html('Grand Total');
+                    $(api.column(8).footer()).html('Rp. ' + colSem);
+                    $(api.column(9).footer()).html('Rp. ' + colSem2);
+                },
+                // "order": [[ 2, 'asc' ]],
+                // "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'all'
+                    }).nodes();
+                    var last = null;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function(i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i ===
+                            'number' ? i : 0;
+                    };
+                    // const rupiah = (number)=>{
+                    //     return new Intl.NumberFormat("id-ID", {
+                    //     style: "currency",
+                    //     currency: "IDR"
+                    //     }).format(number);
+                    // }
+                    total = [];
+                    total2 = [];
+                    api.column(2, {
+                        page: 'all'
+                    }).data().each(function(group, i) {
+                        // IDR
+                        group_assoc = group.replace(/(\.|&|,| |#039;|\n|amp;)/g, "")
+                            .replace(/"/g, "")
+                            .replace(/'/g, "")
+                            .replace(/\(|\)/g, "")
+                            .replace(/\//g, "");
+                        // console.log(group_assoc);
+                        if (typeof total[group_assoc] != 'undefined') {
+                            // untuk total hasil
+                            total[group_assoc] = total[group_assoc] + intVal(api.column(8)
+                                .data()[
+                                    i]);
+                            total2[group_assoc] = total2[group_assoc] + intVal(api.column(9)
+                                .data()[
+                                    i]);
+                        } else {
+                            total[group_assoc] = intVal(api.column(8).data()[i]);
+                            total2[group_assoc] = intVal(api.column(9).data()[i]);
+                        }
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                // untuk colspan
+                                '<tr class="group font-weight-bold bg-red-lt"><td colspan="7"><i class="fa-solid fa-angles-right"></i> ' +
+                                group + '</td><td class="' + group_assoc +
+                                ' text-right"></td><td class="' + group_assoc +
+                                'USD text-right"></td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                    for (var key in total) {
+                        let rupiahFormat = total[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        $("." + key).html("<strong class='text-center'>" + rupiahFormat + "</strong>");
+                    }
+                    for (var key2 in total2) {
+                        let rupiahFormat2 = total2[key2].toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                            '.');
+                        $("." + key2 + "USD").html("<strong class='text-center'>" + rupiahFormat2 +
+                            "</strong>");
+                    }
+                }
+            });
+            $('#btn-filter-servis').click(function() {
+                tableServis.ajax.reload();
             });
         });
 

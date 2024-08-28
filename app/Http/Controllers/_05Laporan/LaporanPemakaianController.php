@@ -2,12 +2,122 @@
 
 namespace App\Http\Controllers\_05Laporan;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
 class LaporanPemakaianController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        date_default_timezone_set('Asia/Jakarta');
+        setlocale(LC_TIME, 'id_ID');
+        \Carbon\Carbon::setLocale('id');
+    }
+
+    public function getLaporanSupplier(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-01');
+            }
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-28');
+            }
+
+            $data = DB::table('pembelianitm AS pi')
+                ->select(DB::raw('pe.tgl, pi.kode, pi.supplier, pi.nofaktur, pi.namabarang, pi.kts, pi.satuan, pi.jumlah, pe.pembeli, pe.currid, pe.kurs'))
+                ->join('pembelian AS pe', 'pe.nofkt', '=', 'pi.nofaktur')
+                ->where('pi.kode', 'not like', '%S%')
+                ->whereBetween('pe.tgl', [$dari, $sampai])
+                ->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('tgl', function ($row) {
+                    $m = Carbon::parse($row->tgl)->format('d/m/Y');
+                    return '<i class="fa-solid fa-chevron-right"></i> ' . $m;
+                })
+                ->addColumn('harga_dalam', function ($row) {
+                    if ($row->currid == "IDR") {
+                        $m = $row->jumlah;
+                    } else {
+                        $m = $row->jumlah * $row->kurs;
+                    }
+                    return $m;
+                })
+                ->addColumn('harga_luar', function ($row) {
+                    if ($row->currid == "IDR") {
+                        $m = '';
+                    } else {
+                        $m = $row->jumlah;
+                    }
+                    return $m;
+                })
+                ->rawColumns(['select_orders', 'harga_luar', 'harga_dalam', 'tgl'])
+                ->make(true);
+        }
+
+        return view('products.05_laporan.laporan_pemakaian');
+    }
+
+    public function getLaporanServis(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-01');
+            }
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-28');
+            }
+
+            $data = DB::table('pembelianitm AS pi')
+                ->select(DB::raw('pe.tgl, pi.kode, pi.supplier, pi.nofaktur, pi.namabarang, pi.kts, pi.satuan, pi.jumlah, pe.pembeli, pe.currid, pe.kurs'))
+                ->join('pembelian AS pe', 'pe.nofkt', '=', 'pi.nofaktur')
+                ->where('pi.kode', 'like', '%S%')
+                ->whereBetween('pe.tgl', [$dari, $sampai])
+                ->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('tgl', function ($row) {
+                    $m = Carbon::parse($row->tgl)->format('d/m/Y');
+                    return '<i class="fa-solid fa-chevron-right"></i> ' . $m;
+                })
+                ->addColumn('harga_dalam', function ($row) {
+                    if ($row->currid == "IDR") {
+                        $m = $row->jumlah;
+                    } else {
+                        $m = $row->jumlah * $row->kurs;
+                    }
+                    return $m;
+                })
+                ->addColumn('harga_luar', function ($row) {
+                    if ($row->currid == "IDR") {
+                        $m = '';
+                    } else {
+                        $m = $row->jumlah;
+                    }
+                    return $m;
+                })
+                ->rawColumns(['select_orders', 'harga_luar', 'harga_dalam', 'tgl'])
+                ->make(true);
+        }
+
+        return view('products.05_laporan.laporan_pemakaian');
+    }
+
     public function pemakaian()
     {
         return view('products.05_laporan.laporan_pemakaian', [
@@ -140,8 +250,9 @@ class LaporanPemakaianController extends Controller
             ->first();
         if ($query) {
             return $query->total;
+        } else {
+            return '';
         }
-        return $query;
     }
 
     public function getMesin(Request $request)
@@ -206,8 +317,9 @@ class LaporanPemakaianController extends Controller
             ->first();
         if ($query) {
             return $query->total;
+        } else {
+            return '';
         }
-        return $query;
     }
 
     public function getSubMesin(Request $request)
@@ -306,8 +418,9 @@ class LaporanPemakaianController extends Controller
             ->first();
         if ($query) {
             return $query->total;
+        } else {
+            return '';
         }
-        return $query;
     }
 
     private function loadDataLapMesin($id, $awal, $akhir)
