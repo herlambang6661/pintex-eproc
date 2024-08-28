@@ -255,6 +255,11 @@ Route::controller(PengambilanController::class)->group(function () {
 
 Route::controller(LaporanPemakaianController::class)->group(function () {
     Route::get('laporan/pemakaian', 'pemakaian');
+    Route::post('laporan/lihatDataMesin', 'laporanMesin')->name('laporan/lihatDataMesin');
+    Route::post('laporan/lihatMesin', 'getMesin')->name('laporan/lihatMesin');
+    Route::post('laporan/lihatSubMesin', 'getSubMesin')->name('laporan/lihatSubMesin');
+    Route::post('getLaporanSupplier.index', 'getLaporanSupplier')->name('getLaporanSupplier.index');
+    Route::post('getLaporanServis.index', 'getLaporanServis')->name('getLaporanServis.index');
 });
 
 Route::controller(LaporanPembelianController::class)->group(function () {
