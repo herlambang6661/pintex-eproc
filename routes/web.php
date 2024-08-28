@@ -39,6 +39,8 @@ use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
 use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
 use App\Http\Controllers\_05Laporan\LaporanPembelianController;
+use App\Http\Controllers\Datatables\Gudang\SampleList;
+use App\Http\Controllers\Datatables\Gudang\TransitList;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +63,8 @@ Route::resource('getPembelianList', PembelianList::class);
 Route::resource('tbPenerimaan', PenerimaanList::class);
 Route::resource('getServis', ServisList::class);
 Route::resource('getListPengiriman', PengirimanList::class);
+Route::resource('getSample', SampleList::class);
+Route::resource('getTransit', TransitList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -204,11 +208,24 @@ Route::controller(PengirimanController::class)->group(function () {
 });
 
 Route::controller(SampleController::class)->group(function () {
+    //ambil data
     Route::get('gudang/sample', 'sample');
+    Route::get('getMasterSuplier', 'getMasterSuplier')->name('getMasterSuplier');
+    Route::get('getSamples', 'getSample')->name('getSample');
+    //kirim data
+    Route::post('/store-sample', 'store')->name('sample.store');
+    Route::post('gudang/viewSample', 'viewSample');
+    Route::post('gudang/editSample', 'editSample');
 });
 
 Route::controller(BarangTransitController::class)->group(function () {
+    // ambil data
     Route::get('gudang/barangtransit', 'barangTransit');
+    Route::get('/Suplierget', 'Suplierget');
+    Route::get('getBarang', 'getBarang');
+    //kirim data
+    Route::post('/store-transit', 'store')->name('store.transit');
+    Route::post('/detailTransit', 'detailTransit')->name('transit.detail');
 });
 
 Route::controller(MutasiController::class)->group(function () {
