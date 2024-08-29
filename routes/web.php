@@ -41,6 +41,8 @@ use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
 use App\Http\Controllers\_05Laporan\LaporanPembelianController;
 use App\Http\Controllers\Datatables\Gudang\SampleList;
 use App\Http\Controllers\Datatables\Gudang\TransitList;
+use App\Http\Controllers\Datatables\Pengadaan\StatusBarangList;
+use App\Http\Controllers\Datatables\Pengadaan\StatusList;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,7 @@ Route::resource('getServis', ServisList::class);
 Route::resource('getListPengiriman', PengirimanList::class);
 Route::resource('getSample', SampleList::class);
 Route::resource('getTransit', TransitList::class);
+Route::resource('getStatus', StatusList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -214,8 +217,9 @@ Route::controller(SampleController::class)->group(function () {
     Route::get('getSamples', 'getSample')->name('getSample');
     //kirim data
     Route::post('/store-sample', 'store')->name('sample.store');
+    Route::post('/updateSample/{id}', 'update')->name('sample.update');
     Route::post('gudang/viewSample', 'viewSample');
-    Route::post('gudang/editSample', 'editSample');
+    Route::post('gudang/viewEditSample', 'viewEditSample')->name('pengadaan/viewEditSample');
 });
 
 Route::controller(BarangTransitController::class)->group(function () {
@@ -226,6 +230,7 @@ Route::controller(BarangTransitController::class)->group(function () {
     //kirim data
     Route::post('/store-transit', 'store')->name('store.transit');
     Route::post('/detailTransit', 'detailTransit')->name('transit.detail');
+    Route::post('/gudang/viewEdittransit', 'viewEditTransit')->name('viewEdittransit');
 });
 
 Route::controller(MutasiController::class)->group(function () {

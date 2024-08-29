@@ -29,29 +29,23 @@ class BarangTransitController extends Controller
 
     public function Suplierget(Request $request)
     {
-        $query = DB::table('person')
-            ->select('id', 'nama')
-            ->where('tipe', 'INDIVIDU');
-
         if ($request->has('q')) {
             $search = $request->q;
-            $query->where(function ($subQuery) use ($search) {
-                $subQuery->where('nama', 'LIKE', "%$search%")
-                    ->orWhere('jabatan', 'LIKE', "%$search%");
-            });
+            $pemesan = DB::table('person')
+                ->select(DB::raw('id, nama, jabatan'))
+                ->where('tipe', '=', "INDIVIDU")
+                ->where('nama', 'LIKE', "%$search%")
+                ->orWhere('jabatan', 'LIKE', "%$search%")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        } else {
+            $pemesan = DB::table('person')
+                ->select(DB::raw('id, nama, jabatan'))
+                ->where('tipe', '=', "INDIVIDU")
+                ->orderBy('nama', 'ASC')
+                ->get();
         }
-
-        $pemesan = $query->orderBy('nama', 'ASC')->get();
-
-        // Format response for Select2
-        $formattedData = $pemesan->map(function ($item) {
-            return [
-                'id' => $item->id,
-                'text' => strtoupper($item->nama), // Use 'text' key as expected by Select2
-            ];
-        });
-
-        return response()->json($formattedData);
+        return Response()->json($pemesan);
     }
 
     public function getBarang(Request $request)
@@ -266,5 +260,151 @@ class BarangTransitController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'Data has been saved']);
+    }
+
+    public function viewEditTransit(Request $request)
+    {
+        $getItem = \App\Models\Gudang\TransitItm::find($request->id);
+
+        if (!$getItem) {
+            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        }
+
+        // $actionUrl = route('transit.update', $getItem->id);
+
+        $data = '
+       
+        <div class="row">
+            <div class="col-lg-12 mb-3">
+                <div class="card bg-pink-lt shadow rounded border border-blue">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Noform</label>
+                                    <input type="text" class="form-control border border-blue" disabled value="' . e($getItem->noform_transit) . '">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Tanggal</label>
+                                    <input type="date" class="form-control border border-blue" name="tanggal" value="' . e($getItem->tgl_transit) . '">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card bg-azure-lt shadow rounded border border-blue">
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <label class="form-label">Kodeseri</label>
+                            <input type="text" class="form-control" name="kodeseri" value="' . e($getItem->kodeseri) . '">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Nama Barang</label>
+                            <input type="text" class="form-control" name="namaBarang" value="' . e($getItem->namaBarang) . '">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Keterangan</label>
+                            <input type="text" class="form-control" name="keterangan" value="' . e($getItem->keterangan) . '">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card bg-orange-lt shadow rounded border border-blue">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Qty</label>
+                                    <input type="number" class="form-control" name="qty" value="' . e($getItem->qty) . '">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Jenis</label>
+                                    <input type="text" class="form-control" name="expedisi" value="' . e($getItem->jenis) . '">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Suplier</label>
+                                    <select required name="suplier[]" class="form-select elementprm inputNone" style="text-transform: uppercase;">
+                                        <option value="' . e($getItem->suplier) . '" selected="selected">' . e($getItem->suplier) . '</option> 
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="hr-text text-blue">Keterangan Tambahan</div>
+            <div class="control-group col-lg-12">
+                <div id="ketTamb" class="shadow rounded border border-blue">
+                    <div class="mb-3">
+                        <textarea id="tinymce-edit" name="keteranganform">' . e($getItem->keteranganform) . '</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary me-auto" data-bs-dismiss="modal">Simpan</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+        </div>
+    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // Inisialisasi Select2
+                $(".elementprm").select2({
+                    dropdownParent: $("#modalEdittransit"),
+                    language: "id",
+                    placeholder: "Pilih Pemesan",
+                    ajax: {
+                        url: "/Suplierget",
+                        dataType: "json",
+                        delay: 200,
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.nama.toUpperCase()
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+    
+                // Inisialisasi TinyMCE
+                let options = {
+                    selector: "#tinymce-edit",
+                    height: 300,
+                    menubar: false,
+                    statusbar: false,
+                    toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent | forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+                    content_style: "body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }"
+                };
+                if (localStorage.getItem("tablerTheme") === "dark") {
+                    options.skin = "oxide-dark";
+                    options.content_css = "dark";
+                }
+                tinyMCE.init(options);
+            });
+        </script>
+        ';
+
+        return response()->json($data);
     }
 }
