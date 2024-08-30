@@ -11,6 +11,92 @@
         td.cuspad1 {
             text-transform: uppercase;
         }
+
+        .timeline-steps {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .timeline-step {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+        }
+
+        .timeline-content {
+            position: relative;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .inner-circle,
+        .inner-circle-undone,
+        .inner-circle-reject,
+        .inner-circle-hold {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #2196F3;
+            border: 2px solid #2196F3;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .inner-circle-undone {
+            background-color: #ddd;
+            border: 2px solid #ddd;
+        }
+
+        .inner-circle-reject {
+            background-color: #f44336;
+            border: 2px solid #f44336;
+        }
+
+        .inner-circle-hold {
+            background-color: #ff9800;
+            border: 2px solid #ff9800;
+        }
+
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background-color: #2196F3;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-content p {
+            margin: 0;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .timeline-content p.text-muted {
+            color: #999;
+        }
+
+        [data-aos="fade-up"] {
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        [data-aos="fade-up"].aos-animate {
+            opacity: 1;
+        }
     </style>
     <div class="page">
         <!-- Sidebar -->
@@ -27,9 +113,9 @@
                             <!-- Page pre-title -->
                             <h2 class="page-title">
                                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                    class="icon icon-tabler icon-tabler-git-pull-request-draft" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                    class="icon icon-tabler icon-tabler-git-pull-request-draft" width="24"
+                                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M6 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
                                     <path d="M6 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
@@ -71,12 +157,12 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <input type="date" id="idfilter_dari" class="form-control "
-                                                    value="{{ date('Y-m-01') }}">
+                                                <input type="date" id="idfilter_dari" class="form-control"
+                                                    onchange="syn()" value="{{ date('Y-m-01') }}">
                                             </td>
                                             <td>
                                                 <input type="date" id="idfilter_sampai" class="form-control "
-                                                    value="{{ date('Y-m-d') }}">
+                                                    onchange="syn()" value="{{ date('Y-m-d') }}">
                                             </td>
                                             <td>
                                                 <a href="#" class="btn btn-primary btn-icon" aria-label="Button">
@@ -140,7 +226,7 @@
         $(document).ready(function() {
             var tableStatusBarang = $('.datatable-status-barang').DataTable({
                 "processing": true,
-                "serverSide": false,
+                "serverSide": true,
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -186,14 +272,14 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "#",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('getStatus.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#idfilter_dari').val();
+                        data.sampai = $('#idfilter_sampai').val();
+                    }
+                },
                 "columns": [{
                         title: 'KODESERI',
                         data: 'kodeseri',
@@ -214,12 +300,11 @@
                     },
                     {
                         title: 'STATUS BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        data: 'status',
+                        name: 'status',
+                        className: "cuspad0 text-center clickable",
                     },
                 ],
-
             });
         });
     </script>

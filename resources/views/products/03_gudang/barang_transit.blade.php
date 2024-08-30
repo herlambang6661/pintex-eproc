@@ -418,6 +418,40 @@
         </div>
     </div>
 
+    <div class="modal modal-blur fade" id="modalEdit" tabindex="-1" aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="loader"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title">
+                        <i class="fa-regular fa-circle-info"></i>
+                        Edit Transit
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-stamp card-stamp-lg">
+                        <div class="card-stamp-icon bg-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-bag"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+                                <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="fetched-data-edit-transit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
     <script type="text/javascript">
         function tambahItem() {
@@ -502,21 +536,65 @@
             // Menginisialisasi Select2 sesuai dengan jenis
             if (jenis === "Penerimaan") {
                 var suplierDiv = document.getElementById("suplier_" + idf);
-                suplierDiv.innerHTML = '<select name="suplier[]" id="suplier_select_' + idf +
-                    '" class="form-select elementprm" style="width: 100%; text-transform: uppercase; margin: 0;"></select>';
+                suplierDiv.innerHTML =
+                    '<select required name="suplier[]" class="form-select elementprm" style="width: 100%; text-transform: uppercase; margin: 0;"><option></option></select>';
 
-                // Menginisialisasi Select2 untuk namaBarang dan suplier
-                setTimeout(function() {
-                    console.log("Initializing Select2 for:", '#namaBarang_' + idf);
-                    $('#suplier_select_' + idf).select2(getSelect2AjaxConfig("/Suplierget", "Pilih Supplier"));
-                }, 0);
+                $(".elementprm").select2({
+                    language: "id",
+                    placeholder: "Pilih Supplier",
+                    ajax: {
+                        url: "/Suplierget",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function(params) {
+                            return {
+                                q: params.term
+                            };
+                        },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.nama.toUpperCase(),
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+
             } else if (jenis === "Pengiriman") {
                 var suplierDiv = document.getElementById("suplier_" + idf);
-                suplierDiv.innerHTML = '<select name="suplier[]" id="suplier_select_' + idf +
-                    '" class="form-select elementprm" style="width: 100%; text-transform: uppercase; margin: 0;"></select>';
+                suplierDiv.innerHTML =
+                    '<select required name="suplier[]" class="form-select elementpr" style="width: 100%; text-transform: uppercase; margin: 0;"><option></option></select>';
 
-                // Menginisialisasi Select2 hanya untuk supplier
-                $('#suplier_select_' + idf).select2(getSelect2AjaxConfig("/Suplierget", "Pilih Supplier"));
+                $(".elementpr").select2({
+                    language: "id",
+                    placeholder: "Pilih Supplier",
+                    ajax: {
+                        url: "/Suplierget",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function(params) {
+                            return {
+                                q: params.term
+                            };
+                        },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.nama.toUpperCase(),
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
 
                 // Pastikan field input tidak dalam kondisi disabled untuk Pengiriman
                 document.getElementById("namaBarang_" + idf).disabled = false;
@@ -524,29 +602,6 @@
                 document.getElementById("satuan_" + idf).disabled = false;
                 document.getElementById("keterangan_" + idf).disabled = false;
             }
-        }
-
-        function getSelect2AjaxConfig(url, placeholder) {
-            return {
-                language: "id",
-                placeholder: placeholder,
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.results || data // Pastikan data.results ada
-                        };
-                    },
-                    cache: true
-                }
-            };
         }
 
 
@@ -766,6 +821,28 @@
                 });
             });
 
+            $('#modalEdit').on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget)
+                var id = button.data('id');
+                console.log("Fetch Id Item: " + id + "...");
+                $(".overlay").fadeIn(300);
+                $.ajax({
+                    type: 'POST',
+                    url: 'viewEdittransit',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: id,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-edit-transit').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
             /*--------------------------------------------------deleted----------------------------- */
             $('.datatable-transit').on('click', '.remove', function() {
                 var noform_transit = $(this).data('id'); // Ubah dari kodeseri ke noform_transit
@@ -852,7 +929,7 @@
                                     error: function(data) {
                                         tableTransit.ajax.reload();
                                         console.log('Error:', data
-                                        .responseText);
+                                            .responseText);
                                         Swal.fire({
                                             icon: 'error',
                                             title: 'Gagal!',

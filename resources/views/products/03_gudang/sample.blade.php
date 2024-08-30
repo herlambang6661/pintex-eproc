@@ -397,6 +397,40 @@
         </div>
     </div>
 
+    <div class="modal modal-blur fade" id="modalEditSample" tabindex="-1" aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="loader"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title">
+                        <i class="fa-regular fa-circle-info"></i>
+                        Edit Sample
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-stamp card-stamp-lg">
+                        <div class="card-stamp-icon bg-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-bag"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+                                <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="fetched-data-edit-sample"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- end modal --}}
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
     <script type="text/javascript">
@@ -777,6 +811,58 @@
                         setTimeout(function() {
                             $(".overlay").fadeOut(300);
                         }, 500);
+                    }
+                });
+            });
+
+            $('#modalEditSample').on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget)
+                var id = button.data('id');
+                console.log("Fetch Id Item: " + id + "...");
+                $(".overlay").fadeIn(300);
+                $.ajax({
+                    type: 'POST',
+                    url: 'viewEditSample',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: id,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-edit-sample').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $(document).on('submit', '#formUpdateSample', function(e) {
+                e.preventDefault(); // Mencegah submit default
+
+                let form = $(this);
+                let url = form.attr("action");
+                let data = form.serialize();
+
+                $.ajax({
+                    url: url,
+                    method: "POST",
+                    data: data,
+                    success: function(response) {
+                        if (response.status === "success") {
+                            alert(response.message);
+                            $('#modalEditSample').modal('hide'); // Tutup modal setelah berhasil
+                            // Tambahkan logika lain di sini jika perlu
+                        } else {
+                            alert("Terjadi kesalahan: " + response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 419) {
+                            alert("CSRF token expired or missing.");
+                        } else {
+                            alert("Terjadi kesalahan: " + xhr.statusText);
+                        }
                     }
                 });
             });

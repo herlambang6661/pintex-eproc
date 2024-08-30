@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class PermintaanItm extends Model
 {
     use HasFactory, Notifiable;
-
+    protected $table = 'permintaanitm';
     protected $fillable = [
         'jenis',
         'tgl',

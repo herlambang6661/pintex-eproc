@@ -111,19 +111,16 @@ class SampleController extends Controller
 
     public function viewSample(Request $request)
     {
-        // Validasi input
         $request->validate([
             'noform' => 'required|string',
         ]);
 
-        // Ambil data sample berdasarkan noform
         $getsample = Sample::where('noform', $request->noform)->first();
 
         if (!$getsample) {
             return response()->json(['message' => 'Data not found'], 404);
         }
 
-        // Kirim data ke view dalam bentuk HTML
         $data = '
             <style>
                 .stamp {
@@ -246,52 +243,184 @@ class SampleController extends Controller
         return response()->json($data);
     }
 
+    public function viewEditSample(Request $request)
+    {
+        $getItem = \App\Models\Gudang\Sample::find($request->id);
 
-    public function update(Request $request)
+        if (!$getItem) {
+            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        }
+
+        $actionUrl = route('sample.update', $getItem->id);
+
+        $data = '
+        <form id="formUpdateSample" method="POST" action="' . $actionUrl . '">
+        
+        <div class="row">
+            <div class="col-lg-12 mb-3">
+                <div class="card bg-pink-lt shadow rounded border border-blue">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Noform</label>
+                                    <input type="text" class="form-control border border-blue" disabled value="' . e($getItem->noform) . '">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Tanggal</label>
+                                    <input type="date" class="form-control border border-blue" name="tanggal" value="' . e($getItem->tanggal) . '">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card bg-azure-lt shadow rounded border border-blue">
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <label class="form-label">Kodeseri</label>
+                            <input type="text" class="form-control" name="kodeseri" value="' . e($getItem->kodeseri) . '">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Nama Barang</label>
+                            <input type="text" class="form-control" name="namaBarang" value="' . e($getItem->namaBarang) . '">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Keterangan</label>
+                            <input type="text" class="form-control" name="keterangan" value="' . e($getItem->keterangan) . '">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card bg-orange-lt shadow rounded border border-blue">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Qty</label>
+                                    <input type="number" class="form-control" name="qty" value="' . e($getItem->qty) . '">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Expedisi</label>
+                                    <input type="text" class="form-control" name="expedisi" value="' . e($getItem->expedisi) . '">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label class="form-label">Suplier</label>
+                                    <select required name="suplier[]" class="form-select elementprm inputNone" style="text-transform: uppercase;">
+                                        <option value="' . e($getItem->suplier) . '" selected="selected">' . e($getItem->suplier) . '</option> 
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="hr-text text-blue">Keterangan Tambahan</div>
+            <div class="control-group col-lg-12">
+                <div id="ketTamb" class="shadow rounded border border-blue">
+                    <div class="mb-3">
+                        <textarea id="tinymce-edit" name="keteranganform">' . e($getItem->keteranganform) . '</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary me-auto" data-bs-dismiss="modal">Simpan</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                </div>
+        </form>
+    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // Inisialisasi Select2
+                $(".elementprm").select2({
+                    dropdownParent: $("#modalEditSample"),
+                    language: "id",
+                    placeholder: "Pilih Pemesan",
+                    ajax: {
+                        url: "/getMasterSuplier",
+                        dataType: "json",
+                        delay: 200,
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.nama.toUpperCase()
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+    
+                // Inisialisasi TinyMCE
+                let options = {
+                    selector: "#tinymce-edit",
+                    height: 300,
+                    menubar: false,
+                    statusbar: false,
+                    toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent | forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+                    content_style: "body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }"
+                };
+                if (localStorage.getItem("tablerTheme") === "dark") {
+                    options.skin = "oxide-dark";
+                    options.content_css = "dark";
+                }
+                tinyMCE.init(options);
+            });
+        </script>
+        ';
+
+        return response()->json($data);
+    }
+
+
+    public function update(Request $request, $id)
     {
         // Validasi input
         $request->validate([
-            'id' => 'required|exists:samples,id',
             'tanggal' => 'required|date',
-            'kodeseri.*' => 'required|string',
-            'namaBarang.*' => 'required|string',
-            'qty.*' => 'required|integer',
-            'keterangan.*' => 'nullable|string',
-            'supplier.*' => 'nullable|string',
-            'expedisi.*' => 'nullable|string',
+            'kodeseri' => 'required|string',
+            'namaBarang' => 'required|string',
+            'qty' => 'required|integer',
+            'keterangan' => 'nullable|string',
+            'suplier' => 'nullable|string',
+            'expedisi' => 'nullable|string',
         ]);
 
         // Temukan data sample yang akan diperbarui
-        $sample = Sample::find($request->id);
+        $sample = \App\Models\Gudang\Sample::find($id);
 
         if (!$sample) {
             return response()->json(['status' => 'error', 'message' => 'Data tidak ditemukan.'], 404);
         }
 
-        // Perbarui data sample
+        // Update data sample
         $sample->tanggal = $request->tanggal;
-        // Perbarui kolom lain jika diperlukan
+        $sample->kodeseri = strtoupper($request->kodeseri);
+        $sample->namaBarang = strtoupper($request->namaBarang);
+        $sample->qty = $request->qty;
+        $sample->keterangan = strtoupper($request->keterangan ?? '');
+        $sample->suplier = strtoupper($request->suplier ?? '');
+        $sample->expedisi = strtoupper($request->expedisi ?? '');
 
-        // Hapus item lama terkait sample jika diperlukan
-        // Contoh jika Anda menyimpan item terkait dalam tabel terpisah:
-        // $sample->items()->delete();
-
-        // Tambahkan item baru atau perbarui item yang ada
-        foreach ($request->kodeseri as $index => $kodeseri) {
-            // Update atau buat item baru
-            $item = $sample->items()->updateOrCreate(
-                ['kodeseri' => strtoupper($kodeseri)], // Gunakan kunci unik atau identifier lain
-                [
-                    'namaBarang' => strtoupper($request->namaBarang[$index]),
-                    'qty' => $request->qty[$index],
-                    'keterangan' => strtoupper($request->keterangan[$index] ?? ''),
-                    'suplier' => strtoupper($request->supplier[$index] ?? ''),
-                    'expedisi' => strtoupper($request->expedisi[$index] ?? ''),
-                ]
-            );
-        }
-
-        // Simpan data sample
         $sample->save();
 
         return response()->json([
