@@ -134,8 +134,8 @@
                                                         <th class="text-center">Tgl Awal</th>
                                                         <th class="text-center">Tgl Akhir</th>
                                                         <th class="text-center">Mesin</th>
-                                                        <th class="text-center">Unit</th>
-                                                        <th class="text-center">Status</th>
+                                                        {{-- <th class="text-center">Unit</th>
+                                                        <th class="text-center">Status</th> --}}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -155,14 +155,14 @@
                                                                 style="text-transform: uppercase;">
                                                             </select>
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <input type="text" id="idfilter_unit" onchange="syn()"
                                                                 class="form-control">
                                                         </td>
                                                         <td>
                                                             <input type="text" id="idfilter_status" onchange="syn()"
                                                                 class="form-control">
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
                                                 </tbody>
                                             </table>

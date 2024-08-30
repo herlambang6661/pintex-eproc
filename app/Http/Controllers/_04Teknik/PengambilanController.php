@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_04Teknik;
 
+use App\Models\Teknik\PengambilanItm;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -38,12 +39,33 @@ class PengambilanController extends Controller
         return Response()->json($mesin);
     }
 
+    public function getPerson(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $pemesan = DB::table('person')
+                ->select(DB::raw('id, nama, jabatan'))
+                ->where('tipe', '=', "INDIVIDU")
+                ->where('nama', 'LIKE', "%$search%")
+                ->orWhere('jabatan', 'LIKE', "%$search%")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        } else {
+            $pemesan = DB::table('person')
+                ->select(DB::raw('id, nama, jabatan'))
+                ->where('tipe', '=', "INDIVIDU")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        }
+        return Response()->json($pemesan);
+    }
+
     public function pencarianBarang(Request $request)
     {
         if (!$request->keyword) {
             echo '<p class="text-center">Pencarian tidak boleh kosong</p>';
         } else {
-            $hasil = DB::table('barang')->where('kodeseri', $request->keyword)->orWhere('namaBarang', 'LIKE', '%' . $request->keyword . '%')->where('status', 'DITERIMA')->orderBy('kodeseri', 'asc')->get();
+            $hasil = DB::table('barang')->where('kodeseri', $request->keyword)->orWhere('namaBarang', 'LIKE', '%' . $request->keyword . '%')->orWhere('keterangan', 'LIKE', '%' . $request->keyword . '%')->where('status', 'DITERIMA')->orderBy('kodeseri', 'asc')->get();
             echo '
             <div class="table-responsive" style="max-height: 250px;">
                 Hasil : ' . count($hasil) . ' Item untuk pencarian : "' . $request->keyword . '"
@@ -146,5 +168,19 @@ class PengambilanController extends Controller
             $arr = array('msg' => 'Data: ' . $kodenoform . ' telah berhasil disimpan', 'status' => true);
         }
         return Response()->json($arr);
+    }
+
+    public function edit($id)
+    {
+        $data = PengambilanItm::find($id);
+        return response()->json($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pengambilan = Pengambilanitm::find($id);
+        $pengambilan->update($request->all());
+
+        return response()->json(['success' => 'Data berhasil diperbarui']);
     }
 }

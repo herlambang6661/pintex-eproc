@@ -238,7 +238,7 @@
                                                 <tr>
                                                     <td>
                                                         <input type="date" id="idfilter_dari" class="form-control"
-                                                            onchange="syn()" value="{{ date('Y-01-01') }}">
+                                                            onchange="syn()" value="{{ date('Y-m-01') }}">
                                                     </td>
                                                     <td>
                                                         <input type="date" id="idfilter_sampai" class="form-control "
@@ -277,6 +277,148 @@
             @include('shared.footer')
         </div>
     </div>
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            display: block;
+            margin: 15px auto;
+            position: relative;
+            color: #ff0000c3;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        .loader::after,
+        .loader::before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 50%;
+            left: 50%;
+            transform: scale(0.5) translate(0, 0);
+            background-color: #ff0000c3;
+            border-radius: 50%;
+            animation: animloader 1s infinite ease-in-out;
+        }
+
+        .loader::before {
+            background-color: #ffffffba;
+            transform: scale(0.5) translate(-48px, -48px);
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes animloader {
+            50% {
+                transform: scale(1) translate(-50%, -50%);
+            }
+        }
+    </style>
+    <div class="modal modal-blur fade" id="modaleditPengambilan" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title">Edit Pengambilan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editForm" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="card-stamp card-stamp-lg">
+                            <div class="card-stamp-icon bg-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-bag"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+                                    <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="fetched-edit-pengambilan">
+                            <div class="row">
+                                <div class="col-lg-12 mb-3">
+                                    <div class="card bg-pink-lt shadow rounded border border-blue">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="mb-2">
+                                                        <label class="form-label">Kodeseri</label>
+                                                        <input type="text" class="form-control border border-blue"
+                                                            disabled name="kodeseri">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="mb-2">
+                                                        <label class="form-label">Tanggal</label>
+                                                        <input type="date" class="form-control border border-blue"
+                                                            name="tanggal">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Nama Barang</label>
+                                                <input type="text" class="form-control" name="namaBarang">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Mesin</label>
+                                                <input type="text" class="form-control" name="mesin">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Jumlah</label>
+                                                <input type="number" class="form-control" name="jumlah">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Diambil</label>
+                                                <input type="text" class="form-control" name="diambil">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Keterangan</label>
+                                                <input type="text" class="form-control" name="keterangan">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
     <script type="text/javascript">
@@ -368,6 +510,14 @@
                     }
                 },
                 "columns": [{
+                        title: '',
+                        data: 'action',
+                        name: 'action',
+                        className: "cuspad0 cuspad1",
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
                         title: 'KODESERI',
                         data: 'kodeseri',
                         name: 'kodeseri',
@@ -405,6 +555,215 @@
                     },
                 ],
 
+            });
+
+            /*-----------------------------------------EDIT PENGAMBILAN-----------------------------------------------*/
+            $(document).ready(function() {
+                function showOverlay() {
+                    $('body').append(
+                        '<div class="overlay"><div class="cv-spinner"><span class="loader"></span></div></div>'
+                    );
+                }
+
+                function hideOverlay() {
+                    $('.overlay').remove();
+                }
+
+                $(document).on('click', '.edit-btn', function() {
+                    var id = $(this).data('id');
+
+                    showOverlay();
+
+                    $.ajax({
+                        url: '/pengambilan/' + id + '/edit',
+                        type: 'GET',
+                        success: function(data) {
+                            $('#modaleditPengambilan input[name="tanggal"]').val(data
+                                .tanggal);
+                            $('#modaleditPengambilan input[name="kodeseri"]').val(data
+                                .kodeseri);
+                            $('#modaleditPengambilan input[name="namaBarang"]').val(data
+                                .namaBarang);
+                            $('#modaleditPengambilan input[name="mesin"]').val(data
+                                .mesin);
+                            $('#modaleditPengambilan input[name="jumlah"]').val(data
+                                .jumlah);
+                            $('#modaleditPengambilan input[name="diambil"]').val(data
+                                .diambil);
+                            $('#modaleditPengambilan input[name="keterangan"]').val(data
+                                .keterangan);
+
+                            $('#editForm').attr('action', '/pengambilan/' + id);
+
+                            var modal = new bootstrap.Modal(document.getElementById(
+                                'modaleditPengambilan'));
+                            modal.show();
+
+                            hideOverlay();
+                        },
+                        error: function() {
+                            hideOverlay();
+                            alert('Failed to fetch data.');
+                        }
+                    });
+                });
+
+                $('#editForm').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var formAction = $(this).attr('action');
+                    var formData = $(this).serialize();
+
+                    showOverlay();
+
+                    $.ajax({
+                        url: formAction,
+                        type: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Data pengambilan updated successfully.',
+                                position: 'top-end',
+                                toast: true,
+                                showConfirmButton: false,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter',
+                                        Swal.stopTimer)
+                                    toast.addEventListener('mouseleave',
+                                        Swal
+                                        .resumeTimer)
+                                }
+                            }).then(() => {
+                                location.reload();
+                            });
+                            $('#modaleditPengambilan').modal('hide');
+                            $('#datatable-pengambilan').DataTable().ajax.reload();
+                            hideOverlay();
+                        },
+                        error: function() {
+                            hideOverlay();
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Failed to update data.',
+                                icon: 'error',
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+                        }
+                    });
+                });
+            });
+
+            /*------------------------------------------DESTROY PENGAMBILAN-------------------------------------------*/
+            $('.datatable-pengambilan').on('click', '.remove', function() {
+                var kodeseri = $(this).data('id');
+                var nama = $(this).data('nama');
+                var desc = $(this).data('desc');
+                var token = $("meta[name='csrf-token']").attr("content");
+                let r = (Math.random() + 1).toString(36).substring(2);
+
+                swal.fire({
+                    title: 'Hapus Data Permintaan',
+                    text: 'Apakah anda yakin ingin menghapus ' + kodeseri + ', Ket : ' + nama +
+                        " " + desc,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '<i class="fa-regular fa-trash-can"></i> Hapus',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        (async () => {
+                            const {
+                                value: password
+                            } = await Swal.fire({
+                                title: "Ketik tulisan dibawah untuk menghapus " +
+                                    kodeseri,
+                                html: '<div class="unselectable">' + r +
+                                    '</div>',
+                                input: "text",
+                                inputPlaceholder: "Enter your password to Delete " +
+                                    nama,
+                                showCancelButton: true,
+                                cancelButtonColor: '#3085d6',
+                                cancelButtonText: 'Batal',
+                                confirmButtonText: 'Ok',
+                                inputAttributes: {
+                                    autocapitalize: "off",
+                                    autocorrect: "off"
+                                },
+                            });
+                            if (password == r) {
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: "{{ route('getPengambilan.store') }}" +
+                                        '/' + kodeseri,
+                                    data: {
+                                        "_token": "{{ csrf_token() }}",
+                                    },
+                                    beforeSend: function() {
+                                        Swal.fire({
+                                            title: 'Mohon Menunggu',
+                                            html: '<center><lottie-player src="https://lottie.host/54b33864-47d1-4f30-b38c-bc2b9bdc3892/1xkjwmUkku.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menghapus data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                            timerProgressBar: true,
+                                            showConfirmButton: false,
+                                            allowOutsideClick: false,
+                                            allowEscapeKey: false,
+                                        })
+                                    },
+                                    success: function(data) {
+                                        tablePengambilan.ajax.reload();
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: "top-end",
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                            timerProgressBar: true,
+                                            didOpen: (toast) => {
+                                                toast.onmouseenter =
+                                                    Swal.stopTimer;
+                                                toast.onmouseleave =
+                                                    Swal
+                                                    .resumeTimer;
+                                            }
+                                        });
+                                        Toast.fire({
+                                            icon: "success",
+                                            title: "Data Permintaan : " +
+                                                nama + " (" + kodeseri +
+                                                ") Terhapus"
+                                        });
+                                    },
+                                    error: function(data) {
+                                        tablePengambilan.ajax.reload();
+                                        console.log('Error:', data
+                                            .responseText);
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal!',
+                                            text: 'Error: ' + data
+                                                .responseText,
+                                            showConfirmButton: true,
+                                        });
+                                    }
+                                });
+                            } else {
+                                tablePengambilan.ajax.reload();
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Gagal",
+                                    text: "Teks yang diketik tidak sama",
+                                });
+                            }
+                        })()
+                    }
+                })
             });
         });
         $(document).on('click', '.tambahkebawah', function() {
