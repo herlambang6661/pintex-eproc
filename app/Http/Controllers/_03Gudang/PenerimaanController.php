@@ -990,7 +990,6 @@ class PenerimaanController extends Controller
 
     public function getPenerimaanCheck(Request $request)
     {
-
         if ($request->ajax()) {
             if ($request->dari) {
                 $dari = $request->dari;
@@ -1012,9 +1011,15 @@ class PenerimaanController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('mesin', function ($row) {
-                    $permintaanController = new PermintaanController();
-                    $m = $permintaanController->getMesinPermintaan($row->mesin);
-                    return $m;
+                    // $permintaanController = new PermintaanController();
+                    // $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $row->mesin)->first();
+                    if (is_null($m)) {
+                        $msn = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $row->mesin)->first();
+                        return $msn->mesin . " " . $msn->merk;
+                    } else {
+                        return $m->mesin . " " . $m->merk;
+                    }
                 })
                 ->addColumn('tgl_pembelian', function ($row) {
                     $date = Carbon::parse($row->tgl_pembelian)->format('d/m/Y');
@@ -1059,7 +1064,6 @@ class PenerimaanController extends Controller
 
     public function getPartial(Request $request)
     {
-
         if ($request->ajax()) {
             if ($request->dari) {
                 $dari = $request->dari;
@@ -1081,9 +1085,15 @@ class PenerimaanController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('mesin', function ($row) {
-                    $permintaanController = new PermintaanController();
-                    $m = $permintaanController->getMesinPermintaan($row->mesin);
-                    return $m;
+                    // $permintaanController = new PermintaanController();
+                    // $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $row->mesin)->first();
+                    if (is_null($m)) {
+                        $msn = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $row->mesin)->first();
+                        return $msn->mesin . " " . $msn->merk;
+                    } else {
+                        return $m->mesin . " " . $m->merk;
+                    }
                 })
                 ->addColumn('tgl_pembelian', function ($row) {
                     $date = Carbon::parse($row->tgl_pembelian)->format('d/m/Y');

@@ -191,6 +191,31 @@
                                             <div class="table-responsive">
                                                 <table style="width:100%; height: 100%;font-size:13px;"
                                                     class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-list-penerimaan">
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th class="px-1 py-1 text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </th>
+                                                            <th class="px-1 th py-1">tgl</th>
+                                                            <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">barang</th>
+                                                            <th class="px-1 th py-1">deskripsi</th>
+                                                            <th class="px-1 th py-1">katalog</th>
+                                                            <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">mesin</th>
+                                                            <th class="px-1 th py-1">qty</th>
+                                                            <th class="px-1 th py-1">qty_terima</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -230,6 +255,29 @@
                                             <div class="table-responsive">
                                                 <table style="width:100%; height: 100%;font-size:13px;"
                                                     class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-checklist-penerimaan">
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th class="px-1 py-1 text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </th>
+                                                            <th class="px-1 th py-1">tgl</th>
+                                                            <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">barang</th>
+                                                            <th class="px-1 th py-1">deskripsi</th>
+                                                            <th class="px-1 th py-1">katalog</th>
+                                                            <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">mesin</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -282,6 +330,30 @@
                                             <div class="table-responsive">
                                                 <table style="width:100%; height: 100%;font-size:13px;"
                                                     class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-partial-penerimaan">
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th class="px-1 py-1 text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </th>
+                                                            <th class="px-1 th py-1">tgl</th>
+                                                            <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">barang</th>
+                                                            <th class="px-1 th py-1">qty</th>
+                                                            <th class="px-1 th py-1">deskripsi</th>
+                                                            <th class="px-1 th py-1">katalog</th>
+                                                            <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">mesin</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -555,7 +627,25 @@
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
-
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
+            });
+            $('.datatable-list-penerimaan tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="' +
+                    $(this).text().toUpperCase() + '" />'
+                );
             });
             //----------------------------------------------CHECKLLIS PENERIMAAN-----------------------------------------//
             tableChecklistPenerimaan = $('.datatable-checklist-penerimaan').DataTable({
@@ -671,7 +761,25 @@
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
-
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
+            });
+            $('.datatable-checklist-penerimaan tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="' +
+                    $(this).text().toUpperCase() + '" />'
+                );
             });
             //---------------------------------------------PARSIAL PENERIMAAN-----------------------------------//
             tablePartial = $('.datatable-partial-penerimaan').DataTable({
@@ -792,6 +900,25 @@
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
+            });
+            $('.datatable-partial-penerimaan tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="' +
+                    $(this).text().toUpperCase() + '" />'
+                );
             });
 
             if ($("#formPenerimaan").length > 0) {

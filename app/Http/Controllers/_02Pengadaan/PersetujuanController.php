@@ -300,6 +300,11 @@ class PersetujuanController extends Controller
                 foreach ($data as $u) {
                     echo  '<input type="hidden" name="idpermintaan[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '" >';
+                    if ($u->entitas == 'TFI') {
+                        $bg_entitas = 'bg-orange-lt';
+                    } else {
+                        $bg_entitas = 'bg-cyan-lt';
+                    }
                     if ($u->urgent == 1) {
                         $urgent = 'border-cyan bg-cyan-lt';
                         $ribbon = '
@@ -329,7 +334,7 @@ class PersetujuanController extends Controller
                                     transform: scale(1.01);
                                 }
                         </style>
-                        <div class="card cards shadow ' . $urgent . ' table-hover" id="kartu-' . $u->id . '">
+                        <div class="card cards ' . $bg_entitas . ' shadow ' . $urgent . ' table-hover" id="kartu-' . $u->id . '">
                             ' . $ribbon . '
                             <div class="row g-0">
                                 <div class="col-auto">
@@ -393,11 +398,12 @@ class PersetujuanController extends Controller
                                     </div>
                                 </div>
                                 <div class="card-footer pt-0 ps-0 pe-0 pb-0">
-                                    <table class="table table-sm table-card text-center text-blue">
+                                    <table class="table table-sm table-card text-left text-blue">
                                         <tr>
-                                            <td>Pemesan: ' . $u->pemesan . '</td>
-                                            <td>' . (empty($u->unit) ? "" : $u->unit) . '</td>
-                                            <td>Mesin: ' . $mesin . '</td>
+                                            <td style="width: 25%">Entitas: ' . strtoupper($u->entitas) . '</td>
+                                            <td style="width: 25%">Pemesan: ' . $u->pemesan . '</td>
+                                            <td style="width: 25%">' . (empty($u->unit) ? "" : $u->unit) . '</td>
+                                            <td style="width: 25%">Mesin: ' . $mesin . '</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -472,6 +478,11 @@ class PersetujuanController extends Controller
                     $tipe = "permintaan";
                 }
                 foreach ($data as $u) {
+                    if ($u->entitas == 'TFI') {
+                        $bg_entitas = 'bg-orange-lt';
+                    } else {
+                        $bg_entitas = 'bg-cyan-lt';
+                    }
                     if ($tipe == "servis") {
                         $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $u->mesin)->first();
                         $mesin = $getMesin->mesin . " " . $getMesin->merk;
@@ -491,7 +502,7 @@ class PersetujuanController extends Controller
                                     transform: scale(1.01);
                                 }
                         </style>
-                        <div class="card cards shadow border-green table-hover" id="kartu-' . $u->id . '">
+                        <div class="card cards shadow ' . $bg_entitas . ' border-green table-hover" id="kartu-' . $u->id . '">
                             <div class="row g-0">
                                 <div class="col-auto">
                                     <div class="card-body">

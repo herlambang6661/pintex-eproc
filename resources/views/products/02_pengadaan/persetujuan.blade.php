@@ -249,6 +249,31 @@
                                                 <table
                                                     style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
                                                     class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-qty-persetujuan">
+                                                    <tfoot>
+                                                        <tr>
+
+                                                            <th class="px-1 py-1 text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </th>
+                                                            <th class="px-1 th py-1">tgl</th>
+                                                            <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">noform</th>
+                                                            <th class="px-1 th py-1">barang</th>
+                                                            <th class="px-1 th py-1">qty</th>
+                                                            <th class="px-1 th py-1">satuan</th>
+                                                            <th class="px-1 th py-1">pemesan</th>
+                                                            <th class="px-1 th py-1">mesin</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -266,44 +291,38 @@
                                                             <th class="text-center"></th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <select class="form-select">
-                                                                    <option value="all">Semua Unit</option>
-                                                                    <option value="Unit1">Unit 1</option>
-                                                                    <option value="Unit2">Unit 2</option>
-                                                                    <option value="TFO">TFO</option>
-                                                                    <option value="TFI">TFI</option>
-                                                                    <option value="UMUM">UMUM</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"
-                                                                            fill="none" />
-                                                                        <path
-                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                        <path d="M21 21l-6 -6" />
-                                                                    </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
                                                 </table>
                                             </div>
                                             {{-- <div class="table-responsive"> --}}
                                             <table
                                                 style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
                                                 class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
+                                                <tfoot>
+                                                    <tr>
+
+                                                        <th class="px-1 py-1 text-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                <path d="M21 21l-6 -6" />
+                                                            </svg>
+                                                        </th>
+                                                        <th class="px-1 th py-1">tgl</th>
+                                                        <th class="px-1 th py-1">kodeseri</th>
+                                                        <th class="px-1 th py-1">barang</th>
+                                                        <th class="px-1 th py-1">keterangan</th>
+                                                        <th class="px-1 th py-1">katalog</th>
+                                                        <th class="px-1 th py-1">part</th>
+                                                        <th class="px-1 th py-1">mesin</th>
+                                                        <th class="px-1 th py-1">qty</th>
+                                                        <th class="px-1 th py-1">satuan</th>
+                                                        <th class="px-1 th py-1">pemesan</th>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                             {{-- </div> --}}
                                             {{-- </div> --}}
@@ -331,6 +350,33 @@
                                             <div class="table-responsive">
                                                 <table style="width:100%; height: 100%;font-size:13px;"
                                                     class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-reject">
+                                                    <tfoot>
+                                                        <tr>
+
+                                                            <th class="px-1 py-1 text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </th>
+                                                            <th class="px-1 th py-1">tgl</th>
+                                                            <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">barang</th>
+                                                            <th class="px-1 th py-1">keterangan</th>
+                                                            <th class="px-1 th py-1">katalog</th>
+                                                            <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">qty</th>
+                                                            <th class="px-1 th py-1">satuan</th>
+                                                            <th class="px-1 th py-1">pemesan</th>
+                                                            <th class="px-1 th py-1">ket_acc</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -354,6 +400,33 @@
                                                 <table
                                                     style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
                                                     class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-hold">
+                                                    <tfoot>
+                                                        <tr>
+
+                                                            <th class="px-1 py-1 text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </th>
+                                                            <th class="px-1 th py-1">tgl</th>
+                                                            <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">barang</th>
+                                                            <th class="px-1 th py-1">keterangan</th>
+                                                            <th class="px-1 th py-1">katalog</th>
+                                                            <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">qty</th>
+                                                            <th class="px-1 th py-1">satuan</th>
+                                                            <th class="px-1 th py-1">pemesan</th>
+                                                            <th class="px-1 th py-1">ket_acc</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -644,7 +717,6 @@
         }
         var tablePermintaanQty, tablePermintaanAcc, tablePermintaanRjt, tablePermintaanHld;
         $(document).ready(function() {
-            $('html').addClass('cursor-wait');
             var selected = new Array();
             // TABLE ---------------------------------------------------------//
             //---------------QTY PERSETUJUAN----------------------------------//
@@ -764,7 +836,7 @@
                         title: 'Noform',
                         data: 'noform',
                         name: 'noform',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 text-center cursor-pointer"
                     },
                     {
                         title: 'Barang',
@@ -776,13 +848,13 @@
                         title: 'QTY Minta',
                         data: 'qty',
                         name: 'qty',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 text-center cursor-pointer"
                     },
                     {
                         title: 'Satuan',
                         data: 'satuan',
                         name: 'satuan',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 text-center cursor-pointer"
                     },
                     {
                         title: 'Pemesan',
@@ -797,7 +869,24 @@
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                 ],
-
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
+            });
+            $('.datatable-qty-persetujuan tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="search" />'
+                );
             });
 
             //---------------PERSETUJUAN-------------------------------------//
@@ -931,7 +1020,25 @@
                         name: 'pemesan',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
-                ]
+                ],
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
+            });
+            $('.datatable-persetujuan tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="search" />'
+                );
             });
 
             //---------------REJECT-----------------------------------------//
@@ -1067,7 +1174,25 @@
                         name: 'keteranganACC',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
-                ]
+                ],
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
+            });
+            $('.datatable-reject tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="search" />'
+                );
             });
 
             //---------------HOLD------------------------------------------//
@@ -1180,12 +1305,6 @@
                         className: "cuspad0 clickable cursor-pointer"
                     },
                     {
-                        title: 'DESKRIPSI',
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
-                    },
-                    {
                         title: 'QTY MINTA',
                         data: 'qty',
                         name: 'qty',
@@ -1209,10 +1328,26 @@
                         name: 'keteranganACC',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
-                ]
-
+                ],
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
             });
-
+            $('.datatable-hold tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="search" />'
+                );
+            });
             //---------------FILTER------------------------------------------//
             $('#filter_id').on('click change', function() {
                 tablePermintaanQty.ajax.reload(null, false);
