@@ -139,21 +139,15 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php
-                                                    $date = new DateTime(); //Today
-                                                    $lastDay = $date->format('Y-m-t'); //Get last day
-                                                    $dateMinus12 = $date->modify('-12 months'); // Last day 12 months ago
-                                                    ?>
                                                     <tr>
                                                         <td>
                                                             <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()"
-                                                                value="{{ $dateMinus12->format('Y-m-d') }}">
+                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
                                                         </td>
                                                         <td>
                                                             <input type="date" id="idfilter_sampai"
                                                                 class="form-control " onchange="syn()"
-                                                                value="{{ $lastDay }}">
+                                                                value="{{ date('Y-m-t') }}">
                                                         </td>
                                                         <td>
                                                             <select id="idfilter_mesin" onchange="syn()"
@@ -519,7 +513,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title">
                             <i class="fa-regular fa-pen-to-square"></i>
-                            Edit Permintaan (Undone)
+                            Edit Permintaan
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -1144,55 +1138,6 @@
             }
             if ($("#formEditPermintaan").length > 0) {
                 $("#formEditPermintaan").validate({
-                    rules: {
-                        jenis: {
-                            required: true,
-                        },
-                        tanggal: {
-                            required: true,
-                        },
-                        nama: {
-                            required: true,
-                        },
-                        keterangan: {
-                            required: true,
-                        },
-                        katalog: {
-                            required: true,
-                        },
-                        part: {
-                            required: true,
-                        },
-                        mesin: {
-                            required: true,
-                        },
-                        qty: {
-                            required: true,
-                        },
-                        satuan: {
-                            required: true,
-                        },
-                        pemesan: {
-                            required: true,
-                        },
-                        unit: {
-                            required: true,
-                        },
-                        peruntukan: {
-                            required: true,
-                        },
-                        sample: {
-                            required: true,
-                        },
-                    },
-                    // messages: {
-                    //     tanggal: {
-                    //         required: "Masukkan Tanggal",
-                    //     },
-                    //     kabag: {
-                    //         required: "Masukkan Kabag",
-                    //     },
-                    // },
 
                     submitHandler: function(form) {
                         $.ajaxSetup({
