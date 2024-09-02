@@ -510,22 +510,29 @@
             </div>
         </div>
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                        Edit Permintaan (Undone)
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            <form method="POST" name="formEditPermintaan" id="formEditPermintaan" class="form"
+                enctype="multipart/form-data" accept-charset="utf-8" onkeydown="return event.key != 'Enter';"
+                data-select2-id="add-form">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                            Edit Permintaan (Undone)
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-edit-permintaan"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="submitEditPermintaan" class="btn btn-primary me-auto"
+                            data-bs-dismiss="modal">Simpan</button>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div class="fetched-data-edit-permintaan"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary me-auto" data-bs-dismiss="modal">Simpan</button>
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     {{-- End Modals --}}
@@ -1130,6 +1137,126 @@
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
                                 );
                                 $("#submitPermintaan").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+            if ($("#formEditPermintaan").length > 0) {
+                $("#formEditPermintaan").validate({
+                    rules: {
+                        jenis: {
+                            required: true,
+                        },
+                        tanggal: {
+                            required: true,
+                        },
+                        nama: {
+                            required: true,
+                        },
+                        keterangan: {
+                            required: true,
+                        },
+                        katalog: {
+                            required: true,
+                        },
+                        part: {
+                            required: true,
+                        },
+                        mesin: {
+                            required: true,
+                        },
+                        qty: {
+                            required: true,
+                        },
+                        satuan: {
+                            required: true,
+                        },
+                        pemesan: {
+                            required: true,
+                        },
+                        unit: {
+                            required: true,
+                        },
+                        peruntukan: {
+                            required: true,
+                        },
+                        sample: {
+                            required: true,
+                        },
+                    },
+                    // messages: {
+                    //     tanggal: {
+                    //         required: "Masukkan Tanggal",
+                    //     },
+                    //     kabag: {
+                    //         required: "Masukkan Kabag",
+                    //     },
+                    // },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $('#submitEditPermintaan').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Mohon Menunggu...');
+                        $("#submitEditPermintaan").attr("disabled", true);
+
+                        $.ajax({
+                            url: "{{ url('storedataEditPermintaan') }}",
+                            type: "POST",
+                            data: $('#formEditPermintaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Menyimpan Data',
+                                    html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Result:', response);
+                                $('#submitEditPermintaan').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitEditPermintaan").attr("disabled", false);
+                                tablePermintaan.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                document.getElementById("formEditPermintaan").reset();
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                tablePermintaan.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitEditPermintaan').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitEditPermintaan").attr("disabled", false);
                             }
                         });
                     }

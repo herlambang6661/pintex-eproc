@@ -557,13 +557,14 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Jenis</label>
-                                                <input type="text" class="form-control border border-blue disabled" disabled value="' . $getItem->jenis . '">
+                                                <input type="hidden" name="kodeseri" value="' . $getItem->kodeseri . '">
+                                                <input type="text" name="jenis" id="jenis" class="form-control border border-blue disabled" readonly value="' . $getItem->jenis . '">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Tanggal</label>
-                                                <input type="date" class="form-control border border-blue" value="' . $getItem->tgl . '">
+                                                <input type="date" name="tanggal" id="tanggal" class="form-control border border-blue" value="' . $getItem->tgl . '">
                                             </div>
                                         </div>
                                     </div>
@@ -575,21 +576,19 @@ class PermintaanController extends Controller
                                 <div class="card-body">
                                     <div class="mb-2">
                                         <label class="form-label">Nama Barang</label>
-                                        <select name="namaBarang[]" class="form-select  elementbrg inputNone" style="text-transform: uppercase;">
-                                            <option value="' . $getItem->namaBarang . '" selected="selected">' . $getItem->namaBarang . '</option> 
-                                        </select>
+                                        <input type="text" name="nama" id="nama" class="form-control" style="text-transform: uppercase;" value="' . $getItem->namaBarang . '">
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Deskripsi</label>
-                                        <input type="text" list="datalistDeskripsi" class="form-control" value="' . $getItem->keterangan . '">
+                                        <input type="text" name="keterangan" id="keterangan" list="datalistDeskripsi" class="form-control" value="' . $getItem->keterangan . '">
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Katalog</label>
-                                        <input type="text" list="datalistKatalog" class="form-control" value="' . $getItem->katalog . '">
+                                        <input type="text" name="katalog" id="katalog" list="datalistKatalog" class="form-control" value="' . $getItem->katalog . '">
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Part</label>
-                                        <input type="text" list="datalistPart" class="form-control" value="' . $getItem->part . '">
+                                        <input type="text" name="part" id="part" list="datalistPart" class="form-control" value="' . $getItem->part . '">
                                     </div>
                                 </div>
                             </div>
@@ -599,7 +598,7 @@ class PermintaanController extends Controller
                                 <div class="card-body">
                                     <div class="mb-2">
                                         <label class="form-label">Mesin</label>
-                                        <select name="mesin[]" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;">
+                                        <select name="mesin" id="mesin" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;">
                                             <option value="' . $getItem->mesin . '" selected="selected">' . $getMesin->mesin . " " . $getMesin->merk . '</option> 
                                         </select>
                                     </div>
@@ -607,13 +606,13 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Qty</label>
-                                                <input type="number" class="form-control" value="' . $getItem->qty . '">
+                                                <input name="qty" id="qty" type="number" class="form-control" value="' . $getItem->qty . '">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Satuan</label>
-                                                <input type="text" list="datalistSatuan" class="form-control" value="' . $getItem->satuan . '">
+                                                <input type="text" name="satuan" id="satuan" list="datalistSatuan" class="form-control" value="' . $getItem->satuan . '">
                                             </div>
                                         </div>
                                     </div>
@@ -621,7 +620,7 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Pemesan</label>
-                                                <select required name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;">
+                                                <select required name="pemesan" id="pemesan" class="form-select  elementprm inputNone" style="text-transform: uppercase;">
                                                     <option value="' . $getItem->pemesan . '" selected="selected">' . $getItem->pemesan . '</option> 
                                                 </select>
                                             </div>
@@ -629,7 +628,7 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Unit</label>
-                                                <input type="text" class="form-control" value="' . $getItem->unit . '">
+                                                <input type="text" name="unit" id="unit" class="form-control" value="' . $getItem->unit . '">
                                             </div>
                                         </div>
                                     </div>
@@ -637,13 +636,13 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Peruntukan</label>
-                                                <input type="text" class="form-control" value="' . $getItem->peruntukan . '">
+                                                <input type="text" name="peruntukan" id="peruntukan" class="form-control" value="' . $getItem->peruntukan . '">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Sample</label>
-                                                <input type="number" class="form-control" value="' . $getItem->qty_sample . '">
+                                                <input type="number" name="sample" id="sample" class="form-control" value="' . $getItem->qty_sample . '">
                                             </div>
                                         </div>
                                     </div>
@@ -809,5 +808,40 @@ class PermintaanController extends Controller
             </div>
         ';
         }
+    }
+
+    public function storeEditPermintaan(Request $request)
+    {
+        DB::table('permintaanitm')
+            ->where('kodeseri', $request->kodeseri)
+            ->update([
+                'tgl' => $request->tanggal,
+                'namaBarang' => $request->nama,
+                'keterangan' => $request->keterangan,
+                'katalog' => $request->katalog,
+                'part' => $request->part,
+                'mesin' => $request->mesin,
+                'qty' => $request->qty,
+                'satuan' => $request->satuan,
+                'pemesan' => $request->pemesan,
+                'unit' => $request->unit,
+                'peruntukan' => $request->peruntukan,
+                'sample' => $request->sample,
+                'edited' => '1',
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        $getbarang2 = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri)->first();
+        $check = DB::table('permintaan')
+            ->where('noform', $getbarang2->noform)
+            ->update([
+                'keteranganform' => $request->keteranganform,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data: (' . $request->kodeseri . ') ' . $request->namaBarang . ' telah berhasil diubah', 'status' => true);
+        }
+        return Response()->json($arr);
     }
 }
