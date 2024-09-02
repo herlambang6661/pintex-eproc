@@ -153,12 +153,12 @@ class PermintaanController extends Controller
         );
 
         // Initiate Noform
-        if ($request->session()->get('entitas') == 'TFI') {
+        if ($request->entitas == 'TFI') {
             $checknoform = DB::table('permintaan')->where('noform', 'like', '%' . date('y') . '-' . '9%')->latest('noform')->first();
             if ($checknoform) {
                 $y = substr($checknoform->noform, 0, 2);
                 if (date('y') == $y) {
-                    $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
+                    $query = DB::table('permintaan')->where('noform', 'like', '%' . date('y') . '-' . '9%')->orderBy('noform', 'desc')->first();
                     $noUrut = (int) substr($query->noform, -4);
                     $noUrut++;
                     $char = date('y-') . '9';
@@ -185,7 +185,7 @@ class PermintaanController extends Controller
 
         $jml_mbl = count($request->jenis);
         for ($i = 0; $i < $jml_mbl; $i++) {
-            if ($request->session()->get('entitas') == 'TFI') {
+            if ($request->entitas == 'TFI') {
                 // generate kodeseri TFI
                 $getkodeseri = DB::table('permintaanitm')->where('kodeseri', 'like', '%T%')->orderBy('kodeseri', 'desc')->first();
                 if ($getkodeseri) {
@@ -243,7 +243,7 @@ class PermintaanController extends Controller
         }
 
         DB::table('permintaan')->insert([
-            'entitas'           => $request->session()->get('entitas'),
+            'entitas'           => $request->entitas,
             'remember_token'    => $request->_token,
             'tanggal'           => $request->tanggal,
             'noform'            => $kodeSurat,

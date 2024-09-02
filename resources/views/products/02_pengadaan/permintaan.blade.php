@@ -884,7 +884,7 @@
             --------------------------------------------*/
             tablePermintaan = $('.datatable-permintaan').DataTable({
                 "processing": true, //Feature control the processing indicator.
-                "serverSide": false, //Feature control DataTables' server-side processing mode.
+                "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
