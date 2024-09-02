@@ -199,7 +199,7 @@ class PermintaanController extends Controller
                 }
             } else {
                 // generate kodeseri PINTEX
-                $getkodeseri = DB::table('permintaanitm')->latest('kodeseri')->first();
+                $getkodeseri = DB::table('permintaanitm')->where('kodeseri', 'not like', '%T%')->latest('kodeseri')->first();
                 if ($getkodeseri) {
                     $kdseriR = $getkodeseri->kodeseri;
                     $kdseri = $kdseriR + 1;
