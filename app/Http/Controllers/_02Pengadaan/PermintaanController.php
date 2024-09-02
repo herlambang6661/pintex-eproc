@@ -215,7 +215,7 @@ class PermintaanController extends Controller
             }
             $check = DB::table('permintaanitm')->insert([
                 'remember_token'    => $request->_token,
-                'entitas'           => $request->session()->get('entitas'),
+                'entitas'           => $request->entitas,
                 'jenis' => $request->jenis[$i],
                 'tgl' => $request->tanggal,
                 'kodeseri' => $kdseri,
