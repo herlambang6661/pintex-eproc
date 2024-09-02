@@ -133,7 +133,7 @@
                                                     <tr>
                                                         <th class="text-center">Tgl Awal</th>
                                                         <th class="text-center">Tgl Akhir</th>
-                                                        <th class="text-center">Mesin</th>
+                                                        <th class="text-center"></th>
                                                         {{-- <th class="text-center">Unit</th>
                                                         <th class="text-center">Status</th> --}}
                                                     </tr>
@@ -150,10 +150,10 @@
                                                                 value="{{ date('Y-m-t') }}">
                                                         </td>
                                                         <td>
-                                                            <select id="idfilter_mesin" onchange="syn()"
-                                                                class="form-select elementmsn text-nowrap"
-                                                                style="text-transform: uppercase;">
-                                                            </select>
+                                                            <button type="button" class="btn btn-primary"
+                                                                onclick="syn()">
+                                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                            </button>
                                                         </td>
                                                         {{-- <td>
                                                             <input type="text" id="idfilter_unit" onchange="syn()"
@@ -1011,8 +1011,8 @@
                     },
                     {
                         title: 'Dibeli',
-                        data: 'dibeli',
-                        name: 'dibeli',
+                        data: 'pembeli',
+                        name: 'pembeli',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
