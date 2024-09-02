@@ -154,20 +154,20 @@ class PermintaanController extends Controller
 
         // Initiate Noform
         if ($request->session()->get('entitas') == 'TFI') {
-            $checknoform = DB::table('permintaan')->where('noform', 'like', '%T%')->latest('noform')->first();
+            $checknoform = DB::table('permintaan')->where('noform', 'like', '%' . date('y') . '-' . '9%')->latest('noform')->first();
             if ($checknoform) {
                 $y = substr($checknoform->noform, 0, 2);
                 if (date('y') == $y) {
                     $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
                     $noUrut = (int) substr($query->noform, -4);
                     $noUrut++;
-                    $char = date('y-') . 'T';
+                    $char = date('y-') . '9';
                     $kodeSurat = $char . sprintf("%04s", $noUrut);
                 } else {
-                    $kodeSurat = date('y-') . "T0001";
+                    $kodeSurat = date('y-') . "90001";
                 }
             } else {
-                $kodeSurat = date('y-') . "T0001";
+                $kodeSurat = date('y-') . "90001";
             }
         } else {
             $checknoform = DB::table('permintaan')->latest('noform')->first();
