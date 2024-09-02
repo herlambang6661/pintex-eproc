@@ -139,15 +139,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <?php
+                                                    $date = new DateTime(); //Today
+                                                    $lastDay = $date->format('Y-m-t'); //Get last day
+                                                    $dateMinus12 = $date->modify('-12 months'); // Last day 12 months ago
+                                                    ?>
                                                     <tr>
                                                         <td>
                                                             <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
+                                                                onchange="syn()"
+                                                                value="{{ $dateMinus12->format('Y-m-d') }}">
                                                         </td>
                                                         <td>
                                                             <input type="date" id="idfilter_sampai"
                                                                 class="form-control " onchange="syn()"
-                                                                value="{{ date('Y-m-d') }}">
+                                                                value="{{ $lastDay }}">
                                                         </td>
                                                         <td>
                                                             <select id="idfilter_mesin" onchange="syn()"
@@ -693,7 +699,7 @@
                             return {
                                 results: $.map(response, function(item) {
                                     return {
-                                        id: item.id,
+                                        id: item.nama,
                                         text: item.nama.toUpperCase(),
                                     }
                                 })
