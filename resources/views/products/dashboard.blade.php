@@ -184,64 +184,131 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row row-deck row-cards mt-1">
-                        <div class="col-sm-12 col-lg-6">
-                            <div class="card bg-blue-lt" style="height: 28rem">
-                                <div class="card-header border-0">
-                                    <div class="card-title"><i class="fa-solid fa-file-signature"></i> Permintaan
-                                        ({{ $qtyPermintaan }} Item) penarikan dari tanggal
-                                        {{ now()->subMonths(24)->format('d/m/Y') }}
+                    @if (Auth::user()->role === 'own' || Auth::user()->role === 'purchasing' || Auth::user()->role === 'kng')
+                        <div class="row row-deck row-cards mt-1">
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="card bg-blue-lt" style="height: 28rem">
+                                    <div class="card-header border-0">
+                                        <div class="card-title"><i class="fa-solid fa-file-signature"></i> Permintaan
+                                            ({{ $qtyPermintaan }} Item) penarikan dari tanggal
+                                            {{ now()->subMonths(24)->format('d/m/Y') }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-                                    <div class="divide-y">
-                                        <?php $i = 1; ?>
-                                        @foreach ($permintaan as $item)
+                                    <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                        <div class="divide-y">
+                                            <?php $i = 1; ?>
+                                            @foreach ($permintaan as $item)
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-auto">
+                                                            <span class="avatar">{{ $i }}</span>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="text-truncate">
+                                                                <strong>{{ '(' . $item->kodeseri . ') ' . strtoupper($item->namaBarang) }}</strong>
+                                                                <strong>{{ strtoupper($item->keterangan) . ' ' . strtoupper($item->katalog) . ' ' . strtoupper($item->part) }}</strong>.
+                                                            </div>
+                                                            <div class="text-secondary">
+                                                                <i class="fa-solid fa-circle-info"
+                                                                    style="margin-right: 3px"></i>
+                                                                {{ Str::title($item->status) }}
+                                                                <i class="fa-solid fa-calendar-days"
+                                                                    style="margin-left: 10px;margin-right: 3px"></i>
+                                                                {{ \Carbon\Carbon::parse($item->tgl)->isoFormat('D MMMM Y') }}
+                                                                <i class="fa-solid fa-circle-right"
+                                                                    style="margin-left: 10px;margin-right: 3px"></i>
+                                                                {{ \Carbon\Carbon::parse($item->tgl)->diffForHumans() }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-auto align-self-center">
+                                                            <div class="badge bg-primary"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php $i++; ?>
+                                            @endforeach
                                             <div>
                                                 <div class="row">
-                                                    <div class="col-auto">
-                                                        <span class="avatar">{{ $i }}</span>
-                                                    </div>
                                                     <div class="col">
-                                                        <div class="text-truncate">
-                                                            <strong>{{ '(' . $item->kodeseri . ') ' . strtoupper($item->namaBarang) }}</strong>
-                                                            <strong>{{ strtoupper($item->keterangan) . ' ' . strtoupper($item->katalog) . ' ' . strtoupper($item->part) }}</strong>.
+                                                        <div class="text-truncate" style="text-align: right;">
+                                                            Lihat Semuanya
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M5 12l14 0" />
+                                                                <path d="M13 18l6 -6" />
+                                                                <path d="M13 6l6 6" />
+                                                            </svg>
                                                         </div>
-                                                        <div class="text-secondary">
-                                                            <i class="fa-solid fa-circle-info"
-                                                                style="margin-right: 3px"></i>
-                                                            {{ Str::title($item->status) }}
-                                                            <i class="fa-solid fa-calendar-days"
-                                                                style="margin-left: 10px;margin-right: 3px"></i>
-                                                            {{ \Carbon\Carbon::parse($item->tgl)->isoFormat('D MMMM Y') }}
-                                                            <i class="fa-solid fa-circle-right"
-                                                                style="margin-left: 10px;margin-right: 3px"></i>
-                                                            {{ \Carbon\Carbon::parse($item->tgl)->diffForHumans() }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto align-self-center">
-                                                        <div class="badge bg-primary"></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php $i++; ?>
-                                        @endforeach
-                                        <div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="text-truncate" style="text-align: right;">
-                                                        Lihat Semuanya
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M5 12l14 0" />
-                                                            <path d="M13 18l6 -6" />
-                                                            <path d="M13 6l6 6" />
-                                                        </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="card bg-green-lt" style="height: 28rem">
+                                    <div class="card-header border-0">
+                                        <div class="card-title">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            Hanya Pembelian
+                                            ({{ $qtyPembelian }} Item) penarikan dari tanggal
+                                            {{ now()->subMonths(24)->format('d/m/Y') }}
+                                        </div>
+                                    </div>
+                                    <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                        <div class="divide-y">
+                                            <?php $j = 1; ?>
+                                            @foreach ($pembelian as $item)
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-auto">
+                                                            <span class="avatar">{{ $j }}</span>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="text-truncate">
+                                                                <strong>{{ '(' . $item->kodeseri . ') ' . strtoupper($item->namaBarang) }}</strong>
+                                                                <strong>{{ strtoupper($item->keterangan) . ' ' . strtoupper($item->katalog) . ' ' . strtoupper($item->part) }}</strong>.
+                                                            </div>
+                                                            <div class="text-secondary">
+                                                                <i class="fa-solid fa-circle-info"
+                                                                    style="margin-right: 3px"></i>
+                                                                {{ Str::title($item->status) }}
+                                                                <i class="fa-solid fa-calendar-days"
+                                                                    style="margin-left: 10px;margin-right: 3px"></i>
+                                                                {{ \Carbon\Carbon::parse($item->tgl)->isoFormat('D MMMM Y') }}
+                                                                <i class="fa-solid fa-circle-right"
+                                                                    style="margin-left: 10px;margin-right: 3px"></i>
+                                                                {{ \Carbon\Carbon::parse($item->tgl)->diffForHumans() }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-auto align-self-center">
+                                                            <div class="badge bg-primary"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php $j++; ?>
+                                            @endforeach
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="text-truncate" style="text-align: right;">
+                                                            Lihat Semuanya
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M5 12l14 0" />
+                                                                <path d="M13 18l6 -6" />
+                                                                <path d="M13 6l6 6" />
+                                                            </svg>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -250,72 +317,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-lg-6">
-                            <div class="card bg-green-lt" style="height: 28rem">
-                                <div class="card-header border-0">
-                                    <div class="card-title"><i class="fa-solid fa-triangle-exclamation"></i>
-                                        Hanya Pembelian
-                                        ({{ $qtyPembelian }} Item) penarikan dari tanggal
-                                        {{ now()->subMonths(24)->format('d/m/Y') }}
-                                    </div>
-                                </div>
-                                <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-                                    <div class="divide-y">
-                                        <?php $j = 1; ?>
-                                        @foreach ($pembelian as $item)
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col-auto">
-                                                        <span class="avatar">{{ $j }}</span>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="text-truncate">
-                                                            <strong>{{ '(' . $item->kodeseri . ') ' . strtoupper($item->namaBarang) }}</strong>
-                                                            <strong>{{ strtoupper($item->keterangan) . ' ' . strtoupper($item->katalog) . ' ' . strtoupper($item->part) }}</strong>.
-                                                        </div>
-                                                        <div class="text-secondary">
-                                                            <i class="fa-solid fa-circle-info"
-                                                                style="margin-right: 3px"></i>
-                                                            {{ Str::title($item->status) }}
-                                                            <i class="fa-solid fa-calendar-days"
-                                                                style="margin-left: 10px;margin-right: 3px"></i>
-                                                            {{ \Carbon\Carbon::parse($item->tgl)->isoFormat('D MMMM Y') }}
-                                                            <i class="fa-solid fa-circle-right"
-                                                                style="margin-left: 10px;margin-right: 3px"></i>
-                                                            {{ \Carbon\Carbon::parse($item->tgl)->diffForHumans() }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto align-self-center">
-                                                        <div class="badge bg-primary"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <?php $j++; ?>
-                                        @endforeach
-                                        <div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="text-truncate" style="text-align: right;">
-                                                        Lihat Semuanya
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M5 12l14 0" />
-                                                            <path d="M13 18l6 -6" />
-                                                            <path d="M13 6l6 6" />
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             @include('shared.footer')
