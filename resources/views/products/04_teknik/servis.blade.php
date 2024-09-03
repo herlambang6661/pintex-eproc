@@ -174,7 +174,14 @@
                                             @csrf
                                             <div class="row">
                                                 <div class="control-group col-lg-3">
-                                                    <div class="mb-3">
+                                                    <div class="mb-1">
+                                                        <label class="form-label">Entitas</label>
+                                                        <input type="text" name="entitas" id="entitas"
+                                                            class="form-control {{ Session::get('entitas') == '' ? '' : 'cursor-not-allowed' }}"
+                                                            {{ Session::get('entitas') == '' ? '' : 'readonly' }}
+                                                            value="{{ Session::get('entitas') == '' ? 'PINTEX' : Session::get('entitas') }}">
+                                                    </div>
+                                                    <div class="mb-1">
                                                         <label class="form-label">Tanggal Pengajuan Servis</label>
                                                         <div class="input-icon mb-2">
                                                             <input name="tanggal" class="form-control "
@@ -198,7 +205,7 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    <div class="mb-1">
+                                                    <div class="mb-3">
                                                         <label class="form-label">Kepala Bagian</label>
                                                         <select name="kabag" id="kabag"
                                                             class="form-select elementkabag" data-select2-id="kabag"

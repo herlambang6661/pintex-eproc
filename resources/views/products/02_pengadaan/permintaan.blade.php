@@ -504,7 +504,6 @@
             </div>
         </div>
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
-
             <form method="POST" name="formEditPermintaan" id="formEditPermintaan" class="form"
                 enctype="multipart/form-data" accept-charset="utf-8" onkeydown="return event.key != 'Enter';"
                 data-select2-id="add-form">
@@ -521,7 +520,7 @@
                         <div class="fetched-data-edit-permintaan"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="submitEditPermintaan" class="btn btn-primary me-auto"
+                        <button type="submit" id="submitEditPermintaan" class="btn btn-primary me-auto"
                             data-bs-dismiss="modal">Simpan</button>
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
                     </div>
@@ -1138,18 +1137,15 @@
             }
             if ($("#formEditPermintaan").length > 0) {
                 $("#formEditPermintaan").validate({
-
                     submitHandler: function(form) {
                         $.ajaxSetup({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
                         });
-
                         $('#submitEditPermintaan').html(
                             '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Mohon Menunggu...');
                         $("#submitEditPermintaan").attr("disabled", true);
-
                         $.ajax({
                             url: "{{ url('storedataEditPermintaan') }}",
                             type: "POST",

@@ -431,9 +431,10 @@ class PermintaanController extends Controller
                             <p>
                                 Tanggal : ' . Carbon::parse($getpermintaan->tanggal)->format("d/m/Y") . '
                             </p>
-                            <p>
-                                No. Form : ' . $getpermintaan->noform . '
-                            </p>
+                            <div class="row mb-2">
+                                <div class="col-lg-9 col-sm-9"> No. Form : ' . $getpermintaan->noform . '</div> 
+                                <div class="col"><button type="button" class="btn btn-sm btn-primary text-end">Tambah item di Form ini</button></div>
+                            </div>
                         </i>
                         <table class="table table-sm table-bordered table-hover"
                             style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
@@ -826,7 +827,7 @@ class PermintaanController extends Controller
                 'pemesan' => $request->pemesan,
                 'unit' => $request->unit,
                 'peruntukan' => $request->peruntukan,
-                'sample' => $request->sample,
+                'qty_sample' => $request->sample,
                 'edited' => '1',
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
@@ -840,7 +841,7 @@ class PermintaanController extends Controller
 
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {
-            $arr = array('msg' => 'Data: (' . $request->kodeseri . ') ' . $request->namaBarang . ' telah berhasil diubah', 'status' => true);
+            $arr = array('msg' => 'Data: (' . $request->kodeseri . ') ' . $getbarang2->namaBarang . ' telah berhasil diubah', 'status' => true);
         }
         return Response()->json($arr);
     }
