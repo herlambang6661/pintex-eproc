@@ -47,8 +47,7 @@ class StockController extends Controller
                 ->where('k.status', '=', 'DITERIMA')
                 ->where('k.namaBarang', 'like', '%' . $request->idcari . '%')
                 ->orWhere('k.kodeseri', '=', $request->idcari)
-                ->paginate(15);
-            $paginations = compact($getBarang);
+                ->get();
 
             foreach ($getBarang as $key) {
                 $diambil = DB::table('pengambilanitm')->where('kodeseri', $key->kodeseri)->sum('jumlah');
@@ -128,7 +127,6 @@ class StockController extends Controller
                     </div>
                 </div>
             ';
-                $paginations->links();
             }
         }
     }

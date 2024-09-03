@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -54,10 +55,15 @@ class AuthController extends Controller
         } else {
             if (Auth::attempt($request->only(["username", "password"]))) {
                 if (Auth::user()->entitas_all == 1) {
+                    session(['entitas' => ""]);
                     return response()->json([
                         "status" => true,
-                        "redirect" => url("landing")
+                        "redirect" => url("dashboard")
                     ]);
+                    // return response()->json([
+                    //     "status" => true,
+                    //     "redirect" => url("landing")
+                    // ]);
                 } else {
                     if (Auth::user()->entitas_pintex == 1) {
                         $ent = "PINTEX";
@@ -120,9 +126,51 @@ class AuthController extends Controller
     public function dashboard()
     {
         if (Auth::check()) {
+            $countPermintaan = DB::table('permintaanitm')->count();
+            $countHold = DB::table('permintaanitm')->where('status', 'like', '%HOLD%')->count();
+            $countReject = DB::table('permintaanitm')->where('status', 'like', '%REJECT%')->count();
+            $countServis = DB::table('servisitm')->count();
+            $qtyPermintaan = DB::table('permintaanitm')
+                ->where('tgl', '>=', now()->subMonths(24))
+                ->where('status', "=", 'PROSES PERSETUJUAN')
+                ->orWhere('status', "=", 'ACC')
+                ->orWhere('status', "=", 'MENUNGGU ACC')
+                ->orWhere('status', "=", 'PROSES PEMBELIAN')
+                ->count();
+            $permintaan = DB::table('permintaanitm')
+                ->where('tgl', '>=', now()->subMonths(24))
+                ->where('status', "=", 'PROSES PERSETUJUAN')
+                ->orWhere('status', "=", 'ACC')
+                ->orWhere('status', "=", 'MENUNGGU ACC')
+                ->orWhere('status', "=", 'PROSES PEMBELIAN')
+                ->orderBy('tgl', 'asc')
+                ->limit('50')
+                ->get();
+            $qtyPembelian = DB::table('permintaanitm')
+                ->where('tgl', '>=', now()->subMonths(24))
+                ->where('status', "=", 'PROSES PEMBELIAN')
+                ->orderBy('tgl', 'asc')
+                ->limit('50')
+                ->count();
+            $pembelian = DB::table('permintaanitm')
+                ->where('tgl', '>=', now()->subMonths(24))
+                ->where('status', "=", 'PROSES PEMBELIAN')
+                ->orderBy('tgl', 'asc')
+                ->limit('50')
+                ->get();
+
             return view('products.dashboard', [
                 'active' => 'Dashboard',
                 'judul' => 'Dashboard',
+
+                'countPermintaan' => $countPermintaan,
+                'countHold' => $countHold,
+                'countReject' => $countReject,
+                'countServis' => $countServis,
+                'permintaan' => $permintaan,
+                'qtyPermintaan' => $qtyPermintaan,
+                'pembelian' => $pembelian,
+                'qtyPembelian' => $qtyPembelian,
             ]);
         }
 
@@ -132,6 +180,27 @@ class AuthController extends Controller
     public function setSession(Request $request)
     {
         if (Auth::check()) {
+            $countPermintaan = DB::table('permintaanitm')->count();
+            $countHold = DB::table('permintaanitm')->where('status', 'like', '%HOLD%')->count();
+            $countReject = DB::table('permintaanitm')->where('status', 'like', '%REJECT%')->count();
+            $countServis = DB::table('servisitm')->count();
+            $qtyPermintaan = DB::table('permintaanitm')
+                ->where('tgl', '>=', now()->subMonths(24))
+                ->where('status', "=", 'PROSES PERSETUJUAN')
+                ->orWhere('status', "=", 'ACC')
+                ->orWhere('status', "=", 'MENUNGGU ACC')
+                ->orWhere('status', "=", 'PROSES PEMBELIAN')
+                ->count();
+            $permintaan = DB::table('permintaanitm')
+                ->where('tgl', '>=', now()->subMonths(24))
+                ->where('status', "=", 'PROSES PERSETUJUAN')
+                ->orWhere('status', "=", 'ACC')
+                ->orWhere('status', "=", 'MENUNGGU ACC')
+                ->orWhere('status', "=", 'PROSES PEMBELIAN')
+                ->orderBy('tgl', 'asc')
+                ->limit('50')
+                ->get();
+
             if ($request->entitas == 'ALL') {
                 session(['entitas' => '']);
             } else {
@@ -141,6 +210,13 @@ class AuthController extends Controller
             return view('products.dashboard', [
                 'active' => 'Dashboard',
                 'judul' => 'Dashboard',
+
+                'countPermintaan' => $countPermintaan,
+                'countHold' => $countHold,
+                'countReject' => $countReject,
+                'countServis' => $countServis,
+                'permintaan' => $permintaan,
+                'qtyPermintaan' => $qtyPermintaan,
             ]);
         }
 
