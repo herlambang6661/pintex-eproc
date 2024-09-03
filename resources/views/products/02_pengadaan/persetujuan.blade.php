@@ -140,27 +140,29 @@
                                                 Proses QTY Persetujuan
                                             </a>
                                         </li>
-                                        {{-- TAB HEADER PROSES PERSETUJUAN --}}
-                                        <li class="nav-item">
-                                            <a href="#tabs-persetujuan" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-hand-click">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M8 13v-8.5a1.5 1.5 0 0 1 3 0v7.5" />
-                                                    <path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0v2.5" />
-                                                    <path d="M14 10.5a1.5 1.5 0 0 1 3 0v1.5" />
-                                                    <path
-                                                        d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7l-.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47" />
-                                                    <path d="M5 3l-1 -1" />
-                                                    <path d="M4 7h-1" />
-                                                    <path d="M14 3l1 -1" />
-                                                    <path d="M15 6h1" />
-                                                </svg>
-                                                Proses Persetujuan
-                                            </a>
-                                        </li>
+                                        @if (Auth::user()->role = 'own' || (Auth::user()->role = 'kng'))
+                                            {{-- TAB HEADER PROSES PERSETUJUAN --}}
+                                            <li class="nav-item">
+                                                <a href="#tabs-persetujuan" class="nav-link" data-bs-toggle="tab">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-hand-click">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M8 13v-8.5a1.5 1.5 0 0 1 3 0v7.5" />
+                                                        <path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0v2.5" />
+                                                        <path d="M14 10.5a1.5 1.5 0 0 1 3 0v1.5" />
+                                                        <path
+                                                            d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7l-.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47" />
+                                                        <path d="M5 3l-1 -1" />
+                                                        <path d="M4 7h-1" />
+                                                        <path d="M14 3l1 -1" />
+                                                        <path d="M15 6h1" />
+                                                    </svg>
+                                                    Proses Persetujuan
+                                                </a>
+                                            </li>
+                                        @endif
                                         {{-- TAB HEADER REJECT --}}
                                         <li class="nav-item">
                                             <a href="#tabs-list-reject" class="nav-link" data-bs-toggle="tab">
@@ -251,7 +253,6 @@
                                                     class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-qty-persetujuan">
                                                     <tfoot>
                                                         <tr>
-
                                                             <th class="px-1 py-1 text-center">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                     height="24" viewBox="0 0 24 24" fill="none"
@@ -278,56 +279,58 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tabs-persetujuan">
-                                        <div class="card">
-                                            {{-- <div class="card card-xl shadow rounded border border-blue"> --}}
-                                            <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
+                                    @if (Auth::user()->role = 'own' || (Auth::user()->role = 'kng'))
+                                        <div class="tab-pane" id="tabs-persetujuan">
+                                            <div class="card">
+                                                {{-- <div class="card card-xl shadow rounded border border-blue"> --}}
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-black">Formulir Persetujuan Pak Alvin / Pak
+                                                                    Brian / Pak Jesse</th>
+                                                                <th class="text-center"></th>
+                                                                <th class="text-center"></th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                                {{-- <div class="table-responsive"> --}}
+                                                <table
+                                                    style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
+                                                    class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
+                                                    <tfoot>
                                                         <tr>
-                                                            <th class="text-black">Formulir Persetujuan Pak Alvin / Pak
-                                                                Brian / Pak Jesse</th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
+                                                            <th class="px-1 py-1 text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </th>
+                                                            <th class="px-1 th py-1">tgl</th>
+                                                            <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">barang</th>
+                                                            <th class="px-1 th py-1">keterangan</th>
+                                                            <th class="px-1 th py-1">katalog</th>
+                                                            <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">mesin</th>
+                                                            <th class="px-1 th py-1">qty</th>
+                                                            <th class="px-1 th py-1">satuan</th>
+                                                            <th class="px-1 th py-1">pemesan</th>
                                                         </tr>
-                                                    </thead>
+                                                    </tfoot>
                                                 </table>
+                                                {{-- </div> --}}
+                                                {{-- </div> --}}
                                             </div>
-                                            {{-- <div class="table-responsive"> --}}
-                                            <table
-                                                style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
-                                                class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-persetujuan">
-                                                <tfoot>
-                                                    <tr>
-
-                                                        <th class="px-1 py-1 text-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                <path d="M21 21l-6 -6" />
-                                                            </svg>
-                                                        </th>
-                                                        <th class="px-1 th py-1">tgl</th>
-                                                        <th class="px-1 th py-1">kodeseri</th>
-                                                        <th class="px-1 th py-1">barang</th>
-                                                        <th class="px-1 th py-1">keterangan</th>
-                                                        <th class="px-1 th py-1">katalog</th>
-                                                        <th class="px-1 th py-1">part</th>
-                                                        <th class="px-1 th py-1">mesin</th>
-                                                        <th class="px-1 th py-1">qty</th>
-                                                        <th class="px-1 th py-1">satuan</th>
-                                                        <th class="px-1 th py-1">pemesan</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                            {{-- </div> --}}
-                                            {{-- </div> --}}
                                         </div>
-                                    </div>
+                                    @endif
                                     <div class="tab-pane" id="tabs-list-reject">
                                         <div class="card">
                                             <div class="table-responsive">
@@ -735,6 +738,24 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
+                        //     text: 'Pilih Semua',
+                        //     extend: 'selectAll',
+                        //     selectorModifier: {
+                        //         search: 'applied'
+                        //     }
+                        // },
+                        // {
+                        //     text: 'Batal Pilih',
+                        //     extend: 'selectNone',
+                        //     selectorModifier: {
+                        //         search: 'applied'
+                        //     }
+                        // },
+                        extend: 'collection',
+                        text: 'Selection',
+                        buttons: ['selectAll', 'selectNone']
+                    },
+                    {
                         extend: 'copyHtml5',
                         className: 'btn btn-teal',
                         text: '<i class="fa fa-copy text-white"></i> Copy',
@@ -759,6 +780,16 @@
                             $('#modalChecklistQty').modal('show')
                         }
                     },
+                    // {
+                    //     text: 'Select All',
+                    //     extend: 'selectAll',
+                    //     selectorModifier: function() {
+                    //         return {
+                    //             page: 'current'
+                    //         };
+                    //     }
+                    // },
+
                 ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
@@ -816,9 +847,13 @@
                 "columns": [{
                         data: 'select_orders',
                         name: 'select_orders',
-                        className: 'cuspad2',
-                        orderable: true,
-                        searchable: false
+                        className: 'select-checkbox',
+                        orderable: false,
+                        searchable: false,
+                        extend: 'selectAll',
+                        selectorModifier: {
+                            search: 'applied'
+                        }
                     },
                     {
                         title: 'Tgl Permintaan',
@@ -889,6 +924,7 @@
                 );
             });
 
+            <?php if(Auth::user()->role = 'own' || Auth::user()->role = 'kng'){ ?>
             //---------------PERSETUJUAN-------------------------------------//
             tablePermintaanAcc = $('.datatable-persetujuan').DataTable({
                 "processing": true,
@@ -905,12 +941,27 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                    "className": 'btn btn-info',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
-                    "action": function(e, node, config) {
-                        $('#modalAccept').modal('show')
+                        text: 'Pilih Semua',
+                        extend: 'selectAll',
+                        selectorModifier: {
+                            search: 'applied'
+                        }
+                    },
+                    {
+                        text: 'Batal Pilih',
+                        extend: 'selectNone',
+                        selectorModifier: {
+                            search: 'applied'
+                        }
+                    },
+                    {
+                        "className": 'btn btn-info',
+                        "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
+                        "action": function(e, node, config) {
+                            $('#modalAccept').modal('show')
+                        }
                     }
-                }],
+                ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -956,8 +1007,8 @@
                 "columns": [{
                         data: 'select_orders',
                         name: 'select_orders',
-                        className: 'cuspad2',
-                        orderable: true,
+                        className: 'select-checkbox',
+                        orderable: false,
                         searchable: false
                     },
                     {
@@ -1040,7 +1091,7 @@
                     '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="search" />'
                 );
             });
-
+            <?php } ?>
             //---------------REJECT-----------------------------------------//
             tablePermintaanRjt = $('.datatable-reject').DataTable({
                 "processing": true,

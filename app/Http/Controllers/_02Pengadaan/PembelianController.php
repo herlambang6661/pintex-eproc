@@ -322,7 +322,7 @@ class PembelianController extends Controller
                                                             function getTotalitem(id){
                                                                 var txt1 = document.getElementById("jumlah-" + id).value;
                                                                 var txt2 = document.getElementById("itempajak-" + id).value;
-                                                                var result = parseFloat(txt1) - parseFloat(txt2);
+                                                                var result = parseFloat(txt1) + parseFloat(txt2);
                                                                 var hasilAngka = formatRibuan(result);
                                                                 if (!isNaN(result)) {
                                                                     document.getElementById("totalitem-" + id).value = result;
