@@ -123,7 +123,6 @@
                                                     <tr>
                                                         <th class="text-center">Tgl Awal</th>
                                                         <th class="text-center">Tgl Akhir</th>
-                                                        <th class="text-center">Mesin</th>
                                                         <th class="text-center">Unit</th>
                                                         <th class="text-center">Status</th>
                                                     </tr>
@@ -138,12 +137,6 @@
                                                             <input type="date" id="idfilter_sampai"
                                                                 class="form-control " onchange="syn()"
                                                                 value="{{ date('Y-m-d') }}">
-                                                        </td>
-                                                        <td>
-                                                            <select id="idfilter_mesin" onchange="syn()"
-                                                                class="form-select elementmsn text-nowrap"
-                                                                style="text-transform: uppercase;">
-                                                            </select>
                                                         </td>
                                                         <td>
                                                             <input type="text" id="idfilter_unit" onchange="syn()"
@@ -543,7 +536,7 @@
                 $('#qty_' + idf).prop('readonly', false);
                 $('#satuan_' + idf).prop('readonly', false);
                 document.getElementById("tampil_mesin_" + idf).innerHTML =
-                    '<select name="mesin[]" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;"><option></option></select>';
+                    '<select name="mesin[]" class="form-select elementmesn text-nowrap" style="text-transform: uppercase;"><option></option></select>';
                 document.getElementById("tampil_pemesan_" + idf).innerHTML =
                     '<select required name="pemesan[]" class="form-select  elementprm inputNone" style="text-transform: uppercase;"><option></option></select>';
                 $('#deskripsi_' + idf).removeClass('cursor-not-allowed bg-secondary-lt');
@@ -586,14 +579,14 @@
                         cache: true
                     },
                 });
-                $(".elementmsn").select2({
+                $(".elementmesn").select2({
                     language: "id",
                     width: '100%',
                     placeholder: "Pilih Mesin",
                     ajax: {
                         url: "/getDataMesinServis",
                         dataType: 'json',
-                        delay: 200,
+                        // delay: 200,
                         processResults: function(response) {
                             console.log(response);
                             return {
@@ -601,6 +594,7 @@
                                     return {
                                         id: item.id,
                                         text: item.mesin.toUpperCase() + " " + item.merk
+                                            .toUpperCase() + " " + item.kode_nomor
                                             .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
                                                 " (UNIT " + item.unit + ")"),
                                     }
@@ -658,31 +652,7 @@
                     cache: true
                 },
             });
-            // select2 input mesin filter list servis
-            $(".elementmsn").select2({
-                language: "id",
-                width: '250px%',
-                placeholder: "Pilih Mesin",
-                ajax: {
-                    url: "/getDataMesinServis",
-                    dataType: 'json',
-                    delay: 200,
-                    processResults: function(response) {
-                        console.log(response);
-                        return {
-                            results: $.map(response, function(item) {
-                                return {
-                                    id: item.id,
-                                    text: item.mesin.toUpperCase() + " " + item.merk
-                                        .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
-                                            " (UNIT " + item.unit + ")"),
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                },
-            });
+
             /*------------------------------------------
             --------------------------------------------
             End Render Select2

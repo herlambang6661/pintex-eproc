@@ -33,17 +33,17 @@ class ServisController extends Controller
     {
         if ($request->has('q')) {
             $search = $request->q;
-            $mesin = DB::table('mastermesin AS me')
-                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm as id, mesin, id_mesinitm, unit'))
-                ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
+            $mesin = DB::table('mastermesinitm AS mi')
+                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm as id, mesin, id_mesinitm, unit, mi.kode_nomor'))
+                ->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')
                 ->where('me.mesin', 'LIKE', "%$search%")
                 ->orWhere('mi.merk', 'LIKE', "%$search%")
                 ->orderBy('me.mesin', 'ASC')
                 ->get();
         } else {
-            $mesin = DB::table('mastermesin AS me')
-                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm as id, mesin, id_mesinitm, unit'))
-                ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
+            $mesin = DB::table('mastermesinitm AS mi')
+                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm as id, mesin, id_mesinitm, unit, mi.kode_nomor'))
+                ->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')
                 ->orderBy('me.mesin', 'ASC')
                 ->get();
         }

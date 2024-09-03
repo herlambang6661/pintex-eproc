@@ -47,10 +47,12 @@ class StockController extends Controller
                 ->where('k.status', '=', 'DITERIMA')
                 ->where('k.namaBarang', 'like', '%' . $request->idcari . '%')
                 ->orWhere('k.kodeseri', '=', $request->idcari)
-                ->get();
+                ->paginate(15);
+            $paginations = compact($getBarang);
 
             foreach ($getBarang as $key) {
-                $diambil = DB::table('pengambilanitm')->where('kodeseri', $key->kodeseri)->count();
+                $diambil = DB::table('pengambilanitm')->where('kodeseri', $key->kodeseri)->sum('jumlah');
+                $diambilitem = DB::table('pengambilanitm')->where('kodeseri', $key->kodeseri)->get();
                 echo '
                 <div class="card mb-5 shadow border border-azure">
                     <div class="table-responsive">
@@ -77,18 +79,56 @@ class StockController extends Controller
                                     </td>
                                     <td class="text-center">
                                         <div class="text-uppercase text-secondary font-weight-medium">Stok</div>
-                                        <div class="display-6 fw-bold my-3">' . number_format(($key->qty_diterima - $diambil), 0, ",", ".") . '</div>
+                                        <div class="display-6 fw-bold my-3">' . number_format(($key->qty_diterima - $diambil), 0, ",", ".") .
+                    '</div>
                                     </td>
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr>
+                                    <td colspan="5" class="bg-primary-lt">
+                                        <small>Pengambilan:</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="py-0 px-0">
+                                        <table class="table table-bordered table-nowrap table-sm">
+                                            <thead>
+                                                <td class="text-center fw-bold">Entitas</td>
+                                                <td class="text-center fw-bold">Tanggal</td>
+                                                <td class="text-center fw-bold">Noform</td>
+                                                <td class="text-center fw-bold">Kodeseri</td>
+                                                <td class="text-center fw-bold">Item</td>
+                                                <td class="text-center fw-bold">Unit</td>
+                                                <td class="text-center fw-bold">Diambil</td>
+                                                <td class="text-center fw-bold">Jumlah</td>
+                                            </thead>
+                                            
                                 ';
+                foreach ($diambilitem as $s) {
+                    echo '
+                                            <tr class="text-center text-secondary">
+                                                <td>' . $s->entitas . '</td>
+                                                <td>' . $s->tanggal . '</td>
+                                                <td>' . $s->noform . '</td>
+                                                <td>' . $s->kodeseri . '</td>
+                                                <td>' . $s->namaBarang . '</td>
+                                                <td>' . $s->unit . '</td>
+                                                <td>' . $s->diambil . '</td>
+                                                <td>' . $s->jumlah . '</td>
+                                            </tr>';
+                }
                 echo '
+                            
+                                        </table>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             ';
+                $paginations->links();
             }
         }
     }
