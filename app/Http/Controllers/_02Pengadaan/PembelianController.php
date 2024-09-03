@@ -236,7 +236,7 @@ class PembelianController extends Controller
                                                     <option value="MANTI">MANTI</option>
                                                     <option value="MARNI">MARNI</option>
                                                     <option value="NURLAELA">NURLAELA</option>
-                                                    <option value="PUJI NURRETI">PUJI NURRETI</option>
+                                                    <option value="PUJI NURRETI">PUJI NURRENTI</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -303,10 +303,10 @@ class PembelianController extends Controller
                                                                 var jml = document.getElementById("jumlah-" + id).value;
                                                                 if (!isNaN(pajak)) {
                                                                     document.getElementById("inisialpajak-" + id).value = pajak;
-                                                                    document.getElementById("txtinisialpajak-" + id).innerText = pajak + " %";
+                                                                    // document.getElementById("txtinisialpajak-" + id).innerText = pajak + " %";
                                                                 } else {
                                                                     document.getElementById("inisialpajak-" + id).value = "0";
-                                                                    document.getElementById("txtinisialpajak-" + id).innerText = "0 %";
+                                                                    // document.getElementById("txtinisialpajak-" + id).innerText = "0 %";
                                                                 }
                                                                 var result = (parseFloat(jml) * parseFloat(pajak)) / 100;
                                                                 var hasilAngka = formatRibuan(result);
@@ -329,7 +329,7 @@ class PembelianController extends Controller
                                                                     document.getElementById("txttotalitem-" + id).innerText = result;
                                                                 }
                                                                     
-                                                                var arr = document.getElementsByName("totalitem[]");
+                                                                var arr = document.getElementsByName("jumlahNet[]");
                                                                 var tot = 0;
                                                                 for (var i = 0; i < arr.length; i++) {
                                                                     if (parseFloat(arr[i].value))
@@ -375,6 +375,18 @@ class PembelianController extends Controller
                                                                 var resTot = parseFloat(txt1) + parseFloat(result);
                                                                 document.getElementById("totalppn").value = result;
                                                                 document.getElementById("totalPembelian").value = resTot;
+                                                            }
+
+                                                            function setPPN(params){
+                                                                var pjk = document.getElementsByName("itempajak[]");
+                                                                var ini = document.getElementById("inisialpajak-"+params).value;
+                                                                var tot = 0;
+                                                                for (var i = 0; i < pjk.length; i++) {
+                                                                    if (parseFloat(pjk[i].value))
+                                                                        tot += parseFloat(pjk[i].value);
+                                                                }
+                                                                document.getElementById("totalppn").value = tot;
+                                                                document.getElementById("percentageppn").value = ini;
                                                             }
 
                                                             function getTotalPembelian() {
@@ -485,7 +497,7 @@ class PembelianController extends Controller
                                         <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Jumlah</td>
                                         <td class="text-center">Estimasi</td>
                                         <td class="text-center">Garansi</td>
-                                        <td class="text-center" style="padding-top:15px;padding-bottom:15px" rowspan="2" colspan="3">Pajak</td>
+                                        <td class="text-center" style="padding-top:15px;padding-bottom:15px" rowspan="2" colspan="2">Pajak</td>
                                         <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Total</td>
                                     </tr>
                                     <tr>
@@ -518,13 +530,13 @@ class PembelianController extends Controller
                                         <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="harga[]" id="harga-' . $u->kodeseri . '" onblur="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" onkeyup="jumlahitem(`' . $u->kodeseri . '`);getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)" min="0" style="text-align:center;" required></td>
                                         <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="padding-right:1px;padding-left:1px;padding-top:10px;padding-bottom:1px">
                                             <i id="txtjumlah-' . $u->kodeseri . '"></i>
-                                            <input type="hidden" id="jumlah-' . $u->kodeseri . '">
+                                            <input type="hidden" id="jumlah-' . $u->kodeseri . '" name="jumlahNet[]">
                                         </td>
                                         <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px"><input class="form-control form-control-sm" type="number" name="estimasi[]" id="estimasi-' . $u->kodeseri . '" min="0"></td>
                                         <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px"><input class="form-control form-control-sm" type="number" name="garansi[]" id="garansi-' . $u->kodeseri . '" min="0"></td>
                                         <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px">
                                             
-                                                                <select class="form-control form-control-sm" name="pajak[]" id="pajak-' . $u->kodeseri . '" onblur="getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`)">
+                                                                <select class="form-control form-control-sm" name="pajak[]" id="pajak-' . $u->kodeseri . '" onblur="getPajak(`' . $u->kodeseri . '`);getTotalitem(`' . $u->kodeseri . '`);setPPN(`' . $u->kodeseri . '`);getTotalPembelian();">
                                                                     <option value="0">-</option>
                                                                 ';
                     foreach ($pajak as $p) {
@@ -532,10 +544,7 @@ class PembelianController extends Controller
                     }
                     echo '                                      </select>
                                         </td>
-                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
-                                            <i id="txtinisialpajak-' . $u->kodeseri . '"></i>
-                                            <input type="hidden" id="inisialpajak-' . $u->kodeseri . '" name="inisialpajak[]">
-                                        </td>
+                                        <input type="hidden" id="inisialpajak-' . $u->kodeseri . '" name="inisialpajak[]">
                                         <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
                                             <i id="txtitempajak-' . $u->kodeseri . '"></i>
                                             <input type="hidden" id="itempajak-' . $u->kodeseri . '" name="itempajak[]" value="0">
@@ -675,7 +684,7 @@ class PembelianController extends Controller
                                                 <td>PPN</td>
                                                 <td>:</td>
                                                 <td colspan="1" style="width:80px">
-                                                    <input type="number" class="form-control border border-blue" value="0" min="0" id="percentageppn" name="percentageppn" onblur="getppn()">
+                                                    <input type="number" class="form-control border border-blue" value="0" min="0" id="percentageppn" name="percentageppn">
                                                 </td>
                                                 <td><input type="text" class="form-control border border-blue" value="0" id="totalppn" name="totalppn"></td>
                                             </tr>
@@ -860,10 +869,10 @@ class PembelianController extends Controller
                                                                 var jml = document.getElementById("totalitem-" + id).value;
                                                                 if (!isNaN(pajak)) {
                                                                     document.getElementById("inisialpajak-" + id).value = pajak;
-                                                                    document.getElementById("txtinisialpajak-" + id).innerText = pajak + " %";
+                                                                    // document.getElementById("txtinisialpajak-" + id).innerText = pajak + " %";
                                                                 } else {
                                                                     document.getElementById("inisialpajak-" + id).value = "0";
-                                                                    document.getElementById("txtinisialpajak-" + id).innerText = "0 %";
+                                                                    // document.getElementById("txtinisialpajak-" + id).innerText = "0 %";
                                                                 }
                                                                 var result = (parseFloat(jml) * parseFloat(pajak)) / 100;
                                                                 var hasilAngka = formatRibuan(result);
@@ -1009,10 +1018,7 @@ class PembelianController extends Controller
                     }
                     echo '                  </select>
                                         </td>
-                                        <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
-                                            <i id="txtinisialpajak-' . $u->kodeseri_servis . '"></i>
-                                            <input type="hidden" id="inisialpajak-' . $u->kodeseri_servis . '" name="inisialpajak[]">
-                                        </td>
+                                        <input type="hidden" id="inisialpajak-' . $u->kodeseri_servis . '" name="inisialpajak[]">
                                         <td class="text-center text-blue bg-secondary-lt cursor-not-allowed" style="width:10px;padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:1px">
                                             <i id="txtitempajak-' . $u->kodeseri_servis . '"></i>
                                             <input type="hidden" id="itempajak-' . $u->kodeseri_servis . '" name="itempajak[]" value="0">
