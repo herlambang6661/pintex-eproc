@@ -102,6 +102,100 @@ class PembelianController extends Controller
         return view('products.02_pengadaan.persetujuan');
     }
 
+    public function viewPembelian(Request $request)
+    {
+        $no = 1;
+        $getpembelian = DB::table('pembelian')->where('nofkt', '=', $request->nofkt)->first();
+        $getpembelianitem = DB::table('pembelianitm')->where('nofaktur', '=', $request->nofkt)->get();
+        echo '
+                <div class="modal-body" style="color: black;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p> Tanggal : ' . Carbon::parse($getpembelian->tgl)->format("d/m/Y") . '</p>
+                                <p> No. Faktur : ' . $getpembelian->nofkt . '</p> 
+                            </div>
+                            <div class="col-lg-6">
+                                <p> Penjual : ' . $getpembelian->penjual . '</p>
+                                <p> Pembeli : ' . $getpembelian->pembeli . '</p> 
+                            </div>
+                        </div>
+                        <table class="table table-sm table-bordered table-hover"
+                            style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
+                            <thead class="text-black" style="border-color: black;">
+                                <th style="border-color: black;" class="text-center">#</th>
+                                <th style="border-color: black;" class="text-center">Kodeseri</th>
+                                <th style="border-color: black;" class="text-center">Barang</th>
+                                <th style="border-color: black;" class="text-center">Quantity</th>
+                                <th style="border-color: black;" class="text-center">Harga</th>
+                                <th style="border-color: black;" class="text-center">Pajak</th>
+                                <th style="border-color: black;" class="text-center">Jumlah</th>
+                            </thead>
+                            <tbody class="text-black" style="border-color: black;">
+                            ';
+        foreach ($getpembelianitem as $key) {
+            echo '
+                                    <tr>
+                                        <td class="text-center">' . $no . '</td>
+                                        <td class="text-center">' . $key->kode . '</td>
+                                        <td class="">' . $key->namabarang . '</td>
+                                        <td class="text-center">' . $key->kts . '</td>
+                                        <td class="text-center">' . $key->harga . '</td>
+                                        <td class="text-center">' . $key->nmpajak . '</td>
+                                        <td class="text-center">' . $key->jumlah . '</td>
+                                    </tr>
+                                    ';
+            $no++;
+        }
+        echo '
+                            </tbody>
+                        </table>
+                        <i>*Note : ' . $getpembelian->catatan . '</i>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-sm table-bordered table-hover"
+                                    style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
+                                    <tr class="text-black" style="border-color: black;">
+                                        <td colspan="5">Pembayaran</td>
+                                    </tr>
+                                    <tr class="text-black" style="border-color: black;">
+                                        <td>Subtotal</td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td>' . $getpembelian->subtotal . '</td>
+                                    </tr>
+                                    <tr class="text-black" style="border-color: black;">
+                                        <td>Diskon</td>
+                                        <td>:</td>
+                                        <td>' . $getpembelian->diskon . '%</td>
+                                        <td>' . $getpembelian->diskonint . '</td>
+                                    </tr>
+                                    <tr class="text-black" style="border-color: black;">
+                                        <td colspan="3"></td>
+                                        <td>' . $getpembelian->thasil . '</td>
+                                    </tr>
+                                    <tr class="text-black" style="border-color: black;">
+                                        <td>PPN</td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td>' . $getpembelian->totppn . '</td>
+                                    </tr>
+                                    <tr class="text-black" style="border-color: black;">
+                                        <td>Total</td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td>' . $getpembelian->grandtotal . '</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+    }
+
     public function getDataServis(Request $request)
     {
         if ($request->ajax()) {

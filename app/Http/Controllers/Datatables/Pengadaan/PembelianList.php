@@ -68,13 +68,9 @@ class PembelianList extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '<div class="btn-list flex-nowrap">
-                                <form method="POST" action="printPermintaan" target="_blank">
-                                    <input type="hidden" name="_token" value="' . csrf_token() . '">
-                                    <input type="hidden" name="noform" value="' . $row->noform . '">
-                                    <button type="submit" class="btn btn-sm btn-link btn-icon">
-                                        <i class="fa-solid fa-eye" style="margin-right:5px;"></i>
-                                    </button>
-                                </form>
+                                <a href="#" class="btn btn-sm btn-link btn-icon" data-bs-toggle="modal" data-bs-target="#modalViewPembelian" data-nofkt="' . $row->nofaktur . '">
+                                    <i class="fa-solid fa-eye" style="margin-right:5px;"></i>
+                                </a>
                                 <button class="btn btn-sm btn-link align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
                                 </button>

@@ -141,39 +141,17 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="date" id="tablePembelian_dari"
-                                                                    onchange="syn()"
                                                                     class="form-control border border-blue"
                                                                     value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
                                                                 <input type="date" id="tablePembelian_sampai"
-                                                                    onchange="syn()"
                                                                     class="form-control  border border-blue"
                                                                     value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
-                                                                <select class="form-select">
-                                                                    <option value="all">Semua Person</option>
-                                                                    <option value="Unit1">Unit 1</option>
-                                                                    <option value="Unit2">Unit 2</option>
-                                                                    <option value="TFO">TFO</option>
-                                                                    <option value="TFI">TFI</option>
-                                                                    <option value="UMUM">UMUM</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-select">
-                                                                    <option value="all">Semua Unit</option>
-                                                                    <option value="Unit1">Unit 1</option>
-                                                                    <option value="Unit2">Unit 2</option>
-                                                                    <option value="TFO">TFO</option>
-                                                                    <option value="TFI">TFI</option>
-                                                                    <option value="UMUM">UMUM</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
                                                                 <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
+                                                                    aria-label="Button" onclick="syn1()">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="1.5"
@@ -186,8 +164,6 @@
                                                                         <path d="M21 21l-6 -6" />
                                                                     </svg>
                                                                 </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -437,6 +413,39 @@
             display: none;
         }
     </style>
+    <div class="modal modal-blur fade" id="modalViewPembelian" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="overlay cursor-wait">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-full-width" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                            <path d="M13 17h-7v-14h-2" />
+                            <path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" />
+                            <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                            <path d="M19 21v1m0 -8v1" />
+                        </svg>
+                        Lihat Detail Pembelian
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="fetched-data-pembelian"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-fw fa-arrow-rotate-left"></i> Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal modal-blur fade" id="modalPembelian" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="overlay cursor-wait">
             <div class="cv-spinner">
@@ -549,7 +558,7 @@
         }
         var tablePembelian, tableCheckPembelian, tableCheckServis;
 
-        function syn() {
+        function syn1() {
             tablePembelian.ajax.reload();
         }
 
@@ -1267,6 +1276,27 @@
             }
             // TABLE =============================================================================================//
             // MODAL =============================================================================================//
+            $('#modalViewPembelian').on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget)
+                var nofkt = button.data('nofkt');
+                console.log("Fetch Noform: " + nofkt + "...");
+                $(".overlay").fadeIn(300);
+                $.ajax({
+                    type: 'POST',
+                    url: 'viewPembelian',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        nofkt: nofkt,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-pembelian').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
             $('#modalPembelian').on('show.bs.modal', function(e) {
                 $(".overlay").fadeIn(300);
                 itemTables = [];
