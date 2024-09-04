@@ -413,7 +413,7 @@
             display: none;
         }
     </style>
-    <div class="modal modal-blur fade" id="modalViewPembelian" tabindex="-1" role="dialog" aria-hidden="true">
+    {{-- <div class="modal modal-blur fade" id="modalViewPembelian" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="overlay cursor-wait">
             <div class="cv-spinner">
                 <span class="spinner"></span>
@@ -445,7 +445,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="modal modal-blur fade" id="modalPembelian" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="overlay cursor-wait">
             <div class="cv-spinner">
@@ -1276,27 +1276,27 @@
             }
             // TABLE =============================================================================================//
             // MODAL =============================================================================================//
-            $('#modalViewPembelian').on('show.bs.modal', function(e) {
-                var button = $(e.relatedTarget)
-                var nofkt = button.data('nofkt');
-                console.log("Fetch Noform: " + nofkt + "...");
-                $(".overlay").fadeIn(300);
-                $.ajax({
-                    type: 'POST',
-                    url: 'viewPembelian',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        nofkt: nofkt,
-                    },
-                    success: function(data) {
-                        $('.fetched-data-pembelian').html(data);
-                    }
-                }).done(function() {
-                    setTimeout(function() {
-                        $(".overlay").fadeOut(300);
-                    }, 500);
-                });
-            });
+            // $('#modalViewPembelian').on('show.bs.modal', function(e) {
+            //     var button = $(e.relatedTarget)
+            //     var nofkt = button.data('nofkt');
+            //     console.log("Fetch Noform: " + nofkt + "...");
+            //     $(".overlay").fadeIn(300);
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: 'viewPembelian',
+            //         data: {
+            //             "_token": "{{ csrf_token() }}",
+            //             nofkt: nofkt,
+            //         },
+            //         success: function(data) {
+            //             $('.fetched-data-pembelian').html(data);
+            //         }
+            //     }).done(function() {
+            //         setTimeout(function() {
+            //             $(".overlay").fadeOut(300);
+            //         }, 500);
+            //     });
+            // });
             $('#modalPembelian').on('show.bs.modal', function(e) {
                 $(".overlay").fadeIn(300);
                 itemTables = [];
