@@ -690,7 +690,9 @@ class PermintaanController extends Controller
                                 <div class="card-body">
                                     <div class="mb-2">
                                         <label class="form-label">Nama Barang</label>
-                                        <input type="text" name="nama" id="nama" readonly class="form-control disabled" style="text-transform: uppercase;" value="' . $getItem->namaBarang . '">
+                                        <select name="nama" id="nama" class="form-select  elementbrg inputNone" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->namaBarang . '" selected="selected">' . $getItem->namaBarang . '</option> 
+                                        </select>
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Deskripsi</label>
@@ -768,7 +770,7 @@ class PermintaanController extends Controller
                         <div class="control-group col-lg-12">
                             <div id="ketTamb" class="shadow rounded border border-blue">
                                 <div class="mb-3">
-                                    <textarea id="tinymce-edit" name="keteranganform" value="' . $getForm->keteranganform . '"></textarea>
+                                    <textarea id="tinymce-edit2" name="keteranganform" value="' . $getForm->keteranganform . '"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -791,7 +793,7 @@ class PermintaanController extends Controller
                                         return {
                                             results: $.map(response, function(item) {
                                                 return {
-                                                    id: item.id,
+                                                    id: item.nama,
                                                     text: item.nama.toUpperCase(),
                                                 }
                                             })
@@ -852,6 +854,21 @@ class PermintaanController extends Controller
                         $(function() {
                             let options = {
                                 selector: "#tinymce-edit",
+                                height: 300,
+                                menubar: false,
+                                statusbar: false,
+                                toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+                                content_style: "body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }"
+                            }
+                            if (localStorage.getItem("tablerTheme") === "dark") {
+                                options.skin = "oxide-dark";
+                                options.content_css = "dark";
+                            }
+                            tinyMCE.init(options);
+                        })
+                        $(function() {
+                            let options = {
+                                selector: "#tinymce-edit2",
                                 height: 300,
                                 menubar: false,
                                 statusbar: false,
