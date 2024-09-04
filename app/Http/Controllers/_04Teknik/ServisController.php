@@ -79,6 +79,7 @@ class ServisController extends Controller
         $noForm = $charForm . sprintf("%05s", $noUrutForm);
 
         DB::table('servis')->insert([
+            'entitas'           => $request->entitas,
             'tanggalservis'     => $request->tanggal,
             'noformservis'      => $noForm,
             'kabag'             => $request->kabag,
@@ -102,6 +103,7 @@ class ServisController extends Controller
             $subkodes = $kodeseriItem . '-01';
 
             $check = DB::table('servisitm')->insert([
+                'entitas' => $request->entitas,
                 'tgl_servis' => $request->tanggal,
                 'noformservis' => $noForm,
                 'kodeseri_servis' => $kodeseriItem,

@@ -289,7 +289,7 @@ class PersetujuanController extends Controller
             for ($i = 0; $i < $jml; $i++) {
                 if (substr($request->id[$i], 0, 1) == "S") {
                     $data = DB::table('servisitm')
-                        ->select('id', 'kodeseri_servis as kodeseri', 'namaBarang', 'qty', 'satuan', 'keterangan', 'katalog', 'serialnumber as part', 'pemesan', 'urgent', 'mesin')
+                        ->select('entitas', 'id', 'kodeseri_servis as kodeseri', 'namaBarang', 'qty', 'satuan', 'keterangan', 'katalog', 'serialnumber as part', 'pemesan', 'urgent', 'mesin')
                         ->where('kodeseri_servis', $request->id[$i])
                         ->get();
                     $tipe = "servis";

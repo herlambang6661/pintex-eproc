@@ -140,7 +140,7 @@
                                                 Proses QTY Persetujuan
                                             </a>
                                         </li>
-                                        @if (Auth::user()->role = 'own' || (Auth::user()->role = 'kng'))
+                                        @if (Auth::user()->role === 'own' || Auth::user()->role === 'kng')
                                             {{-- TAB HEADER PROSES PERSETUJUAN --}}
                                             <li class="nav-item">
                                                 <a href="#tabs-persetujuan" class="nav-link" data-bs-toggle="tab">
@@ -279,7 +279,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if (Auth::user()->role = 'own' || (Auth::user()->role = 'kng'))
+                                    @if (Auth::user()->role === 'own' || Auth::user()->role === 'kng')
                                         <div class="tab-pane" id="tabs-persetujuan">
                                             <div class="card">
                                                 {{-- <div class="card card-xl shadow rounded border border-blue"> --}}
@@ -924,7 +924,6 @@
                 );
             });
 
-            <?php if(Auth::user()->role = 'own' || Auth::user()->role = 'kng'){ ?>
             //---------------PERSETUJUAN-------------------------------------//
             tablePermintaanAcc = $('.datatable-persetujuan').DataTable({
                 "processing": true,
@@ -1091,7 +1090,6 @@
                     '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="search" />'
                 );
             });
-            <?php } ?>
             //---------------REJECT-----------------------------------------//
             tablePermintaanRjt = $('.datatable-reject').DataTable({
                 "processing": true,
