@@ -708,11 +708,12 @@ class PembelianController extends Controller
                                                         <div class="table-responsive">
                                                         <table class="table table-sm table-bordered bg-primary-lt text-nowrap text-dark border border-dark" style="text-transform: uppercase;font-weight: bold;font-size:10px;">
                                                                 <tr>
-                                                                    <th colspan="2" class="fw-bold text-center">Barang dalam Package</th>
+                                                                    <th colspan="3" class="fw-bold text-center">Barang dalam Package</th>
                                                                 </tr>
                                                                 <tr class="fw-bold text-center">
                                                                     <th>Kodeseri</th>
                                                                     <th>Nama</th>
+                                                                    <th>Qty</th>
                                                                 </tr>
                                                         ';
             for ($i = 0; $i < $jml; $i++) {
@@ -723,6 +724,7 @@ class PembelianController extends Controller
                                                                 <input type="hidden" name="packagekodeseri[]" value="' . $u->kodeseri . '">
                                                                 <td class="text-center">' . $u->kodeseri . '</td>
                                                                 <td>' . $u->namaBarang . ' ' . $u->keterangan . ' ' . $u->katalog . ' ' . $u->part . '</td>
+                                                                <td class="text-center">' . $u->qtyacc . ' ' . $u->satuan . '</td>
                                                             </tr>
                         ';
                 }
@@ -969,8 +971,9 @@ class PembelianController extends Controller
                                                                     document.getElementById("itempajak-" + id).value = result;
                                                                     document.getElementById("txtitempajak-" + id).innerText = result;
 
-                                                                    document.getElementById("totalitem-" + id).value = document.getElementById("totalitem-" + id).value - result;
-                                                                    document.getElementById("txttotalitem-" + id).innerText = document.getElementById("totalitem-" + id).value- result;
+                                                                    document.getElementById("totalitem-" + id).value = document.getElementById("totalitem-" + id).value + result;
+                                                                    document.getElementById("txttotalitem-" + id).innerText = document.getElementById("txttotalitem-" + id).value + result;
+
                                                                 } else {
                                                                     document.getElementById("itempajak-" + id).value = "0";
                                                                     document.getElementById("txtitempajak-" + id).innerText = "0";
@@ -993,54 +996,66 @@ class PembelianController extends Controller
                                                                     if (parseFloat(arr[i].value))
                                                                         tot += parseFloat(arr[i].value);
                                                                 }
-                                                                document.getElementById("subtotalcheck").value = tot;
+                                                                document.getElementById("subtotalcheckservis").value = tot;
 
-                                                                var txt1 = document.getElementById("subtotalcheck").value;
-                                                                var txt2 = document.getElementById("subdiskon").value;
+                                                                var txt1 = document.getElementById("subtotalcheckservis").value;
+                                                                var txt2 = document.getElementById("subdiskonservis").value;
                                                                 
                                                                 var resDiskon = (parseFloat(txt1) * parseFloat(txt2)) / 100;
-                                                                document.getElementById("subHasildiskon").value = resDiskon;
+                                                                document.getElementById("subHasildiskonservis").value = resDiskon;
                                                                 
-                                                                var txt3 = document.getElementById("subHasildiskon").value;
+                                                                var txt3 = document.getElementById("subHasildiskonservis").value;
 
                                                                 var result = parseFloat(txt1) - parseFloat(txt3);
                                                                 if (!isNaN(result)) {
-                                                                    document.getElementById("totalSub").value = result;
-                                                                    document.getElementById("totalPembelian").value = result;
+                                                                    document.getElementById("totalSubServis").value = result;
+                                                                    document.getElementById("totalPembelianservis").value = result;
                                                                 }
                                                             }
 
                                                             function getDiskonsub() {
-                                                                var txt1 = document.getElementById("subtotalcheck").value;
-                                                                var txt2 = document.getElementById("subdiskon").value;
+                                                                var txt1 = document.getElementById("subtotalcheckservis").value;
+                                                                var txt2 = document.getElementById("subdiskonservis").value;
                                                                 
                                                                 var resDiskon = (parseFloat(txt1) * parseFloat(txt2)) / 100;
-                                                                document.getElementById("subHasildiskon").value = resDiskon;
+                                                                document.getElementById("subHasildiskonservis").value = resDiskon;
                                                                 
-                                                                var txt3 = document.getElementById("subHasildiskon").value;
+                                                                var txt3 = document.getElementById("subHasildiskonservis").value;
 
                                                                 var result = parseFloat(txt1) - parseFloat(txt3);
                                                                 if (!isNaN(result)) {
-                                                                    document.getElementById("totalSub").value = result;
+                                                                    document.getElementById("totalSubServis").value = result;
                                                                 }
                                                             }
 
                                                             function getppn() {
-                                                                var txt1 = document.getElementById("totalSub").value;
-                                                                var txt2 = document.getElementById("percentageppn").value;
+                                                                var txt1 = document.getElementById("totalSubServis").value;
+                                                                var txt2 = document.getElementById("percentageppnservis").value;
                                                                 
                                                                 var result = (parseFloat(txt1) * parseFloat(txt2))/100;
                                                                 var resTot = parseFloat(txt1) + parseFloat(result);
                                                                 document.getElementById("totalppn").value = result;
-                                                                document.getElementById("totalPembelian").value = resTot;
+                                                                document.getElementById("totalPembelianservis").value = resTot;
+                                                            }
+
+                                                            function setPPN(params){
+                                                                var pjk = document.getElementsByName("itempajak[]");
+                                                                var ini = document.getElementById("inisialpajak-"+params).value;
+                                                                var tot = 0;
+                                                                for (var i = 0; i < pjk.length; i++) {
+                                                                    if (parseFloat(pjk[i].value))
+                                                                        tot += parseFloat(pjk[i].value);
+                                                                }
+                                                                document.getElementById("totalppnservis").value = tot;
+                                                                document.getElementById("percentageppnservis").value = ini;
                                                             }
 
                                                             function getTotalPembelian() {
-                                                                var txt1 = document.getElementById("totalSub").value;
+                                                                var txt1 = document.getElementById("totalSubServis").value;
                                                                 var txt2 = document.getElementById("totalppn").value;
                                                                 
                                                                 var result = parseFloat(txt1) + parseFloat(txt2);
-                                                                document.getElementById("totalPembelian").value = result;
+                                                                document.getElementById("totalPembelianservis").value = result;
                                                             }
                                                         </script>
                                                     </div>
@@ -1071,7 +1086,7 @@ class PembelianController extends Controller
                                         <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Pemesan</td>
                                         <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Supplier</td>
                                         <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Harga Satuan</td>
-                                        <td class="text-center" style="padding-top:15px;padding-bottom:15px" rowspan="2" colspan="3">Pajak</td>
+                                        <td class="text-center" style="padding-top:15px;padding-bottom:15px" rowspan="2" colspan="2">Pajak</td>
                                         <td class="text-center" rowspan="2" style="padding-top:10px;padding-bottom:15px">Total</td>
                                     </tr>
                                 </thead>
@@ -1099,7 +1114,7 @@ class PembelianController extends Controller
                                         <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="text" name="supplier[]" id="supplier-' . $u->kodeseri_servis . '" value="' . $u->supplier . '" required></td>
                                         <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:100px"><input class="form-control form-control-sm" type="number" name="harga[]" id="harga-' . $u->kodeseri_servis . '" onblur="jumlahitem(`' . $u->kodeseri_servis . '`);getPajak(`' . $u->kodeseri_servis . '`);getTotalitem(`' . $u->kodeseri_servis . '`)" onkeyup="jumlahitem(`' . $u->kodeseri_servis . '`);getPajak(`' . $u->kodeseri_servis . '`);getTotalitem(`' . $u->kodeseri_servis . '`)" min="0" style="text-align:center;" required></td>
                                         <td class="text-center" style="padding-right:1px;padding-left:1px;padding-top:5px;padding-bottom:1px;width:75px">
-                                            <select class="form-control form-control-sm" name="pajak[]" id="pajak-' . $u->kodeseri_servis . '" onblur="getPajak(`' . $u->kodeseri_servis . '`);getTotalitem(`' . $u->kodeseri_servis . '`)">
+                                            <select class="form-control form-control-sm" name="pajak[]" id="pajak-' . $u->kodeseri_servis . '" onblur="getPajak(`' . $u->kodeseri_servis . '`);getTotalitem(`' . $u->kodeseri_servis . '`);setPPN(`' . $u->kodeseri_servis . '`);">
                                                 <option value="0">-</option>
                             ';
                     foreach ($pajak as $p) {
@@ -1139,33 +1154,33 @@ class PembelianController extends Controller
                                             <tr>
                                                 <td>Sub Total</td>
                                                 <td colspan="2">:</td>
-                                                <td><input type="text" class="form-control border border-blue" id="subtotalcheck" name="subtotalcheck" value="0"></td>
+                                                <td><input type="text" class="form-control border border-blue" id="subtotalcheckservis" name="subtotalcheck" value="0"></td>
                                             </tr>
                                             <tr>
                                                 <td>Diskon</td>
                                                 <td>:</td>
                                                 <td style="width:110px">
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control border border-blue" value="0" min="0" onblur="getDiskonsub()" id="subdiskon" name="subdiskon">
+                                                        <input type="number" class="form-control border border-blue" value="0" min="0" onblur="getDiskonsub()" id="subdiskonservis" name="subdiskon">
                                                         <span class="input-group-text border border-blue">
                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-percentage"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M6 18l12 -12" /></svg>
                                                         </span>
                                                     </div>
                                                 </td>
-                                                <td><input type="text" class="form-control border border-blue" value="0" id="subHasildiskon" name="subHasildiskon"></td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="subHasildiskonservis" name="subHasildiskon"></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td colspan="2"></td>
-                                                <td><input type="text" class="form-control border border-blue" value="0" id="totalSub" name="totalSub"></td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="totalSubServis" name="totalSub"></td>
                                             </tr>
                                             <tr>
                                                 <td>PPN</td>
                                                 <td>:</td>
                                                 <td colspan="1" style="width:80px">
-                                                    <input type="number" class="form-control border border-blue" value="0" min="0" id="percentageppn" name="percentageppn" onblur="getppn()">
+                                                    <input type="number" class="form-control border border-blue" value="0" min="0" id="percentageppnservis" name="percentageppn" onblur="getppn()">
                                                 </td>
-                                                <td><input type="text" class="form-control border border-blue" value="0" id="totalppn" name="totalppn"></td>
+                                                <td><input type="text" class="form-control border border-blue" value="0" id="totalppnservis" name="totalppn"></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -1183,7 +1198,7 @@ class PembelianController extends Controller
                                             <tr>
                                                 <td>Total Pembelian</td>
                                                 <td>:</td>
-                                                <td colspan="2"><input type="text" value="0" class="form-control border border-blue" id="totalPembelian" name="totalPembelian"></td>
+                                                <td colspan="2"><input type="text" value="0" class="form-control border border-blue" id="totalPembelianservis" name="totalPembelian"></td>
                                             </tr>
                                         </table>
                                     </div>

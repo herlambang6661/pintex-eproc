@@ -269,7 +269,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Alvin Tanuwijaya',
                 'username' => 'alvin',
-                'password' => Hash::make('eproc1269'),
+                'password' => Hash::make('Alvinptx1269'),
                 'role' => 'own',
                 'phone' => '0',
                 'email' => 'Alvin@pintex.co.id',
