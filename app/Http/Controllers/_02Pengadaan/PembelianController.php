@@ -397,10 +397,8 @@ class PembelianController extends Controller
                                                                 var jml = document.getElementById("jumlah-" + id).value;
                                                                 if (!isNaN(pajak)) {
                                                                     document.getElementById("inisialpajak-" + id).value = pajak;
-                                                                    // document.getElementById("txtinisialpajak-" + id).innerText = pajak + " %";
                                                                 } else {
                                                                     document.getElementById("inisialpajak-" + id).value = "0";
-                                                                    // document.getElementById("txtinisialpajak-" + id).innerText = "0 %";
                                                                 }
                                                                 var result = (parseFloat(jml) * parseFloat(pajak)) / 100;
                                                                 var hasilAngka = formatRibuan(result);
@@ -874,7 +872,6 @@ class PembelianController extends Controller
             echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
             echo "<center>Tidak ada data yang dipilih</center>";
         } else {
-            $permintaanController = new PermintaanController();
             $uang = DB::table("uang")->get();
             $pajak = DB::table("pajak")->get();
 
@@ -963,10 +960,8 @@ class PembelianController extends Controller
                                                                 var jml = document.getElementById("totalitem-" + id).value;
                                                                 if (!isNaN(pajak)) {
                                                                     document.getElementById("inisialpajak-" + id).value = pajak;
-                                                                    // document.getElementById("txtinisialpajak-" + id).innerText = pajak + " %";
                                                                 } else {
                                                                     document.getElementById("inisialpajak-" + id).value = "0";
-                                                                    // document.getElementById("txtinisialpajak-" + id).innerText = "0 %";
                                                                 }
                                                                 var result = (parseFloat(jml) * parseFloat(pajak)) / 100;
                                                                 var hasilAngka = formatRibuan(result);
