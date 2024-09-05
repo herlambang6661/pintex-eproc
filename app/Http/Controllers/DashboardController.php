@@ -90,7 +90,7 @@ class DashboardController extends Controller
         // Render HTML}
         echo '
         <div class="card">
-            <div class="card-body">
+            <div class="card-body px-0 py-0">
                 <ul class="steps steps-green steps-counter my-4">
                     <li data-bs-toggle="tooltip" title="Tanggal Pengajuan ' . Carbon::parse($getData->tgl)->format("d/m/Y") . '" class="step-item ' . $satu . '">Pengajuan ' . $getData->kodeseri . '</li>
                     <li data-bs-toggle="tooltip" title="Tanggal QTY ACC ' . Carbon::parse($getData->tgl_qty_acc)->format("d/m/Y") . '" class="step-item ' . $dua . '">Penentuan QTY ACC</li>
@@ -100,38 +100,47 @@ class DashboardController extends Controller
                     <li data-bs-toggle="tooltip" title="Tanggal Diterima ' . Carbon::parse($getData->tgl_terima)->format("d/m/Y") . '" class="step-item ' . $enam . ' ' . $package . ' ' . $retur . '">' . $txtenam . '</li>
                 </ul>
             </div>
-            <div class="card-body">
-                <h3 class="card-title">Detail</h3>
-                <ul class="steps steps-counter steps-vertical">
-                    <li class="step-item ' . $satu . '">
-                        <div class="h4 m-0">Pengajuan</div>
-                        <div class="text-secondary">
-                            ' . $getData->namaBarang . ' ' . $getData->keterangan . ' ' . $getData->katalog . ' ' . $getData->part . ' diajukan tanggal ' . Carbon::parse($getData->tgl)->format("d/m/Y") . ' dengan kodeseri <strong>' . $getData->kodeseri . '</strong><br>
-                            Qty : ' . $getData->qty . ' ' . $getData->satuan . '. Pemesan : ' . $getData->pemesan . '
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Detail
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <ul class="steps steps-counter steps-vertical">
+                                    <li class="step-item ' . $satu . '">
+                                        <div class="h4 m-0">Pengajuan</div>
+                                        <div class="text-secondary">
+                                            ' . $getData->namaBarang . ' ' . $getData->keterangan . ' ' . $getData->katalog . ' ' . $getData->part . ' diajukan tanggal ' . Carbon::parse($getData->tgl)->format("d/m/Y") . ' dengan kodeseri <strong>' . $getData->kodeseri . '</strong><br>
+                                            Qty : ' . $getData->qty . ' ' . $getData->satuan . '. Pemesan : ' . $getData->pemesan . '
+                                        </div>
+                                    </li>
+                                    <li class="step-item ' . $dua . '">
+                                        <div class="h4 m-0">Penentuan QTY ACC</div>
+                                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
+                                    </li>
+                                    <li class="step-item ' . $tiga  . ' ' . $hold . ' ' . $reject . '">
+                                        <div class="h4 m-0">ACC Pimpinan</div>
+                                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
+                                    </li>
+                                    <li class="step-item ' . $empat . '">
+                                        <div class="h4 m-0">Proses Pembelian</div>
+                                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
+                                    </li>
+                                    <li class="step-item ' . $lima . '">
+                                        <div class="h4 m-0">Dibeli</div>
+                                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
+                                    </li>
+                                    <li class="step-item ' . $enam . ' ' . $package . ' ' . $retur . '">
+                                        <div class="h4 m-0">' . $txtenam . '</div>
+                                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </li>
-                    <li class="step-item ' . $dua . '">
-                        <div class="h4 m-0">Penentuan QTY ACC</div>
-                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
-                    </li>
-                    <li class="step-item ' . $tiga  . ' ' . $hold . ' ' . $reject . '">
-                        <div class="h4 m-0">ACC Pimpinan</div>
-                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
-                    </li>
-                    <li class="step-item ' . $empat . '">
-                        <div class="h4 m-0">Proses Pembelian</div>
-                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
-                    </li>
-                    <li class="step-item ' . $lima . '">
-                        <div class="h4 m-0">Dibeli</div>
-                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
-                    </li>
-                    <li class="step-item ' . $enam . ' ' . $package . ' ' . $retur . '">
-                        <div class="h4 m-0">' . $txtenam . '</div>
-                        <div class="text-secondary">Lorem ipsum dolor sit amet.</div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
             <div class="card">
                 <div class="card-header bg-info text-white">Permintaan</div>
                 <div class="card-body">
@@ -160,7 +169,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
-                                <td>' . $getData->tgl . '</td>
+                                <td>' . Carbon::parse($getData->tgl)->format("d/m/Y") . '</td>
                                 <td>' . $getData->kodeseri . '</td>
                                 <td>' . $getData->namaBarang . '</td>
                                 <td>' . $getData->keterangan . '</td>
@@ -178,7 +187,7 @@ class DashboardController extends Controller
                                 <td>' . $getData->pembeli . '</td>
                                 <td>' . $getData->status . '</td>
                                 <td>' . $getData->urgent . '</td>
-                                <td>' . $getData->tgl_acc . '</td>
+                                <td>' . Carbon::parse($getData->tgl_acc)->format("d/m/Y") . '</td>
                                 <td>' . $getData->dibuat . '</td>
                             </tr>
                         </table>
@@ -203,6 +212,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
+                                <td colspan="13" class="text-center">Tidak ada data yang ditampilkan</td>
                             </tr>
                         </table>
                     </div>
@@ -264,6 +274,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
+                                <td colspan="14" class="text-center">Tidak ada data yang ditampilkan</td>
                             </tr>
                         </table>
                     </div>
@@ -334,6 +345,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
+                                <td colspan="13" class="text-center">Tidak ada data yang ditampilkan</td>
                             </tr>
                         </table>
                     </div>
@@ -400,6 +412,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
+                                <td colspan="13" class="text-center">Tidak ada data yang ditampilkan</td>
                             </tr>
                         </table>
                     </div>
