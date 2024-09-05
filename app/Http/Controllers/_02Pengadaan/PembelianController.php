@@ -1217,7 +1217,7 @@ class PembelianController extends Controller
                 '_token' => 'required',
                 'tgl' => 'required',
                 'supplier' => 'required',
-                'dibeli' => 'required',
+                'pembeli' => 'required',
                 'nopo' => 'required',
                 'uang' => 'required',
             ],

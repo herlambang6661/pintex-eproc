@@ -753,7 +753,7 @@ class PersetujuanController extends Controller
                 ->update(
                     array(
                         'tgl_qty_acc' => date('Y-m-d'),
-                        'pembeli' => $request->pembeli,
+                        'dibeli' => $request->pembeli,
                         'qtyacc' => $request->qtyAcc[$i],
                         'estimasiharga' => $request->estimasiHarga[$i],
                         'status' => 'MENUNGGU ACC',

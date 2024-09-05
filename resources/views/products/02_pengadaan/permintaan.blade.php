@@ -1007,8 +1007,8 @@
                     },
                     {
                         title: 'Dibeli',
-                        data: 'pembeli',
-                        name: 'pembeli',
+                        data: 'dibeli',
+                        name: 'dibeli',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
