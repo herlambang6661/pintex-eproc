@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gudang\Penerimaanitm;
+use App\Models\Gudang\Pengirimanitm;
+use App\Models\Pengadaan\PembelianItm;
+use App\Models\Teknik\PengambilanItm;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -18,6 +22,7 @@ class DashboardController extends Controller
     public function CariBarangSearchEngine(Request $request)
     {
         if ($request->has('q')) {
+            // Pencarian di tabel permintaanitm
             $search = $request->q;
             $itm = DB::table('permintaanitm')
                 ->select('kodeseri', 'namaBarang', 'keterangan', 'katalog', 'part')
@@ -30,8 +35,11 @@ class DashboardController extends Controller
                 ->get();
         } else {
         }
-        return Response()->json($itm);
+
+        return response()->json($itm);
     }
+
+
     public function BarangSearchEngineModal(Request $request)
     {
         $satu = '';
@@ -46,7 +54,13 @@ class DashboardController extends Controller
         $retur = '';
         $txtenam = 'Diterima';
 
+        // Ambil data dari database
         $getData = DB::table('permintaanitm')->where('kodeseri', $request->kodeseri)->first();
+        $getPembelian = DB::table('pembelianitm')->where('kode', $request->kodeseri)->first();
+        $getPengiriman = DB::table('pengirimanitm')->where('kodeseri', $request->kodeseri)->first();
+        $getPenerimaan = DB::table('penerimaanitm')->where('kodeseri', $request->kodeseri)->first();
+        $getPengambilan = DB::table('pengambilanitm')->where('kodeseri', $request->kodeseri)->first();
+
         if ($getData->status == 'PROSES PERSETUJUAN') {
             $satu = 'active';
         } elseif ($getData->status == 'MENUNGGU ACC') {
@@ -72,6 +86,8 @@ class DashboardController extends Controller
             $retur = 'active steps-purple';
             $txtenam = ucwords($getData->status);
         }
+
+        // Render HTML}
         echo '
         <div class="card">
             <div class="card-body">
@@ -116,9 +132,320 @@ class DashboardController extends Controller
                     </li>
                 </ul>
             </div>
-        </div>
-        ';
+            <div class="card">
+                <div class="card-header bg-info text-white">Permintaan</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>Tgl Pesan</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>Deskripsi</th>
+                                <th>Katalog</th>
+                                <th>Part</th>
+                                <th>Mesin</th>
+                                <th>Satuan</th>
+                                <th>Qty Pesan</th>
+                                <th>Qty ACC</th>
+                                <th>Pemesan</th>
+                                <th>Unit</th>
+                                <th>Peruntukan</th>
+                                <th>Dibeli</th>
+                                <th>ACC</th>
+                                <th>Pembeli</th>
+                                <th>Status</th>
+                                <th>Urgent</th>
+                                <th>Tgl Acc</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                                <td>' . $getData->tgl . '</td>
+                                <td>' . $getData->kodeseri . '</td>
+                                <td>' . $getData->namaBarang . '</td>
+                                <td>' . $getData->keterangan . '</td>
+                                <td>' . $getData->katalog . '</td>
+                                <td>' . $getData->part . '</td>
+                                <td>' . $getData->mesin . '</td>
+                                <td>' . $getData->satuan . '</td>
+                                <td>' . $getData->qty . '</td>
+                                <td>' . $getData->qtyacc . '</td>
+                                <td>' . $getData->pemesan . '</td>
+                                <td>' . $getData->unit . '</td>
+                                <td>' . $getData->peruntukan . '</td>
+                                <td>' . $getData->dibeli . '</td>
+                                <td>' . $getData->acc . '</td>
+                                <td>' . $getData->pembeli . '</td>
+                                <td>' . $getData->status . '</td>
+                                <td>' . $getData->urgent . '</td>
+                                <td>' . $getData->tgl_acc . '</td>
+                                <td>' . $getData->dibuat . '</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        if (empty($getPembelian)) {
+            echo '<div class="card">
+                <div class="card-header bg-success text-white">Pembelian</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>No Faktur</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>KTS</th>
+                                <th>Satuan</th>
+                                <th>Harga</th>
+                                <th>Suplier</th>
+                                <th>Jumlah</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        } else {
+            echo '<div class="card">
+                <div class="card-header bg-success text-white">Pembelian Rp.' . number_format($getPembelian->harga, 0, ',', ',') . '</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>No Faktur</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>KTS</th>
+                                <th>Satuan</th>
+                                <th>Harga</th>
+                                <th>Suplier</th>
+                                <th>Jumlah</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                                <td>' . $getPembelian->nofaktur . '</td>
+                                <td>' . $getPembelian->kode . '</td>
+                                <td>' . $getPembelian->namabarang . '</td>
+                                <td>' . $getPembelian->kts . '</td>
+                                <td>' . $getPembelian->satuan . '</td>
+                                <td>Rp.' . number_format($getPembelian->harga, 0, ',', ',') . '</td>
+                                <td>' . $getPembelian->supplier . '</td>
+                                <td>' . $getPembelian->jumlah . '</td>
+                                <td>' . $getPembelian->dibuat . '</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        }
+        if (empty($getPengiriman)) {
+            echo '<div class="card">
+                <div class="card-header bg-warning text-white">Pengiriman</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Noform</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>Katalog</th>
+                                <th>Part</th>
+                                <th>Mesin</th>
+                                <th>Qty</th>
+                                <th>Satuan</th>
+                                <th>Pemesan</th>
+                                <th>Supplier</th>
+                                <th>Surat Jalan</th>
+                                <th>Expedisin</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        } else {
+            echo '<div class="card">
+                <div class="card-header bg-warning text-white">Pengiriman</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Noform</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>Katalog</th>
+                                <th>Part</th>
+                                <th>Mesin</th>
+                                <th>Qty</th>
+                                <th>Satuan</th>
+                                <th>Pemesan</th>
+                                <th>Supplier</th>
+                                <th>Surat Jalan</th>
+                                <th>Expedisin</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                                <td>' . $getPengiriman->tgl . '</td>
+                                <td>' . $getPengiriman->noformpengiriman_itm . '</td>
+                                <td>' . $getPengiriman->kodeseri . '</td>
+                                <td>' . $getPengiriman->namaBarang . '</td>
+                                <td>' . $getPengiriman->katalog . '</td>
+                                <td>' . $getPengiriman->part . '</td>
+                                <td>' . $getPengiriman->mesin . '</td>
+                                <td>' . $getPengiriman->qty . '</td>
+                                <td>' . $getPengiriman->satuan . '</td>
+                                <td>' . $getPengiriman->pemesan . '</td>
+                                <td>' . $getPengiriman->supplier . '</td>
+                                <td>' . $getPengiriman->suratjalan . '</td>
+                                <td>' . $getPengiriman->expedisi . '</td>
+                                <td>' . $getPengiriman->dibuat . '</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        }
+        if (empty($getPenerimaan)) {
+            echo '<div class="card">
+                <div class="card-header bg-danger text-white">Penerimaan</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>Katalog</th>
+                                <th>Mesin</th>
+                                <th>Kts</th>
+                                <th>Satuan</th>
+                                <th>Pemesan</th>
+                                <th>Urgent</th>
+                                <th>Dibeli</th>
+                                <th>Locker</th>
+                                <th>Partial</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        } else {
+            echo '<div class="card">
+                <div class="card-header bg-danger text-white">Penerimaan</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>Katalog</th>
+                                <th>Mesin</th>
+                                <th>Kts</th>
+                                <th>Satuan</th>
+                                <th>Pemesan</th>
+                                <th>Urgent</th>
+                                <th>Dibeli</th>
+                                <th>Locker</th>
+                                <th>Partial</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                                <td>' . $getPenerimaan->tanggal . '</td>
+                                <td>' . $getPenerimaan->kodeseri . '</td>
+                                <td>' . $getPenerimaan->nama . '</td>
+                                <td>' . $getPenerimaan->katalog . '</td>
+                                <td>' . $getPenerimaan->mesin . '</td>
+                                <td>' . $getPenerimaan->kts . '</td>
+                                <td>' . $getPenerimaan->satuan . '</td>
+                                <td>' . $getPenerimaan->pemesan . '</td>
+                                <td>' . $getPenerimaan->urgent . '</td>
+                                <td>' . $getPenerimaan->dibeli . '</td>
+                                <td>' . $getPenerimaan->locker . '</td>
+                                <td>' . $getPenerimaan->partial . '</td>
+                                <td>' . $getPenerimaan->dibuat . '</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        }
+        if (empty($getPengambilan)) {
+            echo '<div class="card">
+                <div class="card-header bg-secondary text-white">Pengambilan</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Noform</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>Mesin</th>
+                                <th>Unit</th>
+                                <th>Jumlah</th>
+                                <th>Jam</th>
+                                <th>Keterangan</th>
+                                <th>Diambil</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        } else {
+            echo '<div class="card">
+                <div class="card-header bg-secondary text-white">Pengambilan</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Noform</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>Mesin</th>
+                                <th>Unit</th>
+                                <th>Jumlah</th>
+                                <th>Jam</th>
+                                <th>Keterangan</th>
+                                <th>Diambil</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                                <td>' . $getPengambilan->tanggal . '</td>
+                                <td>' . $getPengambilan->noform . '</td>
+                                <td>' . $getPengambilan->kodeseri . '</td>
+                                <td>' . $getPengambilan->namaBarang . '</td>
+                                <td>' . $getPengambilan->mesin . '</td>
+                                <td>' . $getPengambilan->unit . '</td>
+                                <td>' . $getPengambilan->jumlah . '</td>
+                                <td>' . $getPengambilan->jam . '</td>
+                                <td>' . $getPengambilan->keterangan . '</td>
+                                <td>' . $getPengambilan->diambil . '</td>
+                                <td>' . $getPengambilan->dibuat . '</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        }
+
+        echo '</div>';
     }
+
     public function landing()
     {
         return view('landing');
