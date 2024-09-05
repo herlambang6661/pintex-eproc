@@ -15,17 +15,17 @@ class SuplierController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('suplier');
+            $data = DB::table('person');
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
-                    $editBtn = '<a href="javascript:void(0)" data-bs-target="#modal-edit" data-bs-toggle="modal" data-id="' . $row->id . '" data-nama="' . $row->nama . '" data-tipe="' . $row->tipe . '" data-jabatan="' . $row->jabatan . '" data-npwp="' . $row->npwp . '" data-alamat="' . $row->alamat . '" data-kopos="' . $row->kopos . '" data-kota="' . $row->kota . '" data-provinsi="' . $row->provinsi . '" data-telp="' . $row->telp . '" data-contact="' . $row->contact . '" data-fax="' . $row->fax . '" data-email="' . $row->email . '" data-website="' . $row->website . '" data-catatan="' . $row->catatan . '" data-uang_id="' . $row->uang_id . '" class="btn btn-outline-info btn-sm btn-icon edit-btn"><i class="fa-solid fa-fw fa-edit"></i></a>';
+                    $editBtn = '<a href="javascript:void(0)" data-bs-target="#modal-edit" data-bs-toggle="modal" data-id="' . $row->id . '" data-nama="' . $row->nama . '" data-tipe="' . $row->tipe . '" data-jabatan="' . $row->jabatan . '" data-npwp="' . $row->npwp . '" data-alamat="' . $row->alamat . '" data-kopos="' . $row->kopos . '" data-kota="' . $row->kota . '" data-provinsi="' . $row->provinsi . '" data-telp="' . $row->telp . '" data-contact="' . $row->contact . '" data-email="' . $row->email . '"  class="btn btn-outline-info btn-sm btn-icon edit-btn"><i class="fa-solid fa-fw fa-edit"></i></a>';
                     $deleteForm = '<form id="deleteForm' . $row->id . '" action="/suplier/destroy/' . $row->id . '" method="POST" class="d-inline">' . csrf_field() . method_field('DELETE') . '<button type="button" class="btn btn-outline-danger btn-sm btn-icon" onclick="confirmDelete(event, ' . $row->id . ')"><i class="fa-solid fa-fw fa-trash-can"></i></button></form>';
                     return $editBtn . ' ' . $deleteForm;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        $uang = UangModel::all();
+        $uang = SuplierModel::all();
         return view('products.01_master.suplier.index', [
             'judul' => 'Halaman Suplier',
             'active' => 'Suplier',
@@ -38,23 +38,9 @@ class SuplierController extends Controller
         $request->validate([
             'nama' => 'required',
             'tipe' => 'required',
-            'jabatan' => 'required',
-            'npwp' => 'required',
-            'alamat' => 'required',
-            'kopos' => 'required',
-            'kota' => 'required',
-            'provinsi' => 'required',
-            'telp' => 'required',
-            'contact' => 'required',
-            'fax' => 'required',
-            'email' => 'required',
-            'website' => 'required',
-            'catatan' => 'required',
-            'uang_id' => 'required',
         ]);
 
         $suplier = new SuplierModel();
-        $suplier->uang_id = $request->input('uang_id');
         $suplier->nama = $request->input('nama');
         $suplier->tipe = $request->input('tipe');
         $suplier->jabatan = $request->input('jabatan');
@@ -65,10 +51,7 @@ class SuplierController extends Controller
         $suplier->provinsi = $request->input('provinsi');
         $suplier->telp = $request->input('telp');
         $suplier->contact = $request->input('contact');
-        $suplier->fax = $request->input('fax');
         $suplier->email = $request->input('email');
-        $suplier->website = $request->input('website');
-        $suplier->catatan = $request->input('catatan');
         $suplier->dibuat = auth()->user()->name;
         $suplier->save();
 
@@ -84,19 +67,6 @@ class SuplierController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'tipe' => 'required',
-            'jabatan' => 'required',
-            'npwp' => 'required',
-            'alamat' => 'required',
-            'kopos' => 'required',
-            'kota' => 'required',
-            'provinsi' => 'required',
-            'telp' => 'required',
-            'contact' => 'required',
-            'fax' => 'required',
-            'email' => 'required',
-            'website' => 'required',
-            'catatan' => 'required',
-            'uang_id' => 'required',
         ]);
 
         $suplier = SuplierModel::findOrFail($id);
