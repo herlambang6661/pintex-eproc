@@ -182,7 +182,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (Auth::user()->role === 'own' || Auth::user()->role === 'purchasing' || Auth::user()->role === 'kng')
+                    @if (Auth::user()->role === 'own' || Auth::user()->role === 'pur' || Auth::user()->role === 'kng')
                         <div class="row row-deck row-cards mt-1">
                             <div class="col-sm-12 col-lg-6">
                                 <div class="card bg-blue-lt" style="height: 28rem">
