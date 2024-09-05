@@ -225,25 +225,26 @@
                                                 </div>
                                                 <?php $i++; ?>
                                             @endforeach
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="text-truncate" style="text-align: right;">
-                                                            <a class="nav-link" href="{{ url('existingPermintaan') }}">
-                                                                Lihat Semuanya
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="2"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path d="M5 12l14 0" />
-                                                                    <path d="M13 18l6 -6" />
-                                                                    <path d="M13 6l6 6" />
-                                                                </svg>
-                                                            </a>
-                                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer border-0 bg-blue-lt">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="text-truncate" style="text-align: right;">
+                                                        <a class="" href="{{ url('existingPermintaan') }}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-download">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                                                                <path d="M7 11l5 5l5 -5" />
+                                                                <path d="M12 4l0 12" />
+                                                            </svg>
+                                                            Unduh Selengkapnya
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -294,22 +295,26 @@
                                                 </div>
                                                 <?php $j++; ?>
                                             @endforeach
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="text-truncate" style="text-align: right;">
-                                                            Lihat Semuanya
+                                        </div>
+                                    </div>
+                                    <div class="card-footer border-0 bg-green-lt">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="text-truncate" style="text-align: right;">
+                                                        <a class="" href="{{ url('existingPermintaan') }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
                                                                 stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round"
-                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-download">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M5 12l14 0" />
-                                                                <path d="M13 18l6 -6" />
-                                                                <path d="M13 6l6 6" />
+                                                                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                                                                <path d="M7 11l5 5l5 -5" />
+                                                                <path d="M12 4l0 12" />
                                                             </svg>
-                                                        </div>
+                                                            Unduh Selengkapnya
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
