@@ -63,7 +63,7 @@
                 ?>
             <div class="row">
                 <div class="col-md-4 text-center">
-                    <img src="{{ url('photo/icon/' . strtolower($v->entitas) . '.png') }}" class=""
+                    <img src="{{ url('photo/icon/' . strtolower(trans($v->entitas)) . '.png') }}" class=""
                         alt="PT. PINTEX" srcset="" width="150px" style="max-width: 150px;"><br>
                     {{-- <h3 style="margin-top:10px">PT PINTEX</h3> --}}
                     <p style="font-size: 8px; margin-top:0px" class="text-center">
