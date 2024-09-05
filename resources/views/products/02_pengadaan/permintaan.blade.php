@@ -530,8 +530,6 @@
     </div>
     {{-- End Modals --}}
     <script type="text/javascript">
-        var unit = 'Unit 1';
-
         function tambahItem() {
             var idf = document.getElementById("idf").value;
 
@@ -610,8 +608,7 @@
             // Kolom 12 Unit
             var td = document.createElement("td");
             td.innerHTML += "<input type='text' name='unit[]' id='unit_" + idf +
-                "' class='form-control  inputNone' style='text-transform: uppercase;' value='" +
-                unit + "'>";
+                "' class='form-control  inputNone' style='text-transform: uppercase;' value='{{ Auth::user()->alias == 'TFI' ? 'TFI' : (Auth::user()->username == 'yanti' ? 'Unit 1' : (Auth::user()->username == 'rizki' ? 'Unit 2' : '')) }}'>";
             tr.appendChild(td);
 
             // Kolom 13 Peruntukan
@@ -656,7 +653,7 @@
                 $('#part_' + idf).prop('readonly', false);
 
                 document.getElementById("tampil_mesin_" + idf).innerHTML =
-                    '<select name="mesin[]" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;"><option></option></select>';
+                    '<select name="mesin[]" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;"><option value="{{ Auth::user()->alias == 'TFI' ? '38TFI' : '' }}" selected="selected">{{ Auth::user()->alias == 'TFI' ? 'TFI TFI (UMUM)(UMUM)' : '' }}</option></select>';
                 $('#qty_' + idf).prop('readonly', false);
                 $('#satuan_' + idf).prop('readonly', false);
                 document.getElementById("tampil_pemesan_" + idf).innerHTML =
@@ -671,7 +668,7 @@
                 $('#part_' + idf).prop('readonly', false);
 
                 document.getElementById("tampil_mesin_" + idf).innerHTML =
-                    '<select name="mesin[]" class="form-select  elementmsn" style="text-transform: uppercase;"><option></option></select>';
+                    '<select name="mesin[]" class="form-select  elementmsn" style="text-transform: uppercase;"><option value="{{ Auth::user()->alias == 'TFI' ? '38TFI' : '' }}" selected="selected">{{ Auth::user()->alias == 'TFI' ? 'TFI TFI (UMUM)(UMUM)' : '' }}</option></select>';
                 $('#qty_' + idf).prop('readonly', false);
                 $('#satuan_' + idf).prop('readonly', false);
 

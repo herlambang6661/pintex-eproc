@@ -158,7 +158,7 @@
                     <div class="d-none d-xl-block ps-2">
                         <div style="text-transform: capitalize;">{{ Auth::user()->name }}</div>
                         <div class="mt-1 small text-muted" style="text-transform: capitalize;">
-                            {{ Auth::user()->role }}</div>
+                            {{ Auth::user()->alias }}</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

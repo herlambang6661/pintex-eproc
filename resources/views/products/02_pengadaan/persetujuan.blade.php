@@ -212,7 +212,7 @@
                                                                 <div class="col">
                                                                     <input type="date" id="fqtydari"
                                                                         class="form-control border-primary"
-                                                                        value="{{ date('Y-m-d', strtotime(date('Y-m-01') . '-1 month')) }}">
+                                                                        value="{{ date('Y-m-01') }}">
                                                                 </div>
                                                                 <div class="col">
                                                                     <input type="date" id="fqtysampai"
@@ -220,28 +220,20 @@
                                                                         value="{{ date('Y-m-d') }}">
                                                                 </div>
                                                                 <div class="col-auto">
-                                                                    <a class="btn btn-primary" data-bs-toggle="offcanvas"
-                                                                        href="#filterTableQtyPermintaan" role="button"
-                                                                        aria-controls="filterTableQtyPermintaan">
+                                                                    <a href="#" class="btn btn-primary btn-icon"
+                                                                        aria-label="Button" onclick="syn1()">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                                             width="24" height="24"
                                                                             viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="2"
+                                                                            stroke="currentColor" stroke-width="1.5"
                                                                             stroke-linecap="round" stroke-linejoin="round"
-                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-alt">
+                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
                                                                             <path stroke="none" d="M0 0h24v24H0z"
                                                                                 fill="none" />
-                                                                            <path d="M4 8h4v4h-4z" />
-                                                                            <path d="M6 4l0 4" />
-                                                                            <path d="M6 12l0 8" />
-                                                                            <path d="M10 14h4v4h-4z" />
-                                                                            <path d="M12 4l0 10" />
-                                                                            <path d="M12 18l0 2" />
-                                                                            <path d="M16 5h4v4h-4z" />
-                                                                            <path d="M18 4l0 1" />
-                                                                            <path d="M18 9l0 11" />
+                                                                            <path
+                                                                                d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                            <path d="M21 21l-6 -6" />
                                                                         </svg>
-                                                                        Saring Lanjutan
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -601,94 +593,6 @@
             </div>
         </div>
     </div>
-
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterTableQtyPermintaan"
-        aria-labelledby="filterTableQtyPermintaan">
-        <div class="offcanvas-header">
-            <h2 class="offcanvas-title" id="filterTableQtyPermintaan">Saring Qty Acc</h2>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div>
-                <div class="card-stamp card-stamp-lg">
-                    <div class="card-stamp-icon bg-blue">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-alt">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M4 8h4v4h-4z" />
-                            <path d="M6 4l0 4" />
-                            <path d="M6 12l0 8" />
-                            <path d="M10 14h4v4h-4z" />
-                            <path d="M12 4l0 10" />
-                            <path d="M12 18l0 2" />
-                            <path d="M16 5h4v4h-4z" />
-                            <path d="M18 4l0 1" />
-                            <path d="M18 9l0 11" />
-                        </svg>
-                    </div>
-                </div>
-                <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
-                    class="sticky-top">
-                    <div class="form-label">Noform</div>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control border-primary"
-                                    placeholder="Masukkan Nomor Formulir Permintaan">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-label">Pemesan</div>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <select name="fbagian" id="fbagian" class="form-select border-primary">
-                                    <option value="*">Semua</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-label">Unit</div>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <select name="fshift" id="fshift" class="form-select border-primary">
-                                    <option value="*">Semua</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-label">Dibeli</div>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <select name="fgrup" id="fgrup" class="form-select border-primary">
-                                    <option value="*">Semua</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-label">Status</div>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <select name="fgrup" id="fgrup" class="form-select border-primary">
-                                    <option value="*">Semua</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-5">
-                        <button type="button" class="btn btn-primary w-100" onclick="syn();" id="btn-filter">Filter
-                            Data</button> <br>
-                        <input type="reset" class="btn btn-link w-100" value="Reset">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     {{-- Modal End --}}
     <script type="text/javascript">
         function newexportaction(e, dt, button, config) {
@@ -719,6 +623,10 @@
             dt.ajax.reload();
         }
         var tablePermintaanQty, tablePermintaanAcc, tablePermintaanRjt, tablePermintaanHld;
+
+        function syn1() {
+            tablePermintaanQty.ajax.reload();
+        }
         $(document).ready(function() {
             var selected = new Array();
             // TABLE ---------------------------------------------------------//
