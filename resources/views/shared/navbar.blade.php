@@ -158,8 +158,8 @@
                     <style>
                         .avatar {
                             display: inline-block;
-                            width: 40px;
-                            height: 40px;
+                            width: 35px;
+                            height: 35px;
                             background-size: cover;
                             background-position: center;
                             position: relative;
@@ -175,16 +175,17 @@
                             width: 100%;
                             height: 100%;
                             background-image: inherit;
-                            background-size: 200%;
+                            background-size: 120%;
                             background-position: center;
                             transition: transform 0.3s ease;
                             transform: translate(-50%, -50%);
                         }
 
                         .avatar:hover::before {
-                            transform: translate(-50%, -50%) scale(1.2);
+                            transform: translate(-50%, -50%) scale(1.1);
                         }
                     </style>
+
                     <?php
                     $role = Auth::user()->role;
                     $username = Auth::user()->username;
