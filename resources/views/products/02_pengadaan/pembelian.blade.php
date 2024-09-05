@@ -217,17 +217,15 @@
                                                             <td>
                                                                 <input type="date" id="filterdari_pembelian"
                                                                     class="form-control "
-                                                                    value="{{ date('Y-m-d', strtotime(date('Y-m-01') . '-1 month')) }}"
-                                                                    onchange="syn()">
+                                                                    value="{{ date('Y-m-d', strtotime(date('Y-m-01') . '-1 month')) }}">
                                                             </td>
                                                             <td>
                                                                 <input type="date" id="filtersampai_pembelian"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}"
-                                                                    onchange="syn()">
+                                                                    class="form-control " value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
                                                                 <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
+                                                                    aria-label="Button" onclick="syn2()">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="1.5"
@@ -240,8 +238,6 @@
                                                                         <path d="M21 21l-6 -6" />
                                                                     </svg>
                                                                 </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
                                                             </td>
                                                             <td></td>
                                                         </tr>
@@ -299,17 +295,15 @@
                                                             <td>
                                                                 <input type="date" id="idfilter_dari"
                                                                     class="form-control "
-                                                                    value="{{ date('Y-m-d', strtotime(date('Y-m-01') . '-1 month')) }}"
-                                                                    onchange="synServis()">
+                                                                    value="{{ date('Y-m-d', strtotime(date('Y-m-01') . '-1 month')) }}">
                                                             </td>
                                                             <td>
                                                                 <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}"
-                                                                    onchange="synServis()">
+                                                                    class="form-control " value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
                                                                 <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
+                                                                    aria-label="Button" onclick="syn3()">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="1.5"
@@ -322,8 +316,6 @@
                                                                         <path d="M21 21l-6 -6" />
                                                                     </svg>
                                                                 </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
                                                             </td>
                                                             <td></td>
                                                         </tr>
@@ -560,6 +552,14 @@
 
         function syn1() {
             tablePembelian.ajax.reload();
+        }
+
+        function syn2() {
+            tableCheckPembelian.ajax.reload();
+        }
+
+        function syn3() {
+            tableCheckServis.ajax.reload();
         }
 
         function packages() {
