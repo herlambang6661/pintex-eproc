@@ -155,9 +155,42 @@
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
                     {{-- <span class="avatar avatar-sm rounded">{{ Str::limit(Auth::user()->name, 2, '') }}</span> --}}
+                    <style>
+                        .avatar {
+                            display: inline-block;
+                            width: 40px;
+                            height: 40px;
+                            background-size: cover;
+                            background-position: center;
+                            position: relative;
+                            overflow: hidden;
+                        }
+
+                        .avatar::before {
+                            content: '';
+                            display: block;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            width: 100%;
+                            height: 100%;
+                            background-image: inherit;
+                            background-size: 200%;
+                            background-position: center;
+                            transition: transform 0.3s ease;
+                            transform: translate(-50%, -50%);
+                        }
+
+                        .avatar:hover::before {
+                            transform: translate(-50%, -50%) scale(1.2);
+                        }
+                    </style>
                     <?php
                     $role = Auth::user()->role;
                     $username = Auth::user()->username;
+                    
+                    // Default avatar URL
+                    $avatarUrl = asset('assets/static/avatars/default.png');
                     
                     if ($role === 'own') {
                         if ($username === 'alvin') {
@@ -169,14 +202,27 @@
                         } else {
                             $avatarUrl = asset('assets/static/avatars/avatar.png');
                         }
-                    } elseif ($role === 'whs' || $role === 'purchasing' || $role === 'kng') {
+                    } elseif ($role === 'purchasing') {
+                        $avatarUrl = asset('assets/static/avatars/puji.jpg');
+                    } elseif ($role === 'kng') {
                         $avatarUrl = asset('assets/static/avatars/avatar.png');
-                    } else {
-                        $avatarUrl = asset('assets/static/avatars/default.png');
+                    } elseif ($role === 'whs') {
+                        if ($username === 'fahmi') {
+                            $avatarUrl = asset('assets/static/avatars/fahmi.jpg');
+                        } elseif ($username === 'rizki') {
+                            $avatarUrl = asset('assets/static/avatars/rizky.jpg');
+                        } elseif ($username === 'yanti') {
+                            $avatarUrl = asset('assets/static/avatars/yanti.jpg');
+                        } else {
+                            $avatarUrl = asset('assets/static/avatars/avatar.png');
+                        }
                     }
                     ?>
+
                     <span class="avatar avatar-sm rounded"
                         style="background-image: url('{{ $avatarUrl }}')"></span>
+
+
 
                     <div class="d-none d-xl-block ps-2">
                         <div style="text-transform: capitalize;">{{ Auth::user()->name }}</div>
