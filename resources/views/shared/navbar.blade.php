@@ -203,7 +203,7 @@
                         } else {
                             $avatarUrl = asset('assets/static/avatars/avatar.png');
                         }
-                    } elseif ($role === 'purchasing') {
+                    } elseif ($role === 'pur') {
                         $avatarUrl = asset('assets/static/avatars/puji.jpg');
                     } elseif ($role === 'kng') {
                         $avatarUrl = asset('assets/static/avatars/avatar.png');
