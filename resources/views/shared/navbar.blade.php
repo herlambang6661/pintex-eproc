@@ -154,7 +154,30 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    <span class="avatar avatar-sm rounded">{{ Str::limit(Auth::user()->name, 2, '') }}</span>
+                    {{-- <span class="avatar avatar-sm rounded">{{ Str::limit(Auth::user()->name, 2, '') }}</span> --}}
+                    <?php
+                    $role = Auth::user()->role;
+                    $username = Auth::user()->username;
+                    
+                    if ($role === 'own') {
+                        if ($username === 'alvin') {
+                            $avatarUrl = asset('assets/static/avatars/1.jpg');
+                        } elseif ($username === 'brian') {
+                            $avatarUrl = asset('assets/static/avatars/2.jpg');
+                        } elseif ($username === 'felixjesse') {
+                            $avatarUrl = asset('assets/static/avatars/3.jpg');
+                        } else {
+                            $avatarUrl = asset('assets/static/avatars/avatar.png');
+                        }
+                    } elseif ($role === 'whs' || $role === 'purchasing' || $role === 'kng') {
+                        $avatarUrl = asset('assets/static/avatars/avatar.png');
+                    } else {
+                        $avatarUrl = asset('assets/static/avatars/default.png');
+                    }
+                    ?>
+                    <span class="avatar avatar-sm rounded"
+                        style="background-image: url('{{ $avatarUrl }}')"></span>
+
                     <div class="d-none d-xl-block ps-2">
                         <div style="text-transform: capitalize;">{{ Auth::user()->name }}</div>
                         <div class="mt-1 small text-muted" style="text-transform: capitalize;">

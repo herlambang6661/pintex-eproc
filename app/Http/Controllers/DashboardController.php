@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gudang\Penerimaanitm;
+use App\Models\Gudang\Pengirimanitm;
+use App\Models\Pengadaan\PembelianItm;
+use App\Models\Teknik\PengambilanItm;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -18,6 +22,7 @@ class DashboardController extends Controller
     public function CariBarangSearchEngine(Request $request)
     {
         if ($request->has('q')) {
+            // Pencarian di tabel permintaanitm
             $search = $request->q;
             $itm = DB::table('permintaanitm')
                 ->select('kodeseri', 'namaBarang', 'keterangan', 'katalog', 'part')
@@ -28,10 +33,23 @@ class DashboardController extends Controller
                 ->orWhere('part', 'LIKE', "%$search%")
                 ->orderBy('namaBarang', 'ASC')
                 ->get();
+        } elseif ($request->has('p')) {
+            // Pencarian di tabel pembelianitm
+            $search = $request->p;
+            $itm = DB::table('pembelianitm')
+                ->select('kode', 'namabarang', 'satuan', 'harga')
+                ->where('kode', 'LIKE', "%$search%")
+                ->orWhere('namabarang', 'LIKE', "%$search%")
+                ->orderBy('namabarang', 'ASC')
+                ->get();
         } else {
+            $itm = [];
         }
-        return Response()->json($itm);
+
+        return response()->json($itm);
     }
+
+
     public function BarangSearchEngineModal(Request $request)
     {
         $satu = '';
@@ -46,7 +64,9 @@ class DashboardController extends Controller
         $retur = '';
         $txtenam = 'Diterima';
 
+        // Ambil data dari permintaanitm
         $getData = DB::table('permintaanitm')->where('kodeseri', $request->kodeseri)->first();
+
         if ($getData->status == 'PROSES PERSETUJUAN') {
             $satu = 'active';
         } elseif ($getData->status == 'MENUNGGU ACC') {
@@ -72,6 +92,8 @@ class DashboardController extends Controller
             $retur = 'active steps-purple';
             $txtenam = ucwords($getData->status);
         }
+
+        // Render HTML
         echo '
         <div class="card">
             <div class="card-body">
@@ -116,9 +138,64 @@ class DashboardController extends Controller
                     </li>
                 </ul>
             </div>
-        </div>
-        ';
+            <div class="card">
+                <div class="card-header bg-info text-white">Permintaan</div>
+                <div class="card-body">
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                            <tr>
+                                <th>Tgl Pesan</th>
+                                <th>Kodeseri</th>
+                                <th>Nama</th>
+                                <th>Deskripsi</th>
+                                <th>Katalog</th>
+                                <th>Part</th>
+                                <th>Mesin</th>
+                                <th>Satuan</th>
+                                <th>Qty Pesan</th>
+                                <th>Qty ACC</th>
+                                <th>Pemesan</th>
+                                <th>Unit</th>
+                                <th>Peruntukan</th>
+                                <th>Dibeli</th>
+                                <th>ACC</th>
+                                <th>Pembeli</th>
+                                <th>Status</th>
+                                <th>Urgent</th>
+                                <th>Tgl Acc</th>
+                                <th>Dibuat</th>
+                            </tr>
+                            <tr>
+                                <td>' . $getData->tgl . '</td>
+                                <td>' . $getData->kodeseri . '</td>
+                                <td>' . $getData->namaBarang . '</td>
+                                <td>' . $getData->keterangan . '</td>
+                                <td>' . $getData->katalog . '</td>
+                                <td>' . $getData->part . '</td>
+                                <td>' . $getData->mesin . '</td>
+                                <td>' . $getData->satuan . '</td>
+                                <td>' . $getData->qty . '</td>
+                                <td>' . $getData->qtyacc . '</td>
+                                <td>' . $getData->pemesan . '</td>
+                                <td>' . $getData->unit . '</td>
+                                <td>' . $getData->peruntukan . '</td>
+                                <td>' . $getData->dibeli . '</td>
+                                <td>' . $getData->acc . '</td>
+                                <td>' . $getData->pembeli . '</td>
+                                <td>' . $getData->status . '</td>
+                                <td>' . $getData->urgent . '</td>
+                                <td>' . $getData->tgl_acc . '</td>
+                                <td>' . $getData->dibuat . '</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        
+    </div>';
     }
+
     public function landing()
     {
         return view('landing');
