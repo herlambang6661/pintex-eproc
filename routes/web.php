@@ -39,6 +39,7 @@ use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
 use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
 use App\Http\Controllers\_05Laporan\LaporanPembelianController;
+use App\Http\Controllers\Datatables\ExistingList;
 use App\Http\Controllers\Datatables\Gudang\SampleList;
 use App\Http\Controllers\Datatables\Gudang\TransitList;
 use App\Http\Controllers\Datatables\Pengadaan\StatusBarangList;
@@ -59,6 +60,7 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::resource('getExisting', ExistingList::class);
 Route::resource('getPermintaan', PermintaanList::class);
 Route::resource('getPengambilan', PengambilanList::class);
 Route::resource('getPembelianList', PembelianList::class);
@@ -82,6 +84,7 @@ Route::controller(DashboardController::class)->group(function () {
     Route::get('getSearchEngine', 'CariBarangSearchEngine')->name('getSearchEngine');
     Route::post('searchEngineModal', 'BarangSearchEngineModal')->name('searchEngineModal');
     Route::get('landing', 'landing')->name('landing');
+    Route::get('existingPermintaan', 'existingPermintaan')->name('existingPermintaan');
 });
 
 //Rute Master

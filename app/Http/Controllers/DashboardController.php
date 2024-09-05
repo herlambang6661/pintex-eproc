@@ -39,7 +39,6 @@ class DashboardController extends Controller
         return response()->json($itm);
     }
 
-
     public function BarangSearchEngineModal(Request $request)
     {
         $satu = '';
@@ -462,5 +461,13 @@ class DashboardController extends Controller
     public function landing()
     {
         return view('landing');
+    }
+
+    public function existingPermintaan()
+    {
+        return view('products/exist', [
+            'active' => 'Dashboard',
+            'judul' => 'Items Existing',
+        ]);
     }
 }

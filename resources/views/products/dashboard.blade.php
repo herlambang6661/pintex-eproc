@@ -229,7 +229,7 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="text-truncate" style="text-align: right;">
-                                                            <a href="">
+                                                            <a class="nav-link" href="{{ url('existingPermintaan') }}">
                                                                 Lihat Semuanya
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                     height="24" viewBox="0 0 24 24" fill="none"
