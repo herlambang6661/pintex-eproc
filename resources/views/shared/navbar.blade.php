@@ -243,7 +243,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div>
-                @if (Auth::user()->role === 'own' || Auth::user()->role === 'purchasing' || Auth::user()->role === 'kng')
+                @if (Auth::user()->role === 'own' || Auth::user()->role === 'pur' || Auth::user()->role === 'kng')
                     <form action="./" method="get" autocomplete="off" novalidate>
                         <div class="input-icon">
                             <span class="input-icon-addon">
@@ -255,7 +255,8 @@
                                     <path d="M21 21l-6 -6" />
                                 </svg>
                             </span>
-                            <select class="form-control searchengine" id="searchengine"></select>
+                            <select class="form-control searchengine" id="searchengine"
+                                style="width: 700px"></select>
                             {{-- <input type="text" value="" class="form-control" placeholder="Search…"
                             aria-label="Search in website"> --}}
                         </div>

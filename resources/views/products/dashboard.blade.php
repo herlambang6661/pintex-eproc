@@ -42,11 +42,11 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row align-items-center">
+                                <div class="row align-items-center px-0">
                                     <div class="col-3">
                                         <iframe
                                             src="https://lottie.host/embed/97ec1b9d-a3a0-49a5-ad64-fde41649f07e/AO6UokX4rf.lottie"
-                                            width="300px" height="300px"></iframe>
+                                            width="250px" height="250px"></iframe>
                                     </div>
                                     <div class="col-9">
                                         <h3 class="h1">Selamat Datang di E-PROCUREMENT, {{ Auth::user()->name }} 🎉</h3>
@@ -229,17 +229,20 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="text-truncate" style="text-align: right;">
-                                                            Lihat Semuanya
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M5 12l14 0" />
-                                                                <path d="M13 18l6 -6" />
-                                                                <path d="M13 6l6 6" />
-                                                            </svg>
+                                                            <a href="">
+                                                                Lihat Semuanya
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M5 12l14 0" />
+                                                                    <path d="M13 18l6 -6" />
+                                                                    <path d="M13 6l6 6" />
+                                                                </svg>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -205,6 +205,28 @@
         </div>
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
+                <div class="d-sm-none">
+                    <li class="nav-item">
+                        @if (Auth::user()->role === 'own' || Auth::user()->role === 'pur' || Auth::user()->role === 'kng')
+                            <form action="./" method="get" autocomplete="off" novalidate>
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                            <path d="M21 21l-6 -6" />
+                                        </svg>
+                                    </span>
+                                    <select class="form-control searchengine" style="width: 100%"
+                                        id="searchengine2"></select>
+                                </div>
+                            </form>
+                        @endif
+                    </li>
+                </div>
                 <li class="nav-item {{ $active == 'Dashboard' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('dashboard') }}">
                         <span
