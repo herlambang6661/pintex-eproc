@@ -211,6 +211,8 @@
                                                             <th class="px-1 th py-1">deskripsi</th>
                                                             <th class="px-1 th py-1">katalog</th>
                                                             <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">supplier</th>
+                                                            <th class="px-1 th py-1">unit</th>
                                                             <th class="px-1 th py-1">mesin</th>
                                                             <th class="px-1 th py-1">qty</th>
                                                             <th class="px-1 th py-1">qty_terima</th>
@@ -275,6 +277,8 @@
                                                             <th class="px-1 th py-1">deskripsi</th>
                                                             <th class="px-1 th py-1">katalog</th>
                                                             <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">supplier</th>
+                                                            <th class="px-1 th py-1">unit</th>
                                                             <th class="px-1 th py-1">mesin</th>
                                                         </tr>
                                                     </tfoot>
@@ -351,6 +355,8 @@
                                                             <th class="px-1 th py-1">deskripsi</th>
                                                             <th class="px-1 th py-1">katalog</th>
                                                             <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">supplier</th>
+                                                            <th class="px-1 th py-1">unit</th>
                                                             <th class="px-1 th py-1">mesin</th>
                                                         </tr>
                                                     </tfoot>
@@ -576,55 +582,67 @@
                         title: 'Tgl Penerimaan',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
                         title: 'KODESERI',
                         data: 'kodeseri',
                         name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 clickable"
                     },
                     {
                         title: 'Deskripsi',
                         data: 'keterangan',
                         name: 'keterangan',
-                        className: "cuspad0 text-center clickable cursor-pointer"
+                        className: "cuspad0 text-center clickable"
                     },
                     {
                         title: 'Katalog',
                         data: 'katalog',
                         name: 'katalog',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 clickable"
                     },
                     {
                         title: 'Part',
                         data: 'part',
                         name: 'part',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'Supplier',
+                        data: 'supplier',
+                        name: 'supplier',
+                        className: "cuspad0 cuspad1 clickable"
+                    },
+                    {
+                        title: 'Unit',
+                        data: 'unit',
+                        name: 'unit',
+                        className: "cuspad0 cuspad1 clickable"
                     },
                     {
                         title: 'Mesin',
                         data: 'mesin',
                         name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 clickable"
                     },
                     {
                         title: 'Qty Beli',
                         data: 'qty_beli',
                         name: 'qty_beli',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 clickable"
                     },
                     {
                         title: 'Qty Terima',
                         data: 'qty_diterima',
                         name: 'qty_diterima',
-                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                        className: "cuspad0 cuspad1 clickable"
                     },
                 ],
                 "initComplete": function() {
@@ -752,6 +770,18 @@
                         title: 'Part',
                         data: 'part',
                         name: 'part',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Supplier',
+                        data: 'supplier',
+                        name: 'supplier',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Unit',
+                        data: 'unit',
+                        name: 'unit',
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
@@ -891,6 +921,18 @@
                         title: 'Part',
                         data: 'part',
                         name: 'part',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Supplier',
+                        data: 'supplier',
+                        name: 'supplier',
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Unit',
+                        data: 'unit',
+                        name: 'unit',
                         className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
