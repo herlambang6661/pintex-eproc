@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gudang\Penerimaanitm;
-use App\Models\Gudang\Pengirimanitm;
-use App\Models\Pengadaan\PembelianItm;
-use App\Models\Teknik\PengambilanItm;
+use App\Exports\ExportExisting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\Gudang\Penerimaanitm;
+use App\Models\Gudang\Pengirimanitm;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Teknik\PengambilanItm;
+use App\Models\Pengadaan\PembelianItm;
 
 class DashboardController extends Controller
 {
@@ -469,5 +471,18 @@ class DashboardController extends Controller
             'active' => 'Dashboard',
             'judul' => 'Items Existing',
         ]);
+    }
+
+
+    public function exportExisting(Request $request)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        ini_set('memory_limit', '-1');
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return Excel::download(new ExportExisting(), 'Permintaan ' . now()->subMonths(24) . ' - ' . date('Y-m-d') . ' (' . $randomString . ').xlsx');
     }
 }

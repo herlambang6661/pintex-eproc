@@ -60,7 +60,6 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::resource('getExisting', ExistingList::class);
 Route::resource('getPermintaan', PermintaanList::class);
 Route::resource('getPengambilan', PengambilanList::class);
 Route::resource('getPembelianList', PembelianList::class);
@@ -84,7 +83,7 @@ Route::controller(DashboardController::class)->group(function () {
     Route::get('getSearchEngine', 'CariBarangSearchEngine')->name('getSearchEngine');
     Route::post('searchEngineModal', 'BarangSearchEngineModal')->name('searchEngineModal');
     Route::get('landing', 'landing')->name('landing');
-    Route::get('existingPermintaan', 'existingPermintaan')->name('existingPermintaan');
+    Route::post('existingPermintaan', 'exportExisting')->name('existingPermintaan');
 });
 
 //Rute Master
