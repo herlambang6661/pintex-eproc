@@ -41,6 +41,7 @@ use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
 use App\Http\Controllers\_05Laporan\LaporanPembelianController;
 use App\Http\Controllers\Datatables\Gudang\SampleList;
 use App\Http\Controllers\Datatables\Gudang\TransitList;
+use App\Http\Controllers\Datatables\Pengadaan\EmailList;
 use App\Http\Controllers\Datatables\Pengadaan\StatusBarangList;
 use App\Http\Controllers\Datatables\Pengadaan\StatusList;
 
@@ -68,6 +69,7 @@ Route::resource('getListPengiriman', PengirimanList::class);
 Route::resource('getSample', SampleList::class);
 Route::resource('getTransit', TransitList::class);
 Route::resource('getStatus', StatusList::class);
+Route::resource('getEmail', EmailList::class);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
@@ -171,6 +173,9 @@ Route::controller(PersetujuanController::class)->group(function () {
 
 Route::controller(EmailController::class)->group(function () {
     Route::get('pengadaan/email', 'email')->name('pengadaan/email');
+    Route::post('checkProsesEmail', 'checkProsesEmail');
+    Route::post('storeProsesEmail', 'storeProsesEmail')->name('storeProsesEmail');
+    Route::post('carihistory', 'cariRiwayatEmail')->name('email/carihistoryemail');
 });
 
 Route::controller(PembelianController::class)->group(function () {

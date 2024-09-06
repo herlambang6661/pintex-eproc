@@ -156,7 +156,7 @@
                     aria-label="Open user menu">
                     {{-- <span class="avatar avatar-sm rounded">{{ Str::limit(Auth::user()->name, 2, '') }}</span> --}}
                     <style>
-                        .avatar {
+                        .logo {
                             display: inline-block;
                             width: 35px;
                             height: 35px;
@@ -166,7 +166,7 @@
                             overflow: hidden;
                         }
 
-                        .avatar::before {
+                        .logo::before {
                             content: '';
                             display: block;
                             position: absolute;
@@ -181,7 +181,7 @@
                             transform: translate(-50%, -50%);
                         }
 
-                        .avatar:hover::before {
+                        .logo:hover::before {
                             transform: translate(-50%, -50%) scale(1.1);
                         }
                     </style>
@@ -220,8 +220,7 @@
                     }
                     ?>
 
-                    <span class="avatar avatar-sm rounded"
-                        style="background-image: url('{{ $avatarUrl }}')"></span>
+                    <span class="logo avatar-sm rounded" style="background-image: url('{{ $avatarUrl }}')"></span>
 
 
 

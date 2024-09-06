@@ -160,11 +160,13 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="date" id="idfilter_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
+                                                                    class="form-control" onchange="syn()"
+                                                                    value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
                                                                 <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
+                                                                    class="form-control " onchange="syn()"
+                                                                    value="{{ date('Y-m-t') }}">
                                                             </td>
                                                             <td>
                                                                 <select class="form-select">
@@ -398,6 +400,75 @@
         </div>
     </div>
 
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px #ddd solid;
+            border-top: 4px #2e93e6 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+
+        @keyframes sp-anime {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .is-hide {
+            display: none;
+        }
+    </style>
+    <div class="modal modal-blur fade" id="modalChecklistEmail" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form id="formProsesEmail" name="formProsesEmail" method="POST" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-user-check" style="margin-right: 5px"></i>
+                            Proses Email
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="kodeseri[]" id="kodeseri">
+                        <div class="fetched-data-email-checklist"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -428,7 +499,7 @@
         }
 
         $(document).ready(function() {
-            var tablePermintaan = $('.datatable-proses-email').DataTable({
+            var tableProsesEmail = $('.datatable-proses-email').DataTable({
                 "processing": true,
                 "serverSide": false,
                 "scrollX": false,
@@ -443,12 +514,35 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                    "className": 'btn btn-success',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Email',
-                    "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
+                        extend: 'collection',
+                        text: 'Selection',
+                        buttons: ['selectAll', 'selectNone']
+                    }, {
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                    {
+                        "className": 'btn btn-success',
+                        "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Email',
+                        "action": function(e, node, config) {
+                            $('#modalChecklistEmail').modal('show')
+                        }
                     }
-                }, ],
+                ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -463,81 +557,219 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
+                    "select": {
+                        rows: {
+                            _: "%d item dipilih ",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses Email ",
+                        }
+                    },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "url": "{{ route('getEmail.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
                     }
                 },
+                "initComplete": function(settings, json) {
+                    $('html').removeClass('cursor-wait');
+                },
+                columnDefs: [{
+                    'targets': 0,
+                    "orderable": false,
+                    'className': 'select-checkbox',
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                }],
+                select: {
+                    'style': 'multi',
+                    // "selector": 'td:not(:nth-child(2))',
+                },
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'select-checkbox',
+                        orderable: false,
+                        searchable: false,
+                        extend: 'selectAll',
+                        selectorModifier: {
+                            search: 'applied'
                         }
                     },
                     {
                         title: 'TANGGAL',
                         data: 'tgl',
                         name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'Kodeseri',
                         data: 'kodeseri',
                         name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                     {
                         title: 'NOFORM',
                         data: 'noform',
                         name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 text-center cursor-pointer"
                     },
                     {
                         title: 'BARANG',
                         data: 'namaBarang',
                         name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        className: "cuspad0 clickable cursor-pointer"
                     },
                     {
                         title: 'DESKRIPSI',
                         data: 'keterangan',
                         name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 text-center cursor-pointer"
                     },
                     {
                         title: 'QTY ACC',
                         data: 'qty',
                         name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 text-center cursor-pointer"
                     },
                     {
                         title: 'SATUAN',
                         data: 'satuan',
                         name: 'satuan',
-                        className: "cuspad0 cuspad1 clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'PEMESAN',
                         data: 'pemesan',
                         name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
                     },
                     {
                         title: 'UNIT/MESIN',
                         data: 'mesin',
                         name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "cuspad0 cuspad1 clickable cursor-pointer"
+                    },
+                    {
+                        title: 'PROSES EMAIL',
+                        data: 'proses_email',
+                        name: 'proses_email',
+                        className: "cuspad0 cuspad1 text-center cursor-pointer"
+                    },
+                    {
+                        title: 'STATUS',
+                        data: 'status',
+                        name: 'status',
+                        className: "cuspad0 cuspad1 text-center cursor-pointer"
                     },
                 ],
 
             });
+
+            $('#modalChecklistEmail').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                var kodeseriTables = [];
+                var idpermintaanTables = [];
+
+                $.each(tableProsesEmail.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tableProsesEmail.rows('.selected').data();
+                    kodeseriTables.push(rows_selected[index][
+                        'kodeseri'
+                    ]);
+
+                });
+
+                console.log(kodeseriTables, idpermintaanTables);
+
+                $('#kodeseri').val(kodeseriTables.join(","));
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkProsesEmail') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: kodeseriTables,
+                        jml: kodeseriTables.length,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-email-checklist').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            /*------------------------------------------------------------FORM INPUT-----------------------------------------*/
+            if ($("#formProsesEmail").length > 0) {
+                $("#formProsesEmail").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            url: "{{ url('storeProsesEmail') }}",
+                            type: "POST",
+                            data: $('#formProsesEmail')
+                                .serialize(), // Serialize the form data, including hidden inputs
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/9f0e9407-ad00-4a21-a698-e19bed2949f6/mM7VH432d9.json"  background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                                tableProsesEmail.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                $('#modalChecklistQty').modal('hide');
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                tableProsesEmail.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitCheck').html(
+                                    '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                );
+                                $("#submitCheck").attr("disabled", false);
+                            }
+                        });
+                    }
+                });
+            }
         });
 
         //---------------PERSETUJUAN----------------------------------//
@@ -557,12 +789,28 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                    "className": 'btn btn-info',
-                    "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
-                    "action": function(e, node, config) {
-                        $('#myModalAccQty').modal('show')
-                    }
-                }],
+                        extend: 'collection',
+                        text: 'Selection',
+                        buttons: ['selectAll', 'selectNone']
+                    }, {
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",

@@ -1338,6 +1338,7 @@
                         $('#submitCheck').html(
                             '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
                         $("#submitCheck").attr("disabled", true);
+
                         $.ajax({
                             url: "{{ url('storeQtyPermintaan') }}",
                             type: "POST",

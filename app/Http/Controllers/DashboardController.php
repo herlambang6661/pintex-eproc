@@ -56,7 +56,12 @@ class DashboardController extends Controller
 
         // Ambil data dari database
         $getData = DB::table('permintaanitm')->where('kodeseri', $request->kodeseri)->first();
-        $getPembelian = DB::table('pembelianitm')->where('kode', $request->kodeseri)->first();
+        $getPembelian = DB::table('pembelian')
+            ->join('pembelianitm', 'pembelian.nofkt', '=', 'pembelianitm.noform')
+            ->where('pembelianitm.kode', $request->kodeseri)
+            ->select('pembelian.*', 'pembelianitm.*')
+            ->first();
+
         $getPengiriman = DB::table('pengirimanitm')->where('kodeseri', $request->kodeseri)->first();
         $getPenerimaan = DB::table('penerimaanitm')->where('kodeseri', $request->kodeseri)->first();
         $getPengambilan = DB::table('pengambilanitm')->where('kodeseri', $request->kodeseri)->first();
@@ -201,6 +206,7 @@ class DashboardController extends Controller
                     <div style="overflow-x: scroll;">
                         <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
                             <tr>
+                                <th>Tanggal</th>
                                 <th>No Faktur</th>
                                 <th>Kodeseri</th>
                                 <th>Nama</th>
@@ -225,6 +231,7 @@ class DashboardController extends Controller
                     <div style="overflow-x: scroll;">
                         <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
                             <tr>
+                                <th>Tanggal</th>
                                 <th>No Faktur</th>
                                 <th>Kodeseri</th>
                                 <th>Nama</th>
@@ -236,6 +243,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
+                                <td>' . date('d-m-Y', strtotime($getPembelian->tgl)) . '</td>
                                 <td>' . $getPembelian->nofaktur . '</td>
                                 <td>' . $getPembelian->kode . '</td>
                                 <td>' . $getPembelian->namabarang . '</td>
