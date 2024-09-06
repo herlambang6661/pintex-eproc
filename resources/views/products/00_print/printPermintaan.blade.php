@@ -63,8 +63,8 @@
                 ?>
             <div class="row">
                 <div class="col-md-4 text-center">
-                    <img src="{{ url('photo/icon/' . $v->entitas . '.png') }}" class="" alt="PT. PINTEX"
-                        srcset="" width="150px" style="max-width: 150px;"><br>
+                    <img src="{{ url('photo/icon/' . strtolower(trans($v->entitas)) . '.png') }}" class=""
+                        alt="PT. PINTEX" srcset="" width="150px" style="max-width: 150px;"><br>
                     {{-- <h3 style="margin-top:10px">PT PINTEX</h3> --}}
                     <p style="font-size: 8px; margin-top:0px" class="text-center">
                         Jln. Raya Cirebon-Bandung Km.12 Plumbon-Cirebon<br>
@@ -87,46 +87,48 @@
                         No. Form : {{ $noform }}
                     </p>
                 </i>
-                <table class="table table-sm table-bordered"
-                    style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
-                    <thead class="text-black" style="border-color: black;">
-                        <th style="border-color: black;" class="text-center">#</th>
-                        <th style="border-color: black;" class="text-center">Kodeseri</th>
-                        <th style="border-color: black;" class="text-center">Barang</th>
-                        <th style="border-color: black;" class="text-center">Deskripsi</th>
-                        <th style="border-color: black;" class="text-center">Katalog</th>
-                        <th style="border-color: black;" class="text-center">Part</th>
-                        <th style="border-color: black;" class="text-center">Mesin</th>
-                        <th style="border-color: black;" class="text-center">Quantity</th>
-                        <th style="border-color: black;" class="text-center">Satuan</th>
-                        <th style="border-color: black;" class="text-center">Pemesan</th>
-                    </thead>
-                    <?php $i = 1; ?>
-                    <tbody class="text-black" style="border-color: black;">
-                        @foreach ($permintaanItem as $key => $w)
-                            <?php
-                            $m = DB::table('mastermesinitm AS mi')
-                                ->select('me.mesin', 'mi.merk')
-                                ->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')
-                                ->where('mi.id_mesinitm', '=', $w->mesin)
-                                ->first();
-                            ?>
-                            <tr>
-                                <td class="text-center">{{ $i }}</td>
-                                <td class="text-center">{{ $w->kodeseri }}</td>
-                                <td class="text-center">{{ $w->namaBarang }}</td>
-                                <td class="text-center">{{ $w->keterangan }}</td>
-                                <td class="text-center">{{ $w->katalog }}</td>
-                                <td class="text-center">{{ $w->part }}</td>
-                                <td class="text-center">{{ $m->mesin . ' ' . $m->merk }}</td>
-                                <td class="text-center">{{ $w->qty }}</td>
-                                <td class="text-center">{{ $w->satuan }}</td>
-                                <td class="text-center">{{ $w->pemesan }}</td>
-                            </tr>
-                            <?php $i++; ?>
-                        @endforeach
-                    </tbody>
-                </table>
+            </div>
+            <table class="table table-sm table-bordered text-nowrap my-3"
+                style="color: black; border-color: black;text-transform: uppercase; font-size:9px">
+                <thead class="text-black" style="border-color: black;">
+                    <th style="border-color: black;" class="text-center">#</th>
+                    <th style="border-color: black;" class="text-center">Kodeseri</th>
+                    <th style="border-color: black;" class="text-center">Barang</th>
+                    <th style="border-color: black;" class="text-center">Deskripsi</th>
+                    <th style="border-color: black;" class="text-center">Katalog</th>
+                    <th style="border-color: black;" class="text-center">Part</th>
+                    <th style="border-color: black;" class="text-center">Mesin</th>
+                    <th style="border-color: black;" class="text-center">Quantity</th>
+                    <th style="border-color: black;" class="text-center">Satuan</th>
+                    <th style="border-color: black;" class="text-center">Pemesan</th>
+                </thead>
+                <?php $i = 1; ?>
+                <tbody class="text-black" style="border-color: black;">
+                    @foreach ($permintaanItem as $key => $w)
+                        <?php
+                        $m = DB::table('mastermesinitm AS mi')
+                            ->select('me.mesin', 'mi.merk')
+                            ->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')
+                            ->where('mi.id_mesinitm', '=', $w->mesin)
+                            ->first();
+                        ?>
+                        <tr>
+                            <td class="text-center">{{ $i }}</td>
+                            <td class="text-center">{{ $w->kodeseri }}</td>
+                            <td class="">{{ $w->namaBarang }}</td>
+                            <td class="">{{ $w->keterangan }}</td>
+                            <td class="">{{ $w->katalog }}</td>
+                            <td class="">{{ $w->part }}</td>
+                            <td class="">{{ $m->mesin . ' ' . $m->merk }}</td>
+                            <td class="text-center">{{ $w->qty }}</td>
+                            <td class="text-center">{{ $w->satuan }}</td>
+                            <td class="text-center">{{ $w->pemesan }}</td>
+                        </tr>
+                        <?php $i++; ?>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="container">
                 <i>*Note : <?php echo $v->keteranganform; ?></i>
                 <br>
                 <br>

@@ -41,9 +41,9 @@
         $(".searchengine").select2({
             language: "id",
             allowClear: true,
-            width: '700px',
+            // width: '700px',
             minimumInputLength: 3,
-            placeholder: "Pencarian Barang. Masukkan Kodeseri atau Nama Barang",
+            placeholder: "Pencarian Barang.",
             ajax: {
                 url: "/getSearchEngine",
                 dataType: 'json',

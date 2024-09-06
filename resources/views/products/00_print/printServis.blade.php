@@ -63,8 +63,8 @@
                 ?>
             <div class="row">
                 <div class="col-md-4 text-center">
-                    <img src="{{ url('photo/icon/pintex.png') }}" class="" alt="PT. PINTEX" srcset=""
-                        width="150px"><br>
+                    <img src="{{ url('photo/icon/' . strtolower(trans($v->entitas)) . '.png') }}" class=""
+                        alt="PT. PINTEX" srcset="" width="150px" style="max-width: 150px;"><br>
                     {{-- <h3 style="margin-top:10px">PT PINTEX</h3> --}}
                     <p style="font-size: 8px; margin-top:0px" class="text-center">
                         Jln. Raya Cirebon-Bandung Km.12 Plumbon-Cirebon<br>
@@ -87,44 +87,46 @@
                         No. Form : {{ $noform }}
                     </p>
                 </i>
-                <table class="table table-sm table-bordered"
-                    style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
-                    <thead class="text-black" style="border-color: black;">
-                        <th style="border-color: black;" class="text-center">#</th>
-                        <th style="border-color: black;" class="text-center">Kodeseri</th>
-                        <th style="border-color: black;" class="text-center">Barang</th>
-                        <th style="border-color: black;" class="text-center">Deskripsi</th>
-                        <th style="border-color: black;" class="text-center">Serial Number</th>
-                        <th style="border-color: black;" class="text-center">Mesin</th>
-                        <th style="border-color: black;" class="text-center">Quantity</th>
-                        <th style="border-color: black;" class="text-center">Satuan</th>
-                        <th style="border-color: black;" class="text-center">Pemesan</th>
-                    </thead>
-                    <?php $i = 1; ?>
-                    <tbody class="text-black" style="border-color: black;">
-                        @foreach ($servisItem as $key => $w)
-                            <?php
-                            $m = DB::table('mastermesinitm AS mi')
-                                ->select('me.mesin', 'mi.merk', 'mi.kode_nomor')
-                                ->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')
-                                ->where('mi.id_itm', '=', $w->mesin)
-                                ->first();
-                            ?>
-                            <tr>
-                                <td class="text-center">{{ $i }}</td>
-                                <td class="text-center">{{ $w->kodeseri_servis }}</td>
-                                <td class="text-center">{{ $w->namaBarang }}</td>
-                                <td class="text-center">{{ $w->keterangan }}</td>
-                                <td class="text-center">{{ $w->serialnumber }}</td>
-                                <td class="text-center">{{ $m->mesin . ' ' . $m->merk . ' ' . $m->kode_nomor }}</td>
-                                <td class="text-center">{{ $w->qty }}</td>
-                                <td class="text-center">{{ $w->satuan }}</td>
-                                <td class="text-center">{{ $w->pemesan }}</td>
-                            </tr>
-                            <?php $i++; ?>
-                        @endforeach
-                    </tbody>
-                </table>
+            </div>
+            <table class="table table-sm table-bordered text-nowrap"
+                style="color: black; border-color: black;text-transform: uppercase; font-size:9px">
+                <thead class="text-black" style="border-color: black;">
+                    <th style="border-color: black;" class="text-center">#</th>
+                    <th style="border-color: black;" class="text-center">Kodeseri</th>
+                    <th style="border-color: black;" class="text-center">Barang</th>
+                    <th style="border-color: black;" class="text-center">Deskripsi</th>
+                    <th style="border-color: black;" class="text-center">Serial Number</th>
+                    <th style="border-color: black;" class="text-center">Mesin</th>
+                    <th style="border-color: black;" class="text-center">Quantity</th>
+                    <th style="border-color: black;" class="text-center">Satuan</th>
+                    <th style="border-color: black;" class="text-center">Pemesan</th>
+                </thead>
+                <?php $i = 1; ?>
+                <tbody class="text-black" style="border-color: black;">
+                    @foreach ($servisItem as $key => $w)
+                        <?php
+                        $m = DB::table('mastermesinitm AS mi')
+                            ->select('me.mesin', 'mi.merk', 'mi.kode_nomor')
+                            ->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')
+                            ->where('mi.id_itm', '=', $w->mesin)
+                            ->first();
+                        ?>
+                        <tr>
+                            <td class="text-center">{{ $i }}</td>
+                            <td class="text-center">{{ $w->kodeseri_servis }}</td>
+                            <td class="text-center">{{ $w->namaBarang }}</td>
+                            <td class="text-center">{{ $w->keterangan }}</td>
+                            <td class="text-center">{{ $w->serialnumber }}</td>
+                            <td class="text-center">{{ $m->mesin . ' ' . $m->merk . ' ' . $m->kode_nomor }}</td>
+                            <td class="text-center">{{ $w->qty }}</td>
+                            <td class="text-center">{{ $w->satuan }}</td>
+                            <td class="text-center">{{ $w->pemesan }}</td>
+                        </tr>
+                        <?php $i++; ?>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="container">
                 <i>*Note : <?php echo $v->ket_servis; ?></i>
                 <br>
                 <br>

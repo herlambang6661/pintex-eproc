@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SuplierModel extends Model
 {
     use HasFactory;
-    protected $table = 'suplier';
+    protected $table = 'person';
     protected $fillable = [
-        'uang_id',
+        'id',
+        'entitas',
         'nama',
         'tipe',
         'jabatan',
@@ -23,16 +24,14 @@ class SuplierModel extends Model
         'provinsi',
         'telp',
         'contact',
-        'fax',
+        'uang',
         'email',
-        'website',
-        'catatan',
         'dibuat',
         'status',
     ];
 
-    public function uang(): BelongsTo
+    public function supplier(): BelongsTo
     {
-        return $this->belongsTo(UangModel::class, 'id');
+        return $this->belongsTo(SuplierModel::class, 'id');
     }
 }
