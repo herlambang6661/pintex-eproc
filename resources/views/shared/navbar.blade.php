@@ -222,8 +222,6 @@
 
                     <span class="logo avatar-sm rounded" style="background-image: url('{{ $avatarUrl }}')"></span>
 
-
-
                     <div class="d-none d-xl-block ps-2">
                         <div style="text-transform: capitalize;">{{ Auth::user()->name }}</div>
                         <div class="mt-1 small text-muted" style="text-transform: capitalize;">

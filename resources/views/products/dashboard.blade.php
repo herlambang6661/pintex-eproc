@@ -1,5 +1,34 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        .card-sponsor {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-sponsor::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-image: inherit;
+            transition: transform 0.3s ease;
+            z-index: 0;
+        }
+
+        .card-sponsor:hover::before {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
     <div class="page">
         <!-- Sidebar -->
         @include('shared.sidebar')
@@ -27,38 +56,75 @@
             <div class="page-body">
                 <div class="container-xl">
                     <div class="row row-deck row-cards">
-                        <div class="card card-sm">
-                            <div class="card-stamp card-stamp-lg">
-                                <div class="card-stamp-icon bg-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-shopping-bag" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
-                                        <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row align-items-center px-0">
-                                    <div class="col-3">
-                                        <iframe
-                                            src="https://lottie.host/embed/97ec1b9d-a3a0-49a5-ad64-fde41649f07e/AO6UokX4rf.lottie"
-                                            width="250px" height="250px"></iframe>
+                        <!-- Welcome Card -->
+                        <div class="col-md-6 col-lg-10">
+                            <div class="card card-sm">
+                                <div class="card-stamp card-stamp-lg">
+                                    <div class="card-stamp-icon bg-primary">
+                                        <!-- SVG Icon -->
                                     </div>
-                                    <div class="col-9">
-                                        <h3 class="h1">Selamat Datang di E-PROCUREMENT, {{ Auth::user()->name }} 🎉</h3>
-                                        <div class="markdown text-secondary">
-                                            Aplikasi E-PROC ini adalah aplikasi untuk pengadaan barang di PT. Plumbon
-                                            International Textile.
-                                            <br>
-                                            Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-center px-0">
+                                        <div class="col-3">
+                                            <iframe
+                                                src="https://lottie.host/embed/97ec1b9d-a3a0-49a5-ad64-fde41649f07e/AO6UokX4rf.lottie"
+                                                width="250px" height="250px"></iframe>
+                                        </div>
+                                        <div class="col-9">
+                                            <h3 class="h1">Selamat Datang di E-PROCUREMENT, {{ Auth::user()->name }}
+                                                🎉</h3>
+                                            <div class="markdown text-secondary">
+                                                Aplikasi E-PROC ini adalah aplikasi untuk pengadaan barang di PT.
+                                                Plumbon International Textile.
+                                                <br>
+                                                Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Avatar Card -->
+                        <div class="col-lg-2">
+                            <?php
+                            $role = Auth::user()->role;
+                            $username = Auth::user()->username;
+                            
+                            // Default avatar URL
+                            $avatarUrl = asset('assets/static/avatars/default.png');
+                            
+                            if ($role === 'own') {
+                                if ($username === 'alvin') {
+                                    $avatarUrl = asset('assets/static/avatars/1.jpg');
+                                } elseif ($username === 'brian') {
+                                    $avatarUrl = asset('assets/static/avatars/2.jpg');
+                                } elseif ($username === 'felixjesse') {
+                                    $avatarUrl = asset('assets/static/avatars/3.jpg');
+                                } else {
+                                    $avatarUrl = asset('assets/static/avatars/avatar.png');
+                                }
+                            } elseif ($role === 'pur') {
+                                $avatarUrl = asset('assets/static/avatars/puji.jpg');
+                            } elseif ($role === 'kng') {
+                                $avatarUrl = asset('assets/static/avatars/avatar.png');
+                            } elseif ($role === 'whs') {
+                                if ($username === 'fahmi') {
+                                    $avatarUrl = asset('assets/static/avatars/fahmi.jpg');
+                                } elseif ($username === 'rizki') {
+                                    $avatarUrl = asset('assets/static/avatars/rizky.jpg');
+                                } elseif ($username === 'yanti') {
+                                    $avatarUrl = asset('assets/static/avatars/yanti.jpg');
+                                } else {
+                                    $avatarUrl = asset('assets/static/avatars/avatar.png');
+                                }
+                            }
+                            ?>
+                            <a href="#" class="card card-sponsor" rel="noopener"
+                                style="background-image: url('{{ $avatarUrl }}')" aria-label="Sponsor Tabler!">
+                                <div class="card-body"></div>
+                            </a>
                         </div>
 
                         <div class="col-sm-6 col-lg-3">

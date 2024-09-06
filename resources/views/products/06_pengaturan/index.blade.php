@@ -91,7 +91,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <button class="btn btn-outline-green me-2" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-checklist">
+                                                    data-bs-target="#modal-checklist{{ $item->id }}">
                                                     <i class="fa-solid fa-list-check"></i>
                                                 </button>
                                             </div>
@@ -212,279 +212,361 @@
             display: none;
         }
     </style>
-    <div class="modal modal-blur fade" id="modal-checklist" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="overlay cursor-wait">
-            <div class="cv-spinner">
-                <span class="spinner"></span>
+    @foreach ($users as $item)
+        <div class="modal modal-blur fade" id="modal-checklist{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="overlay cursor-wait">
+                <div class="cv-spinner">
+                    <span class="spinner"></span>
+                </div>
             </div>
-        </div>
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <form id="formPembelian" name="formPembelian" method="post" action="javascript:void(0)">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-carambola">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path
-                                    d="M17.286 21.09q -1.69 .001 -5.288 -2.615q -3.596 2.617 -5.288 2.616q -2.726 0 -.495 -6.8q -9.389 -6.775 2.135 -6.775h.076q 1.785 -5.516 3.574 -5.516q 1.785 0 3.574 5.516h.076q 11.525 0 2.133 6.774q 2.23 6.802 -.497 6.8" />
-                            </svg>
-                            Otorisasi User
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{-- <div class="fetched-data-pembelian"></div> --}}
-                        <div class="row row-cards">
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="card card-md bg-green-lt">
-                                    <div class="card-body ps-3 pe-3 pt-3">
-                                        <div class="text-center mt-0 mb-3">
-                                            <span class="fa-solid fa-cart-shopping fa-3x text-green"></span>
-                                        </div>
-                                        <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
-                                            <label class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="packagesId"
-                                                    value="0" onclick="packages();">
-                                                <span class="form-check-label">Pengadaan</span>
-                                            </label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="divide-y">
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Permintaan</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Persetujuan</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Proses Email</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Pembelian</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Status Barang</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('checklistUpdate.users', $item->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-carambola">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M17.286 21.09q -1.69 .001 -5.288 -2.615q -3.596 2.617 -5.288 2.616q -2.726 0 -.495 -6.8q -9.389 -6.775 2.135 -6.775h.076q 1.785 -5.516 3.574 -5.516q 1.785 0 3.574 5.516h.076q 11.525 0 2.133 6.774q 2.23 6.802 -.497 6.8" />
+                                </svg>
+                                Otorisasi User
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row row-cards">
+                                <!-- Pengadaan Card -->
+                                <div class="col-sm-6 col-lg-3 mb-3">
+                                    <div class="card card-md bg-green-lt">
+                                        <div class="card-body ps-3 pe-3 pt-3">
+                                            <div class="text-center mt-0 mb-3">
+                                                <span class="fa-solid fa-cart-shopping fa-3x text-green"></span>
+                                            </div>
+                                            <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                                <label class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="p_pengadaan"
+                                                        value="1"
+                                                        {{ old('p_pengadaan', $item->p_pengadaan) ? 'checked' : '' }}>
+                                                    <span class="form-check-label">Pengadaan</span>
+                                                </label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="divide-y">
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Permintaan</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_permintaan" value="1"
+                                                                        {{ old('c_permintaan', $item->c_permintaan) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Persetujuan</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_persetujuan" value="1"
+                                                                        {{ old('c_persetujuan', $item->c_persetujuan) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Proses Email</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_email" value="1"
+                                                                        {{ old('c_email', $item->c_email) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Pembelian</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_pembelian" value="1"
+                                                                        {{ old('c_pembelian', $item->c_pembelian) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Status Barang</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_status" value="1"
+                                                                        {{ old('c_status', $item->c_status) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="card card-md bg-azure-lt">
-                                    <div class="card-body ps-3 pe-3 pt-3">
-                                        <div class="text-center mt-0 mb-3">
-                                            <i class="fa-solid fa-warehouse fa-3x text-azure"></i>
-                                        </div>
-                                        <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
-                                            <label class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="packagesId"
-                                                    value="0" onclick="packages();">
-                                                <span class="form-check-label">Gudang</span>
-                                            </label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="divide-y">
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Stok Barang</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Penerimaan</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Pengiriman</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Sample</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Barang Transit</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
+
+                                <!-- Gudang Card -->
+                                <div class="col-sm-6 col-lg-3 mb-3">
+                                    <div class="card card-md bg-azure-lt">
+                                        <div class="card-body ps-3 pe-3 pt-3">
+                                            <div class="text-center mt-0 mb-3">
+                                                <i class="fa-solid fa-warehouse fa-3x text-azure"></i>
+                                            </div>
+                                            <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                                <label class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="p_gudang"
+                                                        value="1"
+                                                        {{ old('p_gudang', $item->p_gudang) ? 'checked' : '' }}>
+                                                    <span class="form-check-label">Gudang</span>
+                                                </label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="divide-y">
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Stok Barang</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_stock" value="1"
+                                                                        {{ old('c_stock', $item->c_stock) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Penerimaan</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_penerimaan" value="1"
+                                                                        {{ old('c_penerimaan', $item->c_penerimaan) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Pengiriman</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_pengiriman" value="1"
+                                                                        {{ old('c_pengiriman', $item->c_pengiriman) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Sample</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_sample" value="1"
+                                                                        {{ old('c_sample', $item->c_sample) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Barang Transit</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_transit" value="1"
+                                                                        {{ old('c_transit', $item->c_transit) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Mutasi</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_mutasi" value="1"
+                                                                        {{ old('c_mutasi', $item->c_mutasi) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="card card-md bg-cyan-lt">
-                                    <div class="card-body ps-3 pe-3 pt-3">
-                                        <div class="text-center mt-0 mb-3">
-                                            <i class="fa-solid fa-wrench fa-3x text-cyan"></i>
-                                        </div>
-                                        <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
-                                            <label class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="packagesId"
-                                                    value="0" onclick="packages();">
-                                                <span class="form-check-label">Teknik</span>
-                                            </label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="divide-y">
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Servis</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Retur</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Pengambilan</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
+
+                                <!-- Teknik Card -->
+                                <div class="col-sm-6 col-lg-3 mb-3">
+                                    <div class="card card-md bg-cyan-lt">
+                                        <div class="card-body ps-3 pe-3 pt-3">
+                                            <div class="text-center mt-0 mb-3">
+                                                <i class="fa-solid fa-wrench fa-3x text-cyan"></i>
+                                            </div>
+                                            <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                                <label class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="p_teknik"
+                                                        value="1"
+                                                        {{ old('p_teknik', $item->p_teknik) ? 'checked' : '' }}>
+                                                    <span class="form-check-label">Teknik</span>
+                                                </label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="divide-y">
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Servis</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_servis" value="1"
+                                                                        {{ old('c_servis', $item->c_servis) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Retur</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_retur" value="1"
+                                                                        {{ old('c_retur', $item->c_retur) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Pengambilan</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_pengambilan" value="1"
+                                                                        {{ old('c_pengambilan', $item->c_pengambilan) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="card card-md bg-purple-lt">
-                                    <div class="card-body ps-3 pe-3 pt-3">
-                                        <div class="text-center mt-0 mb-3">
-                                            <i class="fa-solid fa-book fa-3x text-purple"></i>
-                                        </div>
-                                        <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
-                                            <label class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="packagesId"
-                                                    value="0" onclick="packages();">
-                                                <span class="form-check-label">Laporan</span>
-                                            </label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="divide-y">
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Laporan Pemakaian</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
+
+                                <!-- Laporan Card -->
+                                <div class="col-sm-6 col-lg-3 mb-3">
+                                    <div class="card card-md bg-purple-lt">
+                                        <div class="card-body ps-3 pe-3 pt-3">
+                                            <div class="text-center mt-0 mb-3">
+                                                <i class="fa-solid fa-book fa-3x text-purple"></i>
+                                            </div>
+                                            <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                                <label class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="p_laporan"
+                                                        value="1"
+                                                        {{ old('p_laporan', $item->p_laporan) ? 'checked' : '' }}>
+                                                    <span class="form-check-label">Laporan</span>
+                                                </label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="divide-y">
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Laporan Pemakaian</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_lap_pemakaian" value="1"
+                                                                        {{ old('c_lap_pemakaian', $item->c_lap_pemakaian) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Laporan Pembelian</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_lap_pembelian" value="1"
+                                                                        {{ old('c_lap_pembelian', $item->c_lap_pembelian) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Laporan Stock</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_lap_stock" value="1"
+                                                                        {{ old('c_lap_stock', $item->c_lap_stock) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Laporan Pembelian</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox">
-                                                            </label>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label class="row">
-                                                        <span class="col">Laporan Stock</span>
-                                                        <span class="col-auto">
-                                                            <label class="form-check form-check-single form-switch">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    checked="">
-                                                            </label>
-                                                        </span>
-                                                    </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pengguna Card -->
+                                <div class="col-sm-6 col-lg-3 mb-3">
+                                    <div class="card card-md bg-danger-lt">
+                                        <div class="card-body ps-3 pe-3 pt-3">
+                                            <div class="text-center mt-0 mb-3">
+                                                <i class="fa-solid fa-users fa-3x text-danger"></i>
+                                            </div>
+                                            <div class="text-uppercase text-secondary font-weight-medium text-center mb-2">
+                                                <label class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="p_pengaturan"
+                                                        value="1"
+                                                        {{ old('p_pengaturan', $item->p_pengaturan) ? 'checked' : '' }}>
+                                                    <span class="form-check-label">Pengguna</span>
+                                                </label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="divide-y">
+                                                    <div>
+                                                        <label class="row">
+                                                            <span class="col">Pengguna</span>
+                                                            <span class="col-auto">
+                                                                <label class="form-check form-check-single form-switch">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="c_pengguna" value="1"
+                                                                        {{ old('c_pengguna', $item->c_pengguna) ? 'checked' : '' }}>
+                                                                </label>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -492,17 +574,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-blue" id="submitPembelian"><i class="fas fa-save"
-                                style="margin-right: 5px"></i> Simpan</button>
-                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
-                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-blue">
+                                <i class="fas fa-save" style="margin-right: 5px"></i> Simpan
+                            </button>
+                            <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal">
+                                <i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
         </div>
-    </div>
+    @endforeach
 
     {{-- modal edit --}}
     @foreach ($users as $item)

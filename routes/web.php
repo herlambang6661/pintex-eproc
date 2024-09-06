@@ -295,5 +295,6 @@ Route::controller(PenggunaController::class)->group(function () {
     Route::post('/pengguna/store', 'store')->name('store.users');
     Route::put('/pengguna/update/{id}', 'update')->name('update.users');
     Route::put('/pengguna/reset/{id}', 'reset')->name('reset.users');
+    Route::put('/pengguna/update-checklist/{id}', 'checklistUpdate')->name('checklistUpdate.users');
     Route::delete('/pengguna/destroy/{id}', 'destroy');
 });
