@@ -772,7 +772,7 @@
             }
         });
 
-        //---------------PERSETUJUAN----------------------------------//
+        //---------------LIST EMAIL----------------------------------//
         $(document).ready(function() {
             var tablePermintaan = $('.datatable-list-email').DataTable({
                 "processing": true,
@@ -789,10 +789,6 @@
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
-                        extend: 'collection',
-                        text: 'Selection',
-                        buttons: ['selectAll', 'selectNone']
-                    }, {
                         extend: 'copyHtml5',
                         className: 'btn btn-teal',
                         text: '<i class="fa fa-copy text-white"></i> Copy',
@@ -827,20 +823,15 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "url": "{{ route('getEmail.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
+                        data.type = 'table2';
                     }
                 },
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                    },
-                    {
                         title: 'TANGGAL',
                         data: 'tgl',
                         name: 'tgl',
@@ -883,9 +874,9 @@
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'PEMESAN',
-                        data: 'pemesan',
-                        name: 'pemesan',
+                        title: 'Proses Email',
+                        data: 'proses_email',
+                        name: 'proses_email',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                 ],
@@ -900,7 +891,7 @@
             });
         });
 
-        //---------------REJECT----------------------------------------//
+        //---------------FOLLUP EMAIL----------------------------------------//
         $(document).ready(function() {
             var tablePermintaan = $('.datatable-follup-email').DataTable({
                 "processing": true,
@@ -951,11 +942,12 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "url": "{{ route('getEmail.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
+                        data.type = 'table3';
                     }
                 },
                 "columns": [{
@@ -1007,9 +999,15 @@
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'PEMESAN',
-                        data: 'pemesan',
-                        name: 'pemesan',
+                        title: 'PROSES EMAIL',
+                        data: 'proses_email',
+                        name: 'proses_email',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'STATUS',
+                        data: 'status',
+                        name: 'status',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                 ],
@@ -1021,7 +1019,7 @@
         });
 
 
-        //---------------HOLD-----------------------------------------//
+        //---------------FOLLUP PEMBELIAN / PO-----------------------------------------//
         $(document).ready(function() {
             var tablePermintaan = $('.datatable-pembelian-po').DataTable({
                 "processing": true,
@@ -1072,11 +1070,13 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getPermintaan.index') }}",
+                    "url": "{{ route('getEmail.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
+                        data.type = 'table4';
+
                     }
                 },
                 "columns": [{
@@ -1138,9 +1138,15 @@
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                     {
-                        title: 'KETERANGAN REJECT',
-                        data: 'keteranganACC',
-                        name: 'keteranganACC',
+                        title: 'PROSES EMAIL',
+                        data: 'proses_email',
+                        name: 'proses_email',
+                        className: "cuspad0 cuspad1 text-center clickable"
+                    },
+                    {
+                        title: 'STATUS',
+                        data: 'status',
+                        name: 'status',
                         className: "cuspad0 cuspad1 text-center clickable"
                     },
                 ],
