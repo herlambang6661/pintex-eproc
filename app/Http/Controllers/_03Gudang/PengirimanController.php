@@ -200,11 +200,11 @@ class PengirimanController extends Controller
         // Get NPB
         $latestKodeseri = DB::table('pengiriman')->latest('noformpengiriman')->first();
         if ($latestKodeseri) {
-            $y = substr($latestKodeseri->npb, 3, 2);
-            $m = substr($latestKodeseri->npb, 6, 2);
-            $d = substr($latestKodeseri->npb, 8, 2);
+            $y = substr($latestKodeseri->noformpengiriman, 3, 2);
+            $m = substr($latestKodeseri->noformpengiriman, 6, 2);
+            $d = substr($latestKodeseri->noformpengiriman, 8, 2);
             if (date('ymd') == $y . $m . $d) {
-                $noUrut = (int) substr($latestKodeseri->npb, -4);
+                $noUrut = (int) substr($latestKodeseri->noformpengiriman, -4);
                 $noUrut++;
                 $char = date('y-md');
                 $NPB = "PG-" . $char . sprintf("%04s", $noUrut);

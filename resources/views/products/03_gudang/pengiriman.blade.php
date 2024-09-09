@@ -172,8 +172,6 @@
                                                             <th class="text-center">Tgl Awal</th>
                                                             <th class="text-center">Tgl Akhir</th>
                                                             <th class="text-center"></th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
