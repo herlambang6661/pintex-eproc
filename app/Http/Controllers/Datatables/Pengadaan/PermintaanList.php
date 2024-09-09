@@ -41,6 +41,9 @@ class PermintaanList extends Controller
             }
 
             $data = DB::table('permintaanitm AS pe')
+                ->select('pe.id', 'pe.kodeseri', 'pe.noform', 'pe.tgl', 'pe.namaBarang', 'pe.keterangan', 'pe.deskripsi', 'pe.katalog', 'pe.part', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli', 'pe.status', 'me.mesin', 'mi.merk')
+                ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_mesinitm')
+                ->leftJoin('mastermesin AS me', 'mi.id_itm', '=', 'me.id')
                 ->whereBetween('pe.tgl', [$dari, $sampai])
                 ->where('pe.entitas', 'LIKE', '%' . $entitas . '%')
                 ->orderBy('pe.kodeseri', 'desc')
@@ -56,11 +59,11 @@ class PermintaanList extends Controller
                     $m = Carbon::parse($row->tgl)->format('d/m/Y');
                     return $m;
                 })
-                ->addColumn('mesin', function ($row) {
-                    $permintaanController = new PermintaanController();
-                    $m = $permintaanController->getMesinPermintaan($row->mesin);
-                    return $m;
-                })
+                // ->addColumn('mesin', function ($row) {
+                //     $permintaanController = new PermintaanController();
+                //     $m = $permintaanController->getMesinPermintaan($row->mesin);
+                //     return $m;
+                // })
                 ->addColumn('status', function ($row) {
                     if ($row->status == 'PROSES PERSETUJUAN') {
                         $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
