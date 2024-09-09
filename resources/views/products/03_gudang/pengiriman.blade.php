@@ -67,21 +67,6 @@
                                 </ol>
                             </div>
                         </div>
-                        {{-- <div class="col-auto ms-auto d-print-none">
-                            <div class="btn-list">
-                                <div class="mb-3">
-                                    <div class="row g-2">
-                                        <div class="col-auto">
-                                            <select class="form-select" id="filterDropdown" name="tipe">
-                                                <option value="Permintaan">Permintaan</option>
-                                                <option value="Servis">Servis</option>
-                                                <option value="Retur">Retur</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -144,16 +129,16 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="date" id="idfilter_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
+                                                                <input type="date" id="dari1" class="form-control "
+                                                                    value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
-                                                                <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
+                                                                <input type="date" id="sampai1" class="form-control "
+                                                                    value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="syn1()">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="1.5"
@@ -165,9 +150,7 @@
                                                                             d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                                                                         <path d="M21 21l-6 -6" />
                                                                     </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -196,16 +179,16 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="date" id="idfilter_dari"
+                                                                <input type="date" id="dari2"
                                                                     class="form-control " value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
-                                                                <input type="date" id="idfilter_sampai"
+                                                                <input type="date" id="sampai2"
                                                                     class="form-control " value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="syn2()">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="1.5"
@@ -217,9 +200,7 @@
                                                                             d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                                                                         <path d="M21 21l-6 -6" />
                                                                     </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -341,6 +322,14 @@
             dt.ajax.reload();
         }
         var tableListPengiriman, tablePengiriman;
+
+        function syn1() {
+            tableListPengiriman.ajax.reload();
+        }
+
+        function syn2() {
+            tablePengiriman.ajax.reload();
+        }
         $(function() {
             //----------------------------------------------LIST PENERIMAAN----------------------------------------------//
             tableListPengiriman = $('.datatable-list-pengiriman').DataTable({
@@ -395,8 +384,8 @@
                     "url": "{{ route('getListPengiriman.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
-                        data.dari = $('#listpermintaan_dari').val();
-                        data.sampai = $('#listpermintaan_sampai').val();
+                        data.dari = $('#dari1').val();
+                        data.sampai = $('#sampai1').val();
                     }
                 },
                 "columns": [{
@@ -522,8 +511,8 @@
                     "url": "{{ route('getPengiriman.index') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
-                        data.dari = $('#filterdari_pembelian').val();
-                        data.sampai = $('#filtersampai_pembelian').val();
+                        data.dari = $('#dari2').val();
+                        data.sampai = $('#sampai2').val();
                     }
                 },
                 columnDefs: [{
