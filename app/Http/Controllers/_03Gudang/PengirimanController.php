@@ -243,23 +243,20 @@ class PengirimanController extends Controller
                         )
                     );
             } else {
-                // ambil data permintaan barang untuk deskripsi, katalog dan lain-lain
-                $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
-                // Update Barang
-                $check = DB::table('barang')
-                    ->where('kodeseri', $request->kodeseri[$i])
-                    ->limit(1)
-                    ->update(
-                        array(
-                            'tgl_penerimaan' => $request->tgl,
-                            'qty_diterima' => $request->diterima[$i],
-                            'npb' => $NPB,
-                            'locker' => $request->locker[$i],
-                            'partial' => $request->partial[$i],
-                            'status' => 'DITERIMA',
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        )
-                    );
+                // // ambil data permintaan barang untuk deskripsi, katalog dan lain-lain
+                // $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+                // // Update Barang
+                // $check = DB::table('barang')
+                //     ->where('kodeseri', $request->kodeseri[$i])
+                //     ->limit(1)
+                //     ->update(
+                //         array(
+                //             'tgl_penerimaan' => $request->tgl,
+                //             'npb' => $NPB,
+                //             'status' => 'DITERIMA',
+                //             'updated_at' => date('Y-m-d H:i:s'),
+                //         )
+                //     );
             }
             // input Penerimaan Item
             DB::table('pengirimanitm')->insert([
