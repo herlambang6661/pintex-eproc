@@ -230,7 +230,7 @@ class DashboardController extends Controller
         } else {
             // Tampilkan tabel pembelian jika datanya ada
             echo '<div class="card">
-                    <div class="card-header bg-success text-white">Pembelian Rp.' . number_format($getPembelian->harga, 0, ',', ',') . '</div>
+                    <div class="card-header bg-success text-white">Pembelian ' . number_format($getPembelian->harga, 0, ',', ',') . '</div>
                     <div class="card-body">
                         <div style="overflow-x: scroll;">
                             <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
@@ -253,7 +253,7 @@ class DashboardController extends Controller
                                     <td>' . $getPembelian->namabarang . '</td>
                                     <td>' . $getPembelian->kts . '</td>
                                     <td>' . $getPembelian->satuan . '</td>
-                                    <td>Rp.' . number_format($getPembelian->harga, 0, ',', ',') . '</td>
+                                    <td>' . number_format($getPembelian->harga, 0, ',', ',') . '</td>
                                     <td>' . $getPembelian->supplier . '</td>
                                     <td>' . $getPembelian->jumlah . '</td>
                                     <td>' . $getPembelian->dibuat . '</td>
