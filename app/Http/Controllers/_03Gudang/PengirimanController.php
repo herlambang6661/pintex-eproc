@@ -215,7 +215,7 @@ class PengirimanController extends Controller
             $NPB = "PG-" . date('y') . "-" . date('md') . "0001";
         }
         // input Penerimaan
-        $penerimaan = DB::table('penerimaan')->insert([
+        $penerimaan = DB::table('pengiriman')->insert([
             'tglpengiriman' => $request->tgl,
             'noformpengiriman' => $NPB,
             'keterangan' => $request->keterangan,
