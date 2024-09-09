@@ -253,7 +253,6 @@ class PengirimanController extends Controller
                         array(
                             'tgl_penerimaan' => $request->tgl,
                             'qty_diterima' => $request->diterima[$i],
-                            'qty_partial' => $qty_partial,
                             'npb' => $NPB,
                             'locker' => $request->locker[$i],
                             'partial' => $request->partial[$i],

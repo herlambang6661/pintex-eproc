@@ -610,7 +610,7 @@
                             '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
                         $("#submitCheck").attr("disabled", true);
                         $.ajax({
-                            url: "{{ url('storePenerimaan') }}",
+                            url: "{{ url('storePengiriman') }}",
                             type: "POST",
                             data: $('#formPengiriman').serialize(),
                             beforeSend: function() {
