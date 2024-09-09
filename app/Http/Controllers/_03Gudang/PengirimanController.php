@@ -270,10 +270,9 @@ class PengirimanController extends Controller
                 'qty' => $getbarang->qty,
                 'satuan' => $getbarang->satuan,
                 'pemesan' => $getbarang->pemesan,
-                'supplier' => $getbarang->urgent,
-                'suratjalan' => $getbarang->dibeli,
-                'expedisi' => $request->locker[$i],
-                'urgent' => $request->partial[$i],
+                'expedisi' => $request->expedisi[$i],
+                'supplier' => $request->supplier[$i],
+                'urgent' => $getbarang->urgent,
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
