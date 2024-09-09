@@ -57,11 +57,12 @@ class DashboardController extends Controller
 
         // Ambil data dari database
         $getData = DB::table('permintaanitm')->where('kodeseri', $request->kodeseri)->first();
-        $getPembelian = DB::table('pembelian')
-            ->join('pembelianitm', 'pembelian.nofkt', '=', 'pembelianitm.noform')
-            ->where('pembelianitm.kode', $request->kodeseri)
-            ->select('pembelian.*', 'pembelianitm.*')
+        $getPembelian = DB::table('pembelianitm as p')
+            ->select('pem.tgl', 'p.nofaktur', 'p.kode', 'p.namabarang', 'p.kts', 'p.satuan', 'p.harga', 'p.jumlah', 'p.supplier', 'p.dibuat')
+            ->join('pembelian as pem', 'p.nofaktur', '=', 'pem.nofkt')
+            ->where('p.kode', $request->kodeseri)
             ->first();
+
 
         $getPengiriman = DB::table('pengirimanitm')->where('kodeseri', $request->kodeseri)->first();
         $getPenerimaan = DB::table('penerimaanitm')->where('kodeseri', $request->kodeseri)->first();
@@ -200,66 +201,69 @@ class DashboardController extends Controller
                     </div>
                 </div>
             </div>';
+
         if (empty($getPembelian)) {
             echo '<div class="card">
-                <div class="card-header bg-success text-white">Pembelian</div>
-                <div class="card-body">
-                    <div style="overflow-x: scroll;">
-                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>No Faktur</th>
-                                <th>Kodeseri</th>
-                                <th>Nama</th>
-                                <th>KTS</th>
-                                <th>Satuan</th>
-                                <th>Harga</th>
-                                <th>Suplier</th>
-                                <th>Jumlah</th>
-                                <th>Dibuat</th>
-                            </tr>
-                            <tr>
-                                <td colspan="13" class="text-center">Tidak ada data yang ditampilkan</td>
-                            </tr>
-                        </table>
+                    <div class="card-header bg-success text-white">Pembelian</div>
+                    <div class="card-body">
+                        <div style="overflow-x: scroll;">
+                            <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>No Faktur</th>
+                                    <th>Kodeseri</th>
+                                    <th>Nama</th>
+                                    <th>KTS</th>
+                                    <th>Satuan</th>
+                                    <th>Harga</th>
+                                    <th>Suplier</th>
+                                    <th>Jumlah</th>
+                                    <th>Dibuat</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="13" class="text-center">Tidak ada data yang ditampilkan</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </div>';
+                </div>';
         } else {
+            // Tampilkan tabel pembelian jika datanya ada
             echo '<div class="card">
-                <div class="card-header bg-success text-white">Pembelian Rp.' . number_format($getPembelian->harga, 0, ',', ',') . '</div>
-                <div class="card-body">
-                    <div style="overflow-x: scroll;">
-                        <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>No Faktur</th>
-                                <th>Kodeseri</th>
-                                <th>Nama</th>
-                                <th>KTS</th>
-                                <th>Satuan</th>
-                                <th>Harga</th>
-                                <th>Suplier</th>
-                                <th>Jumlah</th>
-                                <th>Dibuat</th>
-                            </tr>
-                            <tr>
-                                <td>' . date('d-m-Y', strtotime($getPembelian->tgl)) . '</td>
-                                <td>' . $getPembelian->nofaktur . '</td>
-                                <td>' . $getPembelian->kode . '</td>
-                                <td>' . $getPembelian->namabarang . '</td>
-                                <td>' . $getPembelian->kts . '</td>
-                                <td>' . $getPembelian->satuan . '</td>
-                                <td>Rp.' . number_format($getPembelian->harga, 0, ',', ',') . '</td>
-                                <td>' . $getPembelian->supplier . '</td>
-                                <td>' . $getPembelian->jumlah . '</td>
-                                <td>' . $getPembelian->dibuat . '</td>
-                            </tr>
-                        </table>
+                    <div class="card-header bg-success text-white">Pembelian Rp.' . number_format($getPembelian->harga, 0, ',', ',') . '</div>
+                    <div class="card-body">
+                        <div style="overflow-x: scroll;">
+                            <table class="table table-sm table-bordered table-hover text-nowrap" style="color:black;">
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>No Faktur</th>
+                                    <th>Kodeseri</th>
+                                    <th>Nama</th>
+                                    <th>KTS</th>
+                                    <th>Satuan</th>
+                                    <th>Harga</th>
+                                    <th>Suplier</th>
+                                    <th>Jumlah</th>
+                                    <th>Dibuat</th>
+                                </tr>
+                                <tr>
+                                    <td>' . Carbon::parse($getPembelian->tgl)->format('d/m/Y') . '</td>
+                                    <td>' . $getPembelian->nofaktur . '</td>
+                                    <td>' . $getPembelian->kode . '</td>
+                                    <td>' . $getPembelian->namabarang . '</td>
+                                    <td>' . $getPembelian->kts . '</td>
+                                    <td>' . $getPembelian->satuan . '</td>
+                                    <td>Rp.' . number_format($getPembelian->harga, 0, ',', ',') . '</td>
+                                    <td>' . $getPembelian->supplier . '</td>
+                                    <td>' . $getPembelian->jumlah . '</td>
+                                    <td>' . $getPembelian->dibuat . '</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </div>';
+                </div>';
         }
+
         if (empty($getPengiriman)) {
             echo '<div class="card">
                 <div class="card-header bg-warning text-white">Pengiriman</div>
@@ -312,7 +316,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
-                                <td>' . $getPengiriman->tgl . '</td>
+                                <td>' . Carbon::parse($getPengiriman->tgl)->format('d/m/Y') . '</td>
                                 <td>' . $getPengiriman->noformpengiriman_itm . '</td>
                                 <td>' . $getPengiriman->kodeseri . '</td>
                                 <td>' . $getPengiriman->namaBarang . '</td>
@@ -382,7 +386,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
-                                <td>' . $getPenerimaan->tanggal . '</td>
+                                <td>' . Carbon::parse($getPenerimaan->tanggal)->format('d/m/Y') . '</td>
                                 <td>' . $getPenerimaan->kodeseri . '</td>
                                 <td>' . $getPenerimaan->nama . '</td>
                                 <td>' . $getPenerimaan->katalog . '</td>
@@ -447,7 +451,7 @@ class DashboardController extends Controller
                                 <th>Dibuat</th>
                             </tr>
                             <tr>
-                                <td>' . $getPengambilan->tanggal . '</td>
+                                <td>' . Carbon::parse($getPengambilan->tanggal)->format('d/m/Y') . '</td>
                                 <td>' . $getPengambilan->noform . '</td>
                                 <td>' . $getPengambilan->kodeseri . '</td>
                                 <td>' . $getPengambilan->namaBarang . '</td>
