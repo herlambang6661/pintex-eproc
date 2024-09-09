@@ -225,7 +225,7 @@ class PengirimanController extends Controller
 
         $jml = count($request->kodeseri);
         for ($i = 0; $i < $jml; $i++) {
-            if (substr($request->id[$i], 0, 1) == "S") {
+            if (substr($request->kodeseri[$i], 0, 1) == "S") {
                 // ambil data permintaan barang untuk deskripsi, katalog dan lain-lain
                 $getbarang = DB::table('servisitm')->where('kodeseri_servis', '=', $request->kodeseri[$i])->first();
                 // Update Barang
