@@ -133,9 +133,9 @@
                                                     <tr>
                                                         <th class="text-center">Tgl Awal</th>
                                                         <th class="text-center">Tgl Akhir</th>
+                                                        <th class="text-center">Dibuat</th>
                                                         <th class="text-center"></th>
-                                                        {{-- <th class="text-center">Unit</th>
-                                                        <th class="text-center">Status</th> --}}
+                                                        {{-- <th class="text-center">Status</th> --}}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -150,15 +150,59 @@
                                                                 value="{{ date('Y-m-t') }}">
                                                         </td>
                                                         <td>
+                                                            <select id="dibuat" class="form-select">
+                                                                @if (Auth::user()->role == 'own' || Auth::user()->role == 'pur' || Auth::user()->role == 'kng')
+                                                                    <option value="" selected>
+                                                                        Semua
+                                                                    </option>
+                                                                    <option value="Puji Nurrenti">
+                                                                        Puji Nurrenti
+                                                                    </option>
+                                                                    <option value="Fahmi Fahrurrozi">
+                                                                        Fahmi Fahrurrozi
+                                                                    </option>
+                                                                    <option value="Rizky Anurullah R">
+                                                                        Rizky Anurullah R
+                                                                    </option>
+                                                                    <option value="Sukmitiyanti">
+                                                                        Sukmitiyanti
+                                                                    </option>
+                                                                    <option value="Admin TFI">
+                                                                        Admin TFI
+                                                                    </option>
+                                                                    <option value="Akun HRD">
+                                                                        Akun HRD
+                                                                    </option>
+                                                                    <option value="Rodo Natorang Gultom">
+                                                                        Rodo Natorang Gultom
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ Auth::user()->name }}" selected
+                                                                        hidden>
+                                                                        {{ Auth::user()->name }}
+                                                                    </option>
+                                                                    <option value="Puji Nurrenti">
+                                                                        Puji Nurrenti
+                                                                    </option>
+                                                                    <option value="Fahmi Fahrurrozi">
+                                                                        Fahmi Fahrurrozi
+                                                                    </option>
+                                                                    <option value="Rizky Anurullah R">
+                                                                        Rizky Anurullah R
+                                                                    </option>
+                                                                    <option value="Sukmitiyanti">
+                                                                        Sukmitiyanti
+                                                                    </option>
+                                                                @endif
+                                                            </select>
+                                                        </td>
+                                                        <td>
                                                             <button type="button" class="btn btn-primary"
                                                                 onclick="syn()">
                                                                 <i class="fa-solid fa-magnifying-glass"></i>
                                                             </button>
                                                         </td>
-                                                        {{-- <td>
-                                                            <input type="text" id="idfilter_unit" onchange="syn()"
-                                                                class="form-control">
-                                                        </td>
+                                                        {{--
                                                         <td>
                                                             <input type="text" id="idfilter_status" onchange="syn()"
                                                                 class="form-control">
@@ -926,7 +970,7 @@
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
-                        data.mesin = $('#idfilter_mesin').val();
+                        data.dibuat = $('#dibuat').val();
                         data.unit = $('#unit').val();
                         data.status = $('#status').val();
                     }

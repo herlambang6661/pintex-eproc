@@ -40,12 +40,19 @@ class PermintaanList extends Controller
                 $sampai = date('Y-m-d');
             }
 
+            if ($request->dibuat) {
+                $dibuat = $request->dibuat;
+            } else {
+                $dibuat = '';
+            }
+
             $data = DB::table('permintaanitm AS pe')
                 // ->select('pe.id', 'pe.kodeseri', 'pe.noform', 'pe.tgl', 'pe.namaBarang', 'pe.keterangan', 'pe.katalog', 'pe.part', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli', 'pe.status', 'me.mesin', 'mi.merk', 'pe.edited')
                 // ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_mesinitm')
                 // ->leftJoin('mastermesin AS me', 'mi.id_itm', '=', 'me.id')
                 ->whereBetween('pe.tgl', [$dari, $sampai])
                 ->where('pe.entitas', 'LIKE', '%' . $entitas . '%')
+                ->where('pe.dibuat', 'LIKE', '%' . $dibuat . '%')
                 ->orderBy('pe.kodeseri', 'desc')
                 ->get();
 
@@ -87,6 +94,11 @@ class PermintaanList extends Controller
                 ->addColumn('action', function ($row) {
                     // Menampilkan button edit jika kondisi edited di dalam db = 0
                     if (($row->edited == 0 || $row->edited == null) && $row->status == 'PROSES PERSETUJUAN') {
+                        $btnEdit = '<a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEditPermintaan" data-id="' . $row->id . '">
+                                        <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                        Edit
+                                    </a>';
+                    } elseif (Auth::user()->entitas_all == 1) {
                         $btnEdit = '<a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEditPermintaan" data-id="' . $row->id . '">
                                         <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                         Edit
