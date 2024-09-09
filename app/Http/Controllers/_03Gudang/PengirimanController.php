@@ -267,7 +267,7 @@ class PengirimanController extends Controller
                 'katalog' => $getbarang->katalog,
                 'part' => $getbarang->part,
                 'mesin' => $getbarang->mesin,
-                'qty' => $request->diterima[$i],
+                'qty' => $getbarang->qty,
                 'satuan' => $getbarang->satuan,
                 'pemesan' => $getbarang->pemesan,
                 'supplier' => $getbarang->urgent,
