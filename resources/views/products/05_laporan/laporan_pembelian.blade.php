@@ -84,41 +84,11 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#tabs-supplier" class="nav-link active" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="currentColor"
-                                                    class="icon icon-tabler icons-tabler-filled icon-tabler-shopping-cart">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M6 2a1 1 0 0 1 .993 .883l.007 .117v1.068l13.071 .935a1 1 0 0 1 .929 1.024l-.01 .114l-1 7a1 1 0 0 1 -.877 .853l-.113 .006h-12v2h10a3 3 0 1 1 -2.995 3.176l-.005 -.176l.005 -.176c.017 -.288 .074 -.564 .166 -.824h-5.342a3 3 0 1 1 -5.824 1.176l-.005 -.176l.005 -.176a3.002 3.002 0 0 1 1.995 -2.654v-12.17h-1a1 1 0 0 1 -.993 -.883l-.007 -.117a1 1 0 0 1 .883 -.993l.117 -.007h2zm0 16a1 1 0 1 0 0 2a1 1 0 0 0 0 -2zm11 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2z" />
-                                                </svg>
-                                                Supplier
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#tabs-item" class="nav-link " data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-sitemap">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M3 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                                    <path
-                                                        d="M15 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                                    <path
-                                                        d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                                    <path d="M6 15v-1a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v1" />
-                                                    <path d="M12 9l0 3" />
-                                                </svg>
-                                                Item
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#tabs-mesin" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            <a href="#tabs-mesin" class="nav-link active" data-bs-toggle="tab">
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-robot">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
@@ -136,171 +106,227 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#tabs-grafik" class="nav-link" data-bs-toggle="tab">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-codepen">
+                                            <a href="#tabs-supplier" class="nav-link" data-bs-toggle="tab">
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                                                    class="icon icon-tabler icons-tabler-filled icon-tabler-shopping-cart">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M3 15l9 6l9 -6l-9 -6l-9 6" />
-                                                    <path d="M3 9l9 6l9 -6l-9 -6l-9 6" />
-                                                    <path d="M3 9l0 6" />
-                                                    <path d="M21 9l0 6" />
-                                                    <path d="M12 3l0 6" />
-                                                    <path d="M12 15l0 6" />
+                                                    <path
+                                                        d="M6 2a1 1 0 0 1 .993 .883l.007 .117v1.068l13.071 .935a1 1 0 0 1 .929 1.024l-.01 .114l-1 7a1 1 0 0 1 -.877 .853l-.113 .006h-12v2h10a3 3 0 1 1 -2.995 3.176l-.005 -.176l.005 -.176c.017 -.288 .074 -.564 .166 -.824h-5.342a3 3 0 1 1 -5.824 1.176l-.005 -.176l.005 -.176a3.002 3.002 0 0 1 1.995 -2.654v-12.17h-1a1 1 0 0 1 -.993 -.883l-.007 -.117a1 1 0 0 1 .883 -.993l.117 -.007h2zm0 16a1 1 0 1 0 0 2a1 1 0 0 0 0 -2zm11 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2z" />
                                                 </svg>
-                                                Grafik
+                                                Supplier
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-item" class="nav-link " data-bs-toggle="tab">
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-sitemap">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M3 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                                    <path
+                                                        d="M15 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                                    <path
+                                                        d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                                    <path d="M6 15v-1a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v1" />
+                                                    <path d="M12 9l0 3" />
+                                                </svg>
+                                                Item
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-servis" class="nav-link" data-bs-toggle="tab">
+                                                <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                                                    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                                </svg>
+                                                Servis
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
+
                                 <div class="tab-content">
-                                    <div class="tab-pane active show" id="tabs-supplier">
-                                        <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center">Tgl Awal</th>
-                                                            <th class="text-center">Tgl Akhir</th>
-                                                            <th class="text-center"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="date" id="idfilter_dari"
-                                                                    class="form-control " value="{{ date('Y-m-01') }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " value="{{ date('Y-m-d') }}">
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"
-                                                                            fill="none" />
-                                                                        <path
-                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                        <path d="M21 21l-6 -6" />
-                                                                    </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                    <div class="tab-pane" id="tabs-supplier">
+                                        <div class="card card-xl shadow rounded border border-green">
+                                            <h4 class="card-header bg-green-lt pt-1 pb-1">Laporan Pemakaian by Supplier
+                                            </h4>
+                                            <div class="card-body pb-0">
+                                                <form id="formReportMesin" class="form-horizontal mb-3">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAwalSupplier">Tanggal Awal</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-green"
+                                                                    id="tanggalAwalSupplier" name="tanggalAwalSupplier"
+                                                                    required value="{{ date('Y-m-01') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAkhirSupplier">Tanggal Akhir</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-green"
+                                                                    id="tanggalAkhirSupplier" name="tanggalAkhirSupplier"
+                                                                    required value="{{ date('Y-m-d') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 d-flex align-items-end">
+                                                            <button type="button" id="btn-filter-supplier"
+                                                                class="btn btn-green btn-block">
+                                                                <i class="fa fa-search" style="margin-right: 5px"></i>
+                                                                Lihat Data
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="table-responsive">
-                                                <table style="width:100%; height: 100%;font-size:13px;"
-                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-supplier">
-                                                </table>
-                                            </div>
+                                            <table style="width:100%; height: 100%;font-size:13px;"
+                                                class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-supplier">
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="tab-pane " id="tabs-item">
-                                        <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center">Tgl Awal</th>
-                                                            <th class="text-center">Tgl Akhir</th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="date" id="idfilter_dari"
-                                                                    class="form-control" onchange="syn()"
-                                                                    value="{{ date('Y-01-01') }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " onchange="syn()"
-                                                                    value="{{ date('Y-m-d') }}">
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"
-                                                                            fill="none" />
-                                                                        <path
-                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                        <path d="M21 21l-6 -6" />
-                                                                    </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                        <div class="card card-xl shadow rounded border border-yellow">
+                                            <h4 class="card-header bg-yellow-lt pt-1 pb-1">Laporan Pemakaian by Item
+                                            </h4>
+                                            <div class="card-body pb-0">
+                                                <form id="formReportItem" class="form-horizontal mb-3">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAwalMesin">Tanggal Awal</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-yellow"
+                                                                    id="tanggalAwalMesin" name="tanggalAwalMesin" required
+                                                                    value="{{ date('Y-m-01') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAkhirMesin">Tanggal Akhir</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-yellow"
+                                                                    id="tanggalAkhirMesin" name="tanggalAkhirMesin"
+                                                                    required value="{{ date('Y-m-d') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 d-flex align-items-end">
+                                                            <button type="button" id="btn-filter-mesin"
+                                                                class="btn btn-yellow btn-block">
+                                                                <i class="fa fa-search" style="margin-right: 5px"></i>
+                                                                Lihat Data
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="table-responsive">
-                                                <table style="width:100%; height: 100%;font-size:13px;"
-                                                    class="table table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-item">
-                                                </table>
-                                            </div>
+
+                                            <table style="width:100%; height: 100%;font-size:13px;"
+                                                class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-item">
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tabs-mesin">
+                                    <div class="tab-pane active show" id="tabs-mesin">
                                         <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="card-header">
-                                                <h5>Laporan Pemakaian By Mesin</h5>
-                                            </div>
+                                            <h4 class="card-header bg-azure-lt pt-1 pb-1">Laporan Pemakaian by Mesin</h4>
                                             <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <div class="form-group">
-                                                            <label for="start_date">Start Date</label>
-                                                            <input type="date" class="form-control" id="start_date"
-                                                                name="start_date" required>
+                                                <form id="formReportMesin" class="form-horizontal mb-3">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAwalMesin">Tanggal Awal</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-blue"
+                                                                    id="tanggalAwalMesin" name="tanggalAwalMesin" required
+                                                                    value="{{ date('Y-m-01') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAkhirMesin">Tanggal Akhir</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-blue"
+                                                                    id="tanggalAkhirMesin" name="tanggalAkhirMesin"
+                                                                    required value="{{ date('Y-m-d') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 d-flex align-items-end">
+                                                            <button type="button" class="btn btn-primary btn-block"
+                                                                onclick="cariReportMesin()">
+                                                                <i class="fa fa-search" style="margin-right: 5px"></i>
+                                                                Lihat
+                                                                Data
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-5">
-                                                        <div class="form-group">
-                                                            <label for="end_date">End Date</label>
-                                                            <input type="date" class="form-control" id="end_date"
-                                                                name="end_date" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 d-flex align-items-end">
-                                                        <button type="submit"
-                                                            class="btn btn-primary btn-block">Search</button>
-                                                    </div>
-                                                </div>
+                                                </form>
+
+                                                <div id="hasil_cari"></div>
+                                                <div id="tunggu"></div>
+                                                <span id="success-msg">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tabs-grafik">
-                                        <div class="card card-xl shadow rounded border border-blue">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h3 class="card-title">Grafik Laporan Pemakaian</h3>
-                                                        <div id="chart-uptime"></div>
+                                    <div class="tab-pane" id="tabs-servis">
+                                        <div class="card card-xl shadow rounded border border-red">
+                                            <h4 class="card-header bg-red-lt pt-1 pb-1">
+                                                Laporan Pemakaian by Servis
+                                            </h4>
+                                            <div class="card-body pb-0">
+                                                <form id="formReportServis" class="form-horizontal mb-3">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAwalServis">Tanggal Awal</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-red"
+                                                                    id="tanggalAwalServis" name="tanggalAwalServis"
+                                                                    required value="{{ date('Y-m-01') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="tanggalAkhirServis">Tanggal Akhir</label>
+                                                                <input type="date"
+                                                                    class="form-control border border-red"
+                                                                    id="tanggalAkhirServis" name="tanggalAkhirServis"
+                                                                    required value="{{ date('Y-m-d') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 d-flex align-items-end">
+                                                            <button type="button" id="btn-filter-servis"
+                                                                class="btn btn-red btn-block">
+                                                                <i class="fa fa-search" style="margin-right: 5px"></i>
+                                                                Lihat Data
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
+
+                                            <table style="width:100%; height: 100%;font-size:13px;"
+                                                class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-servis">
+                                            </table>
+
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -339,10 +365,91 @@
             dt.ajax.reload();
         }
 
+        function cariReportMesin() {
+            let tgaw = $('#tanggalAwalMesin').val();
+            let tgak = $('#tanggalAkhirMesin').val();
+            // alert(str);
+            $.ajax({
+                // cache: false,
+                type: "POST",
+                url: "{{ url('laporan/detailMesin') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    startDate: tgaw,
+                    endDate: tgak,
+                },
+                beforeSend: function() {
+                    $("#hasil_cari").hide();
+                    $("#tunggu").html(
+                        '<center><lottie-player src="https://lottie.host/03a70b30-5cc2-4418-941e-09828e26b1d8/ypNkHv3IyB.json" background="#fff" speed="1" style="width: 300px; height: 300px" loop autoplay direction="1" mode="normal"></lottie-player><i class="fa-solid fa-spinner fa-spin"></i> Mohon Menunggu, Sedang Tarik Data<span class="animated-dots"></span></center>'
+                    );
+                },
+                success: function(html) {
+                    $("#tunggu").html('');
+                    $("#hasil_cari").show();
+                    $("#hasil_cari").html(html);
+                }
+            });
+        }
+
+        function getMesin(params) {
+            let tgaw = $('#tanggalAwalMesin').val();
+            let tgak = $('#tanggalAkhirMesin').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ url('laporan/mesinLihat') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    startDate: tgaw,
+                    endDate: tgak,
+                    unit: params,
+                },
+                beforeSend: function() {
+                    $("#hasil_mesin_" + params).hide();
+                    $("#tunggu_mesin_" + params).html(
+                        '<center><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mencari data mesin<span class="animated-dots"></span></center>'
+                    );
+                },
+                success: function(html) {
+                    $("#tunggu_mesin_" + params).html('');
+                    $("#hasil_mesin_" + params).show();
+                    $("#hasil_mesin_" + params).html(html);
+                }
+            });
+        }
+
+        function getSubMesin(params, id) {
+            let tgaw = $('#tanggalAwalMesin').val();
+            let tgak = $('#tanggalAkhirMesin').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ url('laporan/MesingetSub') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    startDate: tgaw,
+                    endDate: tgak,
+                    unit: params,
+                    id: id,
+                },
+                beforeSend: function() {
+                    $("#hasil_sub_mesin_" + id).hide();
+                    $("#tunggu_sub_mesin_" + id).html(
+                        '<center><span class="spinner-border spinner-border-sm me-2" role="status"></span> Mencari data sub mesin<span class="animated-dots"></span></center>'
+                    );
+                },
+                success: function(html) {
+                    $("#tunggu_sub_mesin_" + id).html('');
+                    $("#hasil_sub_mesin_" + id).show();
+                    $("#hasil_sub_mesin_" + id).html(html);
+                }
+            });
+        }
+
         $(document).ready(function() {
+            //---------------SUPPLIER----------------------------------//
             var tableSupplier = $('.datatable-supplier').DataTable({
                 "processing": true,
-                "serverSide": false,
+                "serverSide": true,
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -351,7 +458,7 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
-                    [10, 10, 25, 50, -1],
+                    [20, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
@@ -375,11 +482,11 @@
                 ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
-                    "zeroRecords": "Data Tidak Ditemukan",
+                    "zeroRecords": "Tidak Ada Data yang Ditampilkan",
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                     "infoEmpty": "Data Tidak Ditemukan",
                     "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data<span class="animated-dots"></span></div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
                     "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
                     "paginate": {
                         "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
@@ -388,84 +495,181 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "{{ route('getPermintaan.index') }}",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('getLaporan.index') }}",
+                    "type": "POST",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#tanggalAwalSupplier').val();
+                        data.sampai = $('#tanggalAkhirSupplier').val();
+                        data.type = 'supplier';
+                    }
+                },
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                    },
-                    {
                         title: 'TANGGAL',
                         data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "text-center",
                     },
                     {
                         title: 'NO PO',
-                        data: 'kodeseri',
-                        name: 'kodeseri',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'nofaktur',
+                        className: "text-center"
+                    },
+                    {
+                        title: '',
+                        data: 'supplier',
+                        className: "text-center"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'noform',
-                        name: 'noform',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'kode',
+                        className: "text-center",
                     },
                     {
                         title: 'BARANG',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
+                        data: 'namabarang',
+                        className: "font-weight-bold",
                     },
                     {
                         title: 'DESKRIPSI',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'namabarang',
+                        className: "font-weight-bold",
                     },
                     {
                         title: 'DIBELI',
-                        data: 'satuan',
-                        name: 'satuan',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'pembeli',
+                        className: "text-center",
+                        "orderable": false
                     },
                     {
                         title: 'QTY',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'kts',
+                        className: "text-center",
                     },
                     {
                         title: '$/CHF',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'harga_luar',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
                     },
                     {
                         title: 'RP',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'harga_dalam',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
                     },
                 ],
+                // Grand Total Footer
+                "footerCallback": function(row, data, start, end, display) {
+                    var api = this.api(),
+                        data;
+                    // converting to interger to find total
+                    var intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i : 0;
+                    };
+                    // computing column Total of the complete result 
+                    var colSem = api
+                        .column(8)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    var colSem2 = api
+                        .column(9)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
 
+                    // Update footer by showing the total with the reference of the column index 
+                    $(api.column(0).footer()).html('Grand Total');
+                    $(api.column(8).footer()).html('Rp. ' + colSem);
+                    $(api.column(9).footer()).html('Rp. ' + colSem2);
+                },
+                // "order": [[ 2, 'asc' ]],
+                // "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'all'
+                    }).nodes();
+                    var last = null;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function(i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i ===
+                            'number' ? i : 0;
+                    };
+                    // const rupiah = (number)=>{
+                    //     return new Intl.NumberFormat("id-ID", {
+                    //     style: "currency",
+                    //     currency: "IDR"
+                    //     }).format(number);
+                    // }
+                    total = [];
+                    total2 = [];
+                    api.column(2, {
+                        page: 'all'
+                    }).data().each(function(group, i) {
+                        // IDR
+                        group_assoc = group.replace(/(\.|&|,| |#039;|\n|amp;)/g, "")
+                            .replace(/"/g, "")
+                            .replace(/'/g, "")
+                            .replace(/\(|\)/g, "")
+                            .replace(/\//g, "");
+                        // console.log(group_assoc);
+                        if (typeof total[group_assoc] != 'undefined') {
+                            // untuk total hasil
+                            total[group_assoc] = total[group_assoc] + intVal(api.column(8)
+                                .data()[
+                                    i]);
+                            total2[group_assoc] = total2[group_assoc] + intVal(api.column(9)
+                                .data()[
+                                    i]);
+                        } else {
+                            total[group_assoc] = intVal(api.column(8).data()[i]);
+                            total2[group_assoc] = intVal(api.column(9).data()[i]);
+                        }
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                // untuk colspan
+                                '<tr class="group font-weight-bold bg-azure-lt"><td colspan="7"><i class="fa-solid fa-angles-right"></i> ' +
+                                group + '</td><td class="' + group_assoc +
+                                ' text-right"></td><td class="' + group_assoc +
+                                'USD text-right"></td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                    for (var key in total) {
+                        let rupiahFormat = total[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        $("." + key).html("<strong class='text-center'>" + rupiahFormat + "</strong>");
+                    }
+                    for (var key2 in total2) {
+                        let rupiahFormat2 = total2[key2].toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                            '.');
+                        $("." + key2 + "USD").html("<strong class='text-center'>" + rupiahFormat2 +
+                            "</strong>");
+                    }
+                }
             });
-        });
+            $('#btn-filter-supplier').click(function() { //button reset event click
+                tableSupplier.ajax.reload(); //just reload table
+            });
 
-        //---------------ITEM----------------------------------//
-        $(document).ready(function() {
+            //---------------ITEM----------------------------------//
             var tableItem = $('.datatable-item').DataTable({
                 "processing": true,
-                "serverSide": false,
+                "serverSide": true,
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -474,7 +678,7 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
                 "lengthMenu": [
-                    [10, 10, 25, 50, -1],
+                    [20, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
                 "buttons": [{
@@ -502,7 +706,7 @@
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                     "infoEmpty": "Data Tidak Ditemukan",
                     "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data<span class="animated-dots"></span></div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
                     "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
                     "paginate": {
                         "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
@@ -511,80 +715,396 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                // "ajax": {
-                //     "url": "{{ route('getPermintaan.index') }}",
-                //     "data": function(data) {
-                //         data._token = "{{ csrf_token() }}";
-                //         data.dari = $('#idfilter_dari').val();
-                //         data.sampai = $('#idfilter_sampai').val();
-                //     }
-                // },
+                "ajax": {
+                    "url": "{{ route('getLaporan.index') }}",
+                    "type": "POST",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#tanggalAwalItem').val();
+                        data.sampai = $('#tanggalAkhirItem').val();
+                        data.type = 'item';
+                    }
+                },
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
                 "columns": [{
-                        title: '',
-                        data: 'action',
-                        name: 'action',
-                        className: "cuspad0 cuspad1",
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" name="checkbox[]" value="${row.id}">`;
-                        }
-                    },
-                    {
                         title: 'TANGGAL',
                         data: 'tgl',
-                        name: 'tgl',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        className: "text-center",
+                    },
+                    {
+                        title: 'NO PO',
+                        data: 'nofaktur',
+                        className: "text-center"
+                    },
+                    {
+                        title: '',
+                        data: 'namabarang',
+                        className: "text-center"
                     },
                     {
                         title: 'KODESERI',
-                        data: 'namaBarang',
-                        name: 'namaBarang',
-                        className: "cuspad0 text-center clickable"
-                    },
-                    {
-                        title: 'DESKRIPSI',
-                        data: 'mesin',
-                        name: 'mesin',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'kode',
+                        className: "text-center",
                     },
                     {
                         title: 'SUPPLIER',
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'supplier',
+                        className: "font-weight-bold",
+                    },
+                    {
+                        title: 'DESKRIPSI',
+                        data: 'namabarang',
+                        className: "font-weight-bold",
                     },
                     {
                         title: 'DIBELI',
-                        data: 'qty',
-                        name: 'qty',
-                        className: "cuspad0 cuspad1 clickable"
+                        data: 'pembeli',
+                        className: "text-center",
+                        "orderable": false
                     },
                     {
                         title: 'QTY',
-                        data: 'satuan',
-                        name: 'satuan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'kts',
+                        className: "text-center",
                     },
                     {
                         title: '$/CHF',
-                        data: 'pemesan',
-                        name: 'pemesan',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'harga_luar',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
                     },
                     {
                         title: 'RP',
-                        data: 'unit',
-                        name: 'unit',
-                        className: "cuspad0 cuspad1 text-center clickable"
+                        data: 'harga_dalam',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
                     },
                 ],
-                columnDefs: [{
-                    orderable: false,
-                    targets: 0
-                }],
+
+                // Grand Total Footer
+                "footerCallback": function(row, data, start, end, display) {
+                    var api = this.api(),
+                        data;
+                    // converting to interger to find total
+                    var intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i : 0;
+                    };
+                    // computing column Total of the complete result 
+                    var colSem = api
+                        .column(8)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    var colSem2 = api
+                        .column(9)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer by showing the total with the reference of the column index 
+                    $(api.column(0).footer()).html('Grand Total');
+                    $(api.column(8).footer()).html('Rp. ' + colSem);
+                    $(api.column(9).footer()).html('Rp. ' + colSem2);
+                },
+                // "order": [[ 2, 'asc' ]],
+                // "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'all'
+                    }).nodes();
+                    var last = null;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function(i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i ===
+                            'number' ? i : 0;
+                    };
+                    // const rupiah = (number)=>{
+                    //     return new Intl.NumberFormat("id-ID", {
+                    //     style: "currency",
+                    //     currency: "IDR"
+                    //     }).format(number);
+                    // }
+                    total = [];
+                    total2 = [];
+                    api.column(2, {
+                        page: 'all'
+                    }).data().each(function(group, i) {
+                        // IDR
+                        group_assoc = group.replace(/(\.|&|,| |#039;|\n|amp;)/g, "")
+                            .replace(/"/g, "")
+                            .replace(/'/g, "")
+                            .replace(/\(|\)/g, "")
+                            .replace(/\//g, "");
+                        // console.log(group_assoc);
+                        if (typeof total[group_assoc] != 'undefined') {
+                            // untuk total hasil
+                            total[group_assoc] = total[group_assoc] + intVal(api.column(8)
+                                .data()[
+                                    i]);
+                            total2[group_assoc] = total2[group_assoc] + intVal(api.column(9)
+                                .data()[
+                                    i]);
+                        } else {
+                            total[group_assoc] = intVal(api.column(8).data()[i]);
+                            total2[group_assoc] = intVal(api.column(9).data()[i]);
+                        }
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                // untuk colspan
+                                '<tr class="group font-weight-bold bg-yellow-lt"><td colspan="7"><i class="fa-solid fa-angles-right"></i> ' +
+                                group + '</td><td class="' + group_assoc +
+                                ' text-right"></td><td class="' + group_assoc +
+                                'USD text-right"></td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                    for (var key in total) {
+                        let rupiahFormat = total[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        $("." + key).html("<strong class='text-center'>" + rupiahFormat + "</strong>");
+                    }
+                    for (var key2 in total2) {
+                        let rupiahFormat2 = total2[key2].toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                            '.');
+                        $("." + key2 + "USD").html("<strong class='text-center'>" + rupiahFormat2 +
+                            "</strong>");
+                    }
+                }
+            });
+            $('#btn-filter-mesin').click(function() {
+                tableItem.ajax.reload(); //just reload table
             });
 
-            $('#filter_id').on('click change', function() {
-                tablePermintaan.ajax.reload(null, false);
+            //---------------SERVIS----------------------------------//
+            var tableServis = $('.datatable-servis').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                "lengthMenu": [
+                    [20, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data<span class="animated-dots"></span></div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                "ajax": {
+                    "url": "{{ route('getServisLaporan.index') }}",
+                    "type": "POST",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#tanggalAwalServis').val();
+                        data.sampai = $('#tanggalAkhirServis').val();
+                    }
+                },
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
+                "columns": [{
+                        title: 'TANGGAL',
+                        data: 'tgl',
+                        className: "text-center",
+                    },
+                    {
+                        title: 'NO PO',
+                        data: 'nofaktur',
+                        className: "text-center"
+                    },
+                    {
+                        title: '',
+                        data: 'namabarang',
+                        className: "text-center"
+                    },
+                    {
+                        title: 'KODESERI',
+                        data: 'kode',
+                        className: "text-center",
+                    },
+                    {
+                        title: 'SUPPLIER',
+                        data: 'supplier',
+                        className: "font-weight-bold",
+                    },
+                    {
+                        title: 'DESKRIPSI',
+                        data: 'namabarang',
+                        className: "font-weight-bold",
+                    },
+                    {
+                        title: 'DIBELI',
+                        data: 'pembeli',
+                        className: "text-center",
+                        "orderable": false
+                    },
+                    {
+                        title: 'QTY',
+                        data: 'kts',
+                        className: "text-center",
+                    },
+                    {
+                        title: '$/CHF',
+                        data: 'harga_luar',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
+                    },
+                    {
+                        title: 'RP',
+                        data: 'harga_dalam',
+                        className: "text-right",
+                        "orderable": false,
+                        "render": $.fn.dataTable.render.number('.', ',', 0, '')
+                    },
+                ],
+
+                // Grand Total Footer
+                "footerCallback": function(row, data, start, end, display) {
+                    var api = this.api(),
+                        data;
+                    // converting to interger to find total
+                    var intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i : 0;
+                    };
+                    // computing column Total of the complete result 
+                    var colSem = api
+                        .column(8)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    var colSem2 = api
+                        .column(9)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer by showing the total with the reference of the column index 
+                    $(api.column(0).footer()).html('Grand Total');
+                    $(api.column(8).footer()).html('Rp. ' + colSem);
+                    $(api.column(9).footer()).html('Rp. ' + colSem2);
+                },
+                // "order": [[ 2, 'asc' ]],
+                // "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'all'
+                    }).nodes();
+                    var last = null;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function(i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i ===
+                            'number' ? i : 0;
+                    };
+                    // const rupiah = (number)=>{
+                    //     return new Intl.NumberFormat("id-ID", {
+                    //     style: "currency",
+                    //     currency: "IDR"
+                    //     }).format(number);
+                    // }
+                    total = [];
+                    total2 = [];
+                    api.column(2, {
+                        page: 'all'
+                    }).data().each(function(group, i) {
+                        // IDR
+                        group_assoc = group.replace(/(\.|&|,| |#039;|\n|amp;)/g, "")
+                            .replace(/"/g, "")
+                            .replace(/'/g, "")
+                            .replace(/\(|\)/g, "")
+                            .replace(/\//g, "");
+                        // console.log(group_assoc);
+                        if (typeof total[group_assoc] != 'undefined') {
+                            // untuk total hasil
+                            total[group_assoc] = total[group_assoc] + intVal(api.column(8)
+                                .data()[
+                                    i]);
+                            total2[group_assoc] = total2[group_assoc] + intVal(api.column(9)
+                                .data()[
+                                    i]);
+                        } else {
+                            total[group_assoc] = intVal(api.column(8).data()[i]);
+                            total2[group_assoc] = intVal(api.column(9).data()[i]);
+                        }
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                // untuk colspan
+                                '<tr class="group font-weight-bold bg-red-lt"><td colspan="7"><i class="fa-solid fa-angles-right"></i> ' +
+                                group + '</td><td class="' + group_assoc +
+                                ' text-right"></td><td class="' + group_assoc +
+                                'USD text-right"></td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                    for (var key in total) {
+                        let rupiahFormat = total[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        $("." + key).html("<strong class='text-center'>" + rupiahFormat + "</strong>");
+                    }
+                    for (var key2 in total2) {
+                        let rupiahFormat2 = total2[key2].toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                            '.');
+                        $("." + key2 + "USD").html("<strong class='text-center'>" + rupiahFormat2 +
+                            "</strong>");
+                    }
+                }
+            });
+            $('#btn-filter-servis').click(function() {
+                tableServis.ajax.reload();
             });
         });
 
