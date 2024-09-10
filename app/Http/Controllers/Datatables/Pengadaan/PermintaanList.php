@@ -53,7 +53,7 @@ class PermintaanList extends Controller
                 ->whereBetween('pe.tgl', [$dari, $sampai])
                 ->where('pe.entitas', 'LIKE', '%' . $entitas . '%')
                 ->where('pe.dibuat', 'LIKE', '%' . $dibuat . '%')
-                ->orderBy('pe.kodeseri', 'desc')
+                ->orderBy('pe.id', 'desc')
                 ->get();
 
             return DataTables::of($data)

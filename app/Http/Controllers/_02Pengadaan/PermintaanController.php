@@ -655,7 +655,7 @@ class PermintaanController extends Controller
                         <div class="control-group col-lg-12">
                             <div id="ketTamb" class="shadow rounded border border-blue">
                                 <div class="mb-3">
-                                    <textarea id="tinymce-edit" name="keteranganform" value="' . $getForm->keteranganform . '"></textarea>
+                                    <textarea id="tinymce-edit" name="keteranganform" value="' . (empty($getForm->keteranganform) ? "" : $getForm->keteranganform) . '"></textarea>
                                 </div>
                             </div>
                         </div>
