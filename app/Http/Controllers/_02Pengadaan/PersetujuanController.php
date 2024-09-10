@@ -397,15 +397,59 @@ class PersetujuanController extends Controller
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-footer pt-0 ps-0 pe-0 pb-0">
-                                    <table class="table table-sm table-card text-left text-blue">
+                                <div class="card-body bg-light pt-0 ps-0 pe-0 pb-0">
+                                    <table class="table table-sm table-card table-bordered text-center text-blue text-nowrap">
+                                        <tr style="font-size:12px">
+                                            <td style="width: 20%">' . $u->kodeseri . '</td>
+                                            <td style="width: 20%">Entitas: ' . strtoupper($u->entitas) . '</td>
+                                            <td style="width: 20%">Pemesan: ' . $u->pemesan . '</td>
+                                            <td style="width: 20%">' . (empty($u->unit) ? "" : strtoupper($u->unit)) . '</td>
+                                            <td style="width: 20%">Mesin: ' . $mesin . '</td>
+                                        </tr>
                                         <tr>
-                                            <td style="width: 25%">Entitas: ' . strtoupper($u->entitas) . '</td>
-                                            <td style="width: 25%">Pemesan: ' . $u->pemesan . '</td>
-                                            <td style="width: 25%">' . (empty($u->unit) ? "" : $u->unit) . '</td>
-                                            <td style="width: 25%">Mesin: ' . $mesin . '</td>
+                                            <td colspan="5">
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <div class="form-check form-switch py-2 ">
+                                                            <input type="hidden" id="vbypass-' . $u->id . '" name="bypass[]">
+                                                            <input class="form-check-input" type="checkbox" id="bypass-' . $u->id . '" onclick="bypass(' . $u->id . ')">
+                                                            <label class="form-check-label text-danger" for="bypass-' . $u->id . '">Bypass ACC</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <select name="stBypass" id="stBypass-' . $u->id . '" class="form-select disabled bg-secondary-lt cursor-not-allowed visually-hidden">
+                                                            <option value="ACC">ACC</option>
+                                                            <option value="HOLD">HOLD</option>
+                                                            <option value="REJECT">REJECT</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
+                                                        <input class="form-control disabled bg-secondary-lt cursor-not-allowed visually-hidden" type="input" id="ketBypass-' . $u->id . '" placeholder="Alasan Bypass" name="ketBypass[]">
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </table>
+                                    <script>
+                                        function bypass(param) {
+                                            if (document.getElementById("bypass-"+param).checked) {
+                                                document.getElementById("vbypass-"+param).value = 1;
+                                                $("#stBypass-"+param).removeClass("disabled bg-secondary-lt cursor-not-allowed visually-hidden")
+                                                $("#ketBypass-"+param).removeClass("disabled bg-secondary-lt cursor-not-allowed visually-hidden")
+                                                $("#stBypass-"+param).prop("disabled", false);
+                                                $("#ketBypass-"+param).prop("disabled", false);
+                                                console.log("turn on bypass acc "+param);
+
+                                            } else {
+                                                document.getElementById("vbypass-"+param).value = 0;
+                                                $("#stBypass-"+param).addClass("disabled bg-secondary-lt cursor-not-allowed visually-hidden")
+                                                $("#ketBypass-"+param).addClass("disabled bg-secondary-lt cursor-not-allowed visually-hidden")
+                                                $("#stBypass-"+param).prop("disabled", true);
+                                                $("#ketBypass-"+param).prop("disabled", true);
+                                                console.log("turn off bypass acc "+param);
+                                            }
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -747,20 +791,39 @@ class PersetujuanController extends Controller
         $jml = count($request->kodeseri);
 
         for ($i = 0; $i < $jml; $i++) {
-            $check = DB::table('permintaanitm')
-                ->where('id', $request->idpermintaan[$i])
-                ->limit(1)
-                ->update(
-                    array(
-                        'tgl_qty_acc' => date('Y-m-d'),
-                        'pembeli' => $request->pembeli,
-                        'qtyacc' => $request->qtyAcc[$i],
-                        'estimasiharga' => $request->estimasiHarga[$i],
-                        'status' => 'MENUNGGU ACC',
-                        'remember_token' => $request->_token,
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    )
-                );
+            if ($request->bypass[$i] == 1) {
+                $check = DB::table('permintaanitm')
+                    ->where('id', $request->idpermintaan[$i])
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'tgl_qty_acc' => date('Y-m-d'),
+                            'pembeli' => $request->pembeli,
+                            'qtyacc' => $request->qtyAcc[$i],
+                            'estimasiharga' => $request->estimasiHarga[$i],
+                            'status' => 'ACC',
+                            'bypass' => $request->bypass[$i],
+                            'ketBypass' => $request->ketBypass[$i],
+                            'remember_token' => $request->_token,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+            } else {
+                $check = DB::table('permintaanitm')
+                    ->where('id', $request->idpermintaan[$i])
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'tgl_qty_acc' => date('Y-m-d'),
+                            'pembeli' => $request->pembeli,
+                            'qtyacc' => $request->qtyAcc[$i],
+                            'estimasiharga' => $request->estimasiHarga[$i],
+                            'status' => 'MENUNGGU ACC',
+                            'remember_token' => $request->_token,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+            }
         }
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {

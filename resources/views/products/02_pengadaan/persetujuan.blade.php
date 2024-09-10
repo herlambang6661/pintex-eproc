@@ -1013,14 +1013,14 @@
                     [10, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
-                "buttons": [{
+                <?php if (Auth::user()->role === 'own' || Auth::user()->role === 'kng') { ?> "buttons": [{
                     "className": 'btn btn-info',
                     "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
                     "action": function(e, node, config) {
                         $('#modalReject').modal('show')
                     }
                 }],
-                "language": {
+                <?php } ?> "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
@@ -1034,12 +1034,13 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
-                    "select": {
+                    <?php if (Auth::user()->role === 'own' || Auth::user()->role === 'kng') { ?> "select": {
                         rows: {
                             _: "%d item dipilih ",
                             0: "Pilih item dan tekan tombol Proses data untuk memproses ACC ",
                         }
                     },
+                    <?php } ?>
                 },
                 "ajax": {
                     "type": "POST",
@@ -1052,6 +1053,7 @@
                         data.selected = $('#selectedValue').val();
                     }
                 },
+                <?php if (Auth::user()->role === 'own' || Auth::user()->role === 'kng') { ?>
                 columnDefs: [{
                     'targets': 0,
                     "orderable": false,
@@ -1064,7 +1066,7 @@
                     'style': 'multi',
                     // "selector": 'td:not(:nth-child(2))',
                 },
-                "columns": [{
+                <?php } ?> "columns": [{
                         data: 'select_orders',
                         name: 'select_orders',
                         className: 'cuspad2',
@@ -1167,14 +1169,14 @@
                     [10, 10, 25, 50, -1],
                     ['Default', '10', '25', '50', 'Semua']
                 ],
-                "buttons": [{
+                <?php if (Auth::user()->role === 'own' || Auth::user()->role === 'kng') { ?> "buttons": [{
                     "className": 'btn btn-info',
                     "text": '<i class="fa-solid fa-file-circle-check"></i> Proses Data',
                     "action": function(e, node, config) {
                         $('#modalHold').modal('show')
                     }
                 }],
-                "language": {
+                <?php } ?> "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
@@ -1188,12 +1190,13 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
-                    "select": {
+                    <?php if (Auth::user()->role === 'own' || Auth::user()->role === 'kng') { ?> "select": {
                         rows: {
                             _: "%d item dipilih ",
                             0: "Pilih item dan tekan tombol Proses data untuk memproses ACC ",
                         }
                     },
+                    <?php } ?>
                 },
                 "ajax": {
                     "type": "POST",
@@ -1206,6 +1209,7 @@
                         data.selected = $('#selectedValue').val();
                     }
                 },
+                <?php if (Auth::user()->role === 'own' || Auth::user()->role === 'kng') { ?>
                 columnDefs: [{
                     'targets': 0,
                     "orderable": false,
@@ -1218,7 +1222,7 @@
                     'style': 'multi',
                     // "selector": 'td:not(:nth-child(2))',
                 },
-                "columns": [{
+                <?php } ?> "columns": [{
                         data: 'select_orders',
                         name: 'select_orders',
                         className: 'cuspad2',
@@ -1332,11 +1336,13 @@
                     submitHandler: function(form) {
                         $.ajaxSetup({
                             headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
                             }
                         });
                         $('#submitCheck').html(
-                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...'
+                        );
                         $("#submitCheck").attr("disabled", true);
 
                         $.ajax({
@@ -1367,8 +1373,10 @@
                                     timer: 4000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
+                                        toast.onmouseenter = Swal
+                                            .stopTimer;
+                                        toast.onmouseleave = Swal
+                                            .resumeTimer;
                                     }
                                 });
                                 Toast.fire({
@@ -1400,11 +1408,13 @@
                     submitHandler: function(form) {
                         $.ajaxSetup({
                             headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
                             }
                         });
                         $('#submitAccept').html(
-                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...'
+                        );
                         $("#submitAccept").attr("disabled", true);
                         $.ajax({
                             url: "{{ url('storeAccPermintaan') }}",
@@ -1436,8 +1446,10 @@
                                     timer: 4000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
+                                        toast.onmouseenter = Swal
+                                            .stopTimer;
+                                        toast.onmouseleave = Swal
+                                            .resumeTimer;
                                     }
                                 });
                                 Toast.fire({
@@ -1471,11 +1483,13 @@
                     submitHandler: function(form) {
                         $.ajaxSetup({
                             headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
                             }
                         });
                         $('#submitAccept').html(
-                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...'
+                        );
                         $("#submitAccept").attr("disabled", true);
                         $.ajax({
                             url: "{{ url('storeAccPermintaan') }}",
@@ -1507,8 +1521,10 @@
                                     timer: 4000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
+                                        toast.onmouseenter = Swal
+                                            .stopTimer;
+                                        toast.onmouseleave = Swal
+                                            .resumeTimer;
                                     }
                                 });
                                 Toast.fire({
@@ -1542,11 +1558,13 @@
                     submitHandler: function(form) {
                         $.ajaxSetup({
                             headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
                             }
                         });
                         $('#submitAccept').html(
-                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...'
+                        );
                         $("#submitAccept").attr("disabled", true);
                         $.ajax({
                             url: "{{ url('storeAccPermintaan') }}",
@@ -1578,8 +1596,10 @@
                                     timer: 4000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
+                                        toast.onmouseenter = Swal
+                                            .stopTimer;
+                                        toast.onmouseleave = Swal
+                                            .resumeTimer;
                                     }
                                 });
                                 Toast.fire({

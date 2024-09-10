@@ -44,6 +44,8 @@ return new class extends Migration
             $table->string('kodeseri_partial')->nullable();
             $table->float('estimasiharga', 10, 2)->nullable();
             $table->string('statusACC')->nullable();
+            $table->integer('bypass')->nullable();
+            $table->string('ketBypass')->nullable();
             $table->string('keteranganACC')->nullable();
             $table->integer('qty_sample')->nullable();
             $table->string('file_sample')->nullable();
