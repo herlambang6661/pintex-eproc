@@ -223,6 +223,60 @@ class PersetujuanController extends Controller
         return view('products.02_pengadaan.persetujuan');
     }
 
+    public function getACCUrgent(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('permintaanitm AS pe')
+                ->where('pe.bypass', '=', 1)
+                ->orderBy('pe.kodeseri', 'asc')
+                ->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('tgl', function ($row) {
+                    $m = Carbon::parse($row->tgl)->format('d/m/Y');
+                    return $m;
+                })
+                ->addColumn('action', function ($row) {
+                    $m = '
+                    <div class="btn-list flex-nowrap">
+                        <form method="POST" action="printPermintaan" target="_blank">
+                            <input type="hidden" name="_token" value="' . csrf_token() . '">
+                            <input type="hidden" name="noform" value="' . $row->kodeform . '">
+                            <button type="submit" class="btn btn-sm btn-link btn-icon">
+                                <i class="fa-solid fa-print" style="margin-right:5px;"></i>
+                            </button>
+                        </form>
+                    </div>
+                    ';
+                    return $m;
+                })
+                ->addColumn('status', function ($row) {
+                    if ($row->status == 'PROSES PERSETUJUAN') {
+                        $c = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span> <b class="text-blue">' . $row->status . '</b>';
+                    } elseif ($row->status == 'ACC') {
+                        $c = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span> <b class="text-purple">' . $row->status . '</b>';
+                    } elseif ($row->status == 'HOLD') {
+                        $c = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span> <b class="text-orange">' . $row->status . '</b>';
+                    } elseif ($row->status == 'REJECT') {
+                        $c = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span> <b class="text-red">' . $row->status . '</b>';
+                    } elseif ($row->status == 'PROSES PEMBELIAN') {
+                        $c = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span> <b class="text-lime">' . $row->status . '</b>';
+                    } elseif ($row->status == 'DIBELI') {
+                        $c = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span> <b class="text-green">' . $row->status . '</b>';
+                    } elseif ($row->status == 'DITERIMA') {
+                        $c = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span> <b class="text-teal">' . $row->status . '</b>';
+                    } else {
+                        $c = '<span class="status-dot status-dot-animated status-dark"></span> <b class="text-dark">' . $row->status . '</b>';
+                    }
+                    return $c;
+                })
+                ->rawColumns(['select_orders', 'status', 'tgl'])
+                ->make(true);
+        }
+        return view('products.02_pengadaan.persetujuan');
+    }
+
     public function checkAccQty(Request $request)
     {
         if (empty($request->id)) {

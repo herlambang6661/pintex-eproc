@@ -169,6 +169,7 @@ Route::controller(PersetujuanController::class)->group(function () {
     Route::post('persetujuan/carihistory', 'cariRiwayat')->name('persetujuan/carihistory');
     Route::post('persetujuan/cariDetail', 'cariDetailbarang')->name('persetujuan/cariDetail');
     Route::post('getACCPermintaan', 'getACCPermintaan')->name('getACCPermintaan.index');
+    Route::post('getACCUrgent', 'getACCUrgent')->name('getACCUrgent.index');
     Route::post('storeQtyPermintaan', 'storeQtyPermintaan')->name('storeQtyPermintaan');
     Route::post('storeAccPermintaan', 'storeAccPermintaan')->name('storeAccPermintaan');
 });

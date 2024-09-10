@@ -687,7 +687,7 @@
 
             dt.ajax.reload();
         }
-        var tablePermintaanQty, tablePermintaanAcc, tablePermintaanRjt, tablePermintaanHld;
+        var tablePermintaanQty, tableUrgent, tablePermintaanAcc, tablePermintaanRjt, tablePermintaanHld;
 
         function syn1() {
             tablePermintaanQty.ajax.reload();
