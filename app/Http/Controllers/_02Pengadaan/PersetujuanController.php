@@ -791,38 +791,76 @@ class PersetujuanController extends Controller
         $jml = count($request->kodeseri);
 
         for ($i = 0; $i < $jml; $i++) {
-            if ($request->bypass[$i] == 1) {
-                $check = DB::table('permintaanitm')
-                    ->where('id', $request->idpermintaan[$i])
-                    ->limit(1)
-                    ->update(
-                        array(
-                            'tgl_qty_acc' => date('Y-m-d'),
-                            'pembeli' => $request->pembeli,
-                            'qtyacc' => $request->qtyAcc[$i],
-                            'estimasiharga' => $request->estimasiHarga[$i],
-                            'status' => 'ACC',
-                            'bypass' => $request->bypass[$i],
-                            'ketBypass' => $request->ketBypass[$i],
-                            'remember_token' => $request->_token,
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        )
-                    );
+            if (substr($request->kodeseri[$i], 0, 1) == "S") {
+                if ($request->bypass[$i] == 1) {
+                    $check = DB::table('servisitm')
+                        ->where('kodeseri_servis', $request->kodeseri[$i])
+                        ->limit(1)
+                        ->update(
+                            array(
+                                // 'tgl_qty_acc' => date('Y-m-d'),
+                                // 'pembeli' => $request->pembeli,
+                                // 'qtyacc' => $request->qtyAcc[$i],
+                                // 'estimasiharga' => $request->estimasiHarga[$i],
+                                'status' => 'ACC',
+                                'bypass' => $request->bypass[$i],
+                                'ketBypass' => $request->ketBypass[$i],
+                                'remember_token' => $request->_token,
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                } else {
+                    $check = DB::table('servisitm')
+                        ->where('kodeseri_servis', $request->kodeseri[$i])
+                        ->limit(1)
+                        ->update(
+                            array(
+                                // 'tgl_qty_acc' => date('Y-m-d'),
+                                // 'pembeli' => $request->pembeli,
+                                // 'qtyacc' => $request->qtyAcc[$i],
+                                // 'estimasiharga' => $request->estimasiHarga[$i],
+                                'status' => 'MENUNGGU ACC',
+                                'bypass' => $request->bypass[$i],
+                                'ketBypass' => $request->ketBypass[$i],
+                                'remember_token' => $request->_token,
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                }
             } else {
-                $check = DB::table('permintaanitm')
-                    ->where('id', $request->idpermintaan[$i])
-                    ->limit(1)
-                    ->update(
-                        array(
-                            'tgl_qty_acc' => date('Y-m-d'),
-                            'pembeli' => $request->pembeli,
-                            'qtyacc' => $request->qtyAcc[$i],
-                            'estimasiharga' => $request->estimasiHarga[$i],
-                            'status' => 'MENUNGGU ACC',
-                            'remember_token' => $request->_token,
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        )
-                    );
+                if ($request->bypass[$i] == 1) {
+                    $check = DB::table('permintaanitm')
+                        ->where('kodeseri', $request->kodeseri[$i])
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'tgl_qty_acc' => date('Y-m-d'),
+                                'pembeli' => $request->pembeli,
+                                'qtyacc' => $request->qtyAcc[$i],
+                                'estimasiharga' => $request->estimasiHarga[$i],
+                                'status' => 'ACC',
+                                'bypass' => $request->bypass[$i],
+                                'ketBypass' => $request->ketBypass[$i],
+                                'remember_token' => $request->_token,
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                } else {
+                    $check = DB::table('permintaanitm')
+                        ->where('kodeseri', $request->kodeseri[$i])
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'tgl_qty_acc' => date('Y-m-d'),
+                                'pembeli' => $request->pembeli,
+                                'qtyacc' => $request->qtyAcc[$i],
+                                'estimasiharga' => $request->estimasiHarga[$i],
+                                'status' => 'MENUNGGU ACC',
+                                'remember_token' => $request->_token,
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                }
             }
         }
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);

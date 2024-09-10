@@ -140,6 +140,24 @@
                                                 Proses QTY Persetujuan
                                             </a>
                                         </li>
+                                        @if (Auth::user()->role === 'pur' || Auth::user()->role === 'kng')
+                                            {{-- TAB HEADER URGENT ACC --}}
+                                            <li class="nav-item">
+                                                <a href="#tabs-urgent" class="nav-link" data-bs-toggle="tab">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-run">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M13 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                                        <path d="M4 17l5 1l.75 -1.5" />
+                                                        <path d="M15 21l0 -4l-4 -3l1 -6" />
+                                                        <path d="M7 12l0 -3l5 -1l3 3l3 1" />
+                                                    </svg>
+                                                    ACC Urgent
+                                                </a>
+                                            </li>
+                                        @endif
                                         @if (Auth::user()->role === 'own' || Auth::user()->role === 'kng')
                                             {{-- TAB HEADER PROSES PERSETUJUAN --}}
                                             <li class="nav-item">
@@ -271,6 +289,53 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if (Auth::user()->role === 'pur' || Auth::user()->role === 'kng')
+                                        <div class="tab-pane" id="tabs-urgent">
+                                            <div class="card">
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-black">List Bypass Acc</th>
+                                                                <th class="text-center"></th>
+                                                                <th class="text-center"></th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                                <table
+                                                    style="width:100%; height: 100%;font-size:13px;text-transform: uppercase;"
+                                                    class="table table-sm table-bordered table-vcenter card-table table-hover text-nowrap datatable datatable-urgent">
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th class="px-1 py-1 text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </th>
+                                                            <th class="px-1 th py-1">tgl</th>
+                                                            <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">barang</th>
+                                                            <th class="px-1 th py-1">keterangan</th>
+                                                            <th class="px-1 th py-1">katalog</th>
+                                                            <th class="px-1 th py-1">part</th>
+                                                            <th class="px-1 th py-1">mesin</th>
+                                                            <th class="px-1 th py-1">qty</th>
+                                                            <th class="px-1 th py-1">satuan</th>
+                                                            <th class="px-1 th py-1">pemesan</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    @endif
                                     @if (Auth::user()->role === 'own' || Auth::user()->role === 'kng')
                                         <div class="tab-pane" id="tabs-persetujuan">
                                             <div class="card">
