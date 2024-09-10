@@ -534,9 +534,15 @@ class PembelianController extends Controller
                                                             }
 
                                                             function getTotalPembelianPackage() {
+                                                            
                                                                 var txt1 = document.getElementById("package-totalSub").value;
                                                                 var txt2 = document.getElementById("package-totalppn").value;
+                                                                var txt3 = document.getElementById("package-percentageppn").value;
                                                                 
+                                                                var resultppn = (parseFloat(txt3) * parseFloat(txt1)) / 100;
+                                                                document.getElementById("package-totalppn").value = resultppn;
+                                                                txt2 = resultppn;
+
                                                                 var result = parseFloat(txt1) + parseFloat(txt2);
                                                                 document.getElementById("package-totalPembelian").value = result;
                                                             }
@@ -1056,9 +1062,15 @@ class PembelianController extends Controller
                                                             }
 
                                                             function getTotalPembelian() {
+                                                                
                                                                 var txt1 = document.getElementById("totalSubServis").value;
                                                                 var txt2 = document.getElementById("totalppn").value;
+                                                                var txt3 = document.getElementById("percentageppnservis").value;
                                                                 
+                                                                var resultppn = (parseFloat(txt3) * parseFloat(txt1)) / 100;
+                                                                document.getElementById("totalppn").value = resultppn;
+                                                                txt2 = resultppn;
+
                                                                 var result = parseFloat(txt1) + parseFloat(txt2);
                                                                 document.getElementById("totalPembelianservis").value = result;
                                                             }
