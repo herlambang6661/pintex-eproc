@@ -557,15 +557,31 @@ class PermintaanController extends Controller
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-2">
+                                                <label class="form-label">Entitas</label>
+                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->entitas . '">
+                                            </div>
+                                            <div class="mb-2">
                                                 <label class="form-label">Jenis</label>
                                                 <input type="hidden" name="kodeseri" value="' . $getItem->kodeseri . '">
-                                                <input type="text" name="jenis" id="jenis" class="form-control border border-blue disabled" readonly value="' . $getItem->jenis . '">
+                                                <input type="text" name="jenis" id="jenis" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->jenis . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Tanggal</label>
+                                                <input type="date" name="tanggal" id="tanggal" class="form-control border border-blue" value="' . $getItem->tgl . '">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-2">
-                                                <label class="form-label">Tanggal</label>
-                                                <input type="date" name="tanggal" id="tanggal" class="form-control border border-blue" value="' . $getItem->tgl . '">
+                                                <label class="form-label">Kodeseri</label>
+                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->kodeseri . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Noform</label>
+                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->noform . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Pimpinan</label>
+                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getForm->kabag . '">
                                             </div>
                                         </div>
                                     </div>
@@ -594,7 +610,7 @@ class PermintaanController extends Controller
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 mb-3">
                             <div class="card bg-orange-lt shadow rounded border border-blue">
                                 <div class="card-body">
                                     <div class="mb-2">
@@ -644,6 +660,43 @@ class PermintaanController extends Controller
                                             <div class="mb-2">
                                                 <label class="form-label">Sample</label>
                                                 <input type="number" name="sample" id="sample" class="form-control" value="' . $getItem->qty_sample . '">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card bg-green-lt shadow rounded border border-blue">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Entitas</label>
+                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->entitas . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Jenis</label>
+                                                <input type="hidden" name="kodeseri" value="' . $getItem->kodeseri . '">
+                                                <input type="text" name="jenis" id="jenis" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->jenis . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Tanggal</label>
+                                                <input type="date" name="tanggal" id="tanggal" class="form-control border border-blue" value="' . $getItem->tgl . '">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label class="form-label">Kodeseri</label>
+                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->kodeseri . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Noform</label>
+                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->noform . '">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Pimpinan</label>
+                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getForm->kabag . '">
                                             </div>
                                         </div>
                                     </div>
