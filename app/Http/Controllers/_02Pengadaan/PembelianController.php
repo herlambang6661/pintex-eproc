@@ -1512,7 +1512,7 @@ class PembelianController extends Controller
                     ]);
                 } else {
                     // kodeseri TFI : T100***
-                    if (substr($request->kodeseri, 0, 1) == "T") {
+                    if (substr($request->kodeseri[$i], 0, 1) == "T") {
                         $getItem = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
                         $latestKodeseri = DB::table('permintaanitm')->where('kodeseri', 'LIKE', '%T%')->latest('kodeseri')->first();
                         $kserit = (int) substr($latestKodeseri->kodeseri, 1, 6);
