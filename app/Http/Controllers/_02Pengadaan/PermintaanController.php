@@ -261,110 +261,85 @@ class PermintaanController extends Controller
         return Response()->json($arr);
     }
 
+    function storeAddPermintaan(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+            ],
+        );
+
+        $jml_mbl = count($request->jenis);
+        for ($i = 0; $i < $jml_mbl; $i++) {
+            if ($request->entitas == 'TFI') {
+                // generate kodeseri TFI
+                $getkodeseri = DB::table('permintaanitm')->where('kodeseri', 'like', '%T%')->orderBy('kodeseri', 'desc')->first();
+                if ($getkodeseri) {
+                    $kdseri = $getkodeseri->kodeseri;
+                    $noUrutKodeseri = (int) substr($kdseri, -6);
+                    $noUrutKodeseri++;
+                    $charKodeseri = 'T';
+                    $kdseri = $charKodeseri . sprintf("%06s", $noUrutKodeseri);
+                } else {
+                    $kdseri = 'T000001';
+                }
+            } else {
+                // generate kodeseri PINTEX
+                $getkodeseri = DB::table('permintaanitm')->where('kodeseri', 'not like', '%T%')->latest('kodeseri')->first();
+                if ($getkodeseri) {
+                    $kdseriR = $getkodeseri->kodeseri;
+                    $kdseri = $kdseriR + 1;
+                } else {
+                    $kdseri = '100000';
+                }
+            }
+
+            if (!empty($request->urgent[$i])) {
+                $urgent = $request->urgent[$i];
+            } else {
+                $urgent = 0;
+            }
+            $check = DB::table('permintaanitm')->insert([
+                'remember_token' => $request->_token,
+                'entitas' => $request->addEntitas,
+                'jenis' => $request->jenis[$i],
+                'tgl' => $request->addTanggal,
+                'kodeseri' => $kdseri,
+                'noform' => $request->addNoform,
+                'kodeproduk' => $request->kodeproduk[$i],
+                'namaBarang' => strtoupper($request->namaBarang[$i]),
+                'keterangan' => strtoupper($request->deskripsi[$i]),
+                'katalog' => strtoupper($request->katalog[$i]),
+                'part' => strtoupper($request->part[$i]),
+                'mesin' => strtoupper($request->mesin[$i]),
+                'qty' => $request->qty[$i],
+                'satuan' => strtoupper($request->satuan[$i]),
+                'pemesan' => strtoupper($request->pemesan[$i]),
+                'unit' => $request->unit[$i],
+                'peruntukan' => $request->peruntukan[$i],
+                'qty_sample' => $request->sample[$i],
+                'proses_email' => '0',
+                'proses_po' => '0',
+                'partial' => '0',
+                'urgent' => $urgent,
+                'status' => "PROSES PERSETUJUAN",
+                'DIBUAT' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data: ' . $request->addNoform . ' telah berhasil ditambahkan', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
     public function viewPermintaan(Request $request)
     {
         $no = 1;
         $getpermintaan = DB::table('permintaan')->where('noform', '=', $request->noform)->first();
         $getpermintaanitem = DB::table('permintaanitm')->where('noform', '=', $request->noform)->get();
-        // echo '
-        //     <div class="row mb-4">
-        //         <div class="col-lg-4">
-        //             <div class="card bg-info-lt mb-3" style="box-shadow: 10px 10px 5px lightblue;">
-        //                 <div class="table-responsive">
-        //                     <table class="table table-sm table-vcenter card-table">
-        //                         <tbody><tr>
-        //                             <td>Tanggal</td>
-        //                             <td>:</td>
-        //                             <td>' . Carbon::parse($getpermintaan->tanggal)->format('d/m/Y') . '</td>
-        //                         </tr>
-        //                         <tr>
-        //                             <td>Nomor Form</td>
-        //                             <td>:</td>
-        //                             <td>' . $getpermintaan->noform . '</td>
-        //                         </tr>
-        //                         <tr>
-        //                             <td>Kepala Bagian</td>
-        //                             <td>:</td>
-        //                             <td>' . $getpermintaan->kabag . '</td>
-        //                         </tr>
-        //                     </tbody></table>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //         <div class="col-lg-8">
-        //             <div class="card bg-orange-lt" style="box-shadow: 10px 10px 5px lightblue;">
-        //                 <div class="card-body" style="overflow-y: scroll; height: 200px">
-        //                     <i>*Note :</i><br>
-        //                     ' . $getpermintaan->keteranganform . '
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     <div class="table-responsive" style="box-shadow: 10px 10px 5px lightblue;">
-        //         <table class="table table-sm table-bordered table-vcenter table-hover text-nowrap" style="width:100%;">
-        //             <thead>
-        //                 <th class="text-center">#</th>
-        //                 <th class="text-center">Kodeseri</th>
-        //                 <th class="text-center">Barang</th>
-        //                 <th class="text-center">Katalog</th>
-        //                 <th class="text-center">Mesin</th>
-        //                 <th class="text-center">Quantity</th>
-        //                 <th class="text-center">Satuan</th>
-        //                 <th class="text-center">Pemesan</th>
-        //                 <th class="text-center">Dibeli</th>
-        //                 <th class="text-center">Ket. Status</th>
-        //                 <th class="text-center">Sample</th>
-        //                 <th class="text-center">Status</th>
-        //             </thead>
-        //             <tbody>
-        //                 ';
-        // foreach ($getpermintaanitem as $key) {
-        //     if ($key->status == 'PROSES PERSETUJUAN') {
-        //         $sst = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span>';
-        //         $txt = '<span class="badge bg-blue"><b>' . $key->status . '</b></span>';
-        //     } elseif ($key->status == 'ACC') {
-        //         $sst = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span>';
-        //         $txt = ' <span class="badge bg-purple"><b>' . $key->status . '</b></span>';
-        //     } elseif ($key->status == 'HOLD') {
-        //         $sst = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span>';
-        //         $txt = ' <span class="badge bg-orange"><b>' . $key->status . '</b></span>';
-        //     } elseif ($key->status == 'REJECT') {
-        //         $sst = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span>';
-        //         $txt = ' <span class="badge bg-red"><b>' . $key->status . '</b></span>';
-        //     } elseif ($key->status == 'PROSES PEMBELIAN') {
-        //         $sst = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span>';
-        //         $txt = ' <span class="badge bg-lime"><b>' . $key->status . '</b></span>';
-        //     } elseif ($key->status == 'DIBELI') {
-        //         $sst = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span>';
-        //         $txt = ' <span class="badge bg-green"><b>' . $key->status . '</b></span>';
-        //     } elseif ($key->status == 'DITERIMA') {
-        //         $sst = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span>';
-        //         $txt = ' <span class="badge bg-teal"><b>' . $key->status . '</b></span>';
-        //     } else {
-        //         $sst = '<span class="status-dot status-dot-animated status-dark"></span>';
-        //         $txt = ' <span class="badge bg-dark"><b>' . $key->status . '</b></span>';
-        //     }
-        //     echo '          <tr>';
-        //     echo '              <td class="text-center">' . $no . '</td>';
-        //     echo '              <td class="text-center">' . $sst . ' ' . $key->kodeseri . '</td>';
-        //     echo '              <td class="">' . $key->namaBarang . '</td>';
-        //     echo '              <td class="text-center">' . $key->katalog . '</td>';
-        //     echo '              <td class="text-center">' . $key->mesin . '</td>';
-        //     echo '              <td class="text-center">' . $key->qty . '</td>';
-        //     echo '              <td class="text-center">' . $key->satuan . '</td>';
-        //     echo '              <td class="text-center">' . $key->pemesan . '</td>';
-        //     echo '              <td class="text-center">' . $key->dibeli . '</td>';
-        //     echo '              <td class="text-center">' . $key->keteranganACC . '</td>';
-        //     echo '              <td class="text-center">' . $key->qty_sample . '</td>';
-        //     echo '              <td class="text-center">' . $txt . '</td>';
-        //     echo '          </tr>';
-        //     $no++;
-        // }
-        // echo '
-        //             </tbody>
-        //         </table>
-        //     </div>
-        // ';
         echo '
                 <style>
                     .stamp {
@@ -409,6 +384,7 @@ class PermintaanController extends Controller
                             padding: 0.5rem;
                         } 
                 </style>
+                
                 <div class="modal-body" style="color: black;">
                     <div class="row">
                         <div class="col-md-4 text-center">
@@ -433,7 +409,6 @@ class PermintaanController extends Controller
                             </p>
                             <div class="row mb-2">
                                 <div class="col-lg-9 col-sm-9"> No. Form : ' . $getpermintaan->noform . '</div> 
-                                <div class="col"><button type="button" class="btn btn-sm btn-primary text-end">Tambah item di Form ini</button></div>
                             </div>
                         </i>
                         <table class="table table-sm table-bordered table-hover"
@@ -540,6 +515,154 @@ class PermintaanController extends Controller
         }
         echo '
         ';
+    }
+
+    public function viewAddPermintaan(Request $request)
+    {
+        $no = 1;
+        $getpermintaan = DB::table('permintaan')->where('noform', '=', $request->noform)->first();
+        $getpermintaanitem = DB::table('permintaanitm')->where('noform', '=', $request->noform)->get();
+        echo '
+                <div class="modal-body" style="color: black;">
+                    <div class="container">
+                        <i>
+                            <p>
+                                Tanggal : ' . Carbon::parse($getpermintaan->tanggal)->format("d/m/Y") . '
+                            </p>
+                            <div class="row mb-2">
+                                <div class="col-lg-9 col-sm-9"> No. Form : ' . $getpermintaan->noform . '</div> 
+                                <input type="hidden" name="addNoform" value="' . $getpermintaan->noform . '">
+                                <input type="hidden" name="addEntitas" value="' . $getpermintaan->entitas . '">
+                                <input type="hidden" name="addTanggal" value="' . $getpermintaan->tanggal . '">
+                            </div>
+                        </i>
+                        <table class="table table-sm table-bordered table-hover"
+                            style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
+                            <thead class="text-black" style="border-color: black;">
+                                <th style="border-color: black;" class="text-center">#</th>
+                                <th style="border-color: black;" class="text-center">Kodeseri</th>
+                                <th style="border-color: black;" class="text-center">Barang</th>
+                                <th style="border-color: black;" class="text-center">Deskripsi</th>
+                                <th style="border-color: black;" class="text-center">Katalog</th>
+                                <th style="border-color: black;" class="text-center">Part</th>
+                                <th style="border-color: black;" class="text-center">Mesin</th>
+                                <th style="border-color: black;" class="text-center">Quantity</th>
+                                <th style="border-color: black;" class="text-center">Pemesan</th>
+                                <th style="border-color: black;" class="text-center">Status</th>
+                            </thead>
+                            <tbody class="text-black" style="border-color: black;">
+                            ';
+        $i = 1;
+        foreach ($getpermintaanitem as $key) {
+            $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $key->mesin)->first();
+            if ($key->status == 'PROSES PERSETUJUAN') {
+                $sst = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span>';
+                $txt = '<span class="badge bg-blue"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'ACC') {
+                $sst = '<span class="status-dot status-dot-animated status-purple" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-purple"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'HOLD') {
+                $sst = '<span class="status-dot status-dot-animated status-orange" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-orange"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'REJECT') {
+                $sst = '<span class="status-dot status-dot-animated status-red" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-red"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'PROSES PEMBELIAN') {
+                $sst = '<span class="status-dot status-dot-animated status-lime" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-lime"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'DIBELI') {
+                $sst = '<span class="status-dot status-dot-animated status-green" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-green"><b>' . $key->status . '</b></span>';
+            } elseif ($key->status == 'DITERIMA') {
+                $sst = '<span class="status-dot status-dot-animated status-teal" style="font-size:11px"></span>';
+                $txt = ' <span class="badge bg-teal"><b>' . $key->status . '</b></span>';
+            } else {
+                $sst = '<span class="status-dot status-dot-animated status-dark"></span>';
+                $txt = ' <span class="badge bg-dark"><b>' . $key->status . '</b></span>';
+            }
+            echo '
+                                    <tr>
+                                        <td class="text-center">' . $i . '</td>
+                                        <td class="text-center">' . $sst . " " . $key->kodeseri . '</td>
+                                        <td class="">' . $key->namaBarang . '</td>
+                                        <td class="text-center">' . $key->keterangan . '</td>
+                                        <td class="text-center">' . $key->katalog . '</td>
+                                        <td class="text-center">' . $key->part . '</td>
+                                        <td class="text-center">' . $getMesin->mesin . " " . $getMesin->merk . '</td>
+                                        <td class="text-center">' . $key->qty . ' ' . $key->satuan . '</td>
+                                        <td class="text-center">' . $key->pemesan . '</td>
+                                        <td class="text-center">' . $txt . '</td>
+                                    </tr>
+                                    ';
+            $i++;
+            if ($key->statusACC == 'ACC') {
+                $status = 'approve';
+            } else {
+                $status = 'proposal';
+            }
+        }
+
+        echo '
+                            </tbody>
+                        </table>
+                        
+                        <div class="control-group after-add-more">
+                            <button class="btn btn-success" type="button"
+                                onclick="tambahItemForm(); return false;">
+                                <i class="fa-solid fa-plus" style="margin-right: 5px"></i>
+                                Tambah Item
+                            </button>
+                        </div>
+                        <br>
+                        <input id="idAddForm" value="1" type="hidden">
+                        <div style="overflow-x:auto;overflow-x: scroll;">
+                            <div style="width: 2800px">
+                                <table id="detail_add_transaksi" class="control-group text-nowrap"
+                                    border="0"
+                                    style="width: 100%;text-align:center;font-weight: bold;">
+                                    <thead>
+                                        <tr>
+                                            <td
+                                                style="border-left-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;width: 50px">
+                                            </td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Jenis</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Kodeproduk</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Nama Barang</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Deskripsi</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                katalog</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Part</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Mesin</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Qty
+                                            </td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Satuan</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Pemesan</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Unit</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Peruntukan</td>
+                                            <td class="bg-primary text-white" style="width: 200px">
+                                                Sample</td>
+                                            <th
+                                                style="border-right-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;">
+                                                Urgent</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                ';
     }
 
     public function viewEditPermintaan(Request $request)

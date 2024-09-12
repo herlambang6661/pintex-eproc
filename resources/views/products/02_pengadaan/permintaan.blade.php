@@ -534,7 +534,16 @@
                     <div class="fetched-data-permintaan"></div>
                 </div>
                 <div class="modal-footer">
-                    {{-- <button type="button" class="btn me-auto" data-bs-dismiss="modal">Keluar</button> --}}
+                    <a class="btn btn-outline-dark me-auto btnadditem" data-bs-toggle="modal" href="#addmoreitem">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 5l0 14" />
+                            <path d="M5 12l14 0" />
+                        </svg>
+                        Tambah Item di Form ini
+                    </a>
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
                 </div>
             </div>
@@ -567,6 +576,69 @@
                         <button type="submit" id="submitEditPermintaan" class="btn btn-primary me-auto"
                             data-bs-dismiss="modal">Simpan</button>
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal modal-blur fade" id="addmoreitem" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="loader"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
+            <form method="POST" name="formAddPermintaan" id="formAddPermintaan" class="form"
+                enctype="multipart/form-data" accept-charset="utf-8" onkeydown="return event.key != 'Enter';"
+                data-select2-id="add-form">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-package">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                <path d="M12 12l8 -4.5" />
+                                <path d="M12 12l0 9" />
+                                <path d="M12 12l-8 -4.5" />
+                                <path d="M16 5.25l-8 4.5" />
+                            </svg>
+                            Tambah Item
+                        </h4>
+                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button> --}}
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-add-permintaan"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-outline-dark btnBackToForm me-auto" data-bs-toggle="modal"
+                            data-bs-target="#modalDetailPermintaan">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-left">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M5 12l14 0" />
+                                <path d="M5 12l4 4" />
+                                <path d="M5 12l4 -4" />
+                            </svg>
+                            Batal
+                        </a>
+                        <button type="submit" id="subAddItem" class=" btn btn-primary btnSaveForm"
+                            data-bs-toggle="modal" data-bs-target="#modalDetailPermintaan">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M14 4l0 4l-6 0l0 -4" />
+                            </svg>
+                            Simpan Perubahan
+                            </submit>
                     </div>
                 </div>
             </form>
@@ -776,6 +848,325 @@
                     },
                 });
                 $(".elementmsn").select2({
+                    language: "id",
+                    width: '250px',
+                    placeholder: "Pilih Mesin",
+                    ajax: {
+                        url: "/getMesin",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            console.log(response);
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.mesin.toUpperCase() + " " + item.merk
+                                            .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
+                                                " (UNIT " + item.unit + ")"),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+            });
+        }
+
+        function tambahItemForm() {
+            var idAddForm = document.getElementById("idAddForm").value;
+
+            var detail_add_transaksi = document.getElementById("detail_add_transaksi");
+
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "btn-remove-form" + idAddForm);
+
+            // Kolom 1 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.setAttribute("style", "border-left-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;");
+            td.innerHTML +=
+                '<button class="btn btn-sm btn-danger btn-icon remove" type="button" onclick="hapusElemenForm(' +
+                idAddForm +
+                ');"><i class="fa-regular fa-trash-can"></i> </button>';
+            tr.appendChild(td);
+
+            // Kolom 2 Jenis
+            var td = document.createElement("td");
+            td.innerHTML += "<select name='jenis[]' id='jenis_" + idAddForm +
+                "' class='form-select inputNone' onchange='tampilkanForm(" + idAddForm +
+                ")' style='width:100%;text-transform: uppercase;'><option hidden></option><option value='Standar'>STANDAR</option><option value='Lain'>LAIN-LAIN</option></select>";
+            tr.appendChild(td);
+
+            // Kolom 3 Kodeproduk                            
+            var td = document.createElement("td");
+            td.innerHTML += '<select name="kodeproduk[]" id="kodeproduk' + idAddForm +
+                '" class="form-select  inputNone" style="text-transform: uppercase;"><option hidden></option><option value="8" data-ket="Sparepart">8 - Sparepart</option><option value="17" data-ket="Kendaraan">17 - Kendaraan</option><option value="18" data-ket="Perlengkapan">18 - Perlengkapan</option></select>';
+            tr.appendChild(td);
+
+            // Kolom 4 Nama Barang / Jasa
+            var td = document.createElement("td");
+            td.innerHTML += "<div name='menampilkan_add_barang_" + idAddForm + "' id='menampilkan_add_barang_" + idAddForm +
+                "'></div>";
+            tr.appendChild(td);
+
+            // Kolom 5 Deskripsi
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly type='text' list='datalistDeskripsi' name='deskripsi[]' id='deskripsi_" +
+                idAddForm +
+                "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 6 Katalog
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly type='text' list='datalistKatalog' name='katalog[]' id='katalog" + idAddForm +
+                "' value='' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 7 Part
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly type='text' list='datalistPart' name='part[]' id='part_" + idAddForm +
+                "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 8 Mesin
+            var td = document.createElement("td");
+            td.innerHTML += "<div name='tampil_add_mesin_" + idAddForm + "' id='tampil_add_mesin_" + idAddForm + "'></div>";
+            tr.appendChild(td);
+
+            // Kolom 9 Qty
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly type='number' name='qty[]' id='qty_" + idAddForm +
+                "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 10 Satuan
+            var td = document.createElement("td");
+            td.innerHTML += "<input readonly list='datalistSatuan' type='text' name='satuan[]' id='satuan_" + idAddForm +
+                "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
+
+            // Kolom 11 Pemesan
+            var td = document.createElement("td");
+            td.innerHTML += "<div name='tampil_pemesan_" + idAddForm + "' id='tampil_add_pemesan_" + idAddForm + "'></div>";
+            tr.appendChild(td);
+
+            // Kolom 12 Unit
+            var td = document.createElement("td");
+            td.innerHTML += "<input type='text' name='unit[]' id='unit_" + idAddForm +
+                "' class='form-control  inputNone' style='text-transform: uppercase;' value='{{ Auth::user()->alias == 'TFI' ? 'TFI' : (Auth::user()->username == 'yanti' ? 'Unit 1' : (Auth::user()->username == 'rizki' ? 'Unit 2' : '')) }}'>";
+            tr.appendChild(td);
+
+            // Kolom 13 Peruntukan
+            var td = document.createElement("td");
+            td.innerHTML += '<input readonly name="peruntukan[]" id="peruntukan_' + idAddForm +
+                '" class="form-control  inputNone" list"datalistPeruntukan" style="text-transform: uppercase;">';
+            tr.appendChild(td);
+
+            // Kolom 14 Sample
+            var td = document.createElement("td");
+            td.innerHTML += '<input readonly type="number" value="0" name="sample[]" id="sample_' + idAddForm +
+                '" class="form-control " style="">';
+            tr.appendChild(td);
+
+            // Kolom 14 Urgent
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.setAttribute("style", "border-right-color:#FFFFFF;border-top-color:#FFFFFF;border-bottom-color:#FFFFFF;");
+            td.innerHTML += '<input type="checkbox" name="urgent[]" id="urgent' + idAddForm + '" value="1"><br>';
+            tr.appendChild(td);
+
+            detail_add_transaksi.appendChild(tr);
+
+            idAddForm = (idAddForm - 1) + 2;
+            document.getElementById("idAddForm").value = idAddForm;
+        }
+
+        function hapusElemenForm(idAddForm) {
+            $("#btn-remove-form" + idAddForm).remove();
+        }
+
+        function tampilkanForm(idAddForm) {
+            var var_select = document.getElementById("jenis_" + idAddForm).value;
+            if (var_select == "Standar") {
+                document.getElementById("menampilkan_add_barang_" + idAddForm).innerHTML =
+                    '<select name="namaBarang[]" class="form-select  elementbrgAdd inputNone" style="text-transform: uppercase;"><option></option></select>';
+                $('#deskripsi_' + idAddForm).prop('readonly', false);
+                $('#katalog' + idAddForm).prop('readonly', false);
+                $('#part_' + idAddForm).prop('readonly', false);
+
+                document.getElementById("tampil_add_mesin_" + idAddForm).innerHTML =
+                    '<select name="mesin[]" class="form-select elementmsnAdd text-nowrap" style="text-transform: uppercase;"><option value="{{ Auth::user()->alias == 'TFI' ? '38TFI' : '' }}" selected="selected">{{ Auth::user()->alias == 'TFI' ? 'TFI TFI (UMUM)(UMUM)' : '' }}</option></select>';
+                $('#qty_' + idAddForm).prop('readonly', false);
+                $('#satuan_' + idAddForm).prop('readonly', false);
+                document.getElementById("tampil_add_pemesan_" + idAddForm).innerHTML =
+                    '<select required name="pemesan[]" class="form-select  elementprmAdd inputNone" style="text-transform: uppercase;"><option></option></select>';
+                $('#peruntukan_' + idAddForm).prop('readonly', false);
+                $('#sample_' + idAddForm).prop('readonly', false);
+            } else if (var_select == "Lain") {
+                document.getElementById("menampilkan_add_barang_" + idAddForm).innerHTML =
+                    '<input type="text" list="datalistNamaBarang" name="namaBarang[]" class="form-control  inputNone" style=";text-transform: uppercase;" >';
+                $('#deskripsi_' + idAddForm).prop('readonly', false);
+                $('#katalog' + idAddForm).prop('readonly', false);
+                $('#part_' + idAddForm).prop('readonly', false);
+
+                document.getElementById("tampil_add_mesin_" + idAddForm).innerHTML =
+                    '<select name="mesin[]" class="form-select  elementmsnAdd" style="text-transform: uppercase;"><option value="{{ Auth::user()->alias == 'TFI' ? '38TFI' : '' }}" selected="selected">{{ Auth::user()->alias == 'TFI' ? 'TFI TFI (UMUM)(UMUM)' : '' }}</option></select>';
+                $('#qty_' + idAddForm).prop('readonly', false);
+                $('#satuan_' + idAddForm).prop('readonly', false);
+
+                document.getElementById("tampil_add_pemesan_" + idAddForm).innerHTML =
+                    '<select name="pemesan[]" class="form-select  elementprmAdd inputNone" style="text-transform: uppercase;"><option></option></select>';
+                $('#peruntukan_' + idAddForm).prop('readonly', false);
+                $('#sample_' + idAddForm).prop('readonly', false);
+            }
+
+            $(document).ready(function() {
+                $(".elementbrg").select2({
+                    language: "id",
+                    placeholder: "Pilih Barang",
+                    ajax: {
+                        url: "/getMasterBarang",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.nama,
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementprm").select2({
+                    language: "id",
+                    placeholder: "Pilih Pemesan",
+                    ajax: {
+                        url: "/getMasterPemesan",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.nama.toUpperCase(),
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementmsn").select2({
+                    language: "id",
+                    width: '250px',
+                    placeholder: "Pilih Mesin",
+                    ajax: {
+                        url: "/getMesin",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            console.log(response);
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.mesin.toUpperCase() + " " + item.merk
+                                            .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
+                                                " (UNIT " + item.unit + ")"),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementbrgAdd").select2({
+                    dropdownParent: $("#addmoreitem"),
+                    language: "id",
+                    placeholder: "Pilih Barang",
+                    ajax: {
+                        url: "/getMasterBarang",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.nama,
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementprmAdd").select2({
+                    dropdownParent: $("#addmoreitem"),
+                    language: "id",
+                    placeholder: "Pilih Pemesan",
+                    ajax: {
+                        url: "/getMasterPemesan",
+                        // type: "post",
+                        dataType: 'json',
+                        delay: 200,
+                        // data: function(params) {
+                        //     return {
+                        //         searchTerm: params.term // search term
+                        //     };
+                        // },
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.nama.toUpperCase(),
+                                        text: item.nama.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementmsnAdd").select2({
+                    dropdownParent: $("#addmoreitem"),
                     language: "id",
                     width: '250px',
                     placeholder: "Pilih Mesin",
@@ -1244,6 +1635,74 @@
                     }
                 })
             }
+            if ($("#formAddPermintaan").length > 0) {
+                $("#formAddPermintaan").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#subAddItem').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Mohon Menunggu...');
+                        $("#subAddItem").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storedataAddPermintaan') }}",
+                            type: "POST",
+                            data: $('#formAddPermintaan').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Menyimpan Data',
+                                    html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Result:', response);
+                                $('#subAddItem').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#subAddItem").attr("disabled", false);
+                                tablePermintaan.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                document.getElementById("formAddPermintaan").reset();
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                tablePermintaan.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#subAddItem').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#subAddItem").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
             /*------------------------------------------==============================================================================================================================================================
             --------------------------------------------==============================================================================================================================================================
             End Create Data
@@ -1268,6 +1727,33 @@
                     },
                     success: function(data) {
                         $('.fetched-data-permintaan').html(data);
+                        $(".btnBackToForm").attr("data-noform",
+                            noform);
+                        $(".btnSaveForm").attr("data-noform",
+                            noform);
+                        $(".btnadditem").attr("data-noform",
+                            noform);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            $('#addmoreitem').on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget)
+                var noform = button.data('noform');
+                console.log("Add data in Noform: " + noform + "...");
+                $(".overlay").fadeIn(300);
+                $.ajax({
+                    type: 'POST',
+                    url: 'viewAddPermintaan',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        noform: noform,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-add-permintaan').html(data);
                     }
                 }).done(function() {
                     setTimeout(function() {

@@ -153,9 +153,11 @@ Route::controller(PermintaanController::class)->group(function () {
     // Permintaan
     Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
     Route::post('storedataPermintaan', 'storePermintaan');
+    Route::post('storedataAddPermintaan', 'storeAddPermintaan');
     Route::post('storedataEditPermintaan', 'storeEditPermintaan');
     Route::post('pengadaan/printPermintaan', 'printPermintaan')->name('pengadaan/printPermintaan');
     Route::post('pengadaan/viewPermintaan', 'viewPermintaan')->name('pengadaan/viewPermintaan');
+    Route::post('pengadaan/viewAddPermintaan', 'viewAddPermintaan')->name('pengadaan/viewAddPermintaan');
     Route::post('pengadaan/viewEditPermintaan', 'viewEditPermintaan')->name('pengadaan/viewEditPermintaan');
     Route::post('pengadaan/permintaan/repeatOrder', 'repeatOrder')->name('pengadaan/permintaan/repeatOrder');
 });
