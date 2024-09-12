@@ -946,13 +946,38 @@ class PermintaanController extends Controller
                         <div class="control-group col-lg-12">
                             <div id="ketTamb" class="shadow rounded border border-blue">
                                 <div class="mb-3">
-                                    <textarea id="tinymce-edit2" name="keteranganform" value="' . $getForm->keteranganform . '"></textarea>
+                                    <textarea id="tinymce-edit2" name="keteranganform">' . (empty($getForm->keteranganform) ? "" : $getForm->keteranganform) . '</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
             ';
         };
+        if (Auth::user()->role == "pur" || Auth::user()->role == "kng" || Auth::user()->role == "own") {
+            echo '
+            <br>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card bg-dark-lt shadow rounded border border-blue">
+                            <div class="card-body">
+                                <div class="mb-2">
+                                    <label class="form-label">Qty Acc</label>
+                                    <input type="number" name="qtyacc" id="qtyacc" class="form-control" value="' . $getItem->qtyacc . '">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">Estimasi Harga</label>
+                                    <input type="text" name="estimasiharga" id="estimasiharga" class="form-control" value="' . $getItem->estimasiharga . '">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">Pembeli</label>
+                                    <input type="text" name="pembeli" id="pembeli" class="form-control" value="' . $getItem->katalog . '">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ';
+        }
         echo '
                     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
                     <script type="text/javascript">
@@ -1135,6 +1160,15 @@ class PermintaanController extends Controller
                 'edited' => '1',
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
+        if (Auth::user()->role == "pur" || Auth::user()->role == "kng" || Auth::user()->role == "own") {
+            DB::table('permintaanitm')
+                ->where('kodeseri', $request->kodeseri)
+                ->update([
+                    'qtyacc' => $request->qtyacc,
+                    'estimasiharga' => $request->estimasiharga,
+                    'pembeli' => $request->pembeli,
+                ]);
+        }
         $getbarang2 = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri)->first();
         $check = DB::table('permintaan')
             ->where('noform', $getbarang2->noform)
