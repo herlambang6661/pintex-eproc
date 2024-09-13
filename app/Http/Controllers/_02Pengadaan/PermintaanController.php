@@ -25,11 +25,11 @@ class PermintaanController extends Controller
         return view('products/02_pengadaan.permintaan', [
             'active' => 'Permintaan',
             'judul' => 'Permintaan',
-            'namaBarang' => $this->getDatalist('permintaanitm', 'jenis', 'Lain', null),
-            'deskripsi' => $this->getDatalist('permintaanitm', null, null, 'keterangan'),
-            'katalog' => $this->getDatalist('permintaanitm', null, null, 'katalog'),
-            'part' => $this->getDatalist('permintaanitm', null, null, 'part'),
-            'satuan' => $this->getDatalist('permintaanitm', null, null, 'satuan'),
+            // 'namaBarang' => $this->getDatalist('permintaanitm', 'jenis', 'Lain', null),
+            // 'deskripsi' => $this->getDatalist('permintaanitm', null, null, 'keterangan'),
+            // 'katalog' => $this->getDatalist('permintaanitm', null, null, 'katalog'),
+            // 'part' => $this->getDatalist('permintaanitm', null, null, 'part'),
+            // 'satuan' => $this->getDatalist('permintaanitm', null, null, 'satuan'),
             'peruntukan' => $this->getDatalist('permintaanitm', null, null, 'peruntukan'),
         ]);
     }

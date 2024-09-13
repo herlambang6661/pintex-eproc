@@ -18,35 +18,10 @@
         <!-- Navbar -->
         @include('shared.navbar')
 
-        <datalist id="datalistNamaBarang">
-            @foreach ($namaBarang as $item)
-                <option value="{{ strtoupper($item->namaBarang) }}">{{ strtoupper($item->namaBarang) }}</option>
-            @endforeach
-        </datalist>
-        <datalist id="datalistDeskripsi">
-            @foreach ($deskripsi as $a)
-                <option value="{{ strtoupper($a->keterangan) }}">{{ strtoupper($a->keterangan) }}</option>
-            @endforeach
-        </datalist>
-        <datalist id="datalistKatalog">
-            @foreach ($katalog as $b)
-                <option value="{{ strtoupper($b->katalog) }}">{{ strtoupper($b->katalog) }}</option>
-            @endforeach
-        </datalist>
-        <datalist id="datalistPart">
-            @foreach ($part as $c)
-                <option value="{{ strtoupper($c->part) }}">{{ strtoupper($c->part) }}</option>
-            @endforeach
-        </datalist>
-        <datalist id="datalistSatuan">
-            @foreach ($satuan as $d)
-                <option value="{{ strtoupper($d->satuan) }}">{{ strtoupper($d->satuan) }}</option>
-            @endforeach
-        </datalist>
         <datalist id="datalistPeruntukan">
-            @foreach ($peruntukan as $e)
+            {{-- @foreach ($peruntukan as $e)
                 <option value="{{ strtoupper($e->peruntukan) }}">{{ strtoupper($e->peruntukan) }}</option>
-            @endforeach
+            @endforeach --}}
         </datalist>
 
         <div class="page-wrapper">
@@ -145,9 +120,8 @@
                                                                 onchange="syn()" value="{{ date('Y-m-01') }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" id="idfilter_sampai"
-                                                                class="form-control " onchange="syn()"
-                                                                value="{{ date('Y-m-t') }}">
+                                                            <input type="date" id="idfilter_sampai" class="form-control "
+                                                                onchange="syn()" value="{{ date('Y-m-t') }}">
                                                         </td>
                                                         <td>
                                                             <select id="dibuat" class="form-select">
