@@ -454,6 +454,17 @@ class PersetujuanController extends Controller
                         '
                                         <div class="row">
                                             <div class="col-md">
+                                                <div class="mt-1 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <div class="mt-3 badges">
+                                                    <i class="text-green">Ekspedisi : <input name="ekspedisi[]" type="text" style="width: 100px"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md">
                                                 <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
                                                 </div>
                                             </div>
@@ -467,7 +478,7 @@ class PersetujuanController extends Controller
                                                             $(".elementsupplier").select2({
                                                                 dropdownParent: $("#modalChecklistQty"),
                                                                 language: "id",
-                                                                width: "100px",
+                                                                width: "250px",
                                                                 tags: "true",
                                                                 allowClear: true,
                                                                 ajax: {
@@ -488,17 +499,6 @@ class PersetujuanController extends Controller
                                                             });
                                                         </script>
                                                     </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md">
-                                                <div class="mt-1 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-auto">
-                                                <div class="mt-3 badges">
-                                                    <i class="text-green">Ekspedisi : <input name="ekspedisi[]" type="text" style="width: 100px"></i>
                                                 </div>
                                             </div>
                                         </div>
