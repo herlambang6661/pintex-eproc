@@ -81,7 +81,7 @@ class PengambilanController extends Controller
                         </tr>
                     </thead>';
             foreach ($hasil as $key) {
-                $sisa = DB::table('pengambilanitm')->where('kodeseri', $key->kodeseri)->count();
+                $sisa = DB::table('pengambilanitm')->where('kodeseri', $key->kodeseri)->sum('jumlah');
                 if (($key->qty_diterima - $sisa) <= 0) {
                     echo    '<tbody>';
                     echo        '<td class="text-center"></td>';
