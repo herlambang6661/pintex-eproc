@@ -1294,30 +1294,6 @@
                     cache: true
                 },
             });
-            $(".elementmsn").select2({
-                language: "id",
-                width: '250px',
-                placeholder: "Pilih Mesin",
-                ajax: {
-                    url: "/getMesin",
-                    dataType: 'json',
-                    delay: 200,
-                    processResults: function(response) {
-                        console.log(response);
-                        return {
-                            results: $.map(response, function(item) {
-                                return {
-                                    id: item.id,
-                                    text: item.mesin.toUpperCase() + " " + item.merk
-                                        .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
-                                            " (UNIT " + item.unit + ")"),
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                },
-            });
             /*------------------------------------------
             --------------------------------------------
             End Render Select2

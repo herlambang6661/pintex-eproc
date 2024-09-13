@@ -450,11 +450,50 @@ class PersetujuanController extends Controller
                                             </div>
                                         </div>';
                     if (substr($request->id[$i], 0, 1) == "S") {
-                        echo '
+                        echo
+                        '
                                         <div class="row">
+                                            <div class="col-md">
+                                                <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
+                                                </div>
+                                            </div>
                                             <div class="col-md-auto">
                                                 <div class="mt-3 badges">
-                                                    <i class="text-green">Supplier : <input name="supplier[]" type="text" style="width: 120px"></i>
+                                                    <i class="text-green">
+                                                        Supplier :
+                                                        <select name="supplier[]" class="form-select elementsupplier border-danger" style="text-transform: uppercase;">
+                                                        </select>
+                                                        <script>
+                                                            $(".elementsupplier").select2({
+                                                                dropdownParent: $("#modalChecklistQty"),
+                                                                language: "id",
+                                                                width: "100px",
+                                                                tags: "true",
+                                                                allowClear: true,
+                                                                ajax: {
+                                                                    url: "/getMasterSupplier",
+                                                                    dataType: "json",
+                                                                    processResults: function(response) {
+                                                                        return {
+                                                                            results: $.map(response, function(item) {
+                                                                                return {
+                                                                                    id: item.nama,
+                                                                                    text: item.nama.toUpperCase(),
+                                                                                }
+                                                                            })
+                                                                        };
+                                                                    },
+                                                                    cache: true
+                                                                },
+                                                            });
+                                                        </script>
+                                                    </i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <div class="mt-1 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
                                                 </div>
                                             </div>
                                             <div class="col-md-auto">
@@ -462,7 +501,8 @@ class PersetujuanController extends Controller
                                                     <i class="text-green">Ekspedisi : <input name="ekspedisi[]" type="text" style="width: 100px"></i>
                                                 </div>
                                             </div>
-                                        </div>';
+                                        </div>
+                                        ';
                     }
 
                     echo '
@@ -559,7 +599,6 @@ class PersetujuanController extends Controller
                                 beforeSend: function() {
                                     $(".open-"+id).hide();
                                     $(".close-"+id).show();
-
                                     $("#tunggu-"+id).show();
                                     $("#hasilcari-"+id).hide();
                                     $("#tunggu-"+id).html(
@@ -584,7 +623,7 @@ class PersetujuanController extends Controller
             for ($i = 0; $i < $jml; $i++) {
                 if (substr($request->id[$i], 0, 1) == "S") {
                     $data = DB::table('servisitm')
-                        ->select('id', 'kodeseri_servis as kodeseri', 'qtykirim as qtyacc', 'namaBarang', 'qty', 'satuan', 'keterangan', 'katalog', 'serialnumber as part', 'pemesan', 'urgent', 'mesin')
+                        ->select('id', 'entitas', 'kodeseri_servis as kodeseri', 'qtykirim as qtyacc', 'namaBarang', 'qty', 'satuan', 'keterangan', 'katalog', 'serialnumber as part', 'pemesan', 'urgent', 'mesin')
                         ->where('kodeseri_servis', $request->id[$i])
                         ->get();
                     $tipe = "servis";

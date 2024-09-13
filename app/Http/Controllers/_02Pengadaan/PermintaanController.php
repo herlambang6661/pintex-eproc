@@ -211,6 +211,24 @@ class PermintaanController extends Controller
         return Response()->json($barang);
     }
 
+    function getMasterSupplier(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $barang = DB::table('person')
+                ->where('tipe', '=', "ENTITAS")
+                ->where('nama', 'LIKE', "%$search%")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        } else {
+            $barang = DB::table('person')
+                ->where('tipe', '=', "ENTITAS")
+                ->orderBy('nama', 'ASC')
+                ->get();
+        }
+        return Response()->json($barang);
+    }
+
     public function getMasterPemesan(Request $request)
     {
         if ($request->has('q')) {
@@ -806,19 +824,27 @@ class PermintaanController extends Controller
                                 <div class="card-body">
                                     <div class="mb-2">
                                         <label class="form-label">Nama Barang</label>
-                                        <input type="text" name="nama" id="nama" class="form-control" style="text-transform: uppercase;" value="' . $getItem->namaBarang . '">
+                                        <select name="nama" class="form-select elementbrglain border-danger" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->namaBarang . '" selected="selected">' . $getItem->namaBarang . '</option> 
+                                        </select>
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Deskripsi</label>
-                                        <input type="text" name="keterangan" id="keterangan" list="datalistDeskripsi" class="form-control" value="' . $getItem->keterangan . '">
+                                        <select name="keterangan" class="form-select elementdeskripsi border-danger" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->keterangan . '" selected="selected">' . $getItem->keterangan . '</option> 
+                                        </select>
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Katalog</label>
-                                        <input type="text" name="katalog" id="katalog" list="datalistKatalog" class="form-control" value="' . $getItem->katalog . '">
+                                        <select name="katalog" class="form-select elementkatalog border-danger" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->katalog . '" selected="selected">' . $getItem->katalog . '</option> 
+                                        </select>
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Part</label>
-                                        <input type="text" name="part" id="part" list="datalistPart" class="form-control" value="' . $getItem->part . '">
+                                        <select name="part" class="form-select elementpart border-danger" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->part . '" selected="selected">' . $getItem->part . '</option> 
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -842,7 +868,9 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Satuan</label>
-                                                <input type="text" name="satuan" id="satuan" list="datalistSatuan" class="form-control" value="' . $getItem->satuan . '">
+                                                <select name="satuan" class="form-select elementsatuan border-danger" style="text-transform: uppercase;">
+                                                    <option value="' . $getItem->satuan . '" selected="selected">' . $getItem->satuan . '</option> 
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -858,7 +886,7 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Unit</label>
-                                                <input type="text" name="unit" id="unit" class="form-control" value="' . $getItem->unit . '">
+                                                <input type="text" name="unit" id="unit" class="form-control" value="' . strtoupper($getItem->unit) . '">
                                             </div>
                                         </div>
                                     </div>
@@ -866,7 +894,7 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Peruntukan</label>
-                                                <input type="text" name="peruntukan" id="peruntukan" class="form-control" value="' . $getItem->peruntukan . '">
+                                                <input type="text" name="peruntukan" id="peruntukan" class="form-control" value="' . strtoupper($getItem->peruntukan) . '">
                                             </div>
                                         </div>
                                         <div class="col">
@@ -880,41 +908,6 @@ class PermintaanController extends Controller
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="card bg-green-lt shadow rounded border border-blue">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-2">
-                                                <label class="form-label">Entitas</label>
-                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->entitas . '">
-                                            </div>
-                                            <div class="mb-2">
-                                                <label class="form-label">Jenis</label>
-                                                <input type="hidden" name="kodeseri" value="' . $getItem->kodeseri . '">
-                                                <input type="text" name="jenis" id="jenis" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->jenis . '">
-                                            </div>
-                                            <div class="mb-2">
-                                                <label class="form-label">Tanggal</label>
-                                                <input type="date" name="tanggal" id="tanggal" class="form-control border border-blue" value="' . $getItem->tgl . '">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="mb-2">
-                                                <label class="form-label">Kodeseri</label>
-                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->kodeseri . '">
-                                            </div>
-                                            <div class="mb-2">
-                                                <label class="form-label">Noform</label>
-                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getItem->noform . '">
-                                            </div>
-                                            <div class="mb-2">
-                                                <label class="form-label">Pimpinan</label>
-                                                <input type="text" class="form-control border border-blue disabled cursor-not-allowed" readonly value="' . $getForm->kabag . '">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="hr-text text-blue">Keterangan Tambahan</div>
@@ -962,15 +955,21 @@ class PermintaanController extends Controller
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Deskripsi</label>
-                                        <input type="text" name="keterangan" id="keterangan" list="datalistDeskripsi" class="form-control" value="' . $getItem->keterangan . '">
+                                        <select name="keterangan" class="form-select elementdeskripsi border-danger" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->keterangan . '" selected="selected">' . $getItem->keterangan . '</option> 
+                                        </select>
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Katalog</label>
-                                        <input type="text" name="katalog" id="katalog" list="datalistKatalog" class="form-control" value="' . $getItem->katalog . '">
+                                        <select name="katalog" class="form-select elementkatalog border-danger" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->katalog . '" selected="selected">' . $getItem->katalog . '</option> 
+                                        </select>
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Part</label>
-                                        <input type="text" name="part" id="part" list="datalistPart" class="form-control" value="' . $getItem->part . '">
+                                        <select name="part" class="form-select elementpart border-danger" style="text-transform: uppercase;">
+                                            <option value="' . $getItem->part . '" selected="selected">' . $getItem->part . '</option> 
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -994,7 +993,9 @@ class PermintaanController extends Controller
                                         <div class="col">
                                             <div class="mb-2">
                                                 <label class="form-label">Satuan</label>
-                                                <input type="text" name="satuan" id="satuan" list="datalistSatuan" class="form-control" value="' . $getItem->satuan . '">
+                                                <select name="satuan" class="form-select elementsatuan border-danger" style="text-transform: uppercase;">
+                                                    <option value="' . $getItem->satuan . '" selected="selected">' . $getItem->satuan . '</option> 
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -1132,6 +1133,119 @@ class PermintaanController extends Controller
                                                     text: item.mesin.toUpperCase() + " " + item.merk
                                                         .toUpperCase() + (item.unit == "88" ? " (UMUM)" :
                                                             " (UNIT " + item.unit + ")"),
+                                                }
+                                            })
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                            $(".elementbrglain").select2({
+                                dropdownParent: $("#modalEditPermintaan"),
+                                language: "id",
+                                placeholder: "Ketik Nama Barang",
+                                tags: "true",
+                                allowClear: true,
+                                ajax: {
+                                    url: "/getMasterLain",
+                                    dataType: "json",
+                                    processResults: function(response) {
+                                        return {
+                                            results: $.map(response, function(item) {
+                                                return {
+                                                    id: item.namaBarang,
+                                                    text: item.namaBarang.toUpperCase(),
+                                                }
+                                            })
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                            $(".elementdeskripsi").select2({
+                                dropdownParent: $("#modalEditPermintaan"),
+                                language: "id",
+                                placeholder: "Ketik Deskripsi",
+                                tags: "true",
+                                allowClear: true,
+                                minimumInputLength: 1,
+                                ajax: {
+                                    url: "/getMasterDeskripsi",
+                                    dataType: "json",
+                                    processResults: function(response) {
+                                        return {
+                                            results: $.map(response, function(item) {
+                                                return {
+                                                    id: item.keterangan,
+                                                    text: item.keterangan.toUpperCase(),
+                                                }
+                                            })
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                            $(".elementkatalog").select2({
+                                dropdownParent: $("#modalEditPermintaan"),
+                                language: "id",
+                                placeholder: "Ketik Katalog",
+                                tags: "true",
+                                allowClear: true,
+                                minimumInputLength: 1,
+                                ajax: {
+                                    url: "/getMasterKatalog",
+                                    dataType: "json",
+                                    processResults: function(response) {
+                                        return {
+                                            results: $.map(response, function(item) {
+                                                return {
+                                                    id: item.katalog,
+                                                    text: item.katalog.toUpperCase(),
+                                                }
+                                            })
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                            $(".elementpart").select2({
+                                dropdownParent: $("#modalEditPermintaan"),
+                                language: "id",
+                                placeholder: "Ketik Part",
+                                tags: "true",
+                                allowClear: true,
+                                minimumInputLength: 1,
+                                ajax: {
+                                    url: "/getMasterPart",
+                                    dataType: "json",
+                                    processResults: function(response) {
+                                        return {
+                                            results: $.map(response, function(item) {
+                                                return {
+                                                    id: item.part,
+                                                    text: item.part.toUpperCase(),
+                                                }
+                                            })
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                            $(".elementsatuan").select2({
+                                dropdownParent: $("#modalEditPermintaan"),
+                                language: "id",
+                                placeholder: "Ketik Satuan",
+                                tags: "true",
+                                allowClear: true,
+                                ajax: {
+                                    url: "/getMasterSatuan",
+                                    dataType: "json",
+                                    processResults: function(response) {
+                                        return {
+                                            results: $.map(response, function(item) {
+                                                return {
+                                                    id: item.satuan,
+                                                    text: item.satuan.toUpperCase(),
                                                 }
                                             })
                                         };

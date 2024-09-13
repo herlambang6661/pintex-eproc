@@ -154,6 +154,7 @@ Route::controller(PermintaanController::class)->group(function () {
     Route::get('getMasterKatalog', 'getMasterKatalog')->name('getMasterKatalog');
     Route::get('getMasterPart', 'getMasterPart')->name('getMasterPart');
     Route::get('getMasterSatuan', 'getMasterSatuan')->name('getMasterSatuan');
+    Route::get('getMasterSupplier', 'getMasterSupplier')->name('getMasterSupplier');
     Route::get('getMasterPemesan', 'getMasterPemesan')->name('getMasterPemesan');
     // Permintaan
     Route::get('pengadaan/permintaan', 'permintaan')->name('pengadaan/permintaan');
