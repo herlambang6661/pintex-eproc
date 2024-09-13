@@ -1022,21 +1022,21 @@
 
             // Kolom 5 Deskripsi
             var td = document.createElement("td");
-            td.innerHTML += "<input readonly type='text' list='datalistDeskripsi' name='deskripsi[]' id='deskripsi_" +
+            td.innerHTML += "<div name='menampilkan_add_deskripsi_" + idAddForm + "' id='menampilkan_add_deskripsi_" +
                 idAddForm +
-                "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+                "'></div>";
             tr.appendChild(td);
 
             // Kolom 6 Katalog
             var td = document.createElement("td");
-            td.innerHTML += "<input readonly type='text' list='datalistKatalog' name='katalog[]' id='katalog" + idAddForm +
-                "' value='' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            td.innerHTML += "<div name='menampilkan_add_katalog_" + idAddForm + "' id='menampilkan_add_katalog_" +
+                idAddForm + "'></div>";
             tr.appendChild(td);
 
             // Kolom 7 Part
             var td = document.createElement("td");
-            td.innerHTML += "<input readonly type='text' list='datalistPart' name='part[]' id='part_" + idAddForm +
-                "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            td.innerHTML += "<div name='menampilkan_add_part_" + idAddForm + "' id='menampilkan_add_part_" + idAddForm +
+                "'></div>";
             tr.appendChild(td);
 
             // Kolom 8 Mesin
@@ -1052,8 +1052,8 @@
 
             // Kolom 10 Satuan
             var td = document.createElement("td");
-            td.innerHTML += "<input readonly list='datalistSatuan' type='text' name='satuan[]' id='satuan_" + idAddForm +
-                "' class='form-control  border border-red' style='text-transform: uppercase;'>";
+            td.innerHTML += "<div name='menampilkan_add_satuan_" + idAddForm + "' id='menampilkan_add_satuan_" + idAddForm +
+                "'></div>";
             tr.appendChild(td);
 
             // Kolom 11 Pemesan
@@ -1101,29 +1101,37 @@
             if (var_select == "Standar") {
                 document.getElementById("menampilkan_add_barang_" + idAddForm).innerHTML =
                     '<select name="namaBarang[]" class="form-select border border-red elementbrgAdd inputNone" style="text-transform: uppercase;"><option></option></select>';
-                $('#deskripsi_' + idAddForm).prop('readonly', false);
-                $('#katalog' + idAddForm).prop('readonly', false);
-                $('#part_' + idAddForm).prop('readonly', false);
+                document.getElementById("menampilkan_add_deskripsi_" + idAddForm).innerHTML =
+                    '<select name="deskripsi[]" class="form-select elementdeskripsiAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
+                document.getElementById("menampilkan_add_katalog_" + idAddForm).innerHTML =
+                    '<select name="katalog[]" class="form-select elementkatalogAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
+                document.getElementById("menampilkan_add_part_" + idAddForm).innerHTML =
+                    '<select name="part[]" class="form-select elementpartAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
+                document.getElementById("menampilkan_add_satuan_" + idAddForm).innerHTML =
+                    '<select name="satuan[]" class="form-select elementsatuanAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
 
                 document.getElementById("tampil_add_mesin_" + idAddForm).innerHTML =
                     '<select name="mesin[]" class="form-select border border-red elementmsnAdd text-nowrap" style="text-transform: uppercase;"><option value="{{ Auth::user()->alias == 'TFI' ? '38TFI' : '' }}" selected="selected">{{ Auth::user()->alias == 'TFI' ? 'TFI TFI (UMUM)(UMUM)' : '' }}</option></select>';
                 $('#qty_' + idAddForm).prop('readonly', false);
-                $('#satuan_' + idAddForm).prop('readonly', false);
                 document.getElementById("tampil_add_pemesan_" + idAddForm).innerHTML =
                     '<select required name="pemesan[]" class="form-select border border-red elementprmAdd inputNone" style="text-transform: uppercase;"><option></option></select>';
                 $('#peruntukan_' + idAddForm).prop('readonly', false);
                 $('#sample_' + idAddForm).prop('readonly', false);
             } else if (var_select == "Lain") {
                 document.getElementById("menampilkan_add_barang_" + idAddForm).innerHTML =
-                    '<input type="text" list="datalistNamaBarang" name="namaBarang[]" class="form-control border border-red inputNone" style=";text-transform: uppercase;" >';
-                $('#deskripsi_' + idAddForm).prop('readonly', false);
-                $('#katalog' + idAddForm).prop('readonly', false);
-                $('#part_' + idAddForm).prop('readonly', false);
+                    '<select name="namaBarang[]" class="form-select elementbrglainAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
+                document.getElementById("menampilkan_add_deskripsi_" + idAddForm).innerHTML =
+                    '<select name="deskripsi[]" class="form-select elementdeskripsiAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
+                document.getElementById("menampilkan_add_katalog_" + idAddForm).innerHTML =
+                    '<select name="katalog[]" class="form-select elementkatalogAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
+                document.getElementById("menampilkan_add_part_" + idAddForm).innerHTML =
+                    '<select name="part[]" class="form-select elementpartAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
+                document.getElementById("menampilkan_add_satuan_" + idAddForm).innerHTML =
+                    '<select name="satuan[]" class="form-select elementsatuanAdd border-danger" style="text-transform: uppercase;"><option></option></select>';
 
                 document.getElementById("tampil_add_mesin_" + idAddForm).innerHTML =
                     '<select name="mesin[]" class="form-select border border-red elementmsnAdd" style="text-transform: uppercase;"><option value="{{ Auth::user()->alias == 'TFI' ? '38TFI' : '' }}" selected="selected">{{ Auth::user()->alias == 'TFI' ? 'TFI TFI (UMUM)(UMUM)' : '' }}</option></select>';
                 $('#qty_' + idAddForm).prop('readonly', false);
-                $('#satuan_' + idAddForm).prop('readonly', false);
 
                 document.getElementById("tampil_add_pemesan_" + idAddForm).innerHTML =
                     '<select name="pemesan[]" class="form-select border border-red elementprmAdd inputNone" style="text-transform: uppercase;"><option></option></select>';
@@ -1210,6 +1218,120 @@
                                         text: item.mesin.toUpperCase() + " " + item.merk
                                             .toUpperCase() + (item.unit == '88' ? ' (UMUM)' :
                                                 " (UNIT " + item.unit + ")"),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementbrglainAdd").select2({
+                    dropdownParent: $("#addmoreitem"),
+                    language: "id",
+                    placeholder: "Ketik Nama Barang",
+                    tags: "true",
+                    allowClear: true,
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: "/getMasterLain",
+                        dataType: 'json',
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.namaBarang,
+                                        text: item.namaBarang.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementdeskripsiAdd").select2({
+                    dropdownParent: $("#addmoreitem"),
+                    language: "id",
+                    placeholder: "Ketik Deskripsi",
+                    tags: "true",
+                    allowClear: true,
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: "/getMasterDeskripsi",
+                        dataType: 'json',
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.keterangan,
+                                        text: item.keterangan.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementkatalogAdd").select2({
+                    dropdownParent: $("#addmoreitem"),
+                    language: "id",
+                    placeholder: "Ketik Katalog",
+                    tags: "true",
+                    allowClear: true,
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: "/getMasterKatalog",
+                        dataType: 'json',
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.katalog,
+                                        text: item.katalog.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementpartAdd").select2({
+                    dropdownParent: $("#addmoreitem"),
+                    language: "id",
+                    placeholder: "Ketik Part",
+                    tags: "true",
+                    allowClear: true,
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: "/getMasterPart",
+                        dataType: 'json',
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.part,
+                                        text: item.part.toUpperCase(),
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                });
+                $(".elementsatuanAdd").select2({
+                    dropdownParent: $("#addmoreitem"),
+                    language: "id",
+                    placeholder: "Ketik Satuan",
+                    tags: "true",
+                    allowClear: true,
+                    ajax: {
+                        url: "/getMasterSatuan",
+                        dataType: 'json',
+                        processResults: function(response) {
+                            return {
+                                results: $.map(response, function(item) {
+                                    return {
+                                        id: item.satuan,
+                                        text: item.satuan.toUpperCase(),
                                     }
                                 })
                             };
