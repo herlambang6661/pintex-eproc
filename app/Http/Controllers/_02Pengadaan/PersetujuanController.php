@@ -448,7 +448,24 @@ class PersetujuanController extends Controller
                                                     <i class="text-green">Estimasi Harga : <input name="estimasiHarga[]" type="number" style="width: 100px"></i>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>';
+                    if (substr($request->id[$i], 0, 1) == "S") {
+                        echo '
+                                        <div class="row">
+                                            <div class="col-md-auto">
+                                                <div class="mt-3 badges">
+                                                    <i class="text-green">Supplier : <input name="supplier[]" type="text" style="width: 120px"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <div class="mt-3 badges">
+                                                    <i class="text-green">Ekspedisi : <input name="ekspedisi[]" type="text" style="width: 100px"></i>
+                                                </div>
+                                            </div>
+                                        </div>';
+                    }
+
+                    echo '
                                     </div>
                                 </div>
                                 <div class="card-body bg-light pt-0 ps-0 pe-0 pb-0">
@@ -854,8 +871,8 @@ class PersetujuanController extends Controller
                             array(
                                 // 'tgl_qty_acc' => date('Y-m-d'),
                                 // 'pembeli' => $request->pembeli,
-                                // 'qtyacc' => $request->qtyAcc[$i],
-                                // 'estimasiharga' => $request->estimasiHarga[$i],
+                                'expedisi' => $request->ekspedisi[$i],
+                                'supplier' => $request->supplier[$i],
                                 'status' => 'ACC',
                                 'bypass' => $request->bypass[$i],
                                 'ketBypass' => $request->ketBypass[$i],
@@ -871,8 +888,8 @@ class PersetujuanController extends Controller
                             array(
                                 // 'tgl_qty_acc' => date('Y-m-d'),
                                 // 'pembeli' => $request->pembeli,
-                                // 'qtyacc' => $request->qtyAcc[$i],
-                                // 'estimasiharga' => $request->estimasiHarga[$i],
+                                'expedisi' => $request->ekspedisi[$i],
+                                'supplier' => $request->supplier[$i],
                                 'status' => 'MENUNGGU ACC',
                                 'bypass' => $request->bypass[$i],
                                 'ketBypass' => $request->ketBypass[$i],
