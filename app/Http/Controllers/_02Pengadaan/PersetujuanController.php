@@ -876,7 +876,7 @@ class PersetujuanController extends Controller
                                 'status' => 'ACC',
                                 'bypass' => $request->bypass[$i],
                                 'ketBypass' => $request->ketBypass[$i],
-                                'remember_token' => $request->_token,
+                                // 'remember_token' => $request->_token,
                                 'updated_at' => date('Y-m-d H:i:s'),
                             )
                         );
@@ -891,7 +891,7 @@ class PersetujuanController extends Controller
                                 'expedisi' => $request->ekspedisi[$i],
                                 'supplier' => $request->supplier[$i],
                                 'status' => 'MENUNGGU ACC',
-                                'remember_token' => $request->_token,
+                                // 'remember_token' => $request->_token,
                                 'updated_at' => date('Y-m-d H:i:s'),
                             )
                         );
