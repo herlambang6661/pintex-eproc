@@ -121,6 +121,96 @@ class PermintaanController extends Controller
         return Response()->json($barang);
     }
 
+    function getMasterLain(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $barang = DB::table('permintaanitm')
+                ->where('namaBarang', 'LIKE', "%$search%")
+                ->orderBy('namaBarang', 'ASC')
+                ->distinct()
+                ->get(['namaBarang']);
+        } else {
+            $barang = DB::table('permintaanitm')
+                ->orderBy('namaBarang', 'ASC')
+                ->distinct()
+                ->get(['namaBarang']);
+        }
+        return Response()->json($barang);
+    }
+
+    function getMasterDeskripsi(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $barang = DB::table('permintaanitm')
+                ->where('keterangan', 'LIKE', "%$search%")
+                ->orderBy('keterangan', 'ASC')
+                ->distinct()
+                ->get(['keterangan']);
+        } else {
+            $barang = DB::table('permintaanitm')
+                ->orderBy('keterangan', 'ASC')
+                ->distinct()
+                ->get(['keterangan']);
+        }
+        return Response()->json($barang);
+    }
+
+    function getMasterKatalog(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $barang = DB::table('permintaanitm')
+                ->where('katalog', 'LIKE', "%$search%")
+                ->orderBy('katalog', 'ASC')
+                ->distinct()
+                ->get(['katalog']);
+        } else {
+            $barang = DB::table('permintaanitm')
+                ->orderBy('katalog', 'ASC')
+                ->distinct()
+                ->get(['katalog']);
+        }
+        return Response()->json($barang);
+    }
+
+    function getMasterPart(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $barang = DB::table('permintaanitm')
+                ->where('part', 'LIKE', "%$search%")
+                ->orderBy('part', 'ASC')
+                ->distinct()
+                ->get(['part']);
+        } else {
+            $barang = DB::table('permintaanitm')
+                ->orderBy('part', 'ASC')
+                ->distinct()
+                ->get(['part']);
+        }
+        return Response()->json($barang);
+    }
+
+    function getMasterSatuan(Request $request)
+    {
+        if ($request->has('q')) {
+            $search = $request->q;
+            $barang = DB::table('permintaanitm')
+                ->where('satuan', 'LIKE', "%$search%")
+                ->orderBy('satuan', 'ASC')
+                ->distinct()
+                ->get(['satuan']);
+        } else {
+            $barang = DB::table('permintaanitm')
+                ->orderBy('satuan', 'ASC')
+                ->distinct()
+                ->get(['satuan']);
+        }
+        return Response()->json($barang);
+    }
+
     public function getMasterPemesan(Request $request)
     {
         if ($request->has('q')) {
