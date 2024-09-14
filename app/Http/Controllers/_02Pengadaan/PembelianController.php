@@ -52,6 +52,10 @@ class PembelianController extends Controller
                     $m = Carbon::parse($row->tgl)->format('d/m/Y');
                     return $m;
                 })
+                ->editColumn('namaBarang', function ($row) {
+                    $result = strtoupper($row->namaBarang);
+                    return $result;
+                })
                 ->addColumn('mesin', function ($row) {
                     $permintaanController = new PermintaanController();
                     $m = $permintaanController->getMesinPermintaan($row->mesin);

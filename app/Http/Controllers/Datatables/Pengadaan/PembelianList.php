@@ -50,6 +50,10 @@ class PembelianList extends Controller
                     $result = $row->kts . " " . $row->satuan;
                     return $result;
                 })
+                ->editColumn('namabarang', function ($row) {
+                    $result = strtoupper($row->namabarang);
+                    return $result;
+                })
                 ->addColumn('harga', function ($row) {
                     if ($row->currid == "IDR") {
                         $result = number_format($row->harga, 0, ",", ".");
