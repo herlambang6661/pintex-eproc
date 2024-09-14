@@ -52,7 +52,6 @@
                 </a>
                 <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode"
                     data-bs-toggle="tooltip" data-bs-placement="bottom">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -64,127 +63,111 @@
                 </a>
                 <div class="nav-item dropdown d-none d-md-flex me-3">
                     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
-                        aria-label="Show notifications">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round">
+                        aria-label="Show notifications" onclick="getNtf()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-bag">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path
-                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                                d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
                         </svg>
-                        <span class="badge bg-red"></span>
+                        {{-- <span class="badge bg-red"></span> --}}
                     </a>
+                    <script type="text/javascript">
+                        function getNtf() {
+                            $('#fetched-notification').html("");
+                            var htmlLoad = $(".notificationloading").html();
+                            $('#fetched-notification').html(htmlLoad);
+                            $.ajax({
+                                type: 'POST',
+                                url: '/viewNotifPermintaan',
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                },
+                                success: function(data) {
+                                    $('#fetched-notification').html(data);
+                                }
+                            }).done(function() {
+                                setTimeout(function() {
+                                    $(".notificationloading").fadeOut(50);
+                                }, 500);
+                            });
+                        }
+                    </script>
                     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Permintaan Barang</h3>
                             </div>
-                            <div class="list-group list-group-flush list-group-hoverable"
-                                style="height: 400px;overflow-y:auto;overflow-y: scroll;">
-                                @foreach (Session::get('notif') as $ntf)
-                                    <div class="list-group-item">
-                                        <div class="row align-items-center">
-                                            {{-- <div class="col-auto">
-                                                <span class="status-dot status-dot-animated bg-red d-block"></span>
-                                            </div> --}}
-                                            <div class="col-auto">
-                                                <span class="logo avatar-sm rounded"
-                                                    style="background-image: url('{{ asset('assets/static/temp/' . $ntf->dibuat . '.png') }}')"></span>
-                                            </div>
-                                            <div class="col text-truncate">
-                                                <a href="#" class="text-body d-block text-truncate mt-n1">
-                                                    ({{ $ntf->kodeseri }})
-                                                    {{ $ntf->namaBarang . ' ' . $ntf->keterangan . ' ' . $ntf->katalog . ' ' . $ntf->part }}
-                                                </a>
-                                                <div class="d-block text-muted text-truncate mt-n1">
-                                                    {{ $ntf->qty . ' ' . $ntf->satuan }}
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-due">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path
-                                                            d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
-                                                        <path d="M16 3v4" />
-                                                        <path d="M8 3v4" />
-                                                        <path d="M4 11h16" />
-                                                        <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                                                    </svg>
-                                                    {{ \Carbon\Carbon::parse($ntf->created_at)->diffForHumans() }}
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                @if ($ntf->urgent == 1)
-                                                    <a href="#" class="list-group-item-actions show">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tada icon-tabler icons-tabler-outline icon-tabler-bell">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                                                            <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                                                        </svg>
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                {{-- <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span
-                                                class="status-dot status-dot-animated bg-red d-block"></span></div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 1</a>
-                                            <div class="d-block text-muted text-truncate mt-n1">
-                                                Change deprecated html tags to text decoration classes (#29604)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted"
-                                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span class="status-dot d-block"></span></div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 2</a>
-                                            <div class="d-block text-muted text-truncate mt-n1">
-                                                justify-content:between ⇒ justify-content:space-between (#29734)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions show">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-yellow"
-                                                    width="24" height="24" viewBox="0 0 24 24"
-                                                    stroke-width="2" stroke="currentColor" fill="none"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div> --}}
 
+                            <div class="notificationloading" style="display: none">
+                                <ul class="list-group list-group-flush placeholder-glow">
+                                    <li class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="avatar avatar-rounded placeholder"></div>
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="placeholder placeholder-xs col-9"></div>
+                                                <div class="placeholder placeholder-xs col-7"></div>
+                                            </div>
+                                            <div class="col-2 ms-auto text-end">
+                                                <div class="placeholder placeholder-xs col-8"></div>
+                                                <div class="placeholder placeholder-xs col-10"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="avatar avatar-rounded placeholder"></div>
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="placeholder placeholder-xs col-9"></div>
+                                                <div class="placeholder placeholder-xs col-7"></div>
+                                            </div>
+                                            <div class="col-2 ms-auto text-end">
+                                                <div class="placeholder placeholder-xs col-8"></div>
+                                                <div class="placeholder placeholder-xs col-10"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="avatar avatar-rounded placeholder"></div>
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="placeholder placeholder-xs col-9"></div>
+                                                <div class="placeholder placeholder-xs col-7"></div>
+                                            </div>
+                                            <div class="col-2 ms-auto text-end">
+                                                <div class="placeholder placeholder-xs col-8"></div>
+                                                <div class="placeholder placeholder-xs col-10"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="avatar avatar-rounded placeholder"></div>
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="placeholder placeholder-xs col-9"></div>
+                                                <div class="placeholder placeholder-xs col-7"></div>
+                                            </div>
+                                            <div class="col-2 ms-auto text-end">
+                                                <div class="placeholder placeholder-xs col-8"></div>
+                                                <div class="placeholder placeholder-xs col-10"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="list-group list-group-flush list-group-hoverable" id="fetched-notification"
+                                style="height: 400px;width:400px;overflow-y:auto;overflow-y: scroll;">
                             </div>
                         </div>
                     </div>

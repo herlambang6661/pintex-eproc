@@ -86,6 +86,7 @@ Route::controller(DashboardController::class)->group(function () {
     Route::post('searchEngineModal', 'BarangSearchEngineModal')->name('searchEngineModal');
     Route::get('landing', 'landing')->name('landing');
     Route::post('existingPermintaan', 'exportExisting')->name('existingPermintaan');
+    Route::post('viewNotifPermintaan', 'viewNotifPermintaan')->name('viewAddPermintaan');
 });
 
 //Rute Master

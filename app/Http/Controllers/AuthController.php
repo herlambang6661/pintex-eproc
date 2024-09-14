@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
+    public function __construct()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        setlocale(LC_TIME, 'id_ID');
+        \Carbon\Carbon::setLocale('id');
+    }
     /**
      * Write code on Method
      *
@@ -55,8 +61,6 @@ class AuthController extends Controller
         } else {
             if (Auth::attempt($request->only(["username", "password"]))) {
                 if (Auth::user()->entitas_all == 1) {
-                    $notif = DB::table('permintaanitm')->orderByDesc('id')->limit('15')->get();
-                    session(['notif' => $notif]);
                     session(['entitas' => ""]);
                     return response()->json([
                         "status" => true,
@@ -72,8 +76,6 @@ class AuthController extends Controller
                     } elseif (Auth::user()->entitas_tfi == 1) {
                         $ent = "TFI";
                     }
-                    $notif = DB::table('permintaanitm')->orderByDesc('id')->limit('15')->get();
-                    session(['notif' => $notif]);
                     session(['entitas' => $ent]);
                     return response()->json([
                         "status" => true,
