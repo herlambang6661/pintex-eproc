@@ -19,6 +19,9 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        date_default_timezone_set('Asia/Jakarta');
+        setlocale(LC_TIME, 'id_ID');
+        \Carbon\Carbon::setLocale('id');
     }
 
     public function CariBarangSearchEngine(Request $request)
@@ -36,6 +39,7 @@ class DashboardController extends Controller
                 ->orderBy('namaBarang', 'ASC')
                 ->get();
         } else {
+            // kosongkan value
         }
 
         return response()->json($itm);

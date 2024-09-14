@@ -55,6 +55,8 @@ class AuthController extends Controller
         } else {
             if (Auth::attempt($request->only(["username", "password"]))) {
                 if (Auth::user()->entitas_all == 1) {
+                    $notif = DB::table('permintaanitm')->orderByDesc('id')->limit('15')->get();
+                    session(['notif' => $notif]);
                     session(['entitas' => ""]);
                     return response()->json([
                         "status" => true,
@@ -70,6 +72,8 @@ class AuthController extends Controller
                     } elseif (Auth::user()->entitas_tfi == 1) {
                         $ent = "TFI";
                     }
+                    $notif = DB::table('permintaanitm')->orderByDesc('id')->limit('15')->get();
+                    session(['notif' => $notif]);
                     session(['entitas' => $ent]);
                     return response()->json([
                         "status" => true,
