@@ -512,7 +512,7 @@ class DashboardController extends Controller
                     <div class="col-auto" title="' . $ntf->dibuat . '" data-bs-toggle="tooltip"
                         data-bs-placement="left">
                         <span class="logo avatar-sm rounded">
-                            <img class="rounded-circle" src="assets/static/temp/' . $ntf->dibuat . '.png" class="rounded" alt="...">
+                            <img class="rounded-circle" src="' . url("assets/static/temp/" . $ntf->dibuat . ".png") . '" class="rounded" alt="...">
                         </span>
                     </div>
                     <div class="col text-truncate">
