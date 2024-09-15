@@ -117,15 +117,19 @@
                                                     <tr>
                                                         <td>
                                                             <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
+                                                                value="{{ date('Y-m-01') }}">
                                                         </td>
                                                         <td>
                                                             <input type="date" id="idfilter_sampai" class="form-control "
-                                                                onchange="syn()" value="{{ date('Y-m-t') }}">
+                                                                value="{{ date('Y-m-t') }}">
                                                         </td>
                                                         <td>
                                                             <select id="dibuat" class="form-select">
-                                                                @if (Auth::user()->role == 'own' || Auth::user()->role == 'pur' || Auth::user()->role == 'kng')
+                                                                @if (Auth::user()->role == 'own' ||
+                                                                        Auth::user()->role == 'pur' ||
+                                                                        Auth::user()->role == 'kng' ||
+                                                                        Auth::user()->alias == 'HRD' ||
+                                                                        Auth::user()->alias == 'TFI')
                                                                     <option value="" selected>
                                                                         Semua
                                                                     </option>
