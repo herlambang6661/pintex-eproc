@@ -40,10 +40,19 @@ class PembelianController extends Controller
                 $sampai = date('Y-m-28');
             }
 
-            $data = DB::table('permintaanitm AS pi')
-                ->whereBetween('pi.tgl', [$dari, $sampai])
-                ->where('pi.status', '=', 'PROSES PEMBELIAN')
-                ->orderBy('pi.kodeseri', 'desc')
+            // $data = DB::table('permintaanitm AS pi')
+            //     ->whereBetween('pi.tgl', [$dari, $sampai])
+            //     ->where('pi.status', '=', 'PROSES PEMBELIAN')
+            //     ->orderBy('pi.kodeseri', 'desc')
+            //     ->get();
+
+            $data =  DB::table('permintaanitm AS pe')
+                ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+                ->whereBetween('pe.tgl', [$dari, $sampai])
+                ->where('pe.status', '=', 'PROSES PEMBELIAN')
+                ->orderBy('pe.kodeseri', 'desc')
                 ->get();
 
             return DataTables::of($data)
@@ -56,9 +65,15 @@ class PembelianController extends Controller
                     $result = strtoupper($row->namaBarang);
                     return $result;
                 })
+                // ->addColumn('mesin', function ($row) {
+                //     $permintaanController = new PermintaanController();
+                //     $m = $permintaanController->getMesinPermintaan($row->mesin);
+                //     return $m;
+                // })
                 ->addColumn('mesin', function ($row) {
-                    $permintaanController = new PermintaanController();
-                    $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    // $permintaanController = new PermintaanController();
+                    // $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    $m = $row->mesin . " " . $row->merk;
                     return $m;
                 })
                 ->addColumn('status', function ($row) {

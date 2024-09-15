@@ -34,7 +34,7 @@ class PenerimaanController extends Controller
             echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
             echo "<center>Tidak ada data yang dipilih</center>";
         } else {
-            $permintaanController = new PermintaanController();
+            // $permintaanController = new PermintaanController();
             $jml = count($request->id);
             echo '
                     <div class="row">
@@ -315,7 +315,18 @@ class PenerimaanController extends Controller
                 ';
             $z = 1;
             for ($i = 0; $i < $jml; $i++) {
-                $data = DB::table('barang')->where('id', $request->id[$i])->orderBy('kodeseri', 'asc')->get();
+                // $data = DB::table('barang')
+                // ->where('id', $request->id[$i])
+                // ->orderBy('kodeseri', 'asc')
+                // ->get();
+
+                $data = DB::table('barang AS pe')
+                    ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                    ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                    ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+                    ->where('pe.id', $request->id[$i])
+                    ->orderBy('pe.kodeseri', 'desc')
+                    ->get();
                 foreach ($data as $u) {
                     $qrCodes = QrCode::size(70)->generate($u->kodeseri);
                     echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
@@ -377,7 +388,7 @@ class PenerimaanController extends Controller
                                             <li>
                                                 <div class="payment-card">
                                                     <div class="hour text-danger">' . Carbon::parse($u->tgl_permintaan)->format('d/m/Y') . '</div>
-                                                    <div class="price text-green">' . $permintaanController->getMesinPermintaan($u->mesin) . '</div>
+                                                    <div class="price text-green">' . $u->mesin . ' ' . $u->merk . '</div>
                                                     <div class="token">
                                                         ' . strtoupper($u->namaBarang) . '
                                                         <span>' . $u->keterangan . " " . $u->katalog . " " . $u->part . '</span>
@@ -692,7 +703,15 @@ class PenerimaanController extends Controller
                 ';
             $z = 1;
             for ($i = 0; $i < $jml; $i++) {
-                $data = DB::table('barang')->where('id', $request->id[$i])->get();
+                // $data = DB::table('barang')->where('id', $request->id[$i])->get();
+
+                $data = DB::table('barang AS pe')
+                    ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                    ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                    ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+                    ->where('pe.id', $request->id[$i])
+                    ->orderBy('pe.kodeseri', 'desc')
+                    ->get();
                 foreach ($data as $u) {
                     echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
@@ -753,7 +772,7 @@ class PenerimaanController extends Controller
                                             <li>
                                                 <div class="payment-card">
                                                     <div class="hour text-danger">' . Carbon::parse($u->tgl_permintaan)->format('d/m/Y') . '</div>
-                                                    <div class="price text-green">' . $permintaanController->getMesinPermintaan($u->mesin) . '</div>
+                                                    <div class="price text-green">' . $u->mesin . '' . $u->merk . '</div>
                                                     <div class="token">
                                                         ' . strtoupper($u->namaBarang) . '
                                                         <span>' . $u->keterangan . " " . $u->katalog . " " . $u->part . '</span>

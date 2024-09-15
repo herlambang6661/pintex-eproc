@@ -61,7 +61,16 @@ class PersetujuanController extends Controller
                     $status = "HOLD";
                 }
 
+                // $data = DB::table('permintaanitm AS pe')
+                //     ->whereBetween('pe.tgl', [$dari, $sampai])
+                //     ->where('pe.status', 'like', $status)
+                //     ->orderBy('pe.kodeseri', 'desc')
+                //     ->get();
+
                 $data = DB::table('permintaanitm AS pe')
+                    ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                    ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                    ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
                     ->whereBetween('pe.tgl', [$dari, $sampai])
                     ->where('pe.status', 'like', $status)
                     ->orderBy('pe.kodeseri', 'desc')
@@ -78,8 +87,9 @@ class PersetujuanController extends Controller
                         return $m;
                     })
                     ->addColumn('mesin', function ($row) {
-                        $permintaanController = new PermintaanController();
-                        $m = $permintaanController->getMesinPermintaan($row->mesin);
+                        // $permintaanController = new PermintaanController();
+                        // $m = $permintaanController->getMesinPermintaan($row->mesin);
+                        $m = $row->mesin . " " . $row->merk;
                         return $m;
                     })
                     ->addColumn('status', function ($row) {
@@ -283,7 +293,7 @@ class PersetujuanController extends Controller
             echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
             echo "<center>Tidak ada data yang dipilih</center>";
         } else {
-            $permintaanController = new PermintaanController();
+            // $permintaanController = new PermintaanController();
             $jml = count($request->id);
             $dataPembeli = DB::table('person')->where('pembelian', '=', 1)->get();
             // $dataEstimasi = DB::table('barang')->where('', '=', '')->first();
@@ -348,7 +358,14 @@ class PersetujuanController extends Controller
                         ->get();
                     $tipe = "servis";
                 } else {
-                    $data = DB::table('permintaanitm')->where('kodeseri', $request->id[$i])->get();
+                    // $data = DB::table('permintaanitm')->where('kodeseri', $request->id[$i])->get();
+
+                    $data =  DB::table('permintaanitm AS pe')
+                        ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                        ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                        ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+                        ->where('pe.kodeseri', $request->id[$i])
+                        ->get();
                     $tipe = "permintaan";
                 }
                 foreach ($data as $u) {
@@ -375,7 +392,8 @@ class PersetujuanController extends Controller
                         $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $u->mesin)->first();
                         $mesin = $getMesin->mesin . " " . $getMesin->merk;
                     } else {
-                        $mesin = $permintaanController->getMesinPermintaan($u->mesin);
+                        // $mesin = $permintaanController->getMesinPermintaan($u->mesin);
+                        $mesin = $u->mesin . ' ' . $u->merk;
                     }
                     echo '
                         <style>
@@ -581,7 +599,7 @@ class PersetujuanController extends Controller
             echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
             echo "<center>Tidak ada data yang dipilih</center>";
         } else {
-            $permintaanController = new PermintaanController();
+            // $permintaanController = new PermintaanController();
             $jml = count($request->id);
             echo '
                     <div class="space-y">
@@ -628,7 +646,14 @@ class PersetujuanController extends Controller
                         ->get();
                     $tipe = "servis";
                 } else {
-                    $data = DB::table('permintaanitm')->where('kodeseri', $request->id[$i])->get();
+                    // $data = DB::table('permintaanitm')->where('kodeseri', $request->id[$i])->get();
+
+                    $data =  DB::table('permintaanitm AS pe')
+                        ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                        ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                        ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+                        ->where('pe.kodeseri', $request->id[$i])
+                        ->get();
                     $tipe = "permintaan";
                 }
                 foreach ($data as $u) {
@@ -641,7 +666,8 @@ class PersetujuanController extends Controller
                         $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $u->mesin)->first();
                         $mesin = $getMesin->mesin . " " . $getMesin->merk;
                     } else {
-                        $mesin = $permintaanController->getMesinPermintaan($u->mesin);
+                        // $mesin = $permintaanController->getMesinPermintaan($u->mesin);
+                        $mesin = $u->mesin . ' ' . $u->merk;
                     }
                     echo  '<input type="hidden" name="idpermintaan[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '" >';

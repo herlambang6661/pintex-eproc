@@ -84,7 +84,7 @@ class PermintaanController extends Controller
         if ($request->has('q')) {
             $search = $request->q;
             $mesin = DB::table('mastermesin AS me')
-                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm, mesin, id_mesinitm as id, unit, mi.kode_nomor'))
+                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm as id, mesin, id_mesinitm, unit, mi.kode_nomor'))
                 ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
                 ->where('me.mesin', 'LIKE', "%$search%")
                 ->orWhere('mi.merk', 'LIKE', "%$search%")
@@ -92,7 +92,7 @@ class PermintaanController extends Controller
                 ->get();
         } else {
             $mesin = DB::table('mastermesin AS me')
-                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm, mesin, id_mesinitm as id, unit'))
+                ->select(DB::raw('DISTINCT(id_mesin),merk,mi.id_itm as id, mesin, id_mesinitm, unit'))
                 ->join('mastermesinitm AS mi', 'me.id', '=', 'mi.id_mesin')
                 ->orderBy('me.mesin', 'ASC')
                 ->get();
@@ -447,7 +447,12 @@ class PermintaanController extends Controller
     {
         $no = 1;
         $getpermintaan = DB::table('permintaan')->where('noform', '=', $request->noform)->first();
-        $getpermintaanitem = DB::table('permintaanitm')->where('noform', '=', $request->noform)->get();
+        $getpermintaanitem =  DB::table('permintaanitm AS pe')
+            ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+            ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+            ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+            ->where('pe.noform', '=', $request->noform)
+            ->get();
         echo '
                 <style>
                     .stamp {
@@ -537,7 +542,7 @@ class PermintaanController extends Controller
                             ';
         $i = 1;
         foreach ($getpermintaanitem as $key) {
-            $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $key->mesin)->first();
+            // $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $key->mesin)->first();
             if ($key->status == 'PROSES PERSETUJUAN') {
                 $sst = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span>';
                 $txt = '<span class="badge bg-blue"><b>' . $key->status . '</b></span>';
@@ -571,7 +576,7 @@ class PermintaanController extends Controller
                                         <td class="text-center">' . $key->keterangan . '</td>
                                         <td class="text-center">' . $key->katalog . '</td>
                                         <td class="text-center">' . $key->part . '</td>
-                                        <td class="text-center">' . $getMesin->mesin . " " . $getMesin->merk . '</td>
+                                        <td class="text-center">' . $key->mesin . " " . $key->merk . '</td>
                                         <td class="text-center">' . $key->qty . ' ' . $key->satuan . '</td>
                                         <td class="text-center">' . $key->pemesan . '</td>
                                         <td class="text-center">' . $txt . '</td>
@@ -629,7 +634,13 @@ class PermintaanController extends Controller
     {
         $no = 1;
         $getpermintaan = DB::table('permintaan')->where('noform', '=', $request->noform)->first();
-        $getpermintaanitem = DB::table('permintaanitm')->where('noform', '=', $request->noform)->get();
+        // $getpermintaanitem = DB::table('permintaanitm')->where('noform', '=', $request->noform)->get();
+        $getpermintaanitem =  DB::table('permintaanitm AS pe')
+            ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+            ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+            ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+            ->where('pe.noform', '=', $request->noform)
+            ->get();
         echo '
                 <div class="modal-body" style="color: black;">
                     <div class="container">
@@ -662,7 +673,7 @@ class PermintaanController extends Controller
                             ';
         $i = 1;
         foreach ($getpermintaanitem as $key) {
-            $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $key->mesin)->first();
+            // $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $key->mesin)->first();
             if ($key->status == 'PROSES PERSETUJUAN') {
                 $sst = '<span class="status-dot status-dot-animated status-blue" style="font-size:11px"></span>';
                 $txt = '<span class="badge bg-blue"><b>' . $key->status . '</b></span>';
@@ -696,7 +707,7 @@ class PermintaanController extends Controller
                                         <td class="text-center">' . $key->keterangan . '</td>
                                         <td class="text-center">' . $key->katalog . '</td>
                                         <td class="text-center">' . $key->part . '</td>
-                                        <td class="text-center">' . $getMesin->mesin . " " . $getMesin->merk . '</td>
+                                        <td class="text-center">' . $key->mesin . " " . $key->merk . '</td>
                                         <td class="text-center">' . $key->qty . ' ' . $key->satuan . '</td>
                                         <td class="text-center">' . $key->pemesan . '</td>
                                         <td class="text-center">' . $txt . '</td>
@@ -775,9 +786,14 @@ class PermintaanController extends Controller
 
     public function viewEditPermintaan(Request $request)
     {
-        $getItem = DB::table('permintaanitm')->where('id', '=', $request->id)->first();
+        $getItem = DB::table('permintaanitm AS pe')
+            ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+            ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+            ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+            ->where('pe.id', '=', $request->id)
+            ->first();
         $getForm = DB::table('permintaan')->where('noform', '=', $getItem->noform)->first();
-        $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $getItem->mesin)->first();
+        // $getMesin = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $getItem->mesin)->first();
 
         if ($getItem->jenis == "Lain") {
             echo '
@@ -855,7 +871,7 @@ class PermintaanController extends Controller
                                     <div class="mb-2">
                                         <label class="form-label">Mesin</label>
                                         <select name="mesin" id="mesin" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;">
-                                            <option value="' . $getItem->mesin . '" selected="selected">' . $getMesin->mesin . " " . $getMesin->merk . '</option> 
+                                            <option value="' . $getItem->mesin . '" selected="selected">' . $getItem->mesin . " " . $getItem->merk . '</option> 
                                         </select>
                                     </div>
                                     <div class="row">
@@ -980,7 +996,7 @@ class PermintaanController extends Controller
                                     <div class="mb-2">
                                         <label class="form-label">Mesin</label>
                                         <select name="mesin" id="mesin" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;">
-                                            <option value="' . $getItem->mesin . '" selected="selected">' . $getMesin->mesin . " " . $getMesin->merk . '</option> 
+                                            <option value="' . $getItem->idmesin . '" selected="selected">' . $getItem->mesin . " " . $getItem->merk . '</option> 
                                         </select>
                                     </div>
                                     <div class="row">
@@ -1293,7 +1309,12 @@ class PermintaanController extends Controller
     public function printPermintaan(Request $request)
     {
         $permintaan = DB::table('permintaan')->where('noform', $request->noform)->get();
-        $permintaanItem = DB::table('permintaanitm')->where('noform', $request->noform)->get();
+        $permintaanItem = DB::table('permintaanitm AS pe')
+            ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+            ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+            ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+            ->where('noform', $request->noform)
+            ->get();
         return view('products/00_print.printPermintaan', ['permintaan' => $permintaan, 'permintaanItem' => $permintaanItem]);
     }
 

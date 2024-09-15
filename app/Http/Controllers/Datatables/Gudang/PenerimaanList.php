@@ -36,9 +36,18 @@ class PenerimaanList extends Controller
                 $sampai = date('Y-m-d');
             }
 
-            $data = DB::table('barang')
+            // $data = DB::table('barang')
+            //     ->where('status', '=', 'DITERIMA')
+            //     ->whereBetween('tgl_penerimaan', [$dari, $sampai])
+            //     ->orderBy('tgl_penerimaan', 'desc')
+            //     ->get();
+
+            $data = DB::table('barang AS pe')
+                ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
                 ->where('status', '=', 'DITERIMA')
-                ->whereBetween('tgl_penerimaan', [$dari, $sampai])
+                ->whereBetween('pe.tgl_penerimaan', [$dari, $sampai])
                 ->orderBy('tgl_penerimaan', 'desc')
                 ->get();
 
@@ -49,8 +58,9 @@ class PenerimaanList extends Controller
                     return $tgl;
                 })
                 ->addColumn('mesin', function ($row) {
-                    $permintaanController = new PermintaanController();
-                    $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    // $permintaanController = new PermintaanController();
+                    // $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    $m = $row->mesin . " " . $row->merk;
                     return $m;
                 })
                 ->addColumn('action', function ($row) {

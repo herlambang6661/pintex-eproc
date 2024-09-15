@@ -47,9 +47,9 @@ class PermintaanList extends Controller
             }
 
             $data = DB::table('permintaanitm AS pe')
-                // ->select('pe.id', 'pe.kodeseri', 'pe.noform', 'pe.tgl', 'pe.namaBarang', 'pe.keterangan', 'pe.katalog', 'pe.part', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli', 'pe.status', 'me.mesin', 'mi.merk', 'pe.edited')
-                // ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_mesinitm')
-                // ->leftJoin('mastermesin AS me', 'mi.id_itm', '=', 'me.id')
+                ->select('pe.id', 'pe.kodeseri', 'pe.noform', 'pe.tgl', 'pe.namaBarang', 'pe.keterangan', 'pe.katalog', 'pe.part', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli', 'pe.status', 'me.mesin', 'mi.merk', 'pe.edited')
+                ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
                 ->whereBetween('pe.tgl', [$dari, $sampai])
                 ->where('pe.entitas', 'LIKE', '%' . $entitas . '%')
                 ->where('pe.dibuat', 'LIKE', '%' . $dibuat . '%')
@@ -67,8 +67,9 @@ class PermintaanList extends Controller
                     return $m;
                 })
                 ->addColumn('mesin', function ($row) {
-                    $permintaanController = new PermintaanController();
-                    $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    // $permintaanController = new PermintaanController();
+                    // $m = $permintaanController->getMesinPermintaan($row->mesin);
+                    $m = $row->mesin . " " . $row->merk;
                     return $m;
                 })
                 ->addColumn('status', function ($row) {
