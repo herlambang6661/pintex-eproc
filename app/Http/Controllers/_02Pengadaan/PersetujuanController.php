@@ -237,6 +237,9 @@ class PersetujuanController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('permintaanitm AS pe')
+                ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
                 ->where('pe.bypass', '=', 1)
                 ->orderBy('pe.kodeseri', 'asc')
                 ->get();
@@ -247,12 +250,16 @@ class PersetujuanController extends Controller
                     $m = Carbon::parse($row->tgl)->format('d/m/Y');
                     return $m;
                 })
+                ->editColumn('mesin', function ($row) {
+                    $m = $row->mesin . " " . $row->merk;
+                    return $m;
+                })
                 ->addColumn('action', function ($row) {
                     $m = '
                     <div class="btn-list flex-nowrap">
                         <form method="POST" action="printPermintaan" target="_blank">
                             <input type="hidden" name="_token" value="' . csrf_token() . '">
-                            <input type="hidden" name="noform" value="' . $row->kodeform . '">
+                            <input type="hidden" name="noform" value="' . $row->noform . '">
                             <button type="submit" class="btn btn-sm btn-link btn-icon">
                                 <i class="fa-solid fa-print" style="margin-right:5px;"></i>
                             </button>
@@ -281,7 +288,7 @@ class PersetujuanController extends Controller
                     }
                     return $c;
                 })
-                ->rawColumns(['select_orders', 'status', 'tgl'])
+                ->rawColumns(['action', 'status', 'tgl'])
                 ->make(true);
         }
         return view('products.02_pengadaan.persetujuan');

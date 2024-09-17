@@ -322,6 +322,7 @@
                                                             </th>
                                                             <th class="px-1 th py-1">tgl</th>
                                                             <th class="px-1 th py-1">kodeseri</th>
+                                                            <th class="px-1 th py-1">Noform</th>
                                                             <th class="px-1 th py-1">barang</th>
                                                             <th class="px-1 th py-1">keterangan</th>
                                                             <th class="px-1 th py-1">katalog</th>
@@ -891,6 +892,191 @@
                 }
             });
             $('.datatable-qty-persetujuan tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="search" />'
+                );
+            });
+            tableUrgent = $('.datatable-urgent').DataTable({
+                "processing": true,
+                "serverSide": false,
+                "scrollX": false,
+                "scrollCollapse": false,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                "lengthMenu": [
+                    [25, 10, 25, 50, -1],
+                    ['Default', '10', '25', '50', 'Semua']
+                ],
+                "buttons": [{
+                        extend: 'collection',
+                        text: 'Selection',
+                        buttons: ['selectAll', 'selectNone']
+                    },
+                    {
+                        extend: 'copyHtml5',
+                        className: 'btn btn-teal',
+                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                    },
+
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24h24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                    // "select": {
+                    //     rows: {
+                    //         _: "%d item dipilih ",
+                    //         0: "Pilih item dan tekan tombol Proses data untuk memproses Qty Acc ",
+                    //     }
+                    // },
+                },
+                "ajax": {
+                    "type": "POST",
+                    "url": "{{ route('getACCUrgent.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.tipe = 'qtyacc';
+                        data.dari = $('#fqtydari').val();
+                        data.sampai = $('#fqtysampai').val();
+                        data.selected = $('#selectedValue').val();
+                    }
+                },
+                "initComplete": function(settings, json) {
+                    $('html').removeClass('cursor-wait');
+                },
+                // columnDefs: [{
+                //     'targets': 0,
+                //     "orderable": false,
+                //     'className': 'select-checkbox',
+                //     'checkboxes': {
+                //         'selectRow': true
+                //     },
+                // }],
+                // select: {
+                //     'style': 'multi',
+                //     "selector": 'td:not(:nth-child(2))',
+                // },
+                "columns": [{
+                        title: "",
+                        data: 'action',
+                        name: "action",
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
+                        title: 'Tgl Permintaan',
+                        data: 'tgl',
+                        name: 'tgl',
+                        className: "cuspad0 cuspad1 text-center clickable "
+                    },
+                    {
+                        title: 'Kodeseri',
+                        data: 'kodeseri',
+                        name: 'kodeseri',
+                        className: "cuspad0 cuspad1 text-center clickable "
+                    },
+                    {
+                        title: 'Noform',
+                        data: 'noform',
+                        name: 'noform',
+                        className: "cuspad0 cuspad1 text-center "
+                    },
+                    {
+                        title: 'Barang',
+                        data: 'namaBarang',
+                        name: 'namaBarang',
+                        className: "cuspad0 clickable "
+                    },
+                    {
+                        title: 'Deskripsi',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: "cuspad0 cuspad1 clickable "
+                    },
+                    {
+                        title: 'Katalog',
+                        data: 'katalog',
+                        name: 'katalog',
+                        className: "cuspad0 cuspad1 clickable "
+                    },
+                    {
+                        title: 'Part',
+                        data: 'part',
+                        name: 'part',
+                        className: "cuspad0 cuspad1 clickable "
+                    },
+                    {
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 clickable "
+                    },
+                    {
+                        title: 'Alasan',
+                        data: 'ketBypass',
+                        name: 'ketBypass',
+                        className: "cuspad0 cuspad1 clickable "
+                    },
+                    {
+                        title: 'QTY Minta',
+                        data: 'qty',
+                        name: 'qty',
+                        className: "cuspad0 cuspad1 text-center "
+                    },
+                    {
+                        title: 'Satuan',
+                        data: 'satuan',
+                        name: 'satuan',
+                        className: "cuspad0 cuspad1 text-center "
+                    },
+                    {
+                        title: 'Pemesan',
+                        data: 'pemesan',
+                        name: 'pemesan',
+                        className: "cuspad0 cuspad1 clickable "
+                    },
+                ],
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
+            });
+            $('.datatable-urgent tfoot .th').each(function() {
                 var title = $(this).text();
                 $(this).html(
                     '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="search" />'
