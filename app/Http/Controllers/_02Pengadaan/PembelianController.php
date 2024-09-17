@@ -1567,6 +1567,7 @@ class PembelianController extends Controller
                                 'updated_at' => date('Y-m-d H:i:s'),
                             ]);
                         DB::table('permintaanitm')->insert([
+                            'entitas' => $getItem->entitas,
                             'jenis' => $getItem->jenis,
                             'tgl' => $getItem->tgl,
                             'kodeseri' => $newKodeseri,
@@ -1612,6 +1613,7 @@ class PembelianController extends Controller
                         ]);
                         // input barang
                         DB::table('barang')->insert([
+                            'entitas' => $getItem->entitas,
                             'jenis' => $getbarang->jenis,
                             'kodeseri' => $getbarang->kodeseri,
                             'form_permintaan' => $getbarang->noform,
@@ -1666,6 +1668,7 @@ class PembelianController extends Controller
                             ]);
 
                         DB::table('permintaanitm')->insert([
+                            'entitas' => $getItem->entitas,
                             'jenis' => $getItem->jenis,
                             'tgl' => $getItem->tgl,
                             'kodeseri' => $newKodeseri,
@@ -1711,6 +1714,7 @@ class PembelianController extends Controller
                         ]);
                         // input barang
                         DB::table('barang')->insert([
+                            'entitas' => $getItem->entitas,
                             'jenis' => $getbarang->jenis,
                             'kodeseri' => $getbarang->kodeseri,
                             'form_permintaan' => $getbarang->noform,
