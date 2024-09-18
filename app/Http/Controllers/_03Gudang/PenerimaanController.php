@@ -1021,10 +1021,13 @@ class PenerimaanController extends Controller
                 $sampai = date('Y-m-d');
             }
 
-            $data = DB::table('barang')
-                ->where('status', '=', 'DIBELI')
-                ->whereBetween('tgl_pembelian', [$dari, $sampai])
-                ->orderBy('kodeseri', 'desc')
+            $data = DB::table('barang as pe')
+                ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
+                ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
+                ->where('pe.status', '=', 'DIBELI')
+                ->whereBetween('pe.tgl_pembelian', [$dari, $sampai])
+                ->orderBy('pe.kodeseri', 'desc')
                 ->get();
 
             return DataTables::of($data)
@@ -1032,13 +1035,8 @@ class PenerimaanController extends Controller
                 ->addColumn('mesin', function ($row) {
                     // $permintaanController = new PermintaanController();
                     // $m = $permintaanController->getMesinPermintaan($row->mesin);
-                    $m = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_mesinitm', '=', $row->mesin)->first();
-                    if (is_null($m)) {
-                        $msn = DB::table('mastermesinitm AS mi')->select('me.mesin', 'mi.merk')->join('mastermesin AS me', 'me.id', '=', 'mi.id_mesin')->where('mi.id_itm', '=', $row->mesin)->first();
-                        return $msn->mesin . " " . $msn->merk;
-                    } else {
-                        return $m->mesin . " " . $m->merk;
-                    }
+                    $m = $row->mesin . " " . $row->merk;
+                    return $m;
                 })
                 ->addColumn('tgl_pembelian', function ($row) {
                     $date = Carbon::parse($row->tgl_pembelian)->format('d/m/Y');
