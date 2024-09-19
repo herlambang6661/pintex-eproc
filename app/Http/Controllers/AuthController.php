@@ -59,7 +59,9 @@ class AuthController extends Controller
                 "errors" => $validator->errors()
             ]);
         } else {
-            if (Auth::attempt($request->only(["username", "password"]))) {
+            $rememberMe = $request->remember ? true : false;
+            $up = $request->only(["username", "password"]);
+            if (Auth::attempt($up, $rememberMe)) {
                 if (Auth::user()->entitas_all == 1) {
                     session(['entitas' => ""]);
                     return response()->json([

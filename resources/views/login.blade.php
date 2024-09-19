@@ -75,8 +75,9 @@
                         </div>
                         <div class="card card-md">
                             <div class="card-body">
-                                <h3 class="h3 text-center mb-4">Selamat Datang, Silahkan Login untuk menggunakan
-                                    aplikasi</h3>
+                                <h3 class="h3 text-center mb-4">
+                                    Selamat Datang, Silahkan Login untuk menggunakan aplikasi
+                                </h3>
                                 <form action="{{ route('login.post') }}" method="post" name="handleAjax"
                                     id="handleAjax">
                                     @csrf
@@ -98,6 +99,12 @@
                                         @if ($errors->has('password'))
                                             <span class="text-danger">{{ $errors->first('password') }}</span>
                                         @endif
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="remember">
+                                            <span class="form-check-label">Ingat Saya di perangkat ini</span>
+                                        </label>
                                     </div>
                                     <div class="form-footer">
                                         <button type="submit" id="submitLogin"
