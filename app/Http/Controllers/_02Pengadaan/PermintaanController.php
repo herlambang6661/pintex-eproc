@@ -871,7 +871,7 @@ class PermintaanController extends Controller
                                     <div class="mb-2">
                                         <label class="form-label">Mesin</label>
                                         <select name="mesin" id="mesin" class="form-select elementmsn text-nowrap" style="text-transform: uppercase;">
-                                            <option value="' . $getItem->mesin . '" selected="selected">' . $getItem->mesin . " " . $getItem->merk . '</option> 
+                                            <option value="' . $getItem->idmesin . '" selected="selected">' . $getItem->mesin . " " . $getItem->merk . '</option> 
                                         </select>
                                     </div>
                                     <div class="row">
