@@ -1077,7 +1077,7 @@ class PermintaanController extends Controller
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Pembeli</label>
-                                    <input type="text" name="pembeli" id="pembeli" class="form-control" value="' . $getItem->katalog . '">
+                                    <input type="text" name="pembeli" id="pembeli" class="form-control" value="' . $getItem->pembeli . '">
                                 </div>
                             </div>
                         </div>
