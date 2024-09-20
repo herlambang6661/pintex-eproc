@@ -1018,15 +1018,16 @@ class PersetujuanController extends Controller
                 '_token' => 'required',
             ],
         );
+
         $jml = count($request->kodeseri);
 
         for ($i = 0; $i < $jml; $i++) {
             if ($request->statusAcc[$i] == 'ACC') {
-                $status = 'PROSES PEMBELIAN';
+                $status = 'PROSES SERVIS';
             } else {
                 $status = $request->statusAcc[$i];
             }
-            $check = DB::table('permintaanitm')
+            $check = DB::table('servisitm')
                 ->where('id', $request->idpermintaan[$i])
                 ->limit(1)
                 ->update(
@@ -1034,9 +1035,9 @@ class PersetujuanController extends Controller
                         'status' => $status,
                         'statusACC' => $request->statusAcc[$i],
                         'keteranganACC' => $request->ketAcc[$i],
-                        'acc' => Auth::user()->name,
-                        'tgl_acc' => date('Y-m-d'),
-                        'updated_at' => date('Y-m-d H:i:s'),
+                        // 'acc' => Auth::user()->name,
+                        'tglacc' => now(),
+                        'updated_at' => now(),
                     )
                 );
         }
