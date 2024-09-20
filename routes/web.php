@@ -1,10 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Pengadaan;
 use App\Models\Pengadaan\Permintaan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Datatables\ExistingList;
 use App\Http\Controllers\_01Master\UangController;
 use App\Http\Controllers\_01Master\MesinController;
 use App\Http\Controllers\_03Gudang\StockController;
@@ -16,13 +19,17 @@ use App\Http\Controllers\_04Teknik\ServisController;
 use App\Http\Controllers\_01Master\SuplierController;
 use App\Http\Controllers\_04Teknik\BarcodeController;
 use App\Http\Controllers\_02Pengadaan\EmailController;
+use App\Http\Controllers\Datatables\Gudang\SampleList;
 use App\Http\Controllers\Datatables\Teknik\ServisList;
+use App\Http\Controllers\Datatables\Gudang\TransitList;
 use App\Http\Controllers\Pengaturan\PenggunaController;
 use App\Http\Controllers\_01Master\BarangJasaController;
 use App\Http\Controllers\_01Master\TarifPajakController;
 use App\Http\Controllers\_03Gudang\PenerimaanController;
 use App\Http\Controllers\_03Gudang\PengirimanController;
+use App\Http\Controllers\Datatables\Pengadaan\EmailList;
 use App\Http\Controllers\_04Teknik\PengambilanController;
+use App\Http\Controllers\Datatables\Pengadaan\StatusList;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\_01Master\MasterBarangController;
 use App\Http\Controllers\_02Pengadaan\PembelianController;
@@ -39,12 +46,7 @@ use App\Http\Controllers\Datatables\Pengadaan\PermintaanList;
 use App\Http\Controllers\Datatables\Pengadaan\PersetujuanList;
 use App\Http\Controllers\_05Laporan\LaporanPemakaianController;
 use App\Http\Controllers\_05Laporan\LaporanPembelianController;
-use App\Http\Controllers\Datatables\ExistingList;
-use App\Http\Controllers\Datatables\Gudang\SampleList;
-use App\Http\Controllers\Datatables\Gudang\TransitList;
-use App\Http\Controllers\Datatables\Pengadaan\EmailList;
 use App\Http\Controllers\Datatables\Pengadaan\StatusBarangList;
-use App\Http\Controllers\Datatables\Pengadaan\StatusList;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +60,58 @@ use App\Http\Controllers\Datatables\Pengadaan\StatusList;
 */
 
 Route::get('/', function () {
-    return view('login');
+    // return view('login');
+
+    if (Auth::check()) {
+        $countPermintaan = DB::table('permintaanitm')->count();
+        $countHold = DB::table('permintaanitm')->where('status', 'like', '%HOLD%')->count();
+        $countReject = DB::table('permintaanitm')->where('status', 'like', '%REJECT%')->count();
+        $countServis = DB::table('servisitm')->count();
+        $qtyPermintaan = DB::table('permintaanitm')
+            ->where('tgl', '>=', now()->subMonths(24))
+            ->where('status', "=", 'PROSES PERSETUJUAN')
+            ->orWhere('status', "=", 'ACC')
+            ->orWhere('status', "=", 'MENUNGGU ACC')
+            ->orWhere('status', "=", 'PROSES PEMBELIAN')
+            ->count();
+        $permintaan = DB::table('permintaanitm')
+            ->where('tgl', '>=', now()->subMonths(24))
+            ->where('status', "=", 'PROSES PERSETUJUAN')
+            ->orWhere('status', "=", 'ACC')
+            ->orWhere('status', "=", 'MENUNGGU ACC')
+            ->orWhere('status', "=", 'PROSES PEMBELIAN')
+            ->orderBy('tgl', 'asc')
+            ->limit('50')
+            ->get();
+        $qtyPembelian = DB::table('permintaanitm')
+            ->where('tgl', '>=', now()->subMonths(24))
+            ->where('status', "=", 'PROSES PEMBELIAN')
+            ->orderBy('tgl', 'asc')
+            ->limit('50')
+            ->count();
+        $pembelian = DB::table('permintaanitm')
+            ->where('tgl', '>=', now()->subMonths(24))
+            ->where('status', "=", 'PROSES PEMBELIAN')
+            ->orderBy('tgl', 'asc')
+            ->limit('50')
+            ->get();
+
+        return view('products.dashboard', [
+            'active' => 'Dashboard',
+            'judul' => 'Dashboard',
+
+            'countPermintaan' => $countPermintaan,
+            'countHold' => $countHold,
+            'countReject' => $countReject,
+            'countServis' => $countServis,
+            'permintaan' => $permintaan,
+            'qtyPermintaan' => $qtyPermintaan,
+            'pembelian' => $pembelian,
+            'qtyPembelian' => $qtyPembelian,
+        ]);
+    } else {
+        return view('login');
+    }
 });
 
 Route::resource('getPermintaan', PermintaanList::class);
