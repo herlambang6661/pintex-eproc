@@ -414,6 +414,12 @@
         }
 
         /* END Loader style */
+        .modal-body {
+            max-height: 70vh;
+            /* Sesuaikan ketinggian modal-body */
+            overflow-y: auto;
+            /* Menambahkan scroll */
+        }
     </style>
     <div class="modal modal-blur fade" id="modalDetailServis" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="overlay">
@@ -440,29 +446,92 @@
             </div>
         </div>
     </div>
-    <div class="modal modal-blur fade" id="modalEditPermintaan" tabindex="-1" style="display: none;"
-        aria-hidden="true">
-        <div class="overlay">
+    <div class="modal modal-blur fade" id="modalEditServis" tabindex="-1" style="display: none;" aria-hidden="true">
+        {{-- <div class="overlay">
             <div class="cv-spinner">
                 <span class="loader"></span>
             </div>
-        </div>
+        </div> --}}
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-lg-down" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <i class="fa-regular fa-pen-to-square"></i>
-                        Edit Permintaan (Undone)
+                        Edit Servis (Undone)
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="fetched-data-edit-permintaan"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary me-auto" data-bs-dismiss="modal">Simpan</button>
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
-                </div>
+                <form id="editForm" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="card-stamp card-stamp-lg">
+                            <div class="card-stamp-icon bg-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-bag"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+                                    <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="fetched-edit-servis">
+                            <div class="row">
+                                <div class="col-lg-12 mb-3">
+                                    <div class="card bg-pink-lt shadow rounded border border-blue">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="mb-2">
+                                                        <label class="form-label">Kodeseri</label>
+                                                        <input type="text" class="form-control border border-blue"
+                                                            disabled name="kodeseri_servis">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="mb-2">
+                                                        <label class="form-label">Noform</label>
+                                                        <input type="text" class="form-control border border-blue"
+                                                            name="noformservis">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Tanggal</label>
+                                                <input type="date" class="form-control" name="tgl">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Barang</label>
+                                                <input type="text" class="form-control" name="namaBarang">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Deskripsi</label>
+                                                <input type="text" class="form-control" name="keterangan">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Serial Number</label>
+                                                <input type="text" class="form-control" name="serialnumber">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Qty</label>
+                                                <input type="number" class="form-control" name="qty">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">Satuan</label>
+                                                <input type="text" class="form-control" name="satuan">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Keluar</button>
+                        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -957,25 +1026,91 @@
                 });
             });
 
-            $('#modalEditPermintaan').on('show.bs.modal', function(e) {
-                var button = $(e.relatedTarget)
-                var id = button.data('id');
-                console.log("Fetch Id Item: " + id + "...");
-                $(".overlay").fadeIn(300);
-                $.ajax({
-                    type: 'POST',
-                    url: 'viewEditPermintaan',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        id: id,
-                    },
-                    success: function(data) {
-                        $('.fetched-data-edit-permintaan').html(data);
-                    }
-                }).done(function() {
-                    setTimeout(function() {
-                        $(".overlay").fadeOut(300);
-                    }, 500);
+            $(document).ready(function() {
+
+                $(document).on('click', '.edit-btn', function() {
+                    var id = $(this).data('id');
+
+
+                    $.ajax({
+                        url: '/servis/' + id + '/edit',
+                        type: 'GET',
+                        success: function(data) {
+                            $('#modalEditServis input[name="kodeseri_servis"]').val(data
+                                .kodeseri_servis);
+                            $('#modalEditServis input[name="noformservis"]').val(data
+                                .noformservis);
+                            $('#modalEditServis input[name="tgl"]').val(data
+                                .tgl);
+                            $('#modalEditServis input[name="namaBarang"]').val(data
+                                .namaBarang);
+                            $('#modalEditServis input[name="keterangan"]').val(data
+                                .keterangan);
+                            $('#modalEditServis input[name="serialnumber"]').val(data
+                                .serialnumber);
+                            $('#modalEditServis input[name="qty"]').val(data
+                                .qty);
+                            $('#modalEditServis input[name="satuan"]').val(data
+                                .satuan);
+
+                            $('#editForm').attr('action', '/servis/' + id);
+
+                            var modal = new bootstrap.Modal(document.getElementById(
+                                'modalEditServis'));
+                            modal.show();
+
+                        },
+                        error: function() {
+                            alert('Failed to fetch data.');
+                        }
+                    });
+                });
+
+                $('#editForm').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var formAction = $(this).attr('action');
+                    var formData = $(this).serialize();
+
+
+                    $.ajax({
+                        url: formAction,
+                        type: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Data servis updated successfully.',
+                                position: 'top-end',
+                                toast: true,
+                                showConfirmButton: false,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter',
+                                        Swal.stopTimer)
+                                    toast.addEventListener('mouseleave',
+                                        Swal
+                                        .resumeTimer)
+                                }
+                            }).then(() => {
+                                location.reload();
+                            });
+                            $('#modalEditServis').modal('hide');
+                            $('#tablePermintaan').DataTable().ajax.reload();
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Failed to update data.',
+                                icon: 'error',
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+                        }
+                    });
                 });
             });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_04Teknik;
 
+use App\Models\Teknik\ServisitmModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -314,5 +315,19 @@ class ServisController extends Controller
         }
         echo '
         ';
+    }
+
+    public function edit($id)
+    {
+        $data = ServisitmModel::find($id);
+        return response()->json($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pengambilan = ServisitmModel::find($id);
+        $pengambilan->update($request->all());
+
+        return response()->json(['success' => 'Data berhasil diperbarui']);
     }
 }

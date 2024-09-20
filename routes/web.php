@@ -316,6 +316,8 @@ Route::controller(ServisController::class)->group(function () {
     Route::post('storedataServis', 'storedataServis');
     Route::post('teknik/printServis', 'printServis')->name('teknik/printServis');
     Route::post('teknik/viewServis', 'viewServis')->name('teknik/viewServis');
+    Route::get('/servis/{id}/edit', 'edit')->name('servis.edit');
+    Route::post('/servis/{id}', 'update')->name('servis.update');
 });
 
 Route::controller(ReturController::class)->group(function () {
