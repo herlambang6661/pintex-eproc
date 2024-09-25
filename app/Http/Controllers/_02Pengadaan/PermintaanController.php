@@ -262,7 +262,11 @@ class PermintaanController extends Controller
 
         // Initiate Noform
         if ($request->entitas == 'TFI') {
-            $checknoform = DB::table('permintaan')->where('noform', 'like', '%' . date('y') . '-' . '9%')->latest('noform')->first();
+            $checknoform = DB::table('permintaan')
+                // ->where('entitas', 'TFI') //diaktifkan kalo entitasnya TFI dan perkiraan awal tahun
+                ->where('noform', 'like', '%' . date('y') . '-' . '9%')
+                ->latest('noform')
+                ->first();
             if ($checknoform) {
                 $y = substr($checknoform->noform, 0, 2);
                 if (date('y') == $y) {
@@ -278,7 +282,10 @@ class PermintaanController extends Controller
                 $kodeSurat = date('y-') . "90001";
             }
         } else {
-            $checknoform = DB::table('permintaan')->latest('noform')->first();
+            $checknoform = DB::table('permintaan')
+                // ->where('entitas', 'PINTEX') //diaktifkan kalo entitasnya PINTEX dan perkiraan awal tahun
+                ->latest('noform')
+                ->first();
             $y = substr($checknoform->noform, 0, 2);
             if (date('y') == $y) {
                 $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();

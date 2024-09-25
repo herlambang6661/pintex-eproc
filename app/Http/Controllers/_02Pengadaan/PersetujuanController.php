@@ -1022,24 +1022,47 @@ class PersetujuanController extends Controller
         $jml = count($request->kodeseri);
 
         for ($i = 0; $i < $jml; $i++) {
-            if ($request->statusAcc[$i] == 'ACC') {
-                $status = 'PROSES SERVIS';
+
+            // update status Servis
+            if (substr($request->kodeseri[$i], 0, 1) == "S") {
+                if ($request->statusAcc[$i] == 'ACC') {
+                    $status = 'PROSES SERVIS';
+                } else {
+                    $status = $request->statusAcc[$i];
+                }
+                $check = DB::table('servisitm')
+                    ->where('id', $request->idpermintaan[$i])
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'status' => $status,
+                            'statusACC' => $request->statusAcc[$i],
+                            'keteranganACC' => $request->ketAcc[$i],
+                            'acc_servis' => Auth::user()->name,
+                            'tglacc' => now(),
+                            'updated_at' => now(),
+                        )
+                    );
             } else {
-                $status = $request->statusAcc[$i];
+                if ($request->statusAcc[$i] == 'ACC') {
+                    $status = 'PROSES PEMBELIAN';
+                } else {
+                    $status = $request->statusAcc[$i];
+                }
+                $check = DB::table('permintaanitm')
+                    ->where('id', $request->idpermintaan[$i])
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'status' => $status,
+                            'statusACC' => $request->statusAcc[$i],
+                            'keteranganACC' => $request->ketAcc[$i],
+                            'acc' => Auth::user()->name,
+                            'tgl_acc' => now(),
+                            'updated_at' => now(),
+                        )
+                    );
             }
-            $check = DB::table('servisitm')
-                ->where('id', $request->idpermintaan[$i])
-                ->limit(1)
-                ->update(
-                    array(
-                        'status' => $status,
-                        'statusACC' => $request->statusAcc[$i],
-                        'keteranganACC' => $request->ketAcc[$i],
-                        // 'acc' => Auth::user()->name,
-                        'tglacc' => now(),
-                        'updated_at' => now(),
-                    )
-                );
         }
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {

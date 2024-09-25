@@ -107,7 +107,7 @@ class PermintaanList extends Controller
                     } else {
                         $btnEdit = ' ';
                     }
-                    if ($row->status == "PROSES PERSETUJUAN" && (Auth::user()->alias == 'pur' || Auth::user()->alias == 'kng' || Auth::user()->alias == 'own')) {
+                    if ($row->status == "PROSES PERSETUJUAN") {
                         $btnCondition = '
                                     <a class="remove dropdown-item" href="javascript:void(0);" data-id="' . $row->kodeseri . '" data-nama="' . $row->namaBarang . '" data-desc="' . $row->keterangan . '">
                                         <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon text-red icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
@@ -157,7 +157,16 @@ class PermintaanList extends Controller
 
     public function destroy($id)
     {
-        DB::table('permintaanitm')->where('kodeseri', '=', $id)->delete();
-        return response()->json(['success' => 'Record deleted successfully.']);
+        $getData = DB::table('permintaanitm')->where('kodeseri', '=', $id)->first();
+        $getCount = DB::table('permintaanitm')->where('noform', '=', $getData->noform)->count();
+
+        if ($getCount <= 1) {
+            DB::table('permintaanitm')->where('kodeseri', '=', $id)->delete();
+            DB::table('permintaan')->where('noform', '=', $getData->noform)->delete();
+            return response()->json(['success' => 'Record deleted successfully.']);
+        } else {
+            DB::table('permintaanitm')->where('kodeseri', '=', $id)->delete();
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }
     }
 }
