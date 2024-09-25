@@ -35,6 +35,7 @@ class PersetujuanController extends Controller
     {
         if ($request->ajax()) {
             if ($request->selected == "PERMINTAAN") {
+                $unit = '';
                 if ($request->tipe == 'qtyacc') {
                     if ($request->dari) {
                         $dari = $request->dari;
@@ -51,6 +52,11 @@ class PersetujuanController extends Controller
                     $dari = date('2021-m-d');
                     $sampai = date('Y-m-d');
                     $status = "MENUNGGU ACC";
+                    if ($request->unit == '*') {
+                        $unit = '';
+                    } else {
+                        $unit = $request->unit;
+                    }
                 } elseif ($request->tipe == 'reject') {
                     $dari = date('2021-m-d');
                     $sampai = date('Y-m-d');
@@ -73,6 +79,7 @@ class PersetujuanController extends Controller
                     ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
                     ->whereBetween('pe.tgl', [$dari, $sampai])
                     ->where('pe.status', 'like', $status)
+                    ->where('pe.unit', 'like', '%' . $unit . '%')
                     ->orderBy('pe.kodeseri', 'desc')
                     ->get();
 

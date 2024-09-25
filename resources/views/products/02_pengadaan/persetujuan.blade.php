@@ -352,6 +352,44 @@
                                                             </tr>
                                                         </thead>
                                                     </table>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="row g-2">
+                                                                    <div class="col">
+                                                                        <select name="filterACCUnit" id="filterACCUnit"
+                                                                            class="form-select border border-blue">
+                                                                            <option value="*">-- Semua --</option>
+                                                                            <option value="Unit 1">Unit 1</option>
+                                                                            <option value="Unit 2">Unit 2</option>
+                                                                            <option value="Umum">Umum</option>
+                                                                            <option value="Kendaraan">Kendaraan</option>
+                                                                            <option value="TFO">TFO</option>
+                                                                            <option value="TFI">TFI</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <a href="#" class="btn btn-primary btn-icon"
+                                                                            aria-label="Button" onclick="synACC()">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="1.5"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                                <path d="M21 21l-6 -6" />
+                                                                            </svg>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 {{-- <div class="table-responsive"> --}}
                                                 <table
@@ -693,6 +731,11 @@
         function syn1() {
             tablePermintaanQty.ajax.reload();
         }
+
+        function synACC() {
+            tablePermintaanAcc.ajax.reload();
+        }
+
         $(document).ready(function() {
             var selected = new Array();
             // TABLE ---------------------------------------------------------//
@@ -1147,6 +1190,7 @@
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
                         data.tipe = 'persetujuan';
+                        data.unit = $('#filterACCUnit').val();
                         data.selected = $('#selectedValue').val();
                     }
                 },
