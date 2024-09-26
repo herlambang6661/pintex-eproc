@@ -1295,6 +1295,7 @@ class PembelianController extends Controller
             ]);
             DB::table('permintaanitm')->insert([
                 'remember_token'    => $request->_token,
+                'entitas' => $g->entitas,
                 'jenis' => 'Lain',
                 'tgl' => $request->tgl,
                 'kodeseri' => $kodeseriBaru,
@@ -1328,6 +1329,7 @@ class PembelianController extends Controller
             ]);
             // input barang
             DB::table('barang')->insert([
+                'entitas' => $g->entitas,
                 'jenis' => 'Lain',
                 'kodeseri' => $kodeseriBaru,
                 'form_permintaan' => $noformPermintaanBaru,
@@ -1475,6 +1477,7 @@ class PembelianController extends Controller
                 $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
                 // input pembelian items
                 DB::table('pembelianitm')->insert([
+                    'entitas' => $getbarang->entitas,
                     "noform" => $noform,
                     "nofaktur" => $request->nopo,
                     "kode" => $getbarang->kodeseri,
@@ -1509,6 +1512,7 @@ class PembelianController extends Controller
                         ]);
                     // input barang
                     DB::table('barang')->insert([
+                        'entitas' => $getbarang->entitas,
                         'jenis' => $getbarang->jenis,
                         'kodeseri' => $getbarang->kodeseri,
                         'form_permintaan' => $getbarang->noform,
