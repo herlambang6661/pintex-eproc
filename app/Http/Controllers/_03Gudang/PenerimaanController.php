@@ -838,61 +838,120 @@ class PenerimaanController extends Controller
 
         $jml = count($request->kodeseri);
         for ($i = 0; $i < $jml; $i++) {
-            // ambil data permintaan barang untuk deskripsi, katalog dan lain-lain
-            $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
-            // input Penerimaan Item
-            DB::table('penerimaanitm')->insert([
-                'npb' => $NPB,
-                'tanggal' => $request->tgl,
-                'kodeseri' => $getbarang->kodeseri,
-                "nama" => $getbarang->namaBarang,
-                'katalog' => $getbarang->katalog,
-                'mesin' => $getbarang->mesin,
-                'kts' => $request->diterima[$i],
-                'satuan' => $getbarang->satuan,
-                'pemesan' => $getbarang->pemesan,
-                'urgent' => $getbarang->urgent,
-                'dibeli' => $getbarang->dibeli,
-                'locker' => $request->locker[$i],
-                'partial' => $request->partial[$i],
-                'dibuat' => Auth::user()->name,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-            if ($request->diterima[$i] < $request->qtyBeli[$i]) {
-                $qty_partial = $request->qtyBeli[$i] - $request->diterima[$i];
-            } else {
-                $qty_partial = 0;
+            // penerimaan servis
+            if (substr($request->kodeseri[$i], 0, 1) == "S") {
+                // ambil data servis barang untuk deskripsi, katalog dan lain-lain
+                $getbarang = DB::table('servisitm')->where('kodeseri_servis', '=', $request->kodeseri[$i])->first();
+                // input Penerimaan Item
+                DB::table('penerimaanitm')->insert([
+                    'npb' => $NPB,
+                    'tanggal' => $request->tgl,
+                    'kodeseri' => $getbarang->kodeseri_servis,
+                    "nama" => $getbarang->namaBarang,
+                    'katalog' => $getbarang->keterangan,
+                    'mesin' => $getbarang->mesin,
+                    'kts' => $request->diterima[$i],
+                    'satuan' => $getbarang->satuan,
+                    'pemesan' => $getbarang->pemesan,
+                    'urgent' => $getbarang->urgent,
+                    'dibeli' => $getbarang->expedisi,
+                    'locker' => $request->locker[$i],
+                    'partial' => $request->partial[$i],
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+                if ($request->diterima[$i] < $request->qtyBeli[$i]) {
+                    $qty_partial = $request->qtyBeli[$i] - $request->diterima[$i];
+                } else {
+                    $qty_partial = 0;
+                }
+                // Update Barang
+                DB::table('barang')
+                    ->where('kodeseri', $getbarang->kodeseri_servis)
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'tgl_penerimaan' => $request->tgl,
+                            'qty_diterima' => $request->diterima[$i],
+                            'qty_partial' => $qty_partial,
+                            'npb' => $NPB,
+                            'locker' => $request->locker[$i],
+                            'partial' => $request->partial[$i],
+                            'status' => 'DITERIMA',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                DB::table('servisitm')
+                    ->where('kodeseri', $getbarang->kodeseri_servis)
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'tgl_terima' => $request->tgl,
+                            'qty_terima' => $request->diterima[$i],
+                            'qtypenerimaan_partial' => $qty_partial,
+                            'nsupp' => $NPB,
+                            'partial' => $request->partial[$i],
+                            'status' => 'DITERIMA',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+            } else { //penerimaan barang biasa
+                // ambil data permintaan barang untuk deskripsi, katalog dan lain-lain
+                $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
+                // input Penerimaan Item
+                DB::table('penerimaanitm')->insert([
+                    'npb' => $NPB,
+                    'tanggal' => $request->tgl,
+                    'kodeseri' => $getbarang->kodeseri,
+                    "nama" => $getbarang->namaBarang,
+                    'katalog' => $getbarang->katalog,
+                    'mesin' => $getbarang->mesin,
+                    'kts' => $request->diterima[$i],
+                    'satuan' => $getbarang->satuan,
+                    'pemesan' => $getbarang->pemesan,
+                    'urgent' => $getbarang->urgent,
+                    'dibeli' => $getbarang->dibeli,
+                    'locker' => $request->locker[$i],
+                    'partial' => $request->partial[$i],
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+                if ($request->diterima[$i] < $request->qtyBeli[$i]) {
+                    $qty_partial = $request->qtyBeli[$i] - $request->diterima[$i];
+                } else {
+                    $qty_partial = 0;
+                }
+                // Update Barang
+                DB::table('barang')
+                    ->where('kodeseri', $getbarang->kodeseri)
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'tgl_penerimaan' => $request->tgl,
+                            'qty_diterima' => $request->diterima[$i],
+                            'qty_partial' => $qty_partial,
+                            'npb' => $NPB,
+                            'locker' => $request->locker[$i],
+                            'partial' => $request->partial[$i],
+                            'status' => 'DITERIMA',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                DB::table('permintaanitm')
+                    ->where('kodeseri', $getbarang->kodeseri)
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'tgl_terima' => $request->tgl,
+                            'qtyterima' => $request->diterima[$i],
+                            'qtypenerimaan_partial' => $qty_partial,
+                            'nsupp' => $NPB,
+                            'partial' => $request->partial[$i],
+                            'status' => 'DITERIMA',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
             }
-            // Update Barang
-            DB::table('barang')
-                ->where('kodeseri', $getbarang->kodeseri)
-                ->limit(1)
-                ->update(
-                    array(
-                        'tgl_penerimaan' => $request->tgl,
-                        'qty_diterima' => $request->diterima[$i],
-                        'qty_partial' => $qty_partial,
-                        'npb' => $NPB,
-                        'locker' => $request->locker[$i],
-                        'partial' => $request->partial[$i],
-                        'status' => 'DITERIMA',
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    )
-                );
-            DB::table('permintaanitm')
-                ->where('kodeseri', $getbarang->kodeseri)
-                ->limit(1)
-                ->update(
-                    array(
-                        'tgl_terima' => $request->tgl,
-                        'qtyterima' => $request->diterima[$i],
-                        'qtypenerimaan_partial' => $qty_partial,
-                        'nsupp' => $NPB,
-                        'partial' => $request->partial[$i],
-                        'status' => 'DITERIMA',
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    )
-                );
         }
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($penerimaan) {

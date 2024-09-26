@@ -42,10 +42,13 @@ return new class extends Migration
             $table->date('tgl_pengiriman')->nullable();
             $table->date('tgl_diterima')->nullable();
             $table->integer('qty_terima')->nullable();
+            $table->integer('qtypenerimaan_partial')->nullable();
             $table->string('status')->nullable();
             $table->integer('estimasi')->nullable();
             $table->integer('garansi')->nullable();
             $table->date('estimasi_tgl')->nullable();
+            $table->string('nsupp')->nullable();
+            $table->string('partial')->nullable();
             $table->date('garansi_tgl')->nullable();
             $table->integer('edited')->nullable();
             $table->string('dibuat')->nullable();
