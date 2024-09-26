@@ -74,12 +74,12 @@ class PersetujuanController extends Controller
                 //     ->get();
 
                 $data = DB::table('permintaanitm AS pe')
-                    ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk')
+                    ->select('pe.*', 'pe.mesin as idmesin', 'me.mesin', 'mi.merk', 'pe.dibuat')
                     ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
                     ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
                     ->whereBetween('pe.tgl', [$dari, $sampai])
                     ->where('pe.status', 'like', $status)
-                    ->where('pe.unit', 'like', '%' . $unit . '%')
+                    ->where('me.unit', 'like', '%' . $unit . '%')
                     ->orderBy('pe.kodeseri', 'desc')
                     ->get();
 

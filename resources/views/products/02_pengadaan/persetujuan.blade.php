@@ -360,12 +360,11 @@
                                                                         <select name="filterACCUnit" id="filterACCUnit"
                                                                             class="form-select border border-blue">
                                                                             <option value="*">-- Semua --</option>
-                                                                            <option value="Unit 1">Unit 1</option>
-                                                                            <option value="Unit 2">Unit 2</option>
-                                                                            <option value="Umum">Umum</option>
-                                                                            <option value="Kendaraan">Kendaraan</option>
-                                                                            <option value="TFO">TFO</option>
-                                                                            <option value="TFI">TFI</option>
+                                                                            <option value="1">Unit 1</option>
+                                                                            <option value="2">Unit 2</option>
+                                                                            <option value="88">Umum</option>
+                                                                            <option value="15">Kendaraan</option>
+                                                                            <option value="3">TFI</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-auto">
@@ -419,6 +418,7 @@
                                                             <th class="px-1 th py-1">qty</th>
                                                             <th class="px-1 th py-1">satuan</th>
                                                             <th class="px-1 th py-1">pemesan</th>
+                                                            <th class="px-1 th py-1">Dibuat</th>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -1271,6 +1271,12 @@
                         title: 'PEMESAN',
                         data: 'pemesan',
                         name: 'pemesan',
+                        className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
+                    },
+                    {
+                        title: 'Dibuat',
+                        data: 'dibuat',
+                        name: 'dibuat',
                         className: "cuspad0 cuspad1 text-center clickable cursor-pointer"
                     },
                 ],
