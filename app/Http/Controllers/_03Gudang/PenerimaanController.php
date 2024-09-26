@@ -882,7 +882,7 @@ class PenerimaanController extends Controller
                         )
                     );
                 DB::table('servisitm')
-                    ->where('kodeseri', $getbarang->kodeseri_servis)
+                    ->where('kodeseri_servis', $getbarang->kodeseri_servis)
                     ->limit(1)
                     ->update(
                         array(
