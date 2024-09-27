@@ -253,6 +253,7 @@ Route::controller(PembelianController::class)->group(function () {
     Route::post('checkServis', 'checkServis');
     Route::post('storedataPembelian', 'storePembelian')->name('storedataPembelian');
     Route::post('storedataPembelianServis', 'storeServis')->name('storedataPembelianServis');
+    Route::post('pengadaan/printPembelian', 'printPembelian')->name('pengadaan/printPembelian');
 });
 
 Route::controller(StatusBarangController::class)->group(function () {

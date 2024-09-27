@@ -198,7 +198,7 @@ class PembelianController extends Controller
                         <div class="row">
                             <div class="col-lg-4 col-sm-5">
                                 <p>
-                                ' . $getForm->catatan . '
+                                ' . (!empty($getForm->catatan) ? "*Catatan: " . $getForm->catatan : "") . '
                                 </p>
                             </div>
                             <div class="col-lg-4 col-sm-5 ms-auto">
@@ -236,7 +236,7 @@ class PembelianController extends Controller
                         </div>
                         <div class="row">
                             <div class="col text-center">
-                            <div class="alert alert-important alert-info alert-dismissible" role="alert">
+                            <div class="alert alert-important bg-info-lt alert-dismissible" role="alert">
                             <h2> ' . Str::headline(Number::spell($getForm->grandtotal, locale: 'id')) . '</h2>
                             </div>
                             </div>
@@ -244,6 +244,24 @@ class PembelianController extends Controller
                     </div>
                 </div>
         ';
+    }
+
+    /**
+     * Prints the pembelian data based on the provided noform.
+     *
+     * @param Request $request The HTTP request containing the noform parameter.
+     * @return \Illuminate\View\printPembelian The view with the pembelian data.
+     */
+    public function printPembelian(Request $request)
+    {
+        $pembelian = DB::table('pembelian')->where('nofkt', $request->nofkt)->first();
+        $supplier = DB::table('person AS po')
+            ->where('po.nama', 'like', '%' . $pembelian->penjual . '%')
+            ->first();
+        $pembelianItem = DB::table('pembelianitm')
+            ->where('nofaktur', $request->nofkt)
+            ->get();
+        return view('products/00_print.printPembelian', ['pembelian' => $pembelian, 'pembelianItem' => $pembelianItem, 'supplier' => $supplier]);
     }
 
     public function getDataServis(Request $request)
