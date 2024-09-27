@@ -1477,7 +1477,6 @@ class PembelianController extends Controller
                 $getbarang = DB::table('permintaanitm')->where('kodeseri', '=', $request->kodeseri[$i])->first();
                 // input pembelian items
                 DB::table('pembelianitm')->insert([
-                    'entitas' => $getbarang->entitas,
                     "noform" => $noform,
                     "nofaktur" => $request->nopo,
                     "kode" => $getbarang->kodeseri,
