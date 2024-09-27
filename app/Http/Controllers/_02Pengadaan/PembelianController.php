@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\_02Pengadaan;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Number;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -123,96 +125,125 @@ class PembelianController extends Controller
 
     public function viewPembelian(Request $request)
     {
-        $no = 1;
-        $getpembelian = DB::table('pembelian')->where('nofkt', '=', $request->nofkt)->first();
-        $getpembelianitem = DB::table('pembelianitm')->where('nofaktur', '=', $request->nofkt)->get();
+        $getForm = DB::table('pembelian AS pe')->where('pe.nofkt', $request->nofkt)->first();
+        $getItem = DB::table('pembelianitm AS pi')
+            ->where('pi.nofaktur', $request->nofkt)
+            ->get();
+        $getSupp = DB::table('person AS po')
+            ->where('po.nama', 'like', '%' . $getForm->penjual . '%')
+            ->first();
         echo '
-                <div class="modal-body" style="color: black;">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <p> Tanggal : ' . Carbon::parse($getpembelian->tgl)->format("d/m/Y") . '</p>
-                                <p> No. Faktur : ' . $getpembelian->nofkt . '</p> 
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                No. Faktur <strong>' . $getForm->nofkt . '</strong>
                             </div>
-                            <div class="col-lg-6">
-                                <p> Penjual : ' . $getpembelian->penjual . '</p>
-                                <p> Pembeli : ' . $getpembelian->pembeli . '</p> 
+                            <div class="col-sm-6 text-end">
+                                <span class="float-right"> <strong>Mata Uang:</strong> ' . $getForm->currid . '</span>
+                                <br>
+                                <strong>' . Carbon::parse($getForm->tgl)->isoFormat('D MMMM Y') . '</strong>
                             </div>
                         </div>
-                        <table class="table table-sm table-bordered table-hover"
-                            style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
-                            <thead class="text-black" style="border-color: black;">
-                                <th style="border-color: black;" class="text-center">#</th>
-                                <th style="border-color: black;" class="text-center">Kodeseri</th>
-                                <th style="border-color: black;" class="text-center">Barang</th>
-                                <th style="border-color: black;" class="text-center">Quantity</th>
-                                <th style="border-color: black;" class="text-center">Harga</th>
-                                <th style="border-color: black;" class="text-center">Pajak</th>
-                                <th style="border-color: black;" class="text-center">Jumlah</th>
-                            </thead>
-                            <tbody class="text-black" style="border-color: black;">
-                            ';
-        foreach ($getpembelianitem as $key) {
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <h6 class="mb-3">Penjual:</h6>
+                                <div>
+                                    <strong>' . Str::headline($getForm->penjual) . '</strong>
+                                </div>
+                                <div>' . (empty($getForm->alamat) ? "" : $getForm->alamat . ", ") . (empty($getSupp->kota) ? "" : $getSupp->kota . ", ") . (empty($getSupp->provinsi) ? "" : $getSupp->provinsi . ".") . '</div>
+                                <small><i>Tlp: ' . (empty($getSupp->telp) ? "-" : $getSupp->telp) . '</i></small>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6 class="mb-3">Pembeli:</h6>
+                                <div>
+                                    <strong>' . Str::headline($getForm->pembeli) . '</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive-sm">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="center">#</th>
+                                        <th>Item</th>
+                                        <th class="right">Satuan</th>
+                                        <th class="center">Qty</th>
+                                        <th class="center">Harga Satuan</th>
+                                        <th class="center">Pajak</th>
+                                        <th class="right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>';
+        $no = 1;
+        foreach ($getItem as $key) {
             echo '
                                     <tr>
-                                        <td class="text-center">' . $no . '</td>
-                                        <td class="text-center">' . $key->kode . '</td>
-                                        <td class="">' . $key->namabarang . '</td>
-                                        <td class="text-center">' . $key->kts . '</td>
-                                        <td class="text-center">' . $key->harga . '</td>
-                                        <td class="text-center">' . $key->nmpajak . '</td>
-                                        <td class="text-center">' . $key->jumlah . '</td>
+                                        <td class="center">' . $no . '</td>
+                                        <td class="left strong">' . $key->namabarang . '</td>
+                                        <td class="right">' . $key->satuan . '</td>
+                                        <td class="left">' . $key->kts . '</td>
+                                        <td class="left">' . (empty($key->harga) ? "" : Number::format($key->harga, locale: 'id')) . '</td>
+                                        <td class="center">' . (empty($key->pajak) ? "" : Number::format($key->pajak, locale: 'id')) . '</td>
+                                        <td class="right">' . (empty($key->jumlah) ? "" : Number::format($key->jumlah, locale: 'id')) . '</td>
                                     </tr>
                                     ';
             $no++;
         }
         echo '
-                            </tbody>
-                        </table>
-                        <i>*Note : ' . $getpembelian->catatan . '</i>
-                        
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4 col-sm-5">
+                                <p>
+                                ' . $getForm->catatan . '
+                                </p>
                             </div>
-                            <div class="col-lg-6">
-                                <table class="table table-sm table-bordered table-hover"
-                                    style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
-                                    <tr class="text-black" style="border-color: black;">
-                                        <td colspan="5">Pembayaran</td>
-                                    </tr>
-                                    <tr class="text-black" style="border-color: black;">
-                                        <td>Subtotal</td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td>' . $getpembelian->subtotal . '</td>
-                                    </tr>
-                                    <tr class="text-black" style="border-color: black;">
-                                        <td>Diskon</td>
-                                        <td>:</td>
-                                        <td>' . $getpembelian->diskon . '%</td>
-                                        <td>' . $getpembelian->diskonint . '</td>
-                                    </tr>
-                                    <tr class="text-black" style="border-color: black;">
-                                        <td colspan="3"></td>
-                                        <td>' . $getpembelian->thasil . '</td>
-                                    </tr>
-                                    <tr class="text-black" style="border-color: black;">
-                                        <td>PPN</td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td>' . $getpembelian->totppn . '</td>
-                                    </tr>
-                                    <tr class="text-black" style="border-color: black;">
-                                        <td>Total</td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td>' . $getpembelian->grandtotal . '</td>
-                                    </tr>
+                            <div class="col-lg-4 col-sm-5 ms-auto">
+                                <table class="table table-clear">
+                                    <tbody>
+                                        <tr>
+                                            <td class="left">
+                                                <strong>Subtotal</strong>
+                                            </td>
+                                            <td class="right">' . (empty($getForm->subtotal) ? "" : Number::format($getForm->subtotal, locale: 'id')) . '</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="left">
+                                                <strong>Diskon (' . (empty($getForm->diskon) ? "" : Number::format($getForm->diskon, locale: 'id')) . '%)</strong>
+                                            </td>
+                                            <td class="right">' . (empty($getForm->diskonint) ? "" : Number::format($getForm->diskonint, locale: 'id')) . '</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="left">
+                                                <strong>PPN</strong>
+                                            </td>
+                                            <td class="right">' . (empty($getForm->totppn) ? "" : Number::format($getForm->totppn, locale: 'id')) . '</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="left">
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="right">
+                                                <strong>' . (empty($getForm->grandtotal) ? "" : Number::format($getForm->grandtotal, locale: 'id')) . '</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col text-center">
+                            <div class="alert alert-important alert-info alert-dismissible" role="alert">
+                            <h2> ' . Str::headline(Number::spell($getForm->grandtotal, locale: 'id')) . '</h2>
+                            </div>
+                            </div>
+                        </div>
                     </div>
-                </div>';
+                </div>
+        ';
     }
 
     public function getDataServis(Request $request)
