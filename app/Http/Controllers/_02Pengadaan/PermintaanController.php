@@ -1384,7 +1384,7 @@ class PermintaanController extends Controller
                 'part' => $request->part,
                 'mesin' => $request->mesin,
                 'qty' => $request->qty,
-                'satuan' => $request->satuan,
+                'satuan' => strtoupper($request->satuan),
                 'pemesan' => $request->pemesan,
                 'unit' => $request->unit,
                 'peruntukan' => $request->peruntukan,
