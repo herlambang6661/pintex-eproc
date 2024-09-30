@@ -171,6 +171,12 @@
                                                                     <option value="Sukmitiyanti">
                                                                         Sukmitiyanti
                                                                     </option>
+                                                                    <option value="Admin Purchasing">
+                                                                        Purchasing
+                                                                    </option>
+                                                                    <option value="Admin TFI">
+                                                                        TFI
+                                                                    </option>
                                                                 @endif
                                                             </select>
                                                         </td>
