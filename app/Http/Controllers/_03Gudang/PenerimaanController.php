@@ -927,7 +927,7 @@ class PenerimaanController extends Controller
                     'pemesan' => $getbarang->pemesan,
                     'urgent' => $getbarang->urgent,
                     'dibeli' => $getbarang->expedisi,
-                    'locker' => $request->locker[$i],
+                    // 'locker' => $request->locker[$i],
                     'partial' => $request->partial[$i],
                     'dibuat' => Auth::user()->name,
                     'created_at' => date('Y-m-d H:i:s'),
