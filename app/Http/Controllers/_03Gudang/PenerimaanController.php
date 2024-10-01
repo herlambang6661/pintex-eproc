@@ -947,7 +947,7 @@ class PenerimaanController extends Controller
                             'qty_diterima' => $request->diterima[$i],
                             'qty_partial' => $qty_partial,
                             'npb' => $NPB,
-                            'locker' => $request->locker[$i],
+                            // 'locker' => $request->locker[$i],
                             'partial' => $request->partial[$i],
                             'status' => 'DITERIMA',
                             'updated_at' => date('Y-m-d H:i:s'),
