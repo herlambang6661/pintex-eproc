@@ -328,11 +328,83 @@ class PenerimaanController extends Controller
                     ->orderBy('pe.kodeseri', 'desc')
                     ->get();
                 foreach ($data as $u) {
-                    $qrCodes = QrCode::size(70)->generate($u->kodeseri);
-                    echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
-                    echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
-                    echo  '<input type="hidden" name="partial[]" id="partial-' . $u->id . '" value="0">';
-                    echo '
+                    if (substr($u->kodeseri, 0, 1) == "S") { // Jika Kode Seri Mulai Dengan S (Servis)
+                        $qrCodes = QrCode::size(70)->generate($u->kodeseri);
+                        echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
+                        echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
+                        echo  '<input type="hidden" name="partial[]" id="partial-' . $u->id . '" value="0">';
+                        echo '
+                            <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary">
+                                <div class="container-customCard rounded-3 shadow-lg">
+                                    <div class="header-customCard rounded-3 pt-2">
+                                        <div class="navbar-customCard pt-2">
+                                            <button type="button" class="btn-link text-white open-' . $u->id . '" onclick="getDetails(`' . $u->id . '`, `' . $u->kodeseri . '`, `' . $u->namaBarang . '`)">
+                                                <i class="fa fa-bars" aria-hidden="true"></i>
+                                            </button>
+                                            <button type="button" class="btn-link text-white close-' . $u->id . '" onclick="closeDetails(`' . $u->id . '`)" style="display:none">
+                                                <i class="fas fa-xmark"></i>
+                                            </button>
+                                            <div class="main-account-customCard">
+                                                <h4>' . strtoupper($u->namaBarang) . '</h4>
+                                            </div>
+                                        </div>
+                                        <div class="top-view-customCard rounded-3 pt-1">
+                                            <div class="payment-infos">
+                                                <div class="text-white">
+                                                    Kodeseri : ' . $u->kodeseri . '
+                                                </div>
+                                                <div class="price">
+                                                    <input type="hidden" name="qtyBeli[]" value="' . $u->qty_beli . '" id="dibeli-' . $u->id . '">
+                                                    <input type="number" name="diterima[]" value="' . $u->qty_beli . '" id="diterima-' . $u->id . '" onblur="partialCheck(' . $u->id . ')" onclick="partialCheck(' . $u->id . ')" class="form-control" style="width: 50%" max="' . $u->qty_beli . '" min="0">
+                                                </div>
+                                                <div class="btc">
+                                                    Qty Servis: ' . $u->qty_beli . ' ' . strtoupper($u->satuan) . '
+                                                </div>
+                                            </div>
+                                            <div class="qr-code-customCard">
+                                                <div class="img-thumbnail border rounded-3">
+                                                    ' . $qrCodes . '
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ctas pt-1">
+                                            <label for="isi" class="mt-2 mb-2 text-white">Foto Penerimaan</label>
+                                            <input type="file" name="myImage-' . $u->kodeseri . '" class="form-control" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="gradient-overlay"></div>
+                                    <div class="bottom-view rounded-3 pt-1 pb-1">
+                                        <ul>
+                                            <li>
+                                                <div class="payment-card">
+                                                    <div class="hour text-danger">' . Carbon::parse($u->tgl_permintaan)->format('d/m/Y') . '</div>
+                                                    <div class="price text-green">' . $u->mesin . ' ' . $u->merk . '</div>
+                                                    <div class="token">
+                                                        ' . strtoupper($u->namaBarang) . '
+                                                        <span>' . $u->keterangan . " " . $u->katalog . " " . $u->part . '</span>
+                                                    </div>
+                                                    <h5> <span>' . ucfirst($u->supplier) . '</span> </h5>
+                                                    <div class="hasilcari-' . $u->id . '" style="display:none"></div>
+                                                    <div class="tunggu-' . $u->id . '" style="display:none"></div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <span class="badge bg-orange float-start" id="partialItem-' . $u->id . '" style="display:none">
+                                            <svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-star-half"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z" /></svg>
+                                            Partial
+                                        </span>
+                                        <span class="badge bg-indigo float-end">' . $z . ' / ' . $jml . '</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ';
+                        $z++;
+                    } else { // Jika Kode Seri Lain (Barang)
+                        $qrCodes = QrCode::size(70)->generate($u->kodeseri);
+                        echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
+                        echo  '<input type="hidden" name="kodeseri[]" value="' . $u->kodeseri . '">';
+                        echo  '<input type="hidden" name="partial[]" id="partial-' . $u->id . '" value="0">';
+                        echo '
                             <div class="list-inline list-inline-dots mt-0 mb-0 text-secondary">
                                 <div class="container-customCard rounded-3 shadow-lg">
                                     <div class="header-customCard rounded-3 pt-2">
@@ -408,8 +480,8 @@ class PenerimaanController extends Controller
                                 </div>
                             </div>
                         ';
-
-                    $z++;
+                        $z++;
+                    }
                 }
             }
             echo '      </div>';
@@ -886,7 +958,7 @@ class PenerimaanController extends Controller
                     ->limit(1)
                     ->update(
                         array(
-                            'tgl_terima' => $request->tgl,
+                            'tgl_diterima' => $request->tgl,
                             'qty_terima' => $request->diterima[$i],
                             'qtypenerimaan_partial' => $qty_partial,
                             'nsupp' => $NPB,
