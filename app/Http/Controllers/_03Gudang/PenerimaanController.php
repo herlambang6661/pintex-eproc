@@ -958,7 +958,7 @@ class PenerimaanController extends Controller
                     ->limit(1)
                     ->update(
                         array(
-                            'tgl_diterima' => $request->tgl,
+                            'tgl_diterima' => $request->tgl[$i],
                             'qty_terima' => $request->diterima[$i],
                             'qtypenerimaan_partial' => $qty_partial,
                             'nsupp' => $NPB,
