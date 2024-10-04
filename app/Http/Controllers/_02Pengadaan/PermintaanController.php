@@ -250,6 +250,15 @@ class PermintaanController extends Controller
         return Response()->json($pemesan);
     }
 
+    /*************  ✨ Codeium Command ⭐  *************/
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    /******  3c7a6a28-04d8-4d2b-8f09-4bbfd0698c3b  *******/
     function storePermintaan(Request $request)
     {
         $request->validate(
@@ -259,11 +268,14 @@ class PermintaanController extends Controller
                 'kabag' => 'required',
             ],
         );
-
-        // Initiate Noform
+        /* =================================================================================================
+        ====================================================================================================
+        Start Initiate Noform
+        ====================================================================================================
+        ==================================================================================================== */
         if ($request->entitas == 'TFI') {
             $checknoform = DB::table('permintaan')
-                // ->where('entitas', 'TFI') //diaktifkan kalo entitasnya TFI dan perkiraan awal tahun
+                ->where('entitas', 'TFI') //diaktifkan kalo entitasnya TFI dan perkiraan awal tahun
                 ->where('noform', 'like', '%' . date('y') . '-' . '9%')
                 ->latest('noform')
                 ->first();
@@ -283,7 +295,7 @@ class PermintaanController extends Controller
             }
         } else {
             $checknoform = DB::table('permintaan')
-                // ->where('entitas', 'PINTEX') //diaktifkan kalo entitasnya PINTEX dan perkiraan awal tahun
+                ->where('entitas', 'PINTEX') //diaktifkan kalo entitasnya PINTEX dan perkiraan awal tahun
                 ->latest('noform')
                 ->first();
             $y = substr($checknoform->noform, 0, 2);
@@ -297,12 +309,17 @@ class PermintaanController extends Controller
                 $kodeSurat = date('y-') . "00001";
             }
         }
+        /* =================================================================================================
+        ====================================================================================================
+        End Initiate Noform
+        ====================================================================================================
+        ==================================================================================================== */
 
         $jml_mbl = count($request->jenis);
         for ($i = 0; $i < $jml_mbl; $i++) {
             if ($request->entitas == 'TFI') {
                 // generate kodeseri TFI
-                $getkodeseri = DB::table('permintaanitm')->where('kodeseri', 'like', '%T%')->orderBy('kodeseri', 'desc')->first();
+                $getkodeseri = DB::table('permintaanitm')->where('entitas', 'TFI')->where('kodeseri', 'like', '%T%')->latest('kodeseri')->first();
                 if ($getkodeseri) {
                     $kdseri = $getkodeseri->kodeseri;
                     $noUrutKodeseri = (int) substr($kdseri, -6);
@@ -314,7 +331,7 @@ class PermintaanController extends Controller
                 }
             } else {
                 // generate kodeseri PINTEX
-                $getkodeseri = DB::table('permintaanitm')->where('kodeseri', 'not like', '%T%')->latest('kodeseri')->first();
+                $getkodeseri = DB::table('permintaanitm')->where('entitas', 'PINTEX')->where('kodeseri', 'not like', '%T%')->latest('kodeseri')->first();
                 if ($getkodeseri) {
                     $kdseriR = $getkodeseri->kodeseri;
                     $kdseri = $kdseriR + 1;

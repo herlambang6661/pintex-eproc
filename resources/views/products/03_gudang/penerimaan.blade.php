@@ -158,17 +158,15 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="date" id="listpermintaan_dari"
-                                                                    onchange="syn()" class="form-control "
-                                                                    value="{{ date('Y-m-01') }}">
+                                                                    class="form-control " value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
                                                                 <input type="date" id="listpermintaan_sampai"
-                                                                    onchange="syn()" class="form-control "
-                                                                    value="{{ date('Y-m-d') }}">
+                                                                    class="form-control " value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
+                                                                <button class="btn btn-primary btn-icon" type="button"
+                                                                    onclick="synList()">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="1.5"
@@ -180,9 +178,7 @@
                                                                             d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                                                                         <path d="M21 21l-6 -6" />
                                                                     </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -228,9 +224,8 @@
                                                 <table class="table mb-0">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center" colspan="2">Tanggal Pembelian</th>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center"></th>
+                                                            <th class="text-center">Tgl Awal</th>
+                                                            <th class="text-center">Tgl Akhir</th>
                                                             <th class="text-center"></th>
                                                         </tr>
                                                     </thead>
@@ -238,7 +233,7 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="date" id="checkpermintaan_dari"
-                                                                    onchange="synCheck()" class="form-control "
+                                                                    onchange="" class="form-control "
                                                                     value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
@@ -247,8 +242,20 @@
                                                                     value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
+                                                                <button class="btn btn-primary btn-icon"
+                                                                    onclick="synCheck()" type="button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                        <path d="M21 21l-6 -6" />
+                                                                    </svg>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -301,16 +308,16 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="date" id="idfilter_dari"
+                                                                <input type="date" id="idfilter_dari_partial"
                                                                     class="form-control " value="{{ date('Y-m-01') }}">
                                                             </td>
                                                             <td>
-                                                                <input type="date" id="idfilter_sampai"
+                                                                <input type="date" id="idfilter_sampai_partial"
                                                                     class="form-control " value="{{ date('Y-m-d') }}">
                                                             </td>
                                                             <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
+                                                                <button class="btn btn-primary btn-icon"
+                                                                    onclick="synPartial()" type="button">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="1.5"
@@ -322,9 +329,7 @@
                                                                             d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                                                                         <path d="M21 21l-6 -6" />
                                                                     </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
+                                                                </button>
                                                             </td>
                                                             <td></td>
                                                         </tr>
@@ -510,8 +515,12 @@
             tableChecklistPenerimaan.ajax.reload();
         }
 
-        function syn() {
+        function synList() {
             tableListPenerimaan.ajax.reload();
+        }
+
+        function synPartial() {
+            tablePartial.ajax.reload();
         }
         $(function() {
             //----------------------------------------------LIST PENERIMAAN-----------------------------------------//
@@ -859,8 +868,8 @@
                     "url": "{{ route('getPartial') }}",
                     "data": function(data) {
                         data._token = "{{ csrf_token() }}";
-                        // data.dari = $('#idfilter_dari').val();
-                        // data.sampai = $('#idfilter_sampai').val();
+                        data.dari = $('#idfilter_dari_partial').val();
+                        data.sampai = $('#idfilter_sampai_partial').val();
                     }
                 },
                 select: {

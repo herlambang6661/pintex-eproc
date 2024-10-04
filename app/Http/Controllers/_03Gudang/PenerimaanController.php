@@ -898,15 +898,6 @@ class PenerimaanController extends Controller
         } else {
             $NPB = "PN-" . date('y') . "-" . date('md') . "0001";
         }
-        // input Penerimaan
-        $penerimaan = DB::table('penerimaan')->insert([
-            'npb' => $NPB,
-            'tanggal' => $request->tgl,
-            'penerima' => $request->penerima,
-            'keterangan' => $request->keterangan,
-            'dibuat' => Auth::user()->name,
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
 
         $jml = count($request->kodeseri);
         for ($i = 0; $i < $jml; $i++) {
@@ -939,7 +930,7 @@ class PenerimaanController extends Controller
                 }
                 // Update Barang
                 DB::table('barang')
-                    ->where('kodeseri', $getbarang->kodeseri_servis)
+                    ->where('kodeseri', $request->kodeseri[$i])
                     ->limit(1)
                     ->update(
                         array(
@@ -954,7 +945,7 @@ class PenerimaanController extends Controller
                         )
                     );
                 DB::table('servisitm')
-                    ->where('kodeseri_servis', $getbarang->kodeseri_servis)
+                    ->where('kodeseri_servis', $request->kodeseri[$i])
                     ->limit(1)
                     ->update(
                         array(
@@ -1025,6 +1016,16 @@ class PenerimaanController extends Controller
                     );
             }
         }
+
+        // input Penerimaan
+        $penerimaan = DB::table('penerimaan')->insert([
+            'npb' => $NPB,
+            'tanggal' => $request->tgl,
+            'penerima' => $request->penerima,
+            'keterangan' => $request->keterangan,
+            'dibuat' => Auth::user()->name,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($penerimaan) {
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);

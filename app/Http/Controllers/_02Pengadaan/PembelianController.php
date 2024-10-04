@@ -1318,22 +1318,43 @@ class PembelianController extends Controller
             // ====== PERMINTAAN BARU AWAL
             // ======================================================
             // ======================================================
-            $noformPermintaan = DB::table('permintaan')->latest('noform')->first();
-            $y = substr($noformPermintaan->noform, 0, 2);
-            if (date('y') == $y) {
-                $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
-                $noUrut = (int) substr($query->noform, -5);
-                $noUrut++;
-                $char = date('y-');
-                $noformPermintaanBaru = $char . sprintf("%05s", $noUrut);
+            // $noformPermintaan = DB::table('permintaan')->latest('noform')->first();
+            // $y = substr($noformPermintaan->noform, 0, 2);
+            // if (date('y') == $y) {
+            //     $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
+            //     $noUrut = (int) substr($query->noform, -5);
+            //     $noUrut++;
+            //     $char = date('y-');
+            //     $noformPermintaanBaru = $char . sprintf("%05s", $noUrut);
+            // } else {
+            //     $noformPermintaanBaru = date('y-') . "00001";
+            // }
+
+            $checknoform = DB::table('permintaan')
+                ->where('noform', 'like', '%' . date('y') . '-' . '5%')
+                ->latest('noform')
+                ->first();
+            if ($checknoform) {
+                $y = substr($checknoform->noform, 0, 2);
+                if (date('y') == $y) {
+                    $query = DB::table('permintaan')->where('noform', 'like', '%' . date('y') . '-' . '5%')->orderBy('noform', 'desc')->first();
+                    $noUrut = (int) substr($query->noform, -4);
+                    $noUrut++;
+                    $char = date('y-') . '5';
+                    $noformPermintaanBaru = $char . sprintf("%04s", $noUrut);
+                } else {
+                    $noformPermintaanBaru = date('y-') . "50001";
+                }
             } else {
-                $noformPermintaanBaru = date('y-') . "00001";
+                $noformPermintaanBaru = date('y-') . "50001";
             }
+
             // Initiate kodeseri
-            $kodeseriBaru = DB::table("permintaanitm")->max('kodeseri');
+            $kodeseriBaru = DB::table("permintaanitm")->where('entitas', $g->entitas)->max('kodeseri');
             $kodeseriBaru++;
 
             DB::table('permintaan')->insert([
+                'entitas'           => $g->entitas,
                 'remember_token'    => $request->_token,
                 'tanggal'           => $request->tgl,
                 'noform'            => $noformPermintaanBaru,
@@ -1606,7 +1627,7 @@ class PembelianController extends Controller
                         $kserit = (int) substr($latestKodeseri->kodeseri, 1, 6);
                         $kserit++;
                         $char = "T";
-                        $newKodeseri = $char . sprintf("%05s", $kserit);
+                        $newKodeseri = $char . sprintf("%06s", $kserit);
                         $newQty = $request->qtypermintaan[$i] - $request->qtybeli[$i];
                         // update qty dan status permintaan lama
                         DB::table('permintaanitm')
@@ -1676,7 +1697,7 @@ class PembelianController extends Controller
                             'part' => $getbarang->part,
                             'mesin' => $getbarang->mesin,
                             'satuan' => $getbarang->satuan,
-                            'qty_permintaan' => $getbarang->qty,
+                            'qty_permintaan' => $newQty,
                             'qty_acc' => $newQty,
                             'pemesan' => $getbarang->pemesan,
                             'unit' => $getbarang->unit,
@@ -1718,7 +1739,6 @@ class PembelianController extends Controller
                                 'status' => 'DIBELI',
                                 'updated_at' => date('Y-m-d H:i:s'),
                             ]);
-
                         DB::table('permintaanitm')->insert([
                             'entitas' => $getItem->entitas,
                             'jenis' => $getItem->jenis,

@@ -245,7 +245,8 @@
                                                         <input type="text" name="entitas" id="entitas"
                                                             class="form-control {{ Session::get('entitas') == '' ? '' : 'cursor-not-allowed' }}"
                                                             {{ Session::get('entitas') == '' ? '' : 'readonly' }}
-                                                            value="{{ Session::get('entitas') == '' ? 'PINTEX' : Session::get('entitas') }}">
+                                                            value="{{ Session::get('entitas') == '' ? 'PINTEX' : Session::get('entitas') }}"
+                                                            required>
                                                     </div>
                                                     <div class="mb-1">
                                                         <label class="form-label">Tanggal Permintaan</label>
@@ -1344,7 +1345,6 @@
             tablePermintaan.ajax.reload();
         }
         $(function() {
-
             $("#repeatOr").keyup(function(event) {
                 if (event.keyCode === 13) {
                     var id = document.getElementById("repeatOr").value;
