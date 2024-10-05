@@ -15,8 +15,17 @@ class EmailList extends Controller
         $entitas = $request->session()->get('entitas');
 
         if ($request->ajax()) {
-            $dari = $request->dari ? $request->dari : date('Y-m-01');
-            $sampai = $request->sampai ? $request->sampai : date('Y-m-d');
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-01');
+            }
+
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-d');
+            }
 
             $type = $request->type;
 
@@ -40,7 +49,8 @@ class EmailList extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('tgl', function ($row) {
-                    return Carbon::parse($row->tgl)->format('d/m/Y');
+                    $m = Carbon::parse($row->tgl)->format('d/m/Y');
+                    return $m;
                 })
                 ->addColumn('status', function ($row) {
                     return $this->getStatusBadge($row->status);
