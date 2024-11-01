@@ -148,57 +148,47 @@
                                     <div class="tab-pane" id="tabs-qty-persetujuan">
                                         <div class="card card-xl shadow rounded border border-blue">
                                             <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center">Tgl Awal</th>
-                                                            <th class="text-center">Tgl Akhir</th>
-                                                            <th class="text-center"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="date" id="idfilter_dari"
-                                                                    class="form-control" onchange="syn()"
-                                                                    value="{{ date('Y-m-01') }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" id="idfilter_sampai"
-                                                                    class="form-control " onchange="syn()"
-                                                                    value="{{ date('Y-m-t') }}">
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-select">
-                                                                    <option value="all">Semua Unit</option>
-                                                                    <option value="Unit1">Unit 1</option>
-                                                                    <option value="Unit2">Unit 2</option>
-                                                                    <option value="TFO">TFO</option>
-                                                                    <option value="TFI">TFI</option>
-                                                                    <option value="UMUM">UMUM</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-primary btn-icon"
-                                                                    aria-label="Button">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"
-                                                                            fill="none" />
-                                                                        <path
-                                                                            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                        <path d="M21 21l-6 -6" />
-                                                                    </svg>
-                                                                </a>
-                                                                <input class="btn btn-primary" type="reset"
-                                                                    value="Reset">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <form action="#" id="form-filter-items" method="get"
+                                                    autocomplete="off" novalidate="">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Tgl Awal</th>
+                                                                <th class="text-center">Tgl Akhir</th>
+                                                                <th class="text-center"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="date" id="idfilter_dari"
+                                                                        class="form-control" value="{{ date('Y-m-01') }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="date" id="idfilter_sampai"
+                                                                        class="form-control " value="{{ date('Y-m-t') }}">
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-select" id="filter-unit">
+                                                                        <option value="all">Semua Unit</option>
+                                                                        <option value="Unit1">Unit 1</option>
+                                                                        <option value="Unit2">Unit 2</option>
+                                                                        <option value="TFO">TFO</option>
+                                                                        <option value="TFI">TFI</option>
+                                                                        <option value="UMUM">UMUM</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        id="btn-search">
+                                                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+
                                             </div>
                                             <div class="table-responsive">
                                                 <table style="width:100%; height: 100%;font-size:13px;"
@@ -570,6 +560,7 @@
                         data._token = "{{ csrf_token() }}";
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
+                        data.unit = $('#filter-unit').val();
                     }
                 },
                 "initComplete": function(settings, json) {
@@ -665,7 +656,9 @@
                         className: "cuspad0 cuspad1 text-center cursor-pointer"
                     },
                 ],
-
+            });
+            $('#btn-search').on('click', function() {
+                tableProsesEmail.ajax.reload(); // Reload DataTables dengan parameter filter baru
             });
 
             $('#modalChecklistEmail').on('show.bs.modal', function(e) {
