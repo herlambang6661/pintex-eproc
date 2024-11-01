@@ -522,6 +522,12 @@
                         searchable: false,
                     },
                     {
+                        title: 'Tanggal',
+                        data: 'tanggal',
+                        name: 'tanggal',
+                        className: "cuspad0 cuspad1 clickable text-center"
+                    },
+                    {
                         title: 'KODESERI',
                         data: 'kodeseri',
                         name: 'kodeseri',
