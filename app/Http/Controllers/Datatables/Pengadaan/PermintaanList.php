@@ -47,7 +47,7 @@ class PermintaanList extends Controller
             }
 
             $data = DB::table('permintaanitm AS pe')
-                ->select('pe.id', 'pe.kodeseri', 'pe.noform', 'pe.tgl', 'pe.namaBarang', 'pe.keterangan', 'pe.katalog', 'pe.part', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli', 'pe.status', 'me.mesin', 'mi.merk', 'pe.edited')
+                ->select('pe.id', 'pe.kodeseri', 'pe.noform', 'pe.tgl', 'pe.namaBarang', 'pe.keterangan', 'pe.katalog', 'pe.part', 'pe.qty', 'pe.qtyacc', 'pe.satuan', 'pe.dibeli', 'pe.status', 'me.mesin', 'mi.merk', 'pe.pemesan', 'pe.edited')
                 ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
                 ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
                 ->whereBetween('pe.tgl', [$dari, $sampai])

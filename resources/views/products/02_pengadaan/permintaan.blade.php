@@ -223,6 +223,7 @@
                                                     <th class="px-1 th py-1">qty</th>
                                                     <th class="px-1 th py-1">qty_acc</th>
                                                     <th class="px-1 th py-1">satuan</th>
+                                                    <th class="px-1 th py-1">Pemesan</th>
                                                     <th class="px-1 th py-1">dibeli</th>
                                                     <th class="px-1 th py-1">status</th>
                                                 </tr>
@@ -1542,6 +1543,12 @@
                         data: 'satuan',
                         name: 'satuan',
                         className: "cuspad0 text-center"
+                    },
+                    {
+                        title: 'Pemesan',
+                        data: 'pemesan',
+                        name: 'pemesan',
+                        className: "cuspad0 cuspad1 text-center"
                     },
                     {
                         title: 'Dibeli',
