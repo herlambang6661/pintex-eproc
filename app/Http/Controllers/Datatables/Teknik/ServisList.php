@@ -41,12 +41,30 @@ class ServisList extends Controller
             }
 
             $data = DB::table('servisitm AS pe')
+                ->leftJoin('mastermesinitm AS mmitm', 'pe.mesin', '=', 'mmitm.id_itm')
+                ->leftJoin('mastermesin AS mm', 'mmitm.id_mesin', '=', 'mm.id')
+                ->select([
+                    'pe.*',
+                    'mmitm.kode_nomor',
+                    'mm.mesin AS namaMesin'
+                ])
                 ->whereBetween('pe.tgl_servis', [$dari, $sampai])
                 ->orderBy('pe.kodeseri_servis', 'desc')
                 ->get();
 
+            // $data = DB::table('servisitm AS pe')
+            //     ->whereBetween('pe.tgl_servis', [$dari, $sampai])
+            //     ->orderBy('pe.kodeseri_servis', 'desc')
+            //     ->get();
+
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('kode_nomor', function ($row) {
+                    return $row->kode_nomor ? $row->kode_nomor : 'Tidak Ada Data';
+                })
+                ->addColumn('mesin', function ($row) {
+                    return $row->namaMesin ? $row->namaMesin : 'Tidak Ada Data';
+                })
                 ->addColumn('tgl', function ($row) {
                     $m = Carbon::parse($row->tgl_servis)->format('d/m/Y');
                     return $m;
@@ -131,7 +149,7 @@ class ServisList extends Controller
                 ->editColumn('select_orders', function ($row) {
                     return '';
                 })
-                ->rawColumns(['action', 'select_orders', 'status', 'tgl'])
+                ->rawColumns(['action', 'select_orders', 'status', 'tgl', 'kode_nomor', 'mesin'])
                 ->make(true);
         }
 

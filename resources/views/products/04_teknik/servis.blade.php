@@ -848,6 +848,18 @@
                         className: "cuspad0 cuspad1"
                     },
                     {
+                        title: 'Mesin',
+                        data: 'mesin',
+                        name: 'mesin',
+                        className: "cuspad0 cuspad1 text-center"
+                    },
+                    {
+                        title: 'Kode Mesin',
+                        data: 'kode_nomor',
+                        name: 'kode_nomor',
+                        className: "cuspad0 cuspad1 text-center"
+                    },
+                    {
                         title: 'Deskripsi',
                         data: 'keterangan',
                         name: 'keterangan',
