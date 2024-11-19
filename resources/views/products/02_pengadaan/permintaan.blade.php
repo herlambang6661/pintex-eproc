@@ -1861,7 +1861,7 @@
             });
             $('#addmoreitem').on('show.bs.modal', function(e) {
                 var button = $(e.relatedTarget)
-                var noform = button.data('noform');
+                var noform = $(".btnadditem").data('noform');
                 console.log("Add data in Noform: " + noform + "...");
                 $(".overlay").fadeIn(300);
                 $.ajax({

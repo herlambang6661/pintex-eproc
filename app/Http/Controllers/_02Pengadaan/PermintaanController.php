@@ -667,15 +667,14 @@ class PermintaanController extends Controller
             ->get();
         echo '
                 <div class="modal-body" style="color: black;">
-                    <div class="container">
                         <i>
+                            <p>Entitas : <input type="text" name="addEntitas" value="' . $getpermintaan->entitas . '" class="form-control-sm border-white"></p>
                             <p>
                                 Tanggal : ' . Carbon::parse($getpermintaan->tanggal)->format("d/m/Y") . '
                             </p>
                             <div class="row mb-2">
                                 <div class="col-lg-9 col-sm-9"> No. Form : ' . $getpermintaan->noform . '</div> 
                                 <input type="hidden" name="addNoform" value="' . $getpermintaan->noform . '">
-                                <input type="hidden" name="addEntitas" value="' . $getpermintaan->entitas . '">
                                 <input type="hidden" name="addTanggal" value="' . $getpermintaan->tanggal . '">
                             </div>
                         </i>
@@ -803,7 +802,6 @@ class PermintaanController extends Controller
                                 </table>
                             </div>
                         </div>
-                    </div>
                 </div>
                 ';
     }
