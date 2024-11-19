@@ -1422,7 +1422,7 @@
             --------------------------------------------*/
             tablePermintaan = $('.datatable-permintaan').DataTable({
                 "processing": true, //Feature control the processing indicator.
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
+                "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -1438,14 +1438,14 @@
                         extend: 'copyHtml5',
                         className: 'btn btn-teal',
                         text: '<i class="fa fa-copy text-white"></i> Salin',
-                        action: newexportaction,
+                        // action: newexportaction,
                     },
                     {
                         extend: 'excelHtml5',
                         autoFilter: true,
                         className: 'btn btn-success',
                         text: '<i class="fa fa-file-excel text-white"></i> Download Excel',
-                        action: newexportaction,
+                        // action: newexportaction,
                     },
                     {
                         extend: 'pdfHtml5',
