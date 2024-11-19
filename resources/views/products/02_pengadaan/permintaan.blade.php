@@ -181,9 +181,18 @@
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary"
+                                                            <button type="button" class="btn btn-primary btn-icon"
                                                                 onclick="syn()">
-                                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
                                                             </button>
                                                         </td>
                                                         {{--
@@ -1413,7 +1422,7 @@
             --------------------------------------------*/
             tablePermintaan = $('.datatable-permintaan').DataTable({
                 "processing": true, //Feature control the processing indicator.
-                "serverSide": false, //Feature control DataTables' server-side processing mode.
+                "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -1428,20 +1437,20 @@
                 "buttons": [{
                         extend: 'copyHtml5',
                         className: 'btn btn-teal',
-                        text: '<i class="fa fa-copy text-white"></i> Copy',
+                        text: '<i class="fa fa-copy text-white"></i> Salin',
                         action: newexportaction,
                     },
                     {
                         extend: 'excelHtml5',
                         autoFilter: true,
                         className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                        text: '<i class="fa fa-file-excel text-white"></i> Download Excel',
                         action: newexportaction,
                     },
                     {
                         extend: 'pdfHtml5',
                         className: 'btn btn-danger',
-                        text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                        text: '<i class="fa fa-file-pdf text-white"></i> Download Pdf',
                     },
                 ],
                 "language": {
