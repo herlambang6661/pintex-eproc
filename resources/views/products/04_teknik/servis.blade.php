@@ -125,26 +125,41 @@
                                                         <th class="text-center">Tgl Akhir</th>
                                                         <th class="text-center">Unit</th>
                                                         <th class="text-center">Status</th>
+                                                        <th class="text-center"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <td>
                                                             <input type="date" id="idfilter_dari" class="form-control"
-                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
+                                                                value="{{ date('Y-m-01') }}">
                                                         </td>
                                                         <td>
                                                             <input type="date" id="idfilter_sampai"
-                                                                class="form-control " onchange="syn()"
-                                                                value="{{ date('Y-m-d') }}">
+                                                                class="form-control " value="{{ date('Y-m-d') }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="idfilter_unit" onchange="syn()"
+                                                            <input type="text" id="idfilter_unit"
                                                                 class="form-control">
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="idfilter_status" onchange="syn()"
+                                                            <input type="text" id="idfilter_status"
                                                                 class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary btn-icon"
+                                                                onclick="syn()">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                                    <path d="M21 21l-6 -6" />
+                                                                </svg>
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -171,6 +186,8 @@
                                                     <th class="px-1 th py-1">noform</th>
                                                     <th class="px-1 th py-1">tgl</th>
                                                     <th class="px-1 th py-1">barang</th>
+                                                    <th class="px-1 th py-1">Mesin</th>
+                                                    <th class="px-1 th py-1">Kode Mesin</th>
                                                     <th class="px-1 th py-1">deskripsi</th>
                                                     <th class="px-1 th py-1">serialnumber</th>
                                                     <th class="px-1 th py-1">qty</th>
