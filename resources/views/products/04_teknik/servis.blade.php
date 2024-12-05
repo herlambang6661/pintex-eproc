@@ -123,8 +123,7 @@
                                                     <tr>
                                                         <th class="text-center">Tgl Awal</th>
                                                         <th class="text-center">Tgl Akhir</th>
-                                                        <th class="text-center">Unit</th>
-                                                        <th class="text-center">Status</th>
+                                                        <th class="text-center">Dibuat</th>
                                                         <th class="text-center"></th>
                                                     </tr>
                                                 </thead>
@@ -139,11 +138,11 @@
                                                                 class="form-control " value="{{ date('Y-m-d') }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="idfilter_unit"
+                                                            <input type="text" id="idfilter_unit" onchange="syn()"
                                                                 class="form-control">
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="idfilter_status"
+                                                            <input type="text" id="idfilter_status" onchange="syn()"
                                                                 class="form-control">
                                                         </td>
                                                         <td>
@@ -186,8 +185,6 @@
                                                     <th class="px-1 th py-1">noform</th>
                                                     <th class="px-1 th py-1">tgl</th>
                                                     <th class="px-1 th py-1">barang</th>
-                                                    <th class="px-1 th py-1">Mesin</th>
-                                                    <th class="px-1 th py-1">Kode Mesin</th>
                                                     <th class="px-1 th py-1">deskripsi</th>
                                                     <th class="px-1 th py-1">serialnumber</th>
                                                     <th class="px-1 th py-1">qty</th>
@@ -828,6 +825,7 @@
                         data.dari = $('#idfilter_dari').val();
                         data.sampai = $('#idfilter_sampai').val();
                         data.mesin = $('#idfilter_mesin').val();
+                        data.dibuat = $('#dibuat').val();
                         data.unit = $('#unit').val();
                         data.status = $('#status').val();
                     }
