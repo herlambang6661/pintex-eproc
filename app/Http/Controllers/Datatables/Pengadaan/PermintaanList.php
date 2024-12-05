@@ -51,7 +51,7 @@ class PermintaanList extends Controller
                 ->leftJoin('mastermesinitm AS mi', 'pe.mesin', '=', 'mi.id_itm')
                 ->leftJoin('mastermesin AS me', 'mi.id_mesin', '=', 'me.id')
                 ->whereBetween('pe.tgl', [$dari, $sampai])
-                ->where('pe.entitas', 'LIKE', '%' . $entitas . '%')
+                // ->where('pe.entitas', 'LIKE', '%' . $entitas . '%')
                 ->where('pe.dibuat', 'LIKE', '%' . $dibuat . '%')
                 ->orderBy('pe.id', 'desc')
                 ->get();
