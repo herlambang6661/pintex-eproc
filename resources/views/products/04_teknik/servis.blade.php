@@ -186,7 +186,7 @@
                                                     <th class="px-1 th py-1">tgl</th>
                                                     <th class="px-1 th py-1">barang</th>
                                                     <th class="px-1 th py-1">mesin</th>
-                                                    <th class="px-1 th py-1">kdoe</th>
+                                                    <th class="px-1 th py-1">kode</th>
                                                     <th class="px-1 th py-1">deskripsi</th>
                                                     <th class="px-1 th py-1">serialnumber</th>
                                                     <th class="px-1 th py-1">qty</th>
