@@ -668,7 +668,7 @@ class PermintaanController extends Controller
         echo '
                 <div class="modal-body" style="color: black;">
                         <i>
-                            <p>Entitas : <input type="text" name="addEntitas" value="' . $getpermintaan->entitas . '" class="form-control-sm border-white"></p>
+                            <p>Entitas : <input type="text" name="addEntitas" class="form-control cursor-not-allowed" readonly value="' . $getpermintaan->entitas . '" class="form-control-sm border-white"></p>
                             <p>
                                 Tanggal : ' . Carbon::parse($getpermintaan->tanggal)->format("d/m/Y") . '
                             </p>
