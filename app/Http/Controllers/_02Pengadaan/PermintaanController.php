@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Yajra\DataTables\DataTables;
 
 class PermintaanController extends Controller
@@ -266,6 +267,7 @@ class PermintaanController extends Controller
                 '_token' => 'required',
                 'tanggal' => 'required',
                 'kabag' => 'required',
+                'entitas' => 'required|in:TFI,PINTEX', //PEMBARUAN BUG ENTITAS
             ],
         );
         /* =================================================================================================
@@ -320,7 +322,12 @@ class PermintaanController extends Controller
         for ($i = 0; $i < $jml_mbl; $i++) {
             if ($request->entitas == 'TFI') {
                 // generate kodeseri TFI
-                $getkodeseri = DB::table('permintaanitm')->where('entitas', 'TFI')->where('kodeseri', 'like', '%T%')->latest('kodeseri')->first();
+                $getkodeseri = DB::table('permintaanitm')
+                    ->lockForUpdate() //TAMBAHAN BUG ENTITAS
+                    ->where('entitas', 'TFI')
+                    ->where('kodeseri', 'like', '%T%')
+                    ->latest('kodeseri')
+                    ->first();
                 if ($getkodeseri) {
                     $kdseri = $getkodeseri->kodeseri;
                     $noUrutKodeseri = (int) substr($kdseri, -6);
@@ -332,7 +339,12 @@ class PermintaanController extends Controller
                 }
             } else {
                 // generate kodeseri PINTEX
-                $getkodeseri = DB::table('permintaanitm')->where('entitas', 'PINTEX')->where('kodeseri', 'not like', '%T%')->latest('kodeseri')->first();
+                $getkodeseri = DB::table('permintaanitm')
+                    ->lockForUpdate() //TAMBAHAN BUG ENTITAS
+                    ->where('entitas', 'PINTEX')
+                    ->where('kodeseri', 'not like', '%T%')
+                    ->latest('kodeseri')
+                    ->first();
                 if ($getkodeseri) {
                     $kdseriR = $getkodeseri->kodeseri;
                     $kdseri = $kdseriR + 1;
@@ -669,7 +681,7 @@ class PermintaanController extends Controller
         echo '
                 <div class="modal-body" style="color: black;">
                         <i>
-                            <p>Entitas : <input type="text" name="addEntitas" value="' . $getpermintaan->entitas . '" class="form-control-sm border-white"></p>
+                            <p>Entitas : <input type="text" name="addEntitas" class="form-control cursor-not-allowed" readonly value="' . $getpermintaan->entitas . '" class="form-control-sm border-white"></p>
                             <p>
                                 Tanggal : ' . Carbon::parse($getpermintaan->tanggal)->format("d/m/Y") . '
                             </p>
