@@ -131,33 +131,74 @@
                                                     <tr>
                                                         <td>
                                                             <input type="date" id="idfilter_dari" class="form-control"
-                                                                value="{{ date('Y-m-01') }}">
+                                                                onchange="syn()" value="{{ date('Y-m-01') }}">
                                                         </td>
                                                         <td>
                                                             <input type="date" id="idfilter_sampai"
-                                                                class="form-control " value="{{ date('Y-m-d') }}">
+                                                                class="form-control " onchange="syn()"
+                                                                value="{{ date('Y-m-d') }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="idfilter_unit" onchange="syn()"
-                                                                class="form-control">
+                                                            <select id="dibuat" class="form-select">
+                                                                @if (Auth::user()->role == 'own' ||
+                                                                        Auth::user()->role == 'pur' ||
+                                                                        Auth::user()->role == 'kng' ||
+                                                                        Auth::user()->alias == 'HRD' ||
+                                                                        Auth::user()->alias == 'TFI')
+                                                                    <option value="" selected>
+                                                                        Semua
+                                                                    </option>
+                                                                    <option value="Puji Nurrenti">
+                                                                        Puji Nurrenti
+                                                                    </option>
+                                                                    <option value="Fahmi Fahrurrozi">
+                                                                        Fahmi Fahrurrozi
+                                                                    </option>
+                                                                    <option value="Rizky Anurullah R">
+                                                                        Rizky Anurullah R
+                                                                    </option>
+                                                                    <option value="Sukmitiyanti">
+                                                                        Sukmitiyanti
+                                                                    </option>
+                                                                    <option value="Admin TFI">
+                                                                        Admin TFI
+                                                                    </option>
+                                                                    <option value="Akun HRD">
+                                                                        Akun HRD
+                                                                    </option>
+                                                                    <option value="Rodo Natorang Gultom">
+                                                                        Rodo Natorang Gultom
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ Auth::user()->name }}" selected
+                                                                        hidden>
+                                                                        {{ Auth::user()->name }}
+                                                                    </option>
+                                                                    <option value="Puji Nurrenti">
+                                                                        Puji Nurrenti
+                                                                    </option>
+                                                                    <option value="Fahmi Fahrurrozi">
+                                                                        Fahmi Fahrurrozi
+                                                                    </option>
+                                                                    <option value="Rizky Anurullah R">
+                                                                        Rizky Anurullah R
+                                                                    </option>
+                                                                    <option value="Sukmitiyanti">
+                                                                        Sukmitiyanti
+                                                                    </option>
+                                                                    <option value="Admin Purchasing">
+                                                                        Purchasing
+                                                                    </option>
+                                                                    <option value="Admin TFI">
+                                                                        TFI
+                                                                    </option>
+                                                                @endif
+                                                            </select>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="idfilter_status" onchange="syn()"
-                                                                class="form-control">
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary btn-icon"
+                                                            <button type="button" class="btn btn-primary"
                                                                 onclick="syn()">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="2"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                                                    <path d="M21 21l-6 -6" />
-                                                                </svg>
+                                                                <i class="fa-solid fa-magnifying-glass"></i>
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -185,6 +226,8 @@
                                                     <th class="px-1 th py-1">noform</th>
                                                     <th class="px-1 th py-1">tgl</th>
                                                     <th class="px-1 th py-1">barang</th>
+                                                    <th class="px-1 th py-1">Mesin</th>
+                                                    <th class="px-1 th py-1">Kode</th>
                                                     <th class="px-1 th py-1">deskripsi</th>
                                                     <th class="px-1 th py-1">serialnumber</th>
                                                     <th class="px-1 th py-1">qty</th>

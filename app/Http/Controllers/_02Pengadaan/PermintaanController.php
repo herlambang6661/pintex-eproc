@@ -296,11 +296,12 @@ class PermintaanController extends Controller
         } else {
             $checknoform = DB::table('permintaan')
                 ->where('entitas', 'PINTEX') //diaktifkan kalo entitasnya PINTEX dan perkiraan awal tahun
+                ->where('noform', 'like', '%' . date('y') . '-' . '0%')
                 ->latest('noform')
                 ->first();
             $y = substr($checknoform->noform, 0, 2);
             if (date('y') == $y) {
-                $query = DB::table('permintaan')->where('noform', 'like', $y . '%')->orderBy('noform', 'desc')->first();
+                $query = DB::table('permintaan')->where('noform', 'like', $y . '-0%')->orderBy('noform', 'desc')->first();
                 $noUrut = (int) substr($query->noform, -5);
                 $noUrut++;
                 $char = date('y-');
