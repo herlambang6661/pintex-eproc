@@ -298,7 +298,7 @@ class PermintaanController extends Controller
         } else {
             $checknoform = DB::table('permintaan')
                 ->where('entitas', 'PINTEX') //diaktifkan kalo entitasnya PINTEX dan perkiraan awal tahun
-                ->where('noform', 'like', '%' . date('y') . '-' . '0%')
+                ->where('noform', 'like', '%' . date('y') . '-%')
                 ->latest('noform')
                 ->first();
             $y = substr($checknoform->noform, 0, 2);
