@@ -301,13 +301,17 @@ class PermintaanController extends Controller
                 ->where('noform', 'like', '%' . date('y') . '-' . '%')
                 ->latest('noform')
                 ->first();
-            $y = substr($checknoform->noform, 0, 2);
-            if (date('y') == $y) {
-                $query = DB::table('permintaan')->where('noform', 'like', $y . '-0%')->orderBy('noform', 'desc')->first();
-                $noUrut = (int) substr($query->noform, -5);
-                $noUrut++;
-                $char = date('y-');
-                $kodeSurat = $char . sprintf("%05s", $noUrut);
+            if ($checknoform) {
+                $y = substr($checknoform->noform, 0, 2);
+                if (date('y') == $y) {
+                    $query = DB::table('permintaan')->where('noform', 'like', $y . '-0%')->orderBy('noform', 'desc')->first();
+                    $noUrut = (int) substr($query->noform, -5);
+                    $noUrut++;
+                    $char = date('y-');
+                    $kodeSurat = $char . sprintf("%05s", $noUrut);
+                } else {
+                    $kodeSurat = date('y-') . "00001";
+                }
             } else {
                 $kodeSurat = date('y-') . "00001";
             }
